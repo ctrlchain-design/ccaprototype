@@ -1,0 +1,765 @@
+<title>Usability Test Cases, Resource Availability | CtrlChain</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --p2: #4b6615; --p2-bg: #eef6df; --p2-accent: #6f8f2f;
+  --p3: #5b21b6; --p3-bg: #ede9fe; --p3-accent: #7c3aed;
+  --navy: #10152e; --ink: #1a202c; --sub: #4a5568; --mute: #94a3b8;
+  --line: #e2e8f0; --bg: #f0f4f8; --card: #ffffff;
+  --ui: -apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); line-height: 1.6; }
+
+/* ── Doc Header ── */
+.doc-header {
+  background: var(--card); border-bottom: 1px solid var(--line);
+  padding: 36px 0 28px; text-align: center; margin-bottom: 36px;
+}
+.doc-header .eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute); margin-bottom: 10px;
+}
+.doc-header h1 { font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.doc-header .subtitle { font-size: 14px; color: var(--sub); max-width: 520px; margin: 0 auto 18px; }
+.doc-meta { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.doc-meta span {
+  font-size: 12px; color: var(--sub); background: var(--bg);
+  padding: 4px 14px; border-radius: 99px; border: 1px solid var(--line);
+}
+
+/* ── Container ── */
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── How to use ── */
+.how-to {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 36px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;
+}
+.how-to-item { display: flex; gap: 11px; }
+.how-to-icon {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--bg);
+  display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+}
+.how-to-item h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.how-to-item p { font-size: 12px; color: var(--sub); line-height: 1.45; }
+
+/* ── Phase header ── */
+.phase-header {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; border-radius: 12px; margin-bottom: 18px; margin-top: 40px;
+}
+.phase-header.p2 { background: var(--p2-bg); border: 1px solid #c9dea0; }
+.phase-header.p3 { background: var(--p3-bg); border: 1px solid #c4b5fd; }
+.ph-left { flex-shrink: 0; }
+.phase-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px;
+}
+.p2 .phase-badge, .p2-card .phase-badge { background: var(--p2-accent); color: #fff; }
+.p3 .phase-badge, .p3-card .phase-badge { background: var(--p3-accent); color: #fff; }
+.phase-header-text h2 { font-size: 19px; font-weight: 700; color: #1e2430; margin-top: 0; }
+.phase-header-text .ph-sub { font-size: 13px; color: #4b5563; margin-top: 3px; }
+.ph-features { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
+.ph-feature { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #4b5563; }
+.ph-feature::before { content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.p2 .ph-feature::before { background: var(--p2-accent); }
+.p3 .ph-feature::before { background: var(--p3-accent); }
+
+/* ── Test Case Card ── */
+.tc {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  margin-bottom: 18px; overflow: hidden;
+}
+.tc-head {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 22px 14px; border-bottom: 1px solid var(--line);
+}
+.tc-id {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px; flex-shrink: 0; margin-top: 3px;
+}
+.p2-card .tc-id { background: var(--p2-bg); color: var(--p2); }
+.p3-card .tc-id { background: var(--p3-bg); color: var(--p3); }
+.tc-head-text { flex: 1; }
+.tc-title { font-size: 17px; font-weight: 700; color: var(--ink); }
+.tc-scope { font-size: 12px; margin-top: 5px; line-height: 1.45; padding: 5px 10px; border-radius: 6px; }
+.p2-card .tc-scope { background: var(--p2-bg); color: var(--p2); }
+.p3-card .tc-scope { background: var(--p3-bg); color: var(--p3); }
+.tc-role {
+  font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  background: var(--bg); color: var(--sub); flex-shrink: 0; margin-top: 3px;
+  border: 1px solid var(--line);
+}
+.tc-body { padding: 18px 22px; display: flex; flex-direction: column; gap: 18px; }
+
+/* ── Sections ── */
+.tc-section h4 {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--mute); margin-bottom: 7px;
+}
+.tc-objective { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
+.start-point {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 14px; font-size: 13.5px; color: var(--ink); font-weight: 500;
+}
+.start-point .arrow { color: var(--mute); }
+
+/* Flipped task prompt, light with navy left border */
+.task-prompt {
+  background: #f7f9fc;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--navy);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+}
+.task-prompt .read-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--navy); opacity: .55; margin-bottom: 9px;
+}
+.task-prompt p { font-size: 15px; color: var(--navy); line-height: 1.65; font-style: italic; }
+
+/* ── Criteria with observer sign off ── */
+.criteria-header { margin-bottom: 8px; }
+
+.criteria-list { display: flex; flex-direction: column; gap: 8px; }
+.criterion {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; color: var(--ink); line-height: 1.45;
+  padding: 4px 8px;
+}
+.criterion::before {
+  content: '•'; color: var(--mute); flex-shrink: 0;
+  font-size: 16px; line-height: 1.35;
+}
+.p2-card .criterion::before { color: var(--p2-accent); }
+.p3-card .criterion::before { color: var(--p3-accent); }
+.criterion-text { flex: 1; }
+
+.observe-list { display: flex; flex-direction: column; gap: 6px; }
+.observe-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13px; color: var(--sub); line-height: 1.5;
+}
+.observe-item::before { content: '→'; color: var(--mute); flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+
+.followup-list { display: flex; flex-direction: column; gap: 6px; }
+.followup-item {
+  font-size: 13px; color: var(--sub); line-height: 1.5;
+  padding-left: 16px; position: relative;
+}
+.followup-item::before {
+  content: 'Q'; position: absolute; left: 0;
+  font-size: 11px; font-weight: 700; color: var(--mute); top: 1px;
+}
+
+.tc-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.tc-divider { border: none; border-top: 1px solid var(--line); }
+
+/* ── Back button ── */
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--sub);
+  text-decoration: none; padding: 6px 12px;
+  border: 1px solid var(--line); border-radius: 99px;
+  background: var(--card); margin-bottom: 16px;
+  transition: border-color .15s, color .15s;
+}
+.back-btn:hover { border-color: #94a3b8; color: var(--ink); }
+.back-btn::before { content: '←'; font-size: 13px; }
+
+/* ── Count strip ── */
+.count-strip { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+.count-pill {
+  display: flex; align-items: center; gap: 8px; padding: 9px 16px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+  font-size: 13px; font-weight: 500; color: var(--sub);
+}
+.count-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── Save toast ── */
+
+@media (max-width: 700px) {
+  .participant-slots { grid-template-columns: 1fr 1fr; }
+  .how-to { grid-template-columns: 1fr; }
+  .tc-2col { grid-template-columns: 1fr; }
+  .tc-head { flex-wrap: wrap; }
+}
+</style>
+
+<!-- ═══════════════════ PARTICIPANT PANEL ═══════════════════ -->
+<!-- ═══════════════════ DOC HEADER ═══════════════════ -->
+<div class="doc-header">
+  <a class="back-btn" href="../">Resource Availability Home</a>
+  <div class="eyebrow">CtrlChain Carrier TMS · UX Research</div>
+  <h1>Usability Test Cases</h1>
+  <p class="subtitle">Resource Availability Epic, Phase 2 &amp; Phase 3<br>Prototype: ctrlchain-design.github.io/usertesting</p>
+  <div class="doc-meta">
+    <span><strong>Scope:</strong> Fleet &amp; Driver · Trip Planner · Trips</span>
+    <span><strong>Test Cases:</strong> 7</span>
+    <span><strong>Phases:</strong> 2 &amp; 3</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="how-to">
+    <div class="how-to-item">
+      <div class="how-to-icon">📋</div>
+      <div><h4>Task Prompt</h4><p>Left-bordered box = read aloud verbatim. Do not add hints or extra context.</p></div>
+    </div>
+    <div class="how-to-item">
+      <div class="how-to-icon">👁</div>
+      <div><h4>Observe</h4><p>Note hesitations, wrong paths, and unexpected behaviours silently.</p></div>
+    </div>
+    <div class="how-to-item">
+      <div class="how-to-icon">🔗</div>
+      <div><h4>Study Link</h4><p>Participants complete tasks in Lyssna. Share this link before the session: <strong><a href="https://usabi.li/do/jiya90vihxjw/zdilfd" style="color:inherit">usabi.li/do/jiya90vihxjw/zdilfd</a></strong></p></div>
+    </div>
+  </div>
+
+  <div class="count-strip">
+    <div class="count-pill"><div class="dot" style="background:#6f8f2f"></div>Phase 2, 3 test cases</div>
+    <div class="count-pill"><div class="dot" style="background:#7c3aed"></div>Phase 3, 4 test cases</div>
+    <div class="count-pill" style="margin-left:auto">Starting point: Fleet and Driver menu</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ PHASE 2 -->
+  <div class="phase-header p2">
+    <div class="ph-left"><span class="phase-badge p2">Phase 2</span></div>
+    <div class="phase-header-text">
+      <h2>Fleet Management &amp; Foundations</h2>
+      <p class="ph-sub">New Fleet and Driver menu under Carrier TMS. Tests whether users can manage resources and control what planners can see.</p>
+      <div class="ph-features">
+        <div class="ph-feature p2">Fleet and Driver Management, New Menu under Carrier TMS</div>
+        <div class="ph-feature p2">Choose which resources are visible in the Trip Planner, per carrier group</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-01 -->
+  <div class="tc p2-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-01</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Add a New Vehicle and Assign It to a Carrier Group</div>
+        <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, New Menu · Add resources and assign to the correct carrier subgroup</div>
+      </div>
+      <span class="tc-role">Transport Manager</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Verify that users understand the overall logic of the Fleet and Driver menu, that it is split into Vehicle, Trailer, and Driver tabs, and that adding a resource here is how you make it manageable in the system. Also test whether the Carrier Group visibility section is understandable and users know what it controls.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"A new truck has joined the NewCold Transport Poland fleet. Its licence plate is PL WW 4521 and it is a Semi Tractor. Please add it to the system and make sure it is only assigned to the Poland entity, it should not be shared with any other group in the enterprise."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc01">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant finds the add button on the Vehicle tab without hesitation</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant fills in licence plate (PL WW 4521) and vehicle type (Semi Tractor) correctly</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant locates the Carrier Group visibility section and assigns the vehicle to NewCold Transport Poland only</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">Participant does NOT share the vehicle with other groups, understands scope restriction</div></div>
+          <div class="criterion" data-c="4"><div class="criterion-text">Participant can explain in their own words what the Carrier Group field controls</div></div>
+          <div class="criterion" data-c="5"><div class="criterion-text">Participant saves the vehicle successfully</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">Does the participant understand the menu structure (Vehicle / Trailer / Driver tabs) immediately, or do they seem unsure?</div>
+            <div class="observe-item">Is the add button easy to find, or does the participant scan the whole page first?</div>
+            <div class="observe-item">Does the participant notice the Carrier Group visibility section, or scroll past it?</div>
+            <div class="observe-item">Does the participant understand that only Poland means NOT shared enterprise-wide?</div>
+            <div class="observe-item">Any confusion about which form fields are required vs optional?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">Looking at the Vehicle, Trailer, and Driver tabs, does this structure make sense? Is anything missing?</div>
+            <div class="followup-item">What would happen if you shared this vehicle with the entire enterprise instead?</div>
+            <div class="followup-item">Is there any information you expected to fill in but didn't see on the form?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-02 -->
+  <div class="tc p2-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-02</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Delete a Vehicle No Longer Used by the Carrier Group</div>
+        <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, Vehicle Management · Remove a decommissioned vehicle from the system; verify how deleted resources are presented</div>
+      </div>
+      <span class="tc-role">Transport Manager</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Verify that users can find and delete a vehicle that has been decommissioned or is no longer active in the carrier group. Test whether the delete action is discoverable, whether a confirmation step is clear, and whether the way the system handles deleted records (hidden, archived, or visible as inactive) makes sense to the participant.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"Vehicle BE 222 QW has been permanently decommissioned and will no longer be used by NewCold Transport Poland. Please remove it from the system."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc02">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant finds vehicle BE 222 QW in the Vehicle tab</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant finds the delete action for the vehicle (not the edit or unavailability action)</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant completes the deletion (confirms the dialog if one appears)</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">Participant can describe what they expect to happen to the record after deletion</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">Is the delete action easy to find, does the participant locate it without exploring multiple areas?</div>
+            <div class="observe-item">Does the participant hesitate before deleting, do they look for a confirmation step?</div>
+            <div class="observe-item">Does the participant expect the vehicle to disappear entirely, or to appear as archived/greyed out?</div>
+            <div class="observe-item">After deletion, does the participant check whether the vehicle still appears somewhere in the list?</div>
+            <div class="observe-item">Does the participant confuse "delete" with "deactivate" or "mark unavailable"?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">How easy was it to find the delete option, was it where you expected?</div>
+            <div class="followup-item">What would be the reason that you need to look for a deleted vehicle and how do you expect to see those data?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-03 -->
+  <div class="tc p2-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-03</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Hide a Vehicle from Trip Planner Using the Visibility Toggle</div>
+        <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, Carrier Group Visibility · Toggle a vehicle off from Trip Planner so planners cannot accidentally assign a resource that is not available for general planning</div>
+      </div>
+      <span class="tc-role">Transport Manager</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Verify that a transport manager can find and use the Trip Planner visibility toggle to hide a vehicle from planners. Test whether the setting is discoverable, whether it is clear what the toggle controls, and whether the manager understands the impact of hiding a resource.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab <span class="arrow">→</span> ES 654 AA</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"Vehicle ES 654 AA is on a dedicated contract with a key customer and must not appear as an option when planners assign vehicles in Trip Planner. Please make sure it is hidden from planners."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc03">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant finds the Trip Planner visibility toggle on the vehicle record</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant understands what the toggle does before switching it</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant switches the toggle to hide the vehicle from Trip Planner</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">Participant can explain what would change for planners after this action</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">Does the participant find the visibility toggle without being guided, or do they look in the wrong section first?</div>
+            <div class="observe-item">Does the label of the toggle make its effect clear before they switch it?</div>
+            <div class="observe-item">Does the participant look for a confirmation or a way to verify the change took effect?</div>
+            <div class="observe-item">Does the participant express any concern about the vehicle disappearing from planner view entirely?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">Was the toggle where you expected it, or did you have to look for it?</div>
+            <div class="followup-item">Before you switched it, was it clear what would happen?</div>
+            <div class="followup-item">In your day to day work, how often would you need to hide a vehicle from planners?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ PHASE 3 -->
+  <div class="phase-header p3">
+    <div class="ph-left"><span class="phase-badge p3">Phase 3</span></div>
+    <div class="phase-header-text">
+      <h2>Basic Resource Availability</h2>
+      <p class="ph-sub">Full day unavailability blocks for drivers, vehicles, and trailers. Planners see availability when assigning in Trip Planner and Trips. No partial day or approval flow yet, those are Phase 4.</p>
+      <div class="ph-features">
+        <div class="ph-feature p3">Fleet and Driver, Add Events: mark as unavailable with reason and end date (full day blocks)</div>
+        <div class="ph-feature p3">Trip Planner: see unavailability when assigning via drawer, drag &amp; drop, right click, or auto-assign</div>
+        <div class="ph-feature p3">Trip Planner: alert when an already-assigned resource becomes unavailable</div>
+        <div class="ph-feature p3">Trip Actions: unavailability warnings in trip details when assigning resources</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-04 -->
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-04</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Record an Unavailability Event on a Vehicle</div>
+        <div class="tc-scope">📍 Phase 3 · Fleet and Driver, Add Events · Record an open-ended unavailability event on the scheduler for a vehicle that is out of service</div>
+      </div>
+      <span class="tc-role">Transport Manager</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Using the vehicle just added in TC-01, verify that users can find it in the list and record an unavailability event on the Fleet and Driver scheduler. Also test whether the resource list is easy to navigate and whether its display logic makes sense to the participant.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab (PL WW 4521 already in list from TC-01)</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"Vehicle PL WW 4521 is going in for a long-term repair starting today (Thursday, 16/07), with no end date. Please make sure this unavailability event is recorded on the Fleet and Driver menu scheduler."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc04">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant finds vehicle PL WW 4521 in the list without excessive searching</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant locates the option to add an unavailability event on the scheduler</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant sets today as the start date and leaves end date open / no end date</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">The event is visibly recorded on the vehicle's row in the Fleet and Driver scheduler</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">How does the participant find PL WW 4521, scroll, search, or sort? Easy or frustrating?</div>
+            <div class="observe-item">Does the participant understand how to add an event on the scheduler, where to click?</div>
+            <div class="observe-item">Does the participant look for confirmation that the event was recorded on the vehicle?</div>
+            <div class="observe-item">Does the participant try the Trip Planner toggle instead of an event, are the two mechanisms confusing?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">How easy was it to find vehicle PL WW 4521 in the list? What would make it easier?</div>
+            <div class="followup-item">Looking at this list of vehicles, what is the best way to show and organise resources here? (sorting, grouping, filters)</div>
+            <div class="followup-item">Is the information on the scheduler (event card, pop up) enough to summarize what unavailability events have been added?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-05 -->
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-05</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Close an Open-Ended Unavailability Event by Adding an End Date</div>
+        <div class="tc-scope">📍 Phase 3 · Fleet and Driver, Events · Edit an existing open-ended event to add a specific end date, making it close-ended</div>
+      </div>
+      <span class="tc-role">Transport Manager</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Verify that users can find and edit an existing open-ended unavailability event to add a specific end date. Test whether the edit action is discoverable, whether it is clear the user is modifying an existing event (not adding a new one), and whether setting an end date feels intuitive.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab (PL WW 4521 has the open-ended repair event recorded in TC-04)</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"Good news: the mechanic just called and the repair on PL WW 4521 finished earlier than expected. The vehicle will be ready to use tomorrow morning (Friday, 17/07 at 08:00). Please update the unavailability record to reflect this."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc05">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant finds the existing open-ended event on PL WW 4521</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant opens the edit action (not creating a new event)</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant sets tomorrow as the end date and saves the updated event</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">The event now shows a close-ended date range on the scheduler</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">Does the participant reach for an edit action, or do they try to delete the event and add a new one?</div>
+            <div class="observe-item">Is it obvious where to set or change the end date in the edit form?</div>
+            <div class="observe-item">Does the participant understand that "tomorrow morning" means setting today as the end date?</div>
+            <div class="observe-item">After saving, does the participant check that the event now shows the correct end date on the record?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">Was the edit option where you expected it, or did you have to look for it?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-06 -->
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-06</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Assign a Vehicle to a Trip Using the Trip Drawer</div>
+        <div class="tc-scope">📍 Phase 3 · Trip Planner, Assign Resources Drawer · Open the assign resources drawer from a trip; select a vehicle while PL WW 4521 appears unavailable in the list</div>
+      </div>
+      <span class="tc-role">Planner</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Understand how planners use the Assign Resources drawer to select a vehicle for a trip. Surface usability issues with the drawer: whether the page makes sense at first glance, how the planner knows which vehicle type is needed, and whether the information shown is enough to make a confident assignment when one vehicle in the list is unavailable.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Trip Planner <span class="arrow">→</span> Trips section (TRIP2026-015573 is the first trip in the list; ES 771 BB is visible near the top of the vehicle dropdown and is marked unavailable)</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"Let's go to the Trip Planner. Can you find trip TRIP2026-015573 in the Trips section and open its resources panel? From there, please assign vehicle ES 771 BB to the trip."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc06">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant clicks the trip and opens the Assign Resources drawer</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant opens the vehicle dropdown and scans the options</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant notices that ES 771 BB is unavailable (sees the indicator without being told)</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">Participant selects an available vehicle and proceeds to assign</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">Does the Assign Resources page make sense immediately, or does the participant pause to figure out what to do?</div>
+            <div class="observe-item">How does the participant decide which vehicle to pick? Do they look for vehicle type, licence plate, or something else?</div>
+            <div class="observe-item">Does the participant notice ES 771 BB is unavailable, or do they try to select it anyway?</div>
+            <div class="observe-item">Does the drawer show enough context (vehicle type, owner, plate, availability) to assign with confidence, or does the participant feel they are missing information?</div>
+            <div class="observe-item">Does the participant look for additional details about the trip (cargo type, route) to inform their choice, and are those details visible?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">Looking at this the assign resources drawer, does it make sense to you? Is there anything confusing or anything you would change?</div>
+            <div class="followup-item">Did you notice that ES 771 BB was unavailable? Is it clear for you?</div>
+            <div class="followup-item">When you are assigning resources in the drawer, do you need to connect the information about vehicles, trailers and drivers at the same time to make a decision?</div>
+            <div class="followup-item">In your day to day work, what information would you normally need to know before assigning a vehicle to a trip?</div>
+            <div class="followup-item">You can see trip TRIP2026-015571 from Argentan on the scheduler assigned to NL 123 13. Please reassign it to vehicle ES 771 BB using right click. — Comparing resource assignment with right click and the trip drawer, which felt more natural to you and why?</div>
+            <div class="followup-item">Once again we need to reassign trip TRIP2026-015571 from Argentan to vehicle ES 771 BB, but this time please use the scheduler to drag and drop the trip onto the vehicle. — Of the three ways to assign a vehicle (drawer, right click, drag and drop) which one would you use day to day and why?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-07 -->
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-07</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Assign a Vehicle to a Trip via Trip Details</div>
+        <div class="tc-scope">📍 Phase 3 · Trip Planner, Trips, Trip Details · Open a trip's detail view and assign a vehicle from there; test whether this entry point is discoverable and the information shown is sufficient</div>
+      </div>
+      <span class="tc-role">Planner</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Understand how planners navigate to and use the Trip Details page to assign a vehicle. Test whether the entry point is intuitive, whether the information on the detail view is enough to assign with confidence, and how this experience compares to the drawer and scheduler methods.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Trip Planner <span class="arrow">→</span> Trips section <span class="arrow">→</span> open TRIP2026-015573 trip details</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"Let's go to the Trips menu. Please open the first trip on the table and assign a vehicle to it from there. Think out loud as you go."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Success Criteria</h4>
+        </div>
+        <div class="criteria-list" data-tc="tc07">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant opens the Trip Details view for TRIP2026-015573</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant locates the vehicle assignment option within Trip Details</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant selects a vehicle and completes the assignment</div></div>
+          <div class="criterion" data-c="3"><div class="criterion-text">Participant can confirm the assignment was saved or reflected in the view</div></div>
+        </div>
+      </div>
+      <div class="tc-2col">
+        <div class="tc-section">
+          <h4>Observe</h4>
+          <div class="observe-list">
+            <div class="observe-item">Does the participant find the assignment option in Trip Details without guidance, or do they look in the wrong place?</div>
+            <div class="observe-item">Does the Trip Details view provide more, less, or different context than the drawer or scheduler methods?</div>
+            <div class="observe-item">Does the participant feel more or less confident assigning from this view compared to TC-06?</div>
+            <div class="observe-item">Is there any information visible in Trip Details that the participant found useful but missing from the other assignment flows?</div>
+          </div>
+        </div>
+        <div class="tc-section">
+          <h4>Follow up Questions</h4>
+          <div class="followup-list">
+            <div class="followup-item">Was it clear how to assign an available vehicle from the Trip Details page, or did you have to look for it?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SURVEY -->
+  <div class="phase-header p3" style="margin-top: 56px;">
+    <div class="ph-left"><span class="phase-badge">Survey</span></div>
+    <div class="phase-header-text">
+      <h2>Post-Session Survey</h2>
+      <p class="ph-sub">Closed-ended questions to quantify ease, satisfaction, confidence, and assignment method preference across the full session.</p>
+    </div>
+  </div>
+
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id" style="background:#ede9fe;color:#5b21b6;">2.1</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Assignment Method Preference</div>
+        <div class="tc-scope" style="background:#ede9fe;color:#5b21b6;">📍 Single select · Which assignment method would they reach for first in daily work</div>
+      </div>
+      <span class="tc-role">Planner</span>
+    </div>
+    <div class="tc-body">
+      <p class="tc-objective">In your day-to-day work, which assignment method would you most likely reach for first?</p>
+      <div class="criteria-list" style="margin-top:8px;">
+        <div class="criterion"><div class="criterion-text">Assign Resources Drawer</div></div>
+        <div class="criterion"><div class="criterion-text">Right-click on the scheduler</div></div>
+        <div class="criterion"><div class="criterion-text">Drag and drop on the scheduler</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id" style="background:#ede9fe;color:#5b21b6;">2.2</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Ease of Use — Resource Management Tasks</div>
+        <div class="tc-scope" style="background:#ede9fe;color:#5b21b6;">📍 Linear scale 1–5 · Ease across adding vehicles, recording availability, and assigning trips</div>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p class="tc-objective">Overall, how easy or difficult was it to complete the resource management tasks today: adding and managing vehicles, recording availability, and assigning trips?</p>
+      <div class="start-point" style="margin-top:8px;">1 = Very Difficult <span class="arrow">→</span> 5 = Very Easy</div>
+    </div>
+  </div>
+
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id" style="background:#ede9fe;color:#5b21b6;">2.3</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Overall Satisfaction — Resource Availability Feature</div>
+        <div class="tc-scope" style="background:#ede9fe;color:#5b21b6;">📍 Linear scale 1–5 · Satisfaction with how availability is recorded, displayed, and connected to assignment</div>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p class="tc-objective">How satisfied are you with the resource availability feature overall? The way availability is recorded, displayed, and connected to trip assignment.</p>
+      <div class="start-point" style="margin-top:8px;">1 = Very Dissatisfied <span class="arrow">→</span> 5 = Very Satisfied</div>
+    </div>
+  </div>
+
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id" style="background:#ede9fe;color:#5b21b6;">2.4</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Confidence — Using Features Without Help</div>
+        <div class="tc-scope" style="background:#ede9fe;color:#5b21b6;">📍 Linear scale 1–5 · Self-efficacy after completing the session</div>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p class="tc-objective">How confident do you feel that you could use these features in your real work without help?</p>
+      <div class="start-point" style="margin-top:8px;">1 = Not Confident At All <span class="arrow">→</span> 5 = Very Confident</div>
+    </div>
+  </div>
+
+  <div class="tc p3-card">
+    <div class="tc-head">
+      <span class="tc-id" style="background:#ede9fe;color:#5b21b6;">2.5</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Open Feedback</div>
+        <div class="tc-scope" style="background:#ede9fe;color:#5b21b6;">📍 Long text · Anything confusing, out of place, or to change before release</div>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p class="tc-objective">Is there anything that confused you, felt out of place, or that you would change before this goes live?</p>
+    </div>
+  </div>
+
+</div>
+

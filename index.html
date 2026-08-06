@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resource Availability — CtrlChain UX</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #10152e; --ink: #1a202c; --sub: #4a5568;
+  --line: #e2e8f0; --bg: #f0f4f8; --card: #fff;
+  --p2: #6f8f2f; --p3: #7c3aed;
+  --ui: -apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+body { font-family: var(--ui); background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+header {
+  background: var(--card); border-bottom: 1px solid var(--line);
+  padding: 32px 24px; text-align: center;
+}
+header .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #94a3b8; margin-bottom: 10px; }
+header h1 { font-size: 26px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+header p { font-size: 14px; color: var(--sub); }
+main { flex: 1; max-width: 720px; margin: 0 auto; padding: 48px 24px; width: 100%; display: flex; flex-direction: column; gap: 20px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 28px 32px; text-decoration: none; color: inherit;
+  display: flex; align-items: flex-start; gap: 20px; transition: box-shadow .15s, border-color .15s;
+}
+.card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: #cbd5e1; }
+.card-icon { font-size: 32px; flex-shrink: 0; }
+.card-body h2 { font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.card-body p { font-size: 13.5px; color: var(--sub); line-height: 1.55; margin-bottom: 10px; }
+.card-tag {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 99px;
+}
+.tag-proto { background: #e0f2fe; color: #0369a1; }
+.tag-tc { background: #ede9fe; color: #5b21b6; }
+footer { text-align: center; padding: 24px; font-size: 12px; color: #94a3b8; border-top: 1px solid var(--line); background: var(--card); }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">CtrlChain Carrier TMS · UX Research</div>
+  <h1>Resource Availability</h1>
+  <p>Phase 2 &amp; Phase 3 — Usability Testing Materials</p>
+</header>
+<main>
+  <a class="card" href="https://usabi.li/do/jiya90vihxjw/zdilfd" target="_blank">
+    <div class="card-icon">🎬</div>
+    <div class="card-body">
+      <h2>Prototype</h2>
+      <p>A prototype covering Fleet and Driver Management and Trip Planner — participants will use this to go through the tasks in the session.</p>
+      <span class="card-tag tag-proto">Lyssna</span>
+    </div>
+  </a>
+  <a class="card" href="./test-cases/">
+    <div class="card-icon">🧪</div>
+    <div class="card-body">
+      <h2>Usability Test Cases</h2>
+      <p>7 test cases covering Phase 2 (Fleet &amp; Driver) and Phase 3 (Basic Resource Availability). Use this as a session guide — follow the task prompts, watch the observe notes during the session, and use the follow-up questions after each task.</p>
+      <span class="card-tag tag-tc">Test Cases</span>
+    </div>
+  </a>
+</main>
+<footer>CtrlChain Design · Resource Availability Epic · 2026</footer>
+</body>
+</html>
