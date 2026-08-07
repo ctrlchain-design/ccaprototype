@@ -675,25 +675,25 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     <div class="tc-head">
       <span class="tc-id">TC-08</span>
       <div class="tc-head-text">
-        <div class="tc-title">Assign a Vehicle to a Trip via Trip Details</div>
-        <div class="tc-scope">📍 Phase 3 · Trip Planner, Trips, Trip Details · Open a trip's detail view and assign a vehicle from there; test whether this entry point is discoverable and the information shown is sufficient</div>
+        <div class="tc-title">Assign a Driver to a Trip via Trip Details</div>
+        <div class="tc-scope">📍 Phase 3 · Trip Planner, Trips, Trip Details · Open a trip's detail view and assign an available driver from there</div>
       </div>
       <span class="tc-role">Planner</span>
     </div>
     <div class="tc-body">
       <div class="tc-section">
         <h4>Objective</h4>
-        <p class="tc-objective">Understand how planners navigate to and use the Trip Details page to assign a vehicle. Test whether the entry point is intuitive, whether the information on the detail view is enough to assign with confidence, and how this experience compares to the drawer and scheduler methods.</p>
+        <p class="tc-objective">Understand how planners assign a driver from the Trip Details page. Test whether the driver assignment option is discoverable, whether availability information is clear, and whether the experience feels consistent with assigning a vehicle.</p>
       </div>
       <div class="tc-section">
         <h4>Starting Point</h4>
-        <div class="start-point">Trip Planner <span class="arrow">→</span> Trips section <span class="arrow">→</span> open TRIP2026-015573 trip details</div>
+        <div class="start-point">Trip Planner <span class="arrow">→</span> Trips section <span class="arrow">→</span> open first trip in the table</div>
       </div>
       <div class="tc-section">
         <h4>Task Prompt, read aloud</h4>
         <div class="task-prompt">
           <div class="read-label">🎙 Say to participant</div>
-          <p>"Let's go to the Trips menu. Please open the first trip on the table and assign a vehicle to it from there. Think out loud as you go."</p>
+          <p>"Let's go to the Trips menu. Please open the first trip on the table and assign an available driver to it from there. Think out loud as you go."</p>
         </div>
       </div>
       <hr class="tc-divider">
@@ -701,10 +701,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
         <div class="criteria-header">
           <h4>Success Criteria</h4>
         </div>
-        <div class="criteria-list" data-tc="tc07">
-          <div class="criterion" data-c="0"><div class="criterion-text">Participant opens the Trip Details view for TRIP2026-015573</div></div>
-          <div class="criterion" data-c="1"><div class="criterion-text">Participant locates the vehicle assignment option within Trip Details</div></div>
-          <div class="criterion" data-c="2"><div class="criterion-text">Participant selects a vehicle and completes the assignment</div></div>
+        <div class="criteria-list" data-tc="tc08">
+          <div class="criterion" data-c="0"><div class="criterion-text">Participant opens the Trip Details view</div></div>
+          <div class="criterion" data-c="1"><div class="criterion-text">Participant locates the driver assignment option within Trip Details</div></div>
+          <div class="criterion" data-c="2"><div class="criterion-text">Participant identifies an available driver and completes the assignment</div></div>
           <div class="criterion" data-c="3"><div class="criterion-text">Participant can confirm the assignment was saved or reflected in the view</div></div>
         </div>
       </div>
@@ -712,16 +712,16 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
         <div class="tc-section">
           <h4>Observe</h4>
           <div class="observe-list">
-            <div class="observe-item">Does the participant find the assignment option in Trip Details without guidance, or do they look in the wrong place?</div>
-            <div class="observe-item">Does the Trip Details view provide more, less, or different context than the drawer or scheduler methods?</div>
-            <div class="observe-item">Does the participant feel more or less confident assigning from this view compared to TC-06?</div>
-            <div class="observe-item">Is there any information visible in Trip Details that the participant found useful but missing from the other assignment flows?</div>
+            <div class="observe-item">Does the participant find the driver assignment option without guidance?</div>
+            <div class="observe-item">Is it clear which drivers are available vs unavailable in the list?</div>
+            <div class="observe-item">Does the participant feel confident choosing a driver, or do they hesitate due to missing information?</div>
           </div>
         </div>
         <div class="tc-section">
           <h4>Follow up Questions</h4>
           <div class="followup-list">
-            <div class="followup-item">Was it clear how to assign an available vehicle from the Trip Details page, or did you have to look for it?</div>
+            <div class="followup-item">Was it clear how to find and assign an available driver from the Trip Details page?</div>
+            <div class="followup-item">Was the availability information shown enough to make a confident choice?</div>
           </div>
         </div>
       </div>
