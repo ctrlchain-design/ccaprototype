@@ -199,7 +199,7 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
   <p class="subtitle">Resource Availability Epic, Phase 2 &amp; Phase 3<br>Prototype: ctrlchain-design.github.io/usertesting</p>
   <div class="doc-meta">
     <span><strong>Scope:</strong> Fleet &amp; Driver · Trip Planner · Trips</span>
-    <span><strong>Test Cases:</strong> 7</span>
+    <span><strong>Test Cases:</strong> 8</span>
     <span><strong>Phases:</strong> 2 &amp; 3</span>
   </div>
 </div>
@@ -244,6 +244,58 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
   <div class="tc p2-card">
     <div class="tc-head">
       <span class="tc-id">TC-01</span>
+      <div class="tc-head-text">
+        <div class="tc-title">Explore the New Fleet and Driver Menu</div>
+        <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, New Menu · Free exploration of the new interface — first impressions, orientation, and understanding of the two main tabs</div>
+      </div>
+      <span class="tc-role">Transport Manager</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-section">
+        <h4>Objective</h4>
+        <p class="tc-objective">Understand participants' first impressions of the new Fleet and Driver menu before they complete any tasks. Surface how they orient themselves, what they notice first, and whether the two main tabs — Set Availability and Manage Details — are immediately understood without guidance.</p>
+      </div>
+      <div class="tc-section">
+        <h4>Starting Point</h4>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Menu landing (no specific tab selected)</div>
+      </div>
+      <div class="tc-section">
+        <h4>Task Prompt, read aloud</h4>
+        <div class="task-prompt">
+          <div class="read-label">🎙 Say to participant</div>
+          <p>"This is a new menu we have just released — Fleet and Driver Management. Take a moment to explore the interface at your own pace. Click around, look at what's available, and tell us what you see. There is no right or wrong, just think out loud as you go."</p>
+        </div>
+      </div>
+      <hr class="tc-divider">
+      <div class="tc-section">
+        <div class="criteria-header">
+          <h4>Observe</h4>
+        </div>
+        <div class="observe-list">
+          <div class="observe-item">Where does the participant look first — the tabs, the table, the actions?</div>
+          <div class="observe-item">Does the participant explore all three resource tabs (Vehicle, Trailer, Driver) without being prompted?</div>
+          <div class="observe-item">Does the participant switch between the Set Availability and Manage Details tabs on their own?</div>
+          <div class="observe-item">Does the participant seem to understand the purpose of each tab, or do they appear confused about the distinction?</div>
+          <div class="observe-item">Any moment of hesitation, surprise, or delight during exploration?</div>
+        </div>
+      </div>
+      <div class="tc-section">
+        <h4>Follow up Questions</h4>
+        <div class="followup-list">
+          <div class="followup-item">What is your first impression of this menu overall? What stood out to you immediately?</div>
+          <div class="followup-item">You saw the two tabs — Set Availability and Manage Details. In your own words, what do you think each one is for? Can you tell the difference between them?</div>
+          <div class="followup-item">Is the structure of this menu what you would expect, or is there anything you would organise differently?</div>
+          <div class="followup-item">Looking at the Vehicle, Trailer, and Driver tabs — does having all three in one menu make sense to you? Is anything missing?</div>
+          <div class="followup-item">Based on what you explored, what do you think you would use this menu for most in your day-to-day work?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TC-02 -->
+  <div class="tc p2-card">
+    <div class="tc-head">
+      <span class="tc-id">TC-02</span>
       <div class="tc-head-text">
         <div class="tc-title">Add a New Vehicle and Assign It to a Carrier Group</div>
         <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, New Menu · Add resources and assign to the correct carrier subgroup</div>
@@ -303,10 +355,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     </div>
   </div>
 
-  <!-- TC-02 -->
+  <!-- TC-03 -->
   <div class="tc p2-card">
     <div class="tc-head">
-      <span class="tc-id">TC-02</span>
+      <span class="tc-id">TC-03</span>
       <div class="tc-head-text">
         <div class="tc-title">Delete a Vehicle No Longer Used by the Carrier Group</div>
         <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, Vehicle Management · Remove a decommissioned vehicle from the system; verify how deleted resources are presented</div>
@@ -363,10 +415,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     </div>
   </div>
 
-  <!-- TC-03 -->
+  <!-- TC-04 -->
   <div class="tc p2-card">
     <div class="tc-head">
-      <span class="tc-id">TC-03</span>
+      <span class="tc-id">TC-04</span>
       <div class="tc-head-text">
         <div class="tc-title">Hide a Vehicle from Trip Planner Using the Visibility Toggle</div>
         <div class="tc-scope">📍 Phase 2 · Fleet and Driver Management, Carrier Group Visibility · Toggle a vehicle off from Trip Planner so planners cannot accidentally assign a resource that is not available for general planning</div>
@@ -438,10 +490,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     </div>
   </div>
 
-  <!-- TC-04 -->
+  <!-- TC-05 -->
   <div class="tc p3-card">
     <div class="tc-head">
-      <span class="tc-id">TC-04</span>
+      <span class="tc-id">TC-05</span>
       <div class="tc-head-text">
         <div class="tc-title">Record an Unavailability Event on a Vehicle</div>
         <div class="tc-scope">📍 Phase 3 · Fleet and Driver, Add Events · Record an open-ended unavailability event on the scheduler for a vehicle that is out of service</div>
@@ -451,11 +503,11 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     <div class="tc-body">
       <div class="tc-section">
         <h4>Objective</h4>
-        <p class="tc-objective">Using the vehicle just added in TC-01, verify that users can find it in the list and record an unavailability event on the Fleet and Driver scheduler. Also test whether the resource list is easy to navigate and whether its display logic makes sense to the participant.</p>
+        <p class="tc-objective">Using the vehicle just added in TC-02, verify that users can find it in the list and record an unavailability event on the Fleet and Driver scheduler. Also test whether the resource list is easy to navigate and whether its display logic makes sense to the participant.</p>
       </div>
       <div class="tc-section">
         <h4>Starting Point</h4>
-        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab (PL WW 4521 already in list from TC-01)</div>
+        <div class="start-point">Fleet and Driver <span class="arrow">→</span> Vehicle tab (PL WW 4521 already in list from TC-02)</div>
       </div>
       <div class="tc-section">
         <h4>Task Prompt, read aloud</h4>
@@ -498,10 +550,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     </div>
   </div>
 
-  <!-- TC-05 -->
+  <!-- TC-06 -->
   <div class="tc p3-card">
     <div class="tc-head">
-      <span class="tc-id">TC-05</span>
+      <span class="tc-id">TC-06</span>
       <div class="tc-head-text">
         <div class="tc-title">Close an Open-Ended Unavailability Event by Adding an End Date</div>
         <div class="tc-scope">📍 Phase 3 · Fleet and Driver, Events · Edit an existing open-ended event to add a specific end date, making it close-ended</div>
@@ -556,10 +608,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     </div>
   </div>
 
-  <!-- TC-06 -->
+  <!-- TC-07 -->
   <div class="tc p3-card">
     <div class="tc-head">
-      <span class="tc-id">TC-06</span>
+      <span class="tc-id">TC-07</span>
       <div class="tc-head-text">
         <div class="tc-title">Assign a Vehicle to a Trip Using the Trip Drawer</div>
         <div class="tc-scope">📍 Phase 3 · Trip Planner, Assign Resources Drawer · Open the assign resources drawer from a trip; select a vehicle while PL WW 4521 appears unavailable in the list</div>
@@ -620,10 +672,10 @@ html, body { background: var(--bg); font-family: var(--ui); color: var(--ink); l
     </div>
   </div>
 
-  <!-- TC-07 -->
+  <!-- TC-08 -->
   <div class="tc p3-card">
     <div class="tc-head">
-      <span class="tc-id">TC-07</span>
+      <span class="tc-id">TC-08</span>
       <div class="tc-head-text">
         <div class="tc-title">Assign a Vehicle to a Trip via Trip Details</div>
         <div class="tc-scope">📍 Phase 3 · Trip Planner, Trips, Trip Details · Open a trip's detail view and assign a vehicle from there; test whether this entry point is discoverable and the information shown is sufficient</div>
