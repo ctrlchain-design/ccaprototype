@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Taskboard — Concept Exploration</title>
+<style>
+  :root{
+    --navy:#0b1526;
+    --navy-2:#101d33;
+    --brand:#5b7f32;
+    --brand-dark:#3d5a1f;
+    --brand-light:#eaf1dd;
+    --bg:#f4f5f2;
+    --surface:#ffffff;
+    --border:#e3e5df;
+    --text:#1c211a;
+    --text-2:#5c6156;
+    --text-3:#8b8f84;
+    --due-soon:#c98500;
+    --due-soon-bg:#fdf3df;
+    --at-risk:#c1541f;
+    --at-risk-bg:#fbe7db;
+    --critical:#c0392b;
+    --critical-bg:#fbe2de;
+    --shadow: 0 1px 2px rgba(11,21,38,.06), 0 6px 20px rgba(11,21,38,.05);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+  }
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:76px;
+    background:linear-gradient(180deg,var(--navy) 0%, var(--navy-2) 100%);
+    color:#aeb8c8;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:16px 0;
+    flex-shrink:0;
+  }
+  .sidebar .logo{
+    width:34px;height:34px;border-radius:50%;border:1.5px solid #3a4a63;
+    display:flex;align-items:center;justify-content:center;margin-bottom:22px;
+    font-size:12px;font-weight:700;color:#dfe6ef;
+  }
+  .navitem{
+    width:100%;display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:9px 0;font-size:9.5px;color:#8391a6;cursor:pointer;position:relative;
+    border-left:2px solid transparent;
+  }
+  .navitem svg{width:18px;height:18px;stroke:#8391a6;fill:none;stroke-width:1.7;}
+  .navitem.active{color:#e9edf3;border-left-color:var(--brand);background:rgba(91,127,50,.18);}
+  .navitem.active svg{stroke:#cfe0a8;}
+  .navitem .badge{
+    position:absolute; top:4px; right:14px; background:var(--brand);
+    color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:6px;
+  }
+
+  /* ---------- Main ---------- */
+  .main{flex:1; display:flex; flex-direction:column; min-width:0;}
+  .env-banner{
+    background:#eef1ea; color:#6b7062; font-size:11.5px;
+    padding:5px 22px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:14px; flex-shrink:0;
+  }
+  .env-banner .env-text{flex:1; text-align:center;}
+  .topbar{
+    display:flex; align-items:center; gap:14px; padding:14px 22px;
+    border-bottom:1px solid var(--border); background:var(--surface);
+  }
+  .topbar h1{font-size:18px; margin:0; font-weight:700; letter-spacing:-.2px;}
+  .back{color:var(--text-2); font-size:18px; cursor:pointer;}
+  .spacer{flex:1;}
+  .btn{
+    font-family:inherit; font-size:12.5px;
+  }
+  .search-box{
+    display:flex; align-items:center; gap:7px; background:#eceee9; border-radius:9px;
+    padding:0 10px; height:34px; width:280px; flex-shrink:0;
+  }
+  .search-box svg{width:15px;height:15px; stroke:var(--text-3); fill:none; stroke-width:2; flex-shrink:0;}
+  .search-box input{
+    border:none; background:transparent; outline:none; font-family:inherit; font-size:12.5px;
+    color:var(--text); flex:1; min-width:0;
+  }
+  .search-box input::placeholder{color:var(--text-3);}
+  .search-clear{cursor:pointer; color:var(--text-3); font-size:11px; padding:2px;}
+  .search-clear:hover{color:var(--text);}
+  .icon-btn{
+    width:34px;height:34px;border-radius:8px;border:1px solid var(--border); background:var(--surface);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-2);
+  }
+  .icon-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;}
+  .avatar{
+    width:30px;height:30px;border-radius:50%; background:var(--brand-dark); color:#fff;
+    display:flex;align-items:center;justify-content:center; font-size:12px; font-weight:700;
+  }
+
+  /* ---------- Filter & group-by row ---------- */
+  .filter-row{
+    display:flex; align-items:center; gap:10px; padding:10px 22px; background:var(--surface);
+    border-bottom:1px solid var(--border); flex-wrap:wrap; position:relative; z-index:10;
+  }
+  /* Group-by is a segmented control, matching the platform's "Plan by"
+     pattern: every option is visible at once, so switching how the board is
+     organised takes one click instead of open-menu-then-pick. */
+  .seg-label{font-size:13.5px; font-weight:700; color:var(--text); flex-shrink:0;}
+  .segmented{
+    display:flex; border:1px solid var(--border); border-radius:9px; overflow:hidden;
+    background:var(--surface); flex-shrink:0;
+  }
+  .seg{
+    padding:8px 15px; font-family:inherit; font-size:13px; font-weight:600; color:var(--text);
+    background:var(--surface); border:none; border-right:1px solid var(--border); cursor:pointer;
+    white-space:nowrap; transition:.12s;
+  }
+  .seg:last-child{border-right:none;}
+  .seg:hover:not(.active){background:#f4f5f1;}
+  .seg.active{
+    background:var(--brand-light); color:var(--brand-dark); font-weight:700;
+    box-shadow:inset 0 0 0 1.5px #bccfa0;
+  }
+  .filter-divider{width:1px; height:22px; background:var(--border); flex-shrink:0;}
+
+  /* Platform-wide Filters button — one entry point instead of a row of
+     always-visible selects, matching the filter system being built for the
+     rest of the product. The badge is the only thing that hints at what's
+     active until the pinned row below spells it out. */
+  .filters-control{position:relative;}
+  .filters-btn{
+    display:flex; align-items:center; gap:8px; padding:7px 14px; border-radius:8px;
+    border:1px solid var(--border); background:var(--surface); color:var(--text);
+    font-family:inherit; font-size:13px; font-weight:700; cursor:pointer;
+  }
+  .filters-btn svg{width:14px;height:14px; stroke:var(--text-2); fill:none; stroke-width:1.8;}
+  .filters-btn.active{border-color:var(--brand-dark);}
+  .filters-badge{
+    background:var(--brand-dark); color:#fff; font-size:11px; font-weight:700; border-radius:50%;
+    width:19px; height:19px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .filters-panel{
+    display:none; position:absolute; top:calc(100% + 6px); left:0; width:260px; background:var(--surface);
+    border:1px solid var(--border); border-radius:10px; box-shadow:0 10px 30px rgba(11,21,38,.14);
+    padding:14px; z-index:50;
+  }
+  .filters-panel.open{display:block;}
+  .filters-panel-row{margin-bottom:12px;}
+  .filters-panel-row:last-child{margin-bottom:0;}
+  .filters-panel-row label{display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--text-3); margin-bottom:6px;}
+  .filter-select{
+    width:100%; padding:7px 9px; border-radius:8px; border:1px solid var(--border); background:var(--surface);
+    color:var(--text-2); font-family:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .filter-select.active{border-color:var(--brand-dark); color:var(--brand-dark); background:var(--brand-light);}
+
+  .toggle-switch{
+    display:flex; align-items:center; gap:8px; cursor:pointer; flex-shrink:0; user-select:none;
+  }
+  .toggle-switch input{display:none;}
+  .toggle-track{
+    width:32px; height:19px; border-radius:10px; background:#d7dacd; position:relative; transition:.15s; flex-shrink:0;
+  }
+  .toggle-thumb{
+    position:absolute; top:2px; left:2px; width:15px; height:15px; border-radius:50%; background:#fff;
+    box-shadow:0 1px 2px rgba(0,0,0,.2); transition:.15s;
+  }
+  .toggle-switch input:checked + .toggle-track{background:var(--brand-dark);}
+  .toggle-switch input:checked + .toggle-track .toggle-thumb{transform:translateX(13px);}
+  .toggle-label{font-size:12.5px; font-weight:600; color:var(--text-2);}
+
+  /* Pinned filter chips — only appears once a filter is active; each chip is
+     individually removable, "Clear Filter" drops all of them at once, and
+     "Save View" persists the current group-by + filter combination. */
+  .pinned-row{
+    display:flex; align-items:center; gap:14px; padding:9px 22px; background:var(--surface);
+    border-bottom:1px solid var(--border); flex-wrap:wrap;
+  }
+  .pin-chips{display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex:1;}
+  .pin-chip{
+    display:flex; align-items:center; gap:6px; background:#eef0ea; color:var(--text); font-size:12px;
+    font-weight:600; padding:5px 8px 5px 9px; border-radius:20px;
+  }
+  .pin-chip svg{width:11px;height:11px; stroke:var(--text-3); fill:none; stroke-width:1.8; flex-shrink:0;}
+  .pin-chip .chip-x{
+    cursor:pointer; color:var(--text-3); font-weight:700; margin-left:2px; padding:0 2px; line-height:1;
+  }
+  .pin-chip .chip-x:hover{color:var(--critical);}
+  .pinned-actions{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .pin-link{color:var(--brand-dark); font-size:12.5px; font-weight:700; cursor:pointer; text-decoration:none;}
+  .pin-link:hover{text-decoration:underline;}
+  .pin-sep{color:var(--border);}
+
+  /* ---------- Board ---------- */
+  /* Board and detail panel sit side by side in one row — the panel is not an
+     overlay. Closed, it takes zero width and the board is full-bleed; opening
+     a card animates its width open, so the board visibly cedes room to it
+     instead of the panel appearing on top of everything. */
+  /* Prototype-only control for comparing the three task-type treatments.
+     Styled unlike the product chrome so it never reads as UI under test. */
+  .opt-switch{display:flex; align-items:center; gap:5px; flex-shrink:0;}
+  .opt-label{font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:#8a8f81;}
+  .opt-btn{
+    border:1px solid #d3d7ca; background:#fff; color:#5c6156; border-radius:6px;
+    padding:3px 9px; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer;
+  }
+  .opt-btn:hover{background:#f6f7f3;}
+  .opt-btn.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+
+  /* ---------- Task type as a dropdown (B and C) ---------- */
+  .type-dd-wrap{display:flex; align-items:center; gap:10px;}
+  .seg-wrap{position:relative; display:flex; align-items:center;}
+  #groupTypePanel{left:0;}
+  .dd-chev{width:11px; height:11px; stroke:var(--text-2); fill:none; stroke-width:2.2; margin-left:2px;}
+  .seg .seg-chev{width:10px; height:10px; stroke:currentColor; fill:none; stroke-width:2.6; margin-left:6px; vertical-align:-1px;}
+  .filters-panel.wide{width:296px; padding:6px; max-height:420px; overflow-y:auto;}
+  .dd-row{
+    display:flex; align-items:center; gap:9px; padding:8px 9px; border-radius:7px; cursor:pointer;
+    font-size:12.5px; color:var(--text);
+  }
+  .dd-row:hover{background:#f4f5f1;}
+  .dd-row.active{background:var(--brand-light); color:var(--brand-dark); font-weight:700;}
+  .dd-row .vname{flex:1;}
+  .dd-row .vcount{
+    font-size:11px; font-weight:700; color:var(--text-2); background:#eef0ea; padding:1px 7px; border-radius:20px;
+  }
+  .dd-row.active .vcount{background:#fff; color:var(--brand-dark);}
+  .dd-row.zero{color:var(--text-3);}
+  .dd-row.all{border-bottom:1px solid var(--border); border-radius:7px 7px 0 0; margin-bottom:4px; padding-bottom:10px;}
+
+  /* ---------- Task-type tab bar ---------- */
+  .tabbar{
+    display:flex; align-items:center; background:var(--surface);
+    border-bottom:1px solid var(--border); flex-shrink:0; padding:0 6px;
+  }
+  .tabbar-arrow{
+    width:38px; height:52px; border:none; background:transparent; cursor:pointer;
+    font-family:inherit; font-size:22px; line-height:1; color:var(--brand); flex-shrink:0;
+  }
+  .tabbar-arrow:hover:not(:disabled){color:var(--brand-dark);}
+  .tabbar-arrow:disabled{color:#cdd1c6; cursor:default;}
+  .tabbar-track{
+    flex:1; min-width:0; display:flex; align-items:center; overflow-x:auto;
+    scroll-behavior:smooth; scrollbar-width:none;
+  }
+  .tabbar-track::-webkit-scrollbar{display:none;}
+  .tt-tab{
+    position:relative; display:inline-flex; align-items:center; gap:8px; flex-shrink:0;
+    padding:9px 18px; margin:6px 0; border:none; background:transparent; border-radius:20px;
+    font-family:inherit; font-size:12.5px; font-weight:600; letter-spacing:.55px;
+    text-transform:uppercase; color:var(--text-2); cursor:pointer; white-space:nowrap;
+  }
+  .tt-tab:hover:not(.active){color:var(--text);}
+  /* Hairline separators between tabs, suppressed either side of the active pill
+     so the pill reads as one shape. */
+  .tt-tab + .tt-tab::before{
+    content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+    height:22px; width:1px; background:var(--border);
+  }
+  .tt-tab.active::before, .tt-tab.active + .tt-tab::before{display:none;}
+  .tt-tab.active{background:var(--brand-light); color:var(--brand-dark); font-weight:700;}
+  .tt-count{
+    font-size:11px; font-weight:700; letter-spacing:0; color:var(--text-2);
+    background:#eef0ea; padding:1px 7px; border-radius:20px;
+  }
+  .tt-tab.active .tt-count{background:#fff; color:var(--brand-dark);}
+  /* A queue at zero stays reachable but recedes, the way the Dashboard fades
+     its zero tiles — "nothing here" is information worth keeping on screen. */
+  .tt-tab.zero{color:var(--text-3);}
+  .tt-tab.zero .tt-count{opacity:.55;}
+
+  .workspace{flex:1; display:flex; overflow:hidden; min-height:0;}
+
+  /* The board is its own fixed region — it never overlaps the detail panel.
+     Opening the panel narrows this region (flex:1 vs. the panel's fixed
+     width), and columns that no longer fit scroll laterally instead of
+     being compressed or hidden behind anything. */
+  .board-wrap{flex:1; min-width:0; overflow-x:auto; overflow-y:hidden; padding:16px 22px 90px;}
+  .board{display:flex; gap:16px; align-items:flex-start;}
+  /* A single task-type column gets more width, since it is not competing with
+     neighbours and the space would otherwise sit empty. */
+  .col.solo{width:410px;}
+  .col{
+    width:290px; flex-shrink:0; background:#fbfbf9; border-radius:12px; border:1px solid var(--border);
+    display:flex; flex-direction:column; max-height:100%;
+  }
+  .col-head{
+    padding:12px 14px 10px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border);
+  }
+  .col-head .dot{width:8px;height:8px;border-radius:50%;}
+  .col-head h3{font-size:13px; margin:0; font-weight:700; flex:1;}
+  .col-head .count{font-size:11.5px; color:var(--text-3); font-weight:700; background:#eef0ea; padding:2px 7px; border-radius:20px;}
+  .col-body{padding:10px; display:flex; flex-direction:column; gap:8px; overflow-y:auto; transition:.1s;}
+  .col-body.drag-over{background:var(--brand-light); outline:2px dashed var(--brand); outline-offset:-4px;}
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:11px 12px;
+    cursor:grab; transition:.12s; position:relative;
+  }
+  .card:hover{box-shadow:var(--shadow); border-color:#cfd3c8;}
+  .card.dragging{opacity:.4;}
+  .card.ontrack{opacity:.55;}
+  /* Card anatomy, line by line:
+     1. title (+ OVERDUE flag pinned to the top-right of the same line)
+     2. trip reference
+     3. task description
+     4. priority badge
+     5. assignee avatar (left) + deadline with calendar icon (right) */
+  .card-titlerow{display:flex; align-items:flex-start; justify-content:space-between; gap:8px;}
+  .card-title{font-size:13.5px; font-weight:700; margin:0 0 2px; flex:1; min-width:0;}
+  .overdue-flag{
+    display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700;
+    color:var(--critical); letter-spacing:.4px; flex-shrink:0; margin-top:2px; white-space:nowrap;
+  }
+  .overdue-flag .odot{width:6px; height:6px; border-radius:50%; background:var(--critical); flex-shrink:0;}
+  .card-ref{font-size:10.5px; color:var(--text-3); font-weight:700; letter-spacing:.2px; margin-bottom:3px;}
+  /* Due-diligence cards put the company here instead of a TRIP number. */
+  .card-subject{display:inline-flex; align-items:center; gap:5px; letter-spacing:0;}
+  .card-subject svg{width:11px; height:11px; stroke:var(--text-3); fill:none; stroke-width:1.9; flex-shrink:0;}
+  .card-sub{font-size:11.5px; color:var(--text-2); margin-bottom:7px; line-height:1.35;}
+  .card-meta{display:flex; align-items:center; gap:5px; flex-wrap:wrap; margin-bottom:9px;}
+  .meta-tag{
+    font-size:10px; font-weight:600; color:var(--text-3); background:#eef0ea; padding:2px 6px;
+    border-radius:5px;
+  }
+  .meta-tag.priority{color:#fff;}
+  .card-bottom{display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap;}
+  .card-deadline{
+    display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; color:var(--text-2);
+  }
+  .card-deadline svg{width:12px; height:12px; stroke:var(--text-3); fill:none; stroke-width:1.8; flex-shrink:0;}
+  .card-deadline.overdue{color:var(--critical);}
+  .card-deadline.overdue svg{stroke:var(--critical);}
+  .assignee{
+    width:20px;height:20px;border-radius:50%; background:#e2e5dc; color:var(--text-2); font-size:9px;
+    font-weight:700; display:flex;align-items:center;justify-content:center; flex-shrink:0;
+  }
+  .assignee.me{background:var(--brand-dark); color:#fff;}
+  /* Unassigned: an empty silhouette, not a "+". The card offers no way to
+     assign — that lives in the detail panel — so it must not look clickable. */
+  .assignee.empty{background:#f2f3ef; border:1px dashed #c9ccc2;}
+  .assignee.empty svg{width:12px; height:12px; stroke:#a6aa9c; fill:none; stroke-width:2;}
+  /* No "Waiting on" tag on the card — the column already says the task is
+     waiting, and who it waits on lives in the panel's "Waiting on" row. */
+
+  /* ---------- Detail panel ---------- */
+  /* Two permanently fixed panes, side by side — the board (left) and the
+     detail panel (right) never resize each other or overlap. The board
+     scrolls laterally for its columns; the panel always occupies the same
+     420px and shows an empty state until a task is selected. */
+  .panel{
+    width:420px; flex-shrink:0; border-left:1px solid var(--border); background:var(--surface);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .panel-empty{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:40px 30px; color:var(--text-3);
+  }
+  .panel-empty-icon{
+    width:74px; height:56px; border:1.5px dashed #d7dacd; border-radius:10px; margin-bottom:18px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px;
+  }
+  .panel-empty-icon .line{height:3px; border-radius:2px; background:#e3e5df;}
+  .panel-empty-icon .line1{width:44px;}
+  .panel-empty-icon .line2{width:30px;}
+  .panel-empty-icon .dots{display:flex; gap:4px; margin-top:2px;}
+  .panel-empty-icon .dots span{width:8px; height:8px; border-radius:50%; background:#e3e5df;}
+  .panel-empty h4{font-size:14px; font-weight:700; color:var(--text); margin:0 0 4px;}
+  .panel-empty p{font-size:12.5px; color:var(--text-3); margin:0;}
+  .panel-content{flex:1; display:flex; flex-direction:column; min-height:0; display:none;}
+  .panel-content.show{display:flex;}
+  .panel-head{padding:18px 20px 14px; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:10px;}
+  .panel-head .close{cursor:pointer; color:var(--text-3); font-size:18px; margin-left:auto;}
+  .panel-desc{font-size:12.5px; color:var(--text-2); margin-top:5px; line-height:1.45;}
+
+  /* Task Details / Notes tabs */
+  .tab-row{display:flex; gap:20px; padding:0 20px; border-bottom:1px solid var(--border); flex-shrink:0;}
+  .tab{
+    padding:11px 0; font-size:13px; font-weight:700; color:var(--text-3); cursor:pointer;
+    border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .tab.active{color:var(--brand-dark); border-bottom-color:var(--brand-dark);}
+
+  .panel-body{flex:1; overflow-y:auto; padding:6px 20px 18px;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .mini-label{
+    font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--text-3);
+    margin:18px 0 8px;
+  }
+  .mini-label:first-child{margin-top:14px;}
+
+  .detail-row{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; padding:11px 0; border-bottom:1px solid #f0f1ed;}
+  .d-label{font-size:12px; color:var(--text-2); flex-shrink:0; padding-top:1px;}
+  .d-value{font-size:12.5px; font-weight:600; color:var(--text); text-align:right;}
+  /* Editable field rows (owner, priority, status): value and its edit link sit
+     on one baseline, right-aligned with every other value in the panel. */
+  .d-value.owner{display:flex; align-items:center; justify-content:flex-end; gap:8px; min-height:24px;}
+  .status-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+  .d-value.ref{color:var(--brand-dark); font-weight:700;}
+  .d-stack{display:flex; flex-direction:column; align-items:flex-end; gap:6px;}
+  .d-line{display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--text);}
+  .d-line svg{width:13px; height:13px; stroke:var(--text-3); fill:none; stroke-width:1.8; flex-shrink:0;}
+  .d-line.contact{color:var(--brand-dark); font-weight:600;}
+  .d-time-arrow{color:var(--text-3); font-size:12px; text-align:right;}
+  .late-flag{color:var(--critical); font-weight:700;}
+  .value-pill{
+    display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11.5px; font-weight:700;
+  }
+
+  /* Completed/activity trail — mirrors the real product's audit trail */
+  .hist-item{display:flex; gap:10px; padding:9px 0;}
+  .hist-check{
+    width:19px; height:19px; border-radius:50%; border:1.5px solid var(--brand); color:var(--brand);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; margin-top:1px;
+  }
+  .hist-title{font-size:13.5px; font-weight:600; color:var(--text);}
+  .hist-meta{font-size:11.5px; color:var(--text-3); margin-top:2px;}
+
+  /* Notes tab */
+  .notes-empty{font-size:12.5px; color:var(--text-3); padding:6px 0 14px;}
+  .note-item{padding:9px 0; border-bottom:1px solid #f0f1ed;}
+  .note-item .note-text{font-size:12.5px; color:var(--text);}
+  .note-item .note-meta{font-size:11px; color:var(--text-3); margin-top:3px;}
+  .note-textarea{
+    width:100%; border:1px solid var(--border); border-radius:8px; padding:9px 10px; font-family:inherit;
+    font-size:12.5px; resize:vertical; min-height:70px; margin-top:14px;
+  }
+
+  .confirm-btn{
+    width:100%; background:var(--brand-dark); color:#fff; border:none; border-radius:8px;
+    padding:11px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit;
+  }
+  .confirm-btn:hover{filter:brightness(1.1);}
+  .confirm-btn.secondary{background:var(--surface); color:var(--brand-dark); border:1px solid var(--brand-dark); margin-top:8px;}
+  .panel-footer{padding:14px 20px; border-top:1px solid var(--border); flex-shrink:0;}
+  /* Two primary actions side by side: performing the task (hand off to the
+     trip) and closing it out. Both are prominent; the filled one is the
+     dominant path, the outlined one is equally reachable. */
+  .footer-btns{display:flex; gap:8px;}
+  .footer-btns .confirm-btn{margin-top:0;}
+
+  /* Owner assign / reassign — the one field in this panel that is editable
+     here rather than on the trip, because unassigned work sitting in a shared
+     column was the single most-cited failure in the interviews. */
+  .owner-link{
+    color:var(--brand-dark); font-size:11.5px; font-weight:700; cursor:pointer;
+    text-decoration:underline; margin-left:2px;
+  }
+  .owner-link:hover{color:var(--brand);}
+  .owner-select{
+    padding:5px 8px; border-radius:7px; border:1px solid var(--brand-dark); background:var(--surface);
+    font-family:inherit; font-size:12px; font-weight:600; color:var(--text); cursor:pointer;
+  }
+
+  /* toast */
+  .toast{
+    position:fixed; top:20px; right:20px; background:var(--brand-dark); color:#fff; padding:11px 16px;
+    border-radius:9px; font-size:12.5px; font-weight:600; box-shadow:var(--shadow); z-index:60;
+    transform:translateY(-14px); opacity:0; transition:.18s; pointer-events:none;
+  }
+  .toast.show{transform:translateY(0); opacity:1; pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="logo">CC</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Booking</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg>Home</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Dashboard</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/></svg>Inbox<span class="badge">3</span></div>
+  <div class="navitem active"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="9" rx="1.5"/></svg>Taskboard</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/></svg>Shipper</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><rect x="2" y="9" width="14" height="8" rx="1"/><path d="M16 12h3l3 3v2h-6z"/><circle cx="6.5" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>Carrier</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M6 8v4h12V8M12 12v4"/></svg>Enterprise</div>
+  <div class="navitem"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Finance</div>
+</div>
+
+<div class="main">
+  <div class="env-banner">
+    <span class="env-text">Concept exploration — not final visual design. Data is illustrative.</span>
+    <span class="opt-switch">
+      <span class="opt-label">Task type UI</span>
+      <button class="opt-btn active" data-opt="tabs">A · Tabs</button>
+      <button class="opt-btn" data-opt="dropdown">B · Dropdown</button>
+      <button class="opt-btn" data-opt="groupdd">C · From Group by</button>
+    </span>
+  </div>
+
+  <div class="topbar">
+    <span class="back">←</span>
+    <h1>Taskboard</h1>
+    <div class="spacer"></div>
+    <div class="icon-btn"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 4-2 6-2 6h16s-2-2-2-6"/><path d="M10 20a2 2 0 004 0"/></svg></div>
+    <div class="avatar">SM</div>
+  </div>
+
+  <div class="filter-row">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" placeholder="Search by Trip reference" />
+      <span class="search-clear" id="searchClear" style="display:none;">✕</span>
+    </div>
+    <div class="filters-control">
+      <button class="filters-btn" id="filtersBtn">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16l-6.5 7.5V19l-3-1.6v-4.9z"/></svg>
+        Filters
+        <span class="filters-badge" id="filtersBadge" style="display:none;">0</span>
+      </button>
+      <div class="filters-panel" id="filtersPanel"></div>
+    </div>
+    <div class="filter-divider"></div>
+    <span class="seg-label">Group by</span>
+    <!-- C hangs its panel off the "Task type" segment itself, so the grouping
+         button doubles as the selector and no extra control is introduced. -->
+    <span class="seg-wrap" id="segWrap">
+      <div class="segmented" id="groupSegmented"></div>
+      <div class="filters-panel wide" id="groupTypePanel"></div>
+    </span>
+    <!-- B is a standalone dropdown next to the grouping, using the same popover
+         pattern as the Filters button. -->
+    <span class="type-dd-wrap" id="typeDdWrap" style="display:none;">
+      <div class="filter-divider"></div>
+      <div class="filters-control">
+        <button class="filters-btn" id="typeDdBtn">
+          <span id="typeDdLabel">Task type: All tasks</span>
+          <svg class="dd-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="filters-panel wide" id="typeDdPanel"></div>
+      </div>
+    </span>
+    <!-- Only the Status grouping has a "Completed" column to reveal or hide, so
+         the toggle belongs to that grouping and is absent from the others. -->
+    <span class="completed-wrap" id="completedWrap">
+      <div class="filter-divider"></div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="showPerformedToggle" checked />
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span class="toggle-label">Show completed</span>
+      </label>
+    </span>
+  </div>
+
+  <div class="pinned-row" id="pinnedRow" style="display:none;">
+    <div class="pin-chips" id="pinChips"></div>
+    <div class="pinned-actions">
+      <a class="pin-link" id="clearFilterLink">Clear Filter</a>
+      <span class="pin-sep">|</span>
+      <a class="pin-link" id="saveViewLink">Save View</a>
+    </div>
+  </div>
+
+  <!-- Task types as the platform's scrollable tab bar. A tab is a scope, not a
+       filter and not a grouping — "I am working in Missing Operator" — which is
+       what keeps Group by free to organise the columns underneath. Counts sit in
+       the tab the way the task panel already badges Notes. -->
+  <div class="tabbar" id="typeTabs" style="display:none;">
+    <button class="tabbar-arrow" id="tabsPrev" aria-label="Scroll tabs left">‹</button>
+    <div class="tabbar-track" id="tabsTrack"></div>
+    <button class="tabbar-arrow" id="tabsNext" aria-label="Scroll tabs right">›</button>
+  </div>
+
+  <div class="workspace">
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+    </div>
+
+    <div class="panel" id="panel">
+      <div class="panel-empty" id="panelEmpty">
+        <div class="panel-empty-icon">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="dots"><span></span><span></span></span>
+        </div>
+        <h4>No Task Selected</h4>
+        <p>Click on a card to view the details.</p>
+      </div>
+
+      <div class="panel-content" id="panelContent">
+        <div class="panel-head">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:16px;font-weight:700;" id="panelTitle">Task title</div>
+            <div class="panel-desc" id="panelDesc"></div>
+          </div>
+          <div class="close" id="panelClose">✕</div>
+        </div>
+        <div class="tab-row">
+          <div class="tab active" data-tab="details">Task Details</div>
+          <div class="tab" data-tab="history">History</div>
+          <div class="tab" data-tab="notes">Notes</div>
+        </div>
+        <div class="panel-body">
+          <div class="tab-panel active" id="tabDetails">
+            <div id="panelFields"></div>
+          </div>
+          <div class="tab-panel" id="tabHistory">
+            <div class="mini-label" style="margin-top:0;">Activity</div>
+            <div id="panelTimeline"></div>
+          </div>
+          <div class="tab-panel" id="tabNotes">
+            <div id="notesList"></div>
+            <textarea class="note-textarea" id="noteInput" placeholder="Add a note for whoever picks this up next…"></textarea>
+            <button class="confirm-btn secondary" id="addNoteBtn">Add note</button>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="footer-btns">
+            <button class="confirm-btn" id="performTaskBtn">Perform task</button>
+            <button class="confirm-btn secondary" id="completeTaskBtn">Mark as completed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------------------------------------------------------------
+// Data model
+// ---------------------------------------------------------------
+// "Stage" is kept as context on each card (which part of the shipment lifecycle
+// this task belongs to) — validated by five separate interviews — but it is no
+// longer the thing the board's columns are organized by. See card-meta below.
+const STAGES = [
+  {key:'accept', label:'Needs Acceptance'},
+  {key:'setup', label:'Needs Setup'},
+  {key:'transit', label:'In Transit'},
+  {key:'closing', label:'Needs Closing'},
+];
+
+// Real interviewees a task can be assigned to — used to build the assignee
+// group/filter, so personalization is something each user drives themselves,
+// not a different view the system picks for them.
+const ASSIGNEE_NAMES = {
+  NI: 'Nicoleta Ilie',
+  IG: 'Ignacio Gonzalez Videla',
+  LB: 'Lisa Butler',
+  MS: 'Myrthe Schols',
+  MG: 'Michael Gruijters',
+};
+const ASSIGNEE_ORDER = ['NI','IG','LB','MS','MG'];
+// 'ME' is the signed-in user (this prototype is viewed as Stephanie Macri),
+// used by "Assign to me" style flows and the owner picker below.
+const CURRENT_USER = {code:'ME', initials:'SM', name:'Stephanie Macri'};
+function ownerName(code){
+  if(!code) return 'Unassigned';
+  if(code===CURRENT_USER.code) return CURRENT_USER.name;
+  return ASSIGNEE_NAMES[code] || code;
+}
+function ownerInitials(code){
+  return code===CURRENT_USER.code ? CURRENT_USER.initials : code;
+}
+// Unassigned renders as an empty silhouette, never a "+". Assigning is only
+// possible from the detail panel, so a "+" on the card would advertise an
+// action the card doesn't offer — and next to the panel's own "Assign" button
+// it just says the same thing twice.
+const EMPTY_AVATAR = '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.4"/><path d="M5.5 20c0-3.3 3-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/></svg>';
+// Org-tree glyph used in the real product beside a company name.
+const ORG_ICON = '<svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="6" r="2"/><path d="M12 8v3H6v5M12 11h6v5"/></svg>';
+// A task is identified by its trip reference, or by its subject company when
+// it isn't attached to a trip at all.
+function taskRef(t){ return t.ref || (t.subject ? t.subject.name : t.id); }
+function avatarHtml(code){
+  if(!code) return `<span class="assignee empty" title="Unassigned">${EMPTY_AVATAR}</span>`;
+  return `<span class="assignee${code===CURRENT_USER.code?' me':''}" title="${ownerName(code)}">${ownerInitials(code)}</span>`;
+}
+
+// "waiting" covers the case from the flow: the task can't move because it
+// depends on someone outside the team (a carrier accepting, a driver
+// reporting). It gets its own column so those tasks are trackable instead of
+// sitting invisibly inside "In progress".
+const STATUS_LABELS = {not_started:'Not started', in_progress:'In progress', waiting:'Waiting on third party', done:'Completed'};
+const PRIORITY_LABELS = {urgent:'Urgent', high:'High', medium:'Medium', low:'Low'};
+const PRIORITY_COLORS = {urgent:'#c0392b', high:'#c1541f', medium:'#c98500', low:'#8b8f84'};
+const PRIORITY_ORDER = ['urgent','high','medium','low']; // tie-breaker only — see renderBoard
+// One entry per kind of outstanding action a task can represent. These are the
+// buckets the Dashboard's tiles count, so they are what the Views rail queries.
+// Named for the action they ask for, not the state they describe. The Dashboard
+// says "Missing Operator" because it reports on orders; a taskboard is a list of
+// things to do, so the same queue reads "Assign operator". Verb first, so the
+// tabs scan as a list of jobs rather than a list of problems.
+const TASK_TYPES = {
+  assign_operator:  'Assign operator',
+  offer_carrier:    'Offer to a carrier',
+  accept_trip:      'Follow up carrier approval',
+  assign_vehicle:   'Assign driver or vehicle',
+  assign_trailer:   'Assign trailer',
+  confirm_eta:      'Confirm timeslot or ETA',
+  confirm_arrival:  'Confirm arrival',
+  confirm_cargo:    'Confirm (un)loading',
+  upload_pod:       'Upload or approve POD',
+  charge_line:      'Confirm charge lines',
+  due_diligence:    'Perform due diligence',
+  integration_error:'Resolve integration errors',
+};
+const DUE_LABELS = {overdue:'Overdue', today:'Due today', tomorrow:'Due tomorrow', week:'Due this week', none:'No due date'};
+
+// Due-date bucket, computed from hoursLeft rather than stored twice —
+// one date field, several ways to slice it.
+function dueBucket(hoursLeft){
+  if(hoursLeft === null) return 'none';
+  if(hoursLeft <= 0) return 'overdue';
+  if(hoursLeft <= 24) return 'today';
+  if(hoursLeft <= 48) return 'tomorrow';
+  return 'week';
+}
+
+// NOTE: the panel no longer shows an "Urgency" field. Urgency was a second,
+// backend-computed reading of the same due date the panel already displays, so
+// it said the same thing twice. The deadline itself — and the OVERDUE flag
+// derived from it — carry that signal now.
+
+// Fixed "now" for this concept's illustrative dates (all sample data is set
+// around 5–11 Aug 2026) — lets Deadline show a real date/time instead of a
+// raw "hours left" number, same as the real task screen.
+const NOW = new Date(2026, 7, 11, 9, 0);
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function pad2(n){ return String(n).padStart(2,'0'); }
+function fmtDeadline(d){
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(-2)}, ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
+function deadlineOf(t){
+  return t.hoursLeft===null ? null : new Date(NOW.getTime() + t.hoursLeft*3600*1000);
+}
+
+// Opening a task no longer offers an inline Active/Optional action picker —
+// "Perform task" always hands off to the trip itself, where the real action
+// happens. What the panel needs instead is trip-level context to open on:
+// shipper, pickup location, assigned carrier, and — for stop tasks — the
+// confirmed time slot vs. the current ETA. Carrier contact details below are
+// illustrative placeholders (matching the "sample@mail.com" pattern already
+// used for placeholder data in the real product), not real customer data.
+const CARRIERS = {
+  amazing: {name:'Amazing Carrier Global', sub:'Amazing Carrier EU', email:'sample@mail.com', phone:'+31 65590247'},
+  nova:    {name:'Nova Freight Global',    sub:'Nova Freight EU',    email:'sample@mail.com', phone:'+49 891 220334'},
+  baltic:  {name:'Baltic Transport Global',sub:'Baltic Transport EU',email:'sample@mail.com', phone:'+48 225521034'},
+  manas:   {name:'Manas Trans',            sub:'Manas Trans EU',    email:'sample@mail.com', phone:'+40 213456789'},
+};
+const DEFAULT_PICKUP = '2312 BK Leiden, The Netherlands';
+
+// Not every task belongs to a trip. Due-diligence checks are raised against a
+// carrier or shipper directly, so they carry a `subject` instead of a trip
+// reference — and the card shows that company on line 2 where a trip task
+// shows its TRIP number.
+function ddTask(o){
+  return Object.assign({kind:'dd', action:'Perform DueDiligence check'}, o);
+}
+
+const TASKS = [
+  {id:'T1', notes:[{text:'Carrier said they\'d confirm by 09:00 — chase if nothing by then.', who:'Nicoleta Ilie', when:'11 Aug 2026, 07:30'}], type:'offer_carrier', order:'ORD2026-004207', ref:'TRIP2026-018301', stage:'accept', title:'Confirm carrier acceptance', sub:'Budapest → Larisa · MediCo shipment', desc:'Offer the trip to a carrier and confirm acceptance', hoursLeft:-2, action:'Offer to a carrier', assignee:null, status:'not_started', priority:'urgent',
+    trip:{shipper:'MediCo', pickup:'1082 Budapest, Hungary', carrier:null},
+    created:'8 Aug 2026, 09:02'},
+  {id:'T2', type:'offer_carrier', order:'ORD2026-004214', ref:'TRIP2026-018302', stage:'accept', title:'Confirm carrier acceptance', sub:'Rotterdam → Lyon · Ingram Micro', desc:'Offer the trip to a carrier and confirm acceptance', hoursLeft:2, action:'Offer to a carrier', assignee:'IG', status:'waiting', waitingOn:'Baltic Transport (carrier)', priority:'high',
+    trip:{shipper:'Ingram Micro', pickup:'3011 AA Rotterdam, The Netherlands', carrier:null},
+    created:'9 Aug 2026, 11:40'},
+  {id:'T3', notes:[{text:'Called twice, no answer. Sent the offer again by email.', who:'Lisa Butler', when:'11 Aug 2026, 08:10'}], type:'accept_trip', order:'ORD2026-004221', ref:'TRIP2026-018299', stage:'accept', title:'Carrier approval pending', sub:'Warsaw → Praha · NewCold', desc:'Awaiting the carrier response to the trip offer', hoursLeft:8, action:'Accept Trip', assignee:null, status:'waiting', waitingOn:'Nova Freight (carrier)', priority:'medium',
+    trip:{shipper:'NewCold', pickup:'00-001 Warsaw, Poland', carrier:CARRIERS.nova},
+    created:'10 Aug 2026, 08:10', updated:'10 Aug 2026, 08:30'},
+  {id:'T4', type:'accept_trip', order:'ORD2026-004228', ref:'TRIP2026-018280', stage:'accept', title:'Carrier accepted', sub:'Antwerp → Paris · Unilever', desc:'Carrier has accepted the trip', hoursLeft:null, action:'Manage Carriers', assignee:'LB', status:'done', priority:'low',
+    trip:{shipper:'Unilever', pickup:'2000 Antwerp, Belgium', carrier:CARRIERS.amazing},
+    created:'7 Aug 2026, 10:00', updated:'7 Aug 2026, 15:05'},
+  {id:'T5', type:'accept_trip', order:'ORD2026-004235', ref:'TRIP2026-018270', stage:'accept', title:'Carrier accepted', sub:'Munich → Milan · Ingram Micro', desc:'Carrier has accepted the trip', hoursLeft:null, action:'Manage Carriers', assignee:'LB', status:'done', priority:'low',
+    trip:{shipper:'Ingram Micro', pickup:'80331 Munich, Germany', carrier:CARRIERS.baltic},
+    created:'6 Aug 2026, 09:40', updated:'6 Aug 2026, 17:22'},
+
+  {id:'T6', type:'assign_vehicle', order:'ORD2026-004242', ref:'TRIP2026-018210', stage:'setup', title:'Missing plate & driver', sub:'Rotterdam → Lyon · assigned to Manas Trans', desc:'Assign a vehicle and select a driver for this trip', hoursLeft:5, action:'Assign Vehicle', activePeers:['Select Driver'], assignee:'IG', status:'in_progress', priority:'medium',
+    trip:{shipper:'Shipper Enterprise', pickup:'3011 AA Rotterdam, The Netherlands', carrier:CARRIERS.manas},
+    created:'9 Aug 2026, 08:00', updated:'9 Aug 2026, 09:05'},
+  {id:'T7', type:'assign_trailer', order:'ORD2026-004249', ref:'TRIP2026-018195', stage:'setup', title:'Missing trailer assignment', sub:'Eindhoven DC · vehicle and driver confirmed', desc:'Assign a trailer to complete the transport setup', hoursLeft:1, action:'Assign Trailer', assignee:null, status:'not_started', priority:'high',
+    trip:{shipper:'Shipper Enterprise', pickup:'5611 Eindhoven, The Netherlands', carrier:CARRIERS.amazing},
+    created:'10 Aug 2026, 07:15', updated:'10 Aug 2026, 12:41'},
+  {id:'T8', type:'assign_trailer', order:'ORD2026-004256', ref:'TRIP2026-018180', stage:'setup', title:'Plate & driver confirmed', sub:'Budapest → Larisa · ready for transit', desc:'Vehicle, driver and trailer are confirmed', hoursLeft:null, action:'Resend Transport Data', assignee:'MG', status:'done', priority:'low',
+    trip:{shipper:'Shipper Enterprise', pickup:'1082 Budapest, Hungary', carrier:CARRIERS.nova},
+    created:'5 Aug 2026, 09:00', updated:'6 Aug 2026, 08:15'},
+
+  {id:'T9', notes:[{text:'Driver stuck at the border, delay likely — warned the shipper.', who:'Nicoleta Ilie', when:'11 Aug 2026, 08:45'}], type:'confirm_eta', order:'ORD2026-004263', ref:'TRIP2026-018184', stage:'transit', title:'Stop #2: Confirm Delivery ETA', sub:'Carrier last reported 14:20 · no update since', desc:'Confirm the estimated delivery time for stop #2', hoursLeft:0, action:'Stop #2: Confirm Delivery ETA', assignee:'NI', status:'not_started', priority:'urgent',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic},
+    slot:{kind:'Delivery', sched:'10 Aug 2026 · 14:00', upd:'10 Aug 2026 · 15:00', eta:'10 Aug 2026 · 15:10', late:true},
+    created:'9 Aug 2026, 06:00', updated:'9 Aug 2026, 12:30'},
+  {id:'T10', type:'confirm_arrival', order:'ORD2026-004270', ref:'TRIP2026-018227', stage:'transit', title:'Stop #2: Confirm Arrived at Delivery', sub:'Expected at dock 09:00 today', desc:'Confirm the vehicle has arrived at the delivery stop', hoursLeft:2, action:'Stop #2: Confirm Arrived at Delivery', assignee:'NI', status:'in_progress', priority:'high',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.amazing},
+    slot:{kind:'Delivery', sched:'11 Aug 2026 · 09:00', eta:'11 Aug 2026 · 09:00', late:false},
+    created:'10 Aug 2026, 05:00', updated:'10 Aug 2026, 06:40'},
+  {id:'T11', notes:[{text:'Dock says the truck arrived but nobody signed off yet.', who:'Ops team', when:'11 Aug 2026, 09:05'}], type:'confirm_cargo', order:'ORD2026-004277', ref:'TRIP2026-018150', stage:'transit', title:'Stop #2: Confirm Cargo Unloaded', sub:'Arrived 40 min ago · no status yet', desc:'Confirm the cargo has been unloaded at stop #2', hoursLeft:0.5, action:'Stop #2: Confirm Cargo Unloaded', assignee:null, status:'waiting', waitingOn:'Nova Freight (driver)', priority:'urgent',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.nova},
+    slot:{kind:'Delivery', sched:'11 Aug 2026 · 07:30', eta:'11 Aug 2026 · 08:10', late:true},
+    created:'11 Aug 2026, 07:00', updated:'11 Aug 2026, 08:50'},
+  {id:'T12', type:'confirm_arrival', order:'ORD2026-004284', ref:'TRIP2026-018120', stage:'transit', title:'Stop #1: Confirm Arrived at Pickup', sub:'Tracking confirms on-time progress', desc:'Confirm arrival at the pickup location', hoursLeft:null, action:'View', assignee:'NI', status:'done', priority:'low',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic},
+    slot:{kind:'Pickup', sched:'8 Aug 2026 · 14:00', eta:'8 Aug 2026 · 14:00', late:false},
+    created:'8 Aug 2026, 09:00', updated:'8 Aug 2026, 14:20'},
+  {id:'T13', type:'confirm_cargo', order:'ORD2026-004291', ref:'TRIP2026-018121', stage:'transit', title:'Stop #1: Confirm Cargo Loaded', sub:'Tracking confirms on-time progress', desc:'Confirm the cargo has been loaded at stop #1', hoursLeft:null, action:'View', assignee:'NI', status:'done', priority:'low',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.amazing},
+    slot:{kind:'Pickup', sched:'8 Aug 2026 · 14:30', eta:'8 Aug 2026 · 14:45', late:false},
+    created:'8 Aug 2026, 09:00', updated:'8 Aug 2026, 14:45'},
+
+  {id:'T14', type:'upload_pod', order:'ORD2026-004298', ref:'TRIP2026-018050', stage:'closing', title:'Upload Proof of Delivery', sub:'Delivered 2 days ago · Ingram Micro', desc:'Upload the signed proof of delivery document', hoursLeft:9, action:'Stop #2: Upload Proof of Delivery', assignee:null, status:'not_started', priority:'medium',
+    trip:{shipper:'Ingram Micro', pickup:DEFAULT_PICKUP, carrier:CARRIERS.nova},
+    slot:{kind:'Delivery', sched:'9 Aug 2026 · 09:00', eta:'9 Aug 2026 · 09:00', late:false},
+    created:'8 Aug 2026, 08:00', updated:'9 Aug 2026, 15:20'},
+  {id:'T15', type:'charge_line', order:'ORD2026-004305', ref:'TRIP2026-018041', stage:'closing', title:'Open charge line', sub:'Fuel surcharge unconfirmed', desc:'Confirm the outstanding charge line for this trip', hoursLeft:30, action:'Confirm charge', assignee:'MS', status:'in_progress', priority:'low',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic},
+    created:'6 Aug 2026, 09:00', updated:'8 Aug 2026, 10:00'},
+  {id:'T16', type:'upload_pod', order:'ORD2026-004312', ref:'TRIP2026-018030', stage:'closing', title:'POD approved', sub:'Ready for financial close-out', desc:'Proof of delivery approved and ready for close-out', hoursLeft:null, action:'View', assignee:'MS', status:'done', priority:'low',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.amazing},
+    created:'5 Aug 2026, 09:00', updated:'7 Aug 2026, 11:05'},
+
+  // ---- Due-diligence checks: raised against a company, not a trip ----
+  ddTask({id:'D1', type:'due_diligence', subject:{type:'shipper', name:'MauraMt'}, title:'Shipper DueDiligence Check',
+    desc:'Perform DueDiligence check for the shipper', hoursLeft:422, assignee:null, status:'not_started', priority:'low',
+    created:'10 Aug 2026, 06:00'}),
+  ddTask({id:'D2', type:'due_diligence', subject:{type:'carrier', name:'ABRAMCZYK'}, title:'Carrier DueDiligence Check',
+    desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:null, status:'not_started', priority:'low',
+    created:'10 Aug 2026, 06:00'}),
+  ddTask({id:'D3', type:'due_diligence', subject:{type:'carrier', name:'PATYK'}, title:'Carrier DueDiligence Check',
+    desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:'MS', status:'in_progress', priority:'low',
+    created:'10 Aug 2026, 06:00', updated:'11 Aug 2026, 08:15'}),
+  ddTask({id:'D4', type:'due_diligence', subject:{type:'carrier', name:'KDS LOGISTICS'}, title:'Carrier DueDiligence Check',
+    desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:null, status:'not_started', priority:'medium',
+    created:'10 Aug 2026, 06:00'}),
+  ddTask({id:'D5', notes:[{text:'Requested the missing insurance certificate, waiting on reply.', who:'Lisa Butler', when:'11 Aug 2026, 07:40'}], type:'due_diligence', subject:{type:'carrier', name:'STAŃSKI'}, title:'Carrier DueDiligence Check',
+    desc:'Perform DueDiligence check for the carrier', hoursLeft:471, assignee:null, status:'waiting', waitingOn:'STAŃSKI (documents)', priority:'low',
+    created:'10 Aug 2026, 06:00', updated:'11 Aug 2026, 07:40'}),
+
+  // ---- Operator assignment (the Dashboard's largest queue) ----
+  // Titles are written as the action to take, not as the missing state: a task
+  // called "Missing Operator" tells you what is wrong, "Assign an operator"
+  // tells you what to do.
+  {id:'O1', notes:[{text:'Operator on holiday — needs reassigning before pickup.', who:'Michael Gruijters', when:'11 Aug 2026, 06:50'}], type:'assign_operator', order:'ORD2026-004319', ref:'TRIP2026-018410', title:'Assign an operator', sub:'Tilburg → Lille · Unilever',
+    desc:'No operator is assigned to this order yet', hoursLeft:-6, action:'Assign Operator', assignee:null, status:'not_started', priority:'urgent',
+    trip:{shipper:'Unilever', pickup:'5011 Tilburg, The Netherlands', carrier:CARRIERS.amazing}, created:'9 Aug 2026, 08:00'},
+  {id:'O2', type:'assign_operator', order:'ORD2026-004326', ref:'TRIP2026-018415', title:'Assign an operator', sub:'Gdansk → Berlin · NewCold',
+    desc:'No operator is assigned to this order yet', hoursLeft:4, action:'Assign Operator', assignee:null, status:'not_started', priority:'high',
+    trip:{shipper:'NewCold', pickup:'80-001 Gdansk, Poland', carrier:CARRIERS.baltic}, created:'10 Aug 2026, 09:30'},
+  {id:'O3', type:'assign_operator', order:'ORD2026-004333', ref:'TRIP2026-018421', title:'Assign an operator', sub:'Zaragoza → Toulouse · MediCo',
+    desc:'Operator left the team — this order needs a new one', hoursLeft:20, action:'Assign Operator', assignee:'MG', status:'in_progress', priority:'medium',
+    trip:{shipper:'MediCo', pickup:'50001 Zaragoza, Spain', carrier:CARRIERS.nova}, created:'10 Aug 2026, 14:00', updated:'11 Aug 2026, 08:05'},
+  {id:'O4', type:'assign_operator', order:'ORD2026-004340', ref:'TRIP2026-018433', title:'Assign an operator', sub:'Genoa → Lyon · Ingram Micro',
+    desc:'No operator is assigned to this order yet', hoursLeft:60, action:'Assign Operator', assignee:null, status:'not_started', priority:'low',
+    trip:{shipper:'Ingram Micro', pickup:'16121 Genoa, Italy', carrier:CARRIERS.manas}, created:'11 Aug 2026, 06:20'},
+
+  // ---- Integration errors ----
+  {id:'I1', type:'integration_error', order:'ORD2026-004347', ref:'TRIP2026-018402', title:'Fix rejected order payload', sub:'Shipper integration · Ingram Micro',
+    desc:'The order was rejected by the integration because required fields failed validation', hoursLeft:-1, action:'Resolve integration error',
+    assignee:null, status:'not_started', priority:'urgent',
+    trip:{shipper:'Ingram Micro', pickup:DEFAULT_PICKUP, carrier:null}, created:'11 Aug 2026, 05:40'},
+  {id:'I2', notes:[{text:'Raised with the integration team, ticket INT-4471.', who:'Nicoleta Ilie', when:'11 Aug 2026, 07:55'}], type:'integration_error', order:'ORD2026-004354', ref:'TRIP2026-018388', title:'Re-apply failed timeslot update', sub:'Carrier integration · Baltic Transport',
+    desc:'A timeslot update sent by the carrier system could not be applied to this trip', hoursLeft:14, action:'Resolve integration error',
+    assignee:'NI', status:'in_progress', priority:'high',
+    trip:{shipper:'Shipper Enterprise', pickup:DEFAULT_PICKUP, carrier:CARRIERS.baltic}, created:'10 Aug 2026, 22:10', updated:'11 Aug 2026, 07:55'},
+  {id:'I3', type:'integration_error', order:'ORD2026-004361', ref:'TRIP2026-018370', title:'Resolve duplicate order', sub:'Shipper integration · NewCold',
+    desc:'The same order was received twice from the shipper integration', hoursLeft:30, action:'Resolve integration error',
+    assignee:null, status:'waiting', waitingOn:'NewCold (integration team)', priority:'medium',
+    trip:{shipper:'NewCold', pickup:DEFAULT_PICKUP, carrier:null}, created:'9 Aug 2026, 19:00', updated:'11 Aug 2026, 08:30'},
+];
+
+// The History tab is the TASK's own trail — created, assigned, status changes,
+// completion. The trip's action history (Offer to a carrier, Confirm Arrived, …)
+// belongs to the trip and is read there, not here: mixing the two made the tab
+// look like it was reporting on the trip rather than on this task.
+function seedHistory(t){
+  const who = ownerName(t.assignee) === 'Unassigned' ? 'Ops team' : ownerName(t.assignee);
+  const at = t.updated || t.created;
+  const h = [{a:'Task created', who:'System', when:t.created}];
+  if(t.assignee) h.push({a:`Assigned to ${ownerName(t.assignee)}`, who:'System', when:t.created});
+  if(t.status==='in_progress') h.push({a:'Task started', who, when:at});
+  if(t.status==='waiting')     h.push({a:`Waiting on ${t.waitingOn || 'third party'}`, who, when:at});
+  if(t.status==='done')        h.push({a:'Task completed', who, when:at});
+  return h;
+}
+TASKS.forEach(t=>{ t.history = seedHistory(t); });
+
+// ---------------------------------------------------------------
+// Group-by definitions — one board, four ways to organize it.
+// Switching the "Group" control changes column structure; the four
+// filter selects narrow which tasks appear, independent of grouping.
+// ---------------------------------------------------------------
+
+function assigneeColumns(){
+  const cols = [{key:'unassigned', label:'Unassigned', color:'#8b8f84'}];
+  ASSIGNEE_ORDER.forEach(code=> cols.push({key:code, label:ASSIGNEE_NAMES[code], color:'#8b8f84'}));
+  if(TASKS.some(t=>t.assignee==='ME')) cols.push({key:'ME', label:'Assigned to me', color:'#3d5a1f'});
+  return cols;
+}
+
+const GROUP_FIELDS = {
+  status: {
+    label:'Status', valueOf:t=>t.status,
+    columns:[
+      {key:'not_started', label:'Not started', color:'#8b8f84'},
+      {key:'in_progress', label:'In progress', color:'#2a78d6'},
+      {key:'waiting', label:'Waiting on third party', color:'#c98500'},
+      {key:'done', label:'Completed', color:'#3d5a1f'},
+    ],
+    // Dragging a card to a different column moves it to that status. Leaving
+    // "Completed" clears the null hoursLeft a done task carries so it re-enters
+    // the due-date math instead of silently staying "on track" forever.
+    setValue:(t,key)=>{
+      t.status = key;
+      if(key==='done'){ t.hoursLeft = null; }
+      else if(t.hoursLeft===null){ t.hoursLeft = 24; }
+      // A task only "waits" on somebody — dropping out of the waiting column
+      // clears that dependency so it can't linger as stale context.
+      if(key!=='waiting') delete t.waitingOn;
+      else if(!t.waitingOn) t.waitingOn = (t.trip && t.trip.carrier) ? t.trip.carrier.name
+                                       : (t.subject ? t.subject.name : 'Third party');
+    },
+  },
+  assignee: {
+    label:'Assignee', groupable:false, valueOf:t=> t.assignee || 'unassigned',
+    get columns(){ return assigneeColumns(); },
+    setValue:(t,key)=>{ t.assignee = (key==='unassigned') ? null : key; },
+  },
+  priority: {
+    label:'Priority', valueOf:t=>t.priority,
+    columns:[
+      {key:'urgent', label:'Urgent', color:PRIORITY_COLORS.urgent},
+      {key:'high', label:'High', color:PRIORITY_COLORS.high},
+      {key:'medium', label:'Medium', color:PRIORITY_COLORS.medium},
+      {key:'low', label:'Low', color:PRIORITY_COLORS.low},
+    ],
+    setValue:(t,key)=>{ t.priority = key; },
+  },
+  due: {
+    label:'Due date', valueOf:t=> dueBucket(t.hoursLeft),
+    columns:[
+      {key:'overdue', label:'Overdue', color:'#c0392b'},
+      {key:'today', label:'Due today', color:'#c98500'},
+      {key:'tomorrow', label:'Due tomorrow', color:'#2a78d6'},
+      {key:'week', label:'Due this week', color:'#2a78d6'},
+      {key:'none', label:'No due date', color:'#8b8f84'},
+    ],
+    // Dragging into a due-date bucket sets a representative hoursLeft for that
+    // bucket rather than a real calendar date — good enough for this concept.
+    setValue:(t,key)=>{
+      const rep = {overdue:-2, today:10, tomorrow:36, week:96, none:null};
+      t.hoursLeft = rep[key];
+    },
+  },
+  // Grouping by task type does not open twelve columns side by side — the tab
+  // bar walks the same groups one at a time, so the board shows the group you
+  // are standing in. Same grouping concept, paged instead of spread.
+  type: {
+    label:'Task type', valueOf:t=>t.type,
+    columns: Object.entries(TASK_TYPES).map(([key,label])=>({key, label, color:'#8b8f84'})),
+  },
+};
+
+// ---------------------------------------------------------------
+// State
+// ---------------------------------------------------------------
+let groupBy = 'status';
+const FILTER_KEYS = ['status','assignee','priority','due'];
+function emptyFilters(){ const f={}; FILTER_KEYS.forEach(k=>f[k]=null); return f; }
+let filters = emptyFilters();
+// The active tab is a scope, deliberately NOT part of `filters`: it does not
+// produce a filter chip, because a tab already shows you where you are. Filters
+// narrow within the tab; Group by arranges the columns inside it.
+let activeTab = null;   // null = "All tasks"
+let searchQuery = '';
+let showPerformed = true;
+
+// Task-type categories are counted the way a Dashboard tile is: outstanding
+// work only, independent of the board's current filters, so a count is a
+// standalone statement rather than a reflection of what is already on screen.
+function countForType(typeKey){
+  return TASKS.filter(t=> t.status !== 'done' && (!typeKey || t.type === typeKey)).length;
+}
+
+document.getElementById('showPerformedToggle').addEventListener('change', (e)=>{
+  showPerformed = e.target.checked;
+  renderBoard();
+});
+
+// ---------------------------------------------------------------
+// Render: search — free-text over ref, title, context and owner
+// ---------------------------------------------------------------
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+searchInput.addEventListener('input', ()=>{
+  searchQuery = searchInput.value.trim().toLowerCase();
+  searchClear.style.display = searchQuery ? 'flex' : 'none';
+  renderBoard();
+});
+searchClear.addEventListener('click', ()=>{
+  searchQuery = '';
+  searchInput.value = '';
+  searchClear.style.display = 'none';
+  renderBoard();
+});
+
+// ---------------------------------------------------------------
+// Render: task-type tabs
+// ---------------------------------------------------------------
+function countForTab(typeKey){
+  return TASKS.filter(t=> t.status !== 'done' && (!typeKey || t.type === typeKey)).length;
+}
+
+const tabsTrack = document.getElementById('tabsTrack');
+const tabsPrev = document.getElementById('tabsPrev');
+const tabsNext = document.getElementById('tabsNext');
+tabsPrev.addEventListener('click', ()=> tabsTrack.scrollBy({left:-320, behavior:'smooth'}));
+tabsNext.addEventListener('click', ()=> tabsTrack.scrollBy({left: 320, behavior:'smooth'}));
+tabsTrack.addEventListener('scroll', updateTabArrows);
+addEventListener('resize', updateTabArrows);
+
+// Arrows grey out at each end so the strip never looks scrollable when it isn't.
+function updateTabArrows(){
+  const max = tabsTrack.scrollWidth - tabsTrack.clientWidth;
+  tabsPrev.disabled = tabsTrack.scrollLeft <= 1;
+  tabsNext.disabled = tabsTrack.scrollLeft >= max - 1;
+}
+
+// Three treatments of the same model, switchable from the banner:
+//   A · tabs      · every queue on screen, one row, scrolls
+//   B · dropdown  · its own control beside Group by
+//   C · group-by  · the panel hangs off the "Task type" segment itself
+// All three write to the same activeTab, so switching keeps your place.
+let typeUiOption = 'tabs';
+
+document.querySelectorAll('.opt-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    typeUiOption = btn.dataset.opt;
+    document.querySelectorAll('.opt-btn').forEach(b=> b.classList.toggle('active', b===btn));
+    closeTypePanels();
+    if(groupBy !== 'type') groupBy = 'type';   // test harness, not product behaviour
+    renderAll();
+  });
+});
+
+function typeRows(){
+  return [{key:null, label:'All tasks'}]
+    .concat(Object.entries(TASK_TYPES).map(([key,label])=>({key,label})));
+}
+function selectTab(key){
+  activeTab = key;
+  closeTypePanels();
+  renderAll();
+}
+function closeTypePanels(){
+  document.getElementById('typeDdPanel').classList.remove('open');
+  document.getElementById('groupTypePanel').classList.remove('open');
+}
+// Rows shared by both dropdown treatments.
+function fillDdPanel(panel){
+  panel.innerHTML = '';
+  typeRows().forEach(r=>{
+    const count = countForTab(r.key);
+    const row = document.createElement('div');
+    row.className = 'dd-row' + (activeTab===r.key ? ' active':'')
+      + (count===0 ? ' zero':'') + (r.key===null ? ' all':'');
+    row.innerHTML = `<span class="vname">${r.label}</span><span class="vcount">${count}</span>`;
+    row.addEventListener('click', ()=> selectTab(r.key));
+    panel.appendChild(row);
+  });
+}
+
+function renderTypeUI(){
+  const on = groupBy === 'type';
+  document.getElementById('completedWrap').style.display = groupBy === 'status' ? 'flex' : 'none';
+  document.getElementById('typeTabs').style.display   = (on && typeUiOption==='tabs')     ? 'flex' : 'none';
+  document.getElementById('typeDdWrap').style.display = (on && typeUiOption==='dropdown') ? 'flex' : 'none';
+  if(!on){ closeTypePanels(); return; }
+  if(typeUiOption==='tabs')     renderTypeTabs();
+  if(typeUiOption==='dropdown') renderTypeDropdown();
+  if(typeUiOption==='groupdd'){
+    const panel = document.getElementById('groupTypePanel');
+    fillDdPanel(panel);
+    anchorGroupPanel();
+  }
+}
+
+// Keep the C panel under the "Task type" segment even before it is first
+// opened, so it can never appear detached at the left edge.
+function anchorGroupPanel(){
+  const seg = [...document.querySelectorAll('#groupSegmented .seg')].find(b=>b.textContent.trim().startsWith('Task type'));
+  if(seg) document.getElementById('groupTypePanel').style.left = seg.offsetLeft + 'px';
+}
+
+/* ---- B · standalone dropdown ---- */
+const typeDdBtn = document.getElementById('typeDdBtn');
+const typeDdPanel = document.getElementById('typeDdPanel');
+typeDdBtn.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  typeDdPanel.classList.toggle('open');
+});
+typeDdPanel.addEventListener('click', (e)=> e.stopPropagation());
+document.getElementById('groupTypePanel').addEventListener('click', (e)=> e.stopPropagation());
+document.addEventListener('click', closeTypePanels);
+
+function renderTypeDropdown(){
+  const label = activeTab ? TASK_TYPES[activeTab] : 'All tasks';
+  document.getElementById('typeDdLabel').textContent = `Task type: ${label} (${countForTab(activeTab)})`;
+  typeDdBtn.classList.toggle('active', !!activeTab);
+  fillDdPanel(typeDdPanel);
+}
+
+/* ---- A · tabs ---- */
+function renderTypeTabs(){
+  tabsTrack.innerHTML = '';
+  [{key:null, label:'All tasks'}]
+    .concat(Object.entries(TASK_TYPES).map(([key,label])=>({key,label})))
+    .forEach(r=>{
+      const count = countForTab(r.key);
+      const tab = document.createElement('button');
+      tab.className = 'tt-tab' + (activeTab===r.key ? ' active':'') + (count===0 ? ' zero':'');
+      tab.innerHTML = `${r.label}<span class="tt-count">${count}</span>`;
+      tab.addEventListener('click', ()=>{
+        if(activeTab === r.key) return;
+        activeTab = r.key;
+        renderAll();
+        // Keep the tab you just chose in view when the strip is scrolled.
+        tab.scrollIntoView({behavior:'smooth', block:'nearest', inline:'nearest'});
+      });
+      tabsTrack.appendChild(tab);
+    });
+  updateTabArrows();
+}
+
+// ---------------------------------------------------------------
+// Render: "Group by" segmented control — one board, switch how it's organised.
+// All four options stay visible, so the current grouping is readable at a
+// glance rather than hidden behind a closed menu.
+// ---------------------------------------------------------------
+function renderSegmented(){
+  const wrap = document.getElementById('groupSegmented');
+  wrap.innerHTML = '';
+  Object.entries(GROUP_FIELDS).filter(([,def])=> def.groupable !== false).forEach(([key, def])=>{
+    const btn = document.createElement('button');
+    btn.className = 'seg' + (groupBy===key ? ' active' : '');
+    btn.textContent = def.label;
+    btn.setAttribute('aria-pressed', groupBy===key ? 'true' : 'false');
+    // Treatment C turns the active "Task type" segment into the selector too:
+    // press it once to group, press it again to choose which type.
+    const isTypeDd = (key==='type' && typeUiOption==='groupdd');
+    if(isTypeDd){
+      btn.innerHTML = `${def.label}<svg class="seg-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>`;
+    }
+    btn.addEventListener('click', (e)=>{
+      if(groupBy===key){
+        if(!isTypeDd) return;
+        e.stopPropagation();
+        const panel = document.getElementById('groupTypePanel');
+        const opening = !panel.classList.contains('open');
+        closeTypePanels();
+        if(opening){
+          anchorGroupPanel();
+          panel.classList.add('open');
+        }
+        return;
+      }
+      groupBy = key;
+      renderAll();
+      if(isTypeDd){
+        // Land straight in the picker — the grouping is meaningless until a
+        // type is chosen, so opening it saves a second click.
+        setTimeout(()=>{
+          anchorGroupPanel();
+          document.getElementById('groupTypePanel').classList.add('open');
+        }, 0);
+      }
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+// ---------------------------------------------------------------
+// Render: the platform-wide Filters button — Status / Assignee / Priority /
+// Due date live inside one popover instead of four always-visible selects.
+// Independent of the group-by field: each person narrows the same shared
+// board to what they need instead of getting a different one.
+// ---------------------------------------------------------------
+const PIN_ICON = '<svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5c0 2.6 1.6 4.1 2.1 4.5L8 18l4-2.6L16 18l-1.1-6.5c.5-.4 2.1-1.9 2.1-4.5a5 5 0 0 0-5-5z"/></svg>';
+
+const filtersBtn = document.getElementById('filtersBtn');
+const filtersPanel = document.getElementById('filtersPanel');
+filtersBtn.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  filtersPanel.classList.toggle('open');
+  filtersBtn.classList.toggle('active');
+});
+filtersPanel.addEventListener('click', (e)=> e.stopPropagation());
+document.addEventListener('click', ()=>{
+  filtersPanel.classList.remove('open');
+  filtersBtn.classList.toggle('active', activeFilterCount()>0);
+});
+
+function renderFiltersPanel(){
+  filtersPanel.innerHTML = '';
+  Object.entries(GROUP_FIELDS).forEach(([key, def])=>{
+    const row = document.createElement('div');
+    row.className = 'filters-panel-row';
+    const label = document.createElement('label');
+    label.textContent = def.label;
+    const sel = document.createElement('select');
+    sel.className = 'filter-select' + (filters[key] ? ' active' : '');
+    const optAll = document.createElement('option');
+    optAll.value = ''; optAll.textContent = `All ${def.label.toLowerCase()}`;
+    sel.appendChild(optAll);
+    def.columns.forEach(c=>{
+      const opt = document.createElement('option');
+      opt.value = c.key; opt.textContent = c.label;
+      if(filters[key]===c.key) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', (e)=>{
+      e.stopPropagation();
+      filters[key] = sel.value || null;
+      renderAll();
+    });
+    row.appendChild(label);
+    row.appendChild(sel);
+    filtersPanel.appendChild(row);
+  });
+}
+
+function activeFilterCount(){
+  return Object.values(filters).filter(Boolean).length;
+}
+
+function renderFiltersBadge(){
+  const n = activeFilterCount();
+  const badge = document.getElementById('filtersBadge');
+  badge.textContent = n;
+  badge.style.display = n ? 'flex' : 'none';
+  filtersBtn.classList.toggle('active', n>0);
+}
+
+// Pinned chips spell out exactly what's narrowing the board right now — one
+// chip per active filter, individually removable, plus a link to clear all
+// of them and a link to save this filter + group-by combination as a view.
+function renderPinnedRow(){
+  const pinnedRow = document.getElementById('pinnedRow');
+  const chips = document.getElementById('pinChips');
+  chips.innerHTML = '';
+  const active = Object.entries(filters).filter(([,v])=>v);
+  pinnedRow.style.display = active.length ? 'flex' : 'none';
+  active.forEach(([key, value])=>{
+    const def = GROUP_FIELDS[key];
+    const colDef = def.columns.find(c=>c.key===value);
+    const chip = document.createElement('span');
+    chip.className = 'pin-chip';
+    chip.innerHTML = `${PIN_ICON}${def.label}: <b>${colDef ? colDef.label : value}</b><span class="chip-x" data-key="${key}">×</span>`;
+    chip.querySelector('.chip-x').addEventListener('click', ()=>{
+      filters[key] = null;
+      renderAll();
+    });
+    chips.appendChild(chip);
+  });
+}
+
+document.getElementById('clearFilterLink').addEventListener('click', ()=>{
+  filters = emptyFilters();
+  renderAll();
+});
+// Saved views no longer have a home now that the left panel is a task-type
+// navigator, so this confirms the intent without pretending to persist. They
+// need a place of their own — a dropdown beside Filters is the obvious one.
+document.getElementById('saveViewLink').addEventListener('click', ()=>{
+  const parts = Object.entries(filters).filter(([,v])=>v).map(([key,value])=>{
+    const colDef = GROUP_FIELDS[key].columns.find(c=>c.key===value);
+    return colDef ? colDef.label : value;
+  });
+  toast('View saved: "' + (parts.length ? parts.join(' · ') : 'All tasks') + '"');
+});
+
+// Completed tasks are only ever revealed by the Status grouping's own toggle.
+// Every other grouping shows outstanding work only — and because this is derived
+// rather than stored, returning to Status restores whatever the user had chosen.
+function completedVisible(){ return groupBy === 'status' && showPerformed; }
+
+// The tab only means anything while the board is grouped by task type, so its
+// scope is derived rather than stored — group some other way and the tab stops
+// narrowing anything, come back and your tab is still where you left it.
+function tabScope(){ return groupBy === 'type' ? activeTab : null; }
+
+function taskMatchesFilters(t){
+  const tab = tabScope();
+  if(tab && t.type !== tab) return false;
+  // A tab named "Missing approved POD" cannot hold a POD that is already
+  // approved, so a type tab excludes completed work whatever the toggle says.
+  // That is also what keeps each tab's count equal to what the board shows.
+  if(tab && t.status==='done') return false;
+  if(!completedVisible() && t.status==='done') return false;
+  if(filters.status && t.status !== filters.status) return false;
+  if(filters.assignee && (t.assignee || 'unassigned') !== filters.assignee) return false;
+  if(filters.priority && t.priority !== filters.priority) return false;
+  if(filters.due && dueBucket(t.hoursLeft) !== filters.due) return false;
+  if(searchQuery){
+    const owner = t.assignee ? (ASSIGNEE_NAMES[t.assignee] || t.assignee) : '';
+    const haystack = [taskRef(t), t.order, t.title, t.desc, t.sub, owner, t.action].filter(Boolean).join(' ').toLowerCase();
+    if(!haystack.includes(searchQuery)) return false;
+  }
+  return true;
+}
+
+// ---------------------------------------------------------------
+// Render: board — columns come from whichever field is grouped on.
+// With "Show performed" off, the Performed column disappears entirely
+// under Status grouping, and performed tasks drop out of every other
+// grouping too — not just hidden, genuinely out of the way.
+// ---------------------------------------------------------------
+function renderBoard(){
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  const def = GROUP_FIELDS[groupBy];
+  const filtered = TASKS.filter(taskMatchesFilters);
+
+  // One column: the task-type group the tab bar is currently on.
+  if(groupBy === 'type'){
+    const label = activeTab ? TASK_TYPES[activeTab] : 'All tasks';
+    board.appendChild(buildColumn({key:'__tab', label, color:'#8b8f84'}, filtered, null, true));
+    return;
+  }
+
+
+
+  // Inside a type tab there is no completed work by definition, so that column
+  // would sit permanently at zero — drop it rather than show a dead lane.
+  const hideDone = groupBy==='status' && !showPerformed;
+  const columns = hideDone ? def.columns.filter(c=>c.key!=='done') : def.columns;
+
+  columns.forEach(colDef=>{
+    const visible = filtered.filter(t=> def.valueOf(t) === colDef.key);
+    board.appendChild(buildColumn(colDef, visible, def, false));
+  });
+}
+
+// One column. `def` is the grouped-on field, or null when the column isn't a
+// bucket of anything droppable (the single task-type column).
+function buildColumn(colDef, visible, def, solo){
+  const col = document.createElement('div');
+  col.className = 'col' + (solo ? ' solo' : '');
+  col.innerHTML = `
+    <div class="col-head">
+      <span class="dot" style="background:${colDef.color}"></span>
+      <h3>${colDef.label}</h3>
+      <span class="count">${visible.length}</span>
+    </div>
+    <div class="col-body"></div>
+  `;
+  const body = col.querySelector('.col-body');
+  if(visible.length===0){
+    body.innerHTML = `<div style="font-size:11.5px;color:var(--text-3);padding:10px 4px;">Nothing matches.</div>`;
+  }
+  // Cards are ordered by deadline, not by priority: whatever is already
+  // overdue or closest to its due date sits at the top, and tasks with no
+  // deadline sink to the bottom. Priority only breaks ties between two tasks
+  // that share the same deadline — it never outranks the clock.
+  visible
+    .sort((a,b)=>{
+      const da = a.hoursLeft===null ? Infinity : a.hoursLeft;
+      const db = b.hoursLeft===null ? Infinity : b.hoursLeft;
+      if(da !== db) return da - db;
+      return PRIORITY_ORDER.indexOf(a.priority) - PRIORITY_ORDER.indexOf(b.priority);
+    })
+    .forEach(t=> body.appendChild(renderCard(t)));
+
+  if(def && def.setValue){
+    body.addEventListener('dragover', (e)=>{ e.preventDefault(); body.classList.add('drag-over'); });
+    body.addEventListener('dragleave', ()=> body.classList.remove('drag-over'));
+    body.addEventListener('drop', (e)=>{
+      e.preventDefault();
+      body.classList.remove('drag-over');
+      const task = TASKS.find(x=>x.id===e.dataTransfer.getData('text/plain'));
+      if(!task) return;
+      if(def.valueOf(task) === colDef.key) return; // dropped back where it started
+      def.setValue(task, colDef.key);
+      renderBoard();
+      toast(`Moved ${taskRef(task)} to "${colDef.label}"`);
+    });
+  }
+  return col;
+}
+
+// Card anatomy, top to bottom: title, trip reference, task description,
+// badges (priority + Overdue when the deadline has passed), assignee avatar.
+// Bulk-select checkboxes are deferred to a later version. The card carries no
+// action button either — acting on a task goes through the detail panel, which
+// hands off to the trip, so the card stays a scannable summary.
+// The card's third line carries the most recent note rather than the task
+// description: the description repeats for every task of the same type, while a
+// note is the one piece of human context worth scanning for. No notes, no line.
+function latestNote(t){
+  return (t.notes && t.notes.length) ? t.notes[t.notes.length-1].text : '';
+}
+
+function renderCard(t){
+  const overdue = t.hoursLeft !== null && t.hoursLeft <= 0;
+  const deadline = deadlineOf(t);
+  const card = document.createElement('div');
+  card.className = 'card' + (t.hoursLeft===null?' ontrack':'');
+  card.draggable = true;
+  card.innerHTML = `
+    <div class="card-titlerow">
+      <div class="card-title">${t.title}</div>
+      ${overdue ? `<span class="overdue-flag"><span class="odot"></span>OVERDUE</span>` : ``}
+    </div>
+    <div class="card-ref">${
+      t.subject
+        ? `<span class="card-subject">${ORG_ICON}${t.subject.name}</span>`
+        : t.ref
+    }</div>
+    <div class="card-sub">${latestNote(t)}</div>
+    <div class="card-meta">
+      <span class="meta-tag priority" style="background:${PRIORITY_COLORS[t.priority]};">${PRIORITY_LABELS[t.priority]}</span>
+    </div>
+    <div class="card-bottom">
+      ${avatarHtml(t.assignee)}
+      <span class="card-deadline${overdue?' overdue':''}">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        ${deadline ? fmtDeadline(deadline) : 'No deadline'}
+      </span>
+    </div>
+  `;
+  card.addEventListener('click', ()=> openPanel(t));
+  card.addEventListener('dragstart', (e)=>{
+    e.dataTransfer.setData('text/plain', t.id);
+    e.dataTransfer.effectAllowed = 'move';
+    card.classList.add('dragging');
+  });
+  card.addEventListener('dragend', ()=>{
+    card.classList.remove('dragging');
+  });
+  return card;
+}
+
+// ---------------------------------------------------------------
+// Detail panel — opens on task and trip context (deadline, priority, owner,
+// reference, shipper, pickup, confirmed slot vs. ETA, assigned carrier) plus
+// the activity trail. There is no in-panel action picker: "Perform task"
+// hands off to the trip, where the real action taxonomy (Offer to a carrier,
+// Confirm Arrived, Upload Proof of Delivery, etc.) actually lives.
+// ---------------------------------------------------------------
+let panelTask = null;
+
+function openPanel(t){
+  panelTask = t;
+  document.getElementById('panelTitle').textContent = t.title;
+  // The line under the title is the task's own description from the backend —
+  // what this task asks you to do — not the trip route.
+  document.getElementById('panelDesc').textContent = t.desc;
+
+  const deadline = deadlineOf(t);
+
+  let html = '';
+  html += `<div class="detail-row"><span class="d-label">Deadline</span><span class="d-value">${deadline ? fmtDeadline(deadline) : '—'}</span></div>`;
+  html += `<div class="detail-row"><span class="d-label">Priority</span><span class="d-value owner" id="priorityControl"></span></div>`;
+  html += `<div class="detail-row"><span class="d-label">Status</span><span class="d-value owner" id="statusControl"></span></div>`;
+  if(t.status==='waiting'){
+    html += `<div class="detail-row"><span class="d-label">Waiting on</span><span class="d-value">${t.waitingOn || 'Third party'}</span></div>`;
+  }
+  html += `<div class="detail-row"><span class="d-label">Task Owner(s)</span><span class="d-value owner" id="ownerControl"></span></div>`;
+
+  // A due-diligence task has no trip: it points straight at the company it was
+  // raised against, and the trip-specific rows below don't apply.
+  if(t.subject){
+    const lbl = t.subject.type==='carrier' ? 'Carrier' : 'Shipper';
+    html += `<div class="detail-row"><span class="d-label">${lbl}</span><span class="d-stack">
+      <span class="d-line"><svg viewBox="0 0 24 24"><path d="M4 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M15 10h4a1 1 0 0 1 1 1v10"/><path d="M9 21v-4h2v4"/></svg>${t.subject.name}</span>
+      <span class="d-line">${ORG_ICON}${t.subject.name}</span>
+    </span></div>`;
+    document.getElementById('panelFields').innerHTML = html;
+    return finishPanel(t);
+  }
+
+  html += `<div class="detail-row"><span class="d-label">Trip</span><span class="d-value ref">${t.ref}</span></div>`;
+  html += `<div class="detail-row"><span class="d-label">Order</span><span class="d-value ref">${t.order || '—'}</span></div>`;
+  html += `<div class="detail-row"><span class="d-label">Route</span><span class="d-value">${t.sub}</span></div>`;
+
+  html += `<div class="detail-row"><span class="d-label">Shipper</span><span class="d-stack">
+    <span class="d-line"><svg viewBox="0 0 24 24"><path d="M4 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M15 10h4a1 1 0 0 1 1 1v10"/><path d="M9 21v-4h2v4"/></svg>${t.trip.shipper}</span>
+    <span class="d-line">${ORG_ICON}Shipper Subgroup</span>
+  </span></div>`;
+
+  html += `<div class="detail-row"><span class="d-label">Pickup at</span><span class="d-value">${t.trip.pickup}</span></div>`;
+
+  if(t.slot){
+    html += `<div class="detail-row"><span class="d-label">Confirmed ${t.slot.kind} Time Slot</span><span class="d-value">
+      ${t.slot.sched}${t.slot.upd ? `<div class="d-time-arrow">↓</div>${t.slot.upd}` : ''}
+    </span></div>`;
+    html += `<div class="detail-row"><span class="d-label">${t.slot.kind} ETA</span><span class="d-value">${t.slot.eta}${t.slot.late ? ` <span class="late-flag">(Late)</span>` : ''}</span></div>`;
+  }
+
+  html += `<div class="detail-row"><span class="d-label">Assigned Carrier</span><span class="d-value">${
+    t.trip.carrier
+      ? `<span class="d-stack">
+          <span class="d-line"><svg viewBox="0 0 24 24"><path d="M4 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M15 10h4a1 1 0 0 1 1 1v10"/><path d="M9 21v-4h2v4"/></svg>${t.trip.carrier.name}</span>
+          <span class="d-line"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M6 8v3h12V8M12 11v7"/></svg>${t.trip.carrier.sub}</span>
+          <span class="d-line contact"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 6l8 6 8-6"/></svg>${t.trip.carrier.email}</span>
+          <span class="d-line contact"><svg viewBox="0 0 24 24"><path d="M6 3h4l1 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 1v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/></svg>${t.trip.carrier.phone}</span>
+        </span>`
+      : `<span style="color:var(--text-3);font-weight:600;">Not yet assigned</span>`
+  }</span></div>`;
+
+  document.getElementById('panelFields').innerHTML = html;
+  return finishPanel(t);
+}
+
+// Shared tail for both task shapes (trip tasks and due-diligence checks).
+function finishPanel(t){
+  ownerEditing = false; priorityEditing = false; statusEditing = false;
+  renderOwnerControl();
+  renderPriorityControl();
+  renderStatusControl();
+  renderTimeline();
+
+  // A completed task has nothing left to close out, so the second action
+  // drops away and the first becomes a read-only route to the trip.
+  const target = t.subject ? (t.subject.type==='carrier' ? 'carrier' : 'shipper') : 'trip';
+  document.getElementById('performTaskBtn').textContent = t.status==='done' ? `View ${target}` : 'Perform task';
+  document.getElementById('completeTaskBtn').style.display = t.status==='done' ? 'none' : 'block';
+
+  t.notes = t.notes || [];
+  renderNotes();
+  switchTab('details');
+
+  document.getElementById('panelEmpty').style.display = 'none';
+  document.getElementById('panelContent').classList.add('show');
+}
+
+function renderTimeline(){
+  document.getElementById('panelTimeline').innerHTML = panelTask.history.map(h=>`
+    <div class="hist-item">
+      <div class="hist-check">✓</div>
+      <div><div class="hist-title">${h.a}</div><div class="hist-meta">${h.when} by ${h.who}</div></div>
+    </div>
+  `).join('');
+}
+
+// Owner is assignable and reassignable straight from the task — "Assign" when
+// nobody owns it yet, "Reassign" when someone does. Every change is written to
+// the History tab so the handover is traceable (Myrthe's audit-trail need).
+let ownerEditing = false;
+function renderOwnerControl(){
+  const t = panelTask;
+  const wrap = document.getElementById('ownerControl');
+  if(!t || !wrap) return;
+
+  if(ownerEditing){
+    let opts = `<option value="">Unassigned</option>`;
+    opts += `<option value="${CURRENT_USER.code}"${t.assignee===CURRENT_USER.code?' selected':''}>${CURRENT_USER.name} (me)</option>`;
+    ASSIGNEE_ORDER.forEach(code=>{
+      opts += `<option value="${code}"${t.assignee===code?' selected':''}>${ASSIGNEE_NAMES[code]}</option>`;
+    });
+    wrap.innerHTML = `<select class="owner-select" id="ownerSelect">${opts}</select>`;
+    const sel = document.getElementById('ownerSelect');
+    sel.focus();
+    sel.addEventListener('change', ()=>{
+      const from = ownerName(t.assignee);
+      t.assignee = sel.value || null;
+      const to = ownerName(t.assignee);
+      ownerEditing = false;
+      if(from !== to){
+        t.history.push({a:`Owner: ${from} → ${to}`, who:CURRENT_USER.name, when:'Just now'});
+        toast(t.assignee ? `Assigned to ${to}` : `Owner removed — task is unassigned`);
+      }
+      renderOwnerControl();
+      renderTimeline();
+      renderBoard();
+    });
+  } else {
+    wrap.innerHTML = avatarHtml(t.assignee)
+      + `<span${t.assignee ? '' : ' style="color:var(--text-3);"'}>${ownerName(t.assignee)}</span>`
+      + `<span class="owner-link" id="ownerEditLink">${t.assignee ? 'Reassign' : 'Assign'}</span>`;
+    document.getElementById('ownerEditLink').addEventListener('click', ()=>{
+      ownerEditing = true;
+      renderOwnerControl();
+    });
+  }
+}
+
+// Priority is editable: the interviews showed teams disagree about what counts
+// as high priority, so it is a judgement each team makes rather than a value
+// the system imposes. Urgency stays read-only — it is computed from the due date.
+let priorityEditing = false;
+function renderPriorityControl(){
+  const t = panelTask;
+  const wrap = document.getElementById('priorityControl');
+  if(!t || !wrap) return;
+
+  if(priorityEditing){
+    const opts = Object.entries(PRIORITY_LABELS)
+      .map(([k,v])=>`<option value="${k}"${t.priority===k?' selected':''}>${v}</option>`).join('');
+    wrap.innerHTML = `<select class="owner-select" id="prioritySelect">${opts}</select>`;
+    const sel = document.getElementById('prioritySelect');
+    sel.focus();
+    sel.addEventListener('change', ()=>{
+      const from = PRIORITY_LABELS[t.priority];
+      t.priority = sel.value;
+      priorityEditing = false;
+      if(from !== PRIORITY_LABELS[t.priority]){
+        t.history.push({a:`Priority: ${from} → ${PRIORITY_LABELS[t.priority]}`, who:CURRENT_USER.name, when:'Just now'});
+        toast(`Priority set to ${PRIORITY_LABELS[t.priority]}`);
+      }
+      renderPriorityControl();
+      renderTimeline();
+      renderBoard();
+    });
+  } else {
+    wrap.innerHTML = `<span class="value-pill" style="background:${PRIORITY_COLORS[t.priority]};color:#fff;">${PRIORITY_LABELS[t.priority]}</span>`
+      + `<span class="owner-link" id="priorityEditLink">Edit</span>`;
+    document.getElementById('priorityEditLink').addEventListener('click', ()=>{
+      priorityEditing = true;
+      renderPriorityControl();
+    });
+  }
+}
+
+// Status is editable here so the board's columns aren't reachable by drag alone
+// — needed on touch devices, and when the task was opened from search or a
+// notification rather than from the board.
+let statusEditing = false;
+function renderStatusControl(){
+  const t = panelTask;
+  const wrap = document.getElementById('statusControl');
+  if(!t || !wrap) return;
+  const def = GROUP_FIELDS.status;
+
+  if(statusEditing){
+    const opts = def.columns.map(c=>`<option value="${c.key}"${t.status===c.key?' selected':''}>${c.label}</option>`).join('');
+    wrap.innerHTML = `<select class="owner-select" id="statusSelect">${opts}</select>`;
+    const sel = document.getElementById('statusSelect');
+    sel.focus();
+    sel.addEventListener('change', ()=>{
+      const from = STATUS_LABELS[t.status];
+      statusEditing = false;
+      if(sel.value !== t.status){
+        def.setValue(t, sel.value);
+        t.history.push({a:`Status: ${from} → ${STATUS_LABELS[t.status]}`, who:CURRENT_USER.name, when:'Just now'});
+        toast(`Moved to "${STATUS_LABELS[t.status]}"`);
+        renderBoard();
+        openPanel(t); // status can add/remove the "Waiting on" row
+      } else {
+        renderStatusControl();
+      }
+    });
+  } else {
+    const col = def.columns.find(c=>c.key===t.status);
+    wrap.innerHTML = `<span class="status-dot" style="background:${col?col.color:'#8b8f84'};"></span>`
+      + `<span>${STATUS_LABELS[t.status]}</span>`
+      + `<span class="owner-link" id="statusEditLink">Change</span>`;
+    document.getElementById('statusEditLink').addEventListener('click', ()=>{
+      statusEditing = true;
+      renderStatusControl();
+    });
+  }
+}
+
+function renderNotes(){
+  const t = panelTask;
+  const list = document.getElementById('notesList');
+  if(!t.notes.length){
+    list.innerHTML = `<div class="notes-empty">No notes yet. Add context for whoever picks this up next.</div>`;
+  } else {
+    list.innerHTML = t.notes.map(n=>`
+      <div class="note-item"><div class="note-text">${n.text}</div><div class="note-meta">${n.when} · ${n.who}</div></div>
+    `).join('');
+  }
+}
+
+document.querySelectorAll('.tab').forEach(tabEl=>{
+  tabEl.addEventListener('click', ()=> switchTab(tabEl.dataset.tab));
+});
+function switchTab(key){
+  document.querySelectorAll('.tab').forEach(el=> el.classList.toggle('active', el.dataset.tab===key));
+  document.getElementById('tabDetails').classList.toggle('active', key==='details');
+  document.getElementById('tabHistory').classList.toggle('active', key==='history');
+  document.getElementById('tabNotes').classList.toggle('active', key==='notes');
+}
+
+document.getElementById('addNoteBtn').addEventListener('click', ()=>{
+  const input = document.getElementById('noteInput');
+  const text = input.value.trim();
+  if(!text || !panelTask) return;
+  panelTask.notes.push({text, who:'Stephanie Macri', when:'Just now'});
+  input.value = '';
+  renderNotes();
+  renderBoard(); // the card's third line is the latest note, so it changes too
+});
+
+// "Perform task" never runs the action here — it hands off to the trip,
+// which is where the real action taxonomy lives (Offer to a carrier, Confirm
+// Arrived, Upload Proof of Delivery, etc.). This panel is context, not a
+// second place to do the work.
+// "Perform task" opens the trip (or the company, for a due-diligence check) in
+// a NEW TAB and deliberately leaves the panel open behind it. The user needs the
+// task's context while they work in the other tab, and comes back to a board
+// that hasn't lost their place.
+document.getElementById('performTaskBtn').addEventListener('click', ()=>{
+  const t = panelTask;
+  if(!t) return;
+  const win = window.open('', '_blank');
+  if(win){
+    win.document.write(tripPageHtml(t));
+    win.document.close();
+  }
+  toast(win ? `Opened ${taskRef(t)} in a new tab — task stays open here`
+            : `Pop-up blocked — allow pop-ups to open ${taskRef(t)}`);
+});
+
+// Stand-in for the real trip / company screen, so the hand-off is visible in
+// the prototype. In production this is simply a link to the existing page.
+function tripPageHtml(t){
+  const isDD = !!t.subject;
+  const heading = isDD ? t.subject.name : `Trip ${t.ref}`;
+  const kicker = isDD ? (t.subject.type==='carrier' ? 'Carrier profile' : 'Shipper profile') : 'Trip detail';
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>${heading} — CtrlChain</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Segoe UI',Inter,system-ui,sans-serif;background:#f4f5f2;color:#1c211a}
+.top{background:#0b1526;color:#fff;padding:14px 26px;display:flex;align-items:center;gap:12px}
+.top .logo{width:30px;height:30px;border-radius:50%;border:1.5px solid #3a4a63;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.banner{background:#eef1ea;color:#6b7062;text-align:center;font-size:12px;padding:7px;border-bottom:1px solid #e3e5df}
+.wrap{max-width:820px;margin:26px auto;padding:0 22px}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#8b8f84}
+h1{font-size:24px;margin:5px 0 20px}
+.card{background:#fff;border:1px solid #e3e5df;border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#8b8f84;margin:0 0 14px}
+.act{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1.5px solid #3d5a1f;background:#eaf1dd;border-radius:10px;padding:14px 16px}
+.act b{font-size:15px;color:#3d5a1f}
+.act button{font-family:inherit;background:#3d5a1f;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid #f0f1ed;font-size:13.5px}
+li span{color:#8b8f84;font-size:12px}
+.note{font-size:12.5px;color:#8b8f84;margin-top:18px;text-align:center}
+</style></head><body>
+<div class="top"><div class="logo">CC</div><b>CtrlChain</b></div>
+<div class="banner">Concept exploration — not final visual design. Data is illustrative.</div>
+<div class="wrap">
+  <div class="kicker">${kicker}</div>
+  <h1>${heading}</h1>
+  <div class="card"><h2>Action required by this task</h2>
+    <div class="act"><b>${t.action}</b><button onclick="alert('In the real product this performs the action and completes the linked task.')">Confirm</button></div>
+  </div>
+  <p class="note">This stand-in page represents the existing trip screen the Taskboard hands off to.</p>
+</div></body></html>`;
+}
+
+// "Mark as completed" closes the task out from here without a trip round-trip —
+// for the cases users described where the work already happened somewhere else
+// (a call, an email) and only the task is still open. The panel stays on the
+// task so the result of completing it is visible rather than just vanishing.
+document.getElementById('completeTaskBtn').addEventListener('click', ()=>{
+  const t = panelTask;
+  if(!t || t.status==='done') return;
+  t.status = 'done';
+  t.hoursLeft = null;
+  t.history.push({a:t.action, who:ownerName(t.assignee || CURRENT_USER.code), when:'Just now'});
+  renderBoard();
+  openPanel(t);
+  toast(`${taskRef(t)} marked as completed`);
+});
+
+document.getElementById('panelClose').addEventListener('click', closePanel);
+function closePanel(){
+  panelTask = null;
+  document.getElementById('panelContent').classList.remove('show');
+  document.getElementById('panelEmpty').style.display = 'flex';
+}
+
+// ---------------------------------------------------------------
+// Toast
+// ---------------------------------------------------------------
+let toastTimer;
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> el.classList.remove('show'), 2600);
+}
+
+// ---------------------------------------------------------------
+// Init
+// ---------------------------------------------------------------
+function renderAll(){
+  renderTypeUI();
+  renderSegmented();
+  renderFiltersPanel();
+  renderFiltersBadge();
+  renderPinnedRow();
+  renderBoard();
+}
+renderAll();
+</script>
+</body>
+</html>
