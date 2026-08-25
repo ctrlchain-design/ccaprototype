@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/cca-design-system-bf155a20-36b7-48b3-8c9e-8a1bc0137d08/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/cca-design-system-bf155a20-36b7-48b3-8c9e-8a1bc0137d08/colors_and_type.css">
+  <style>
+    body { margin: 0; }
+    a { color: var(--text-brand-default); }
+    a:hover { color: var(--text-brand-dark); }
+  </style>
+</helmet>
+<div style="display:flex;height:100vh;width:100%;font-family:var(--font-ui);background:var(--surface-neutral-default);overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <aside style="width:88px;flex-shrink:0;background:var(--sidebar-main-bg-default);display:flex;flex-direction:column;align-items:center;padding:16px 8px;gap:4px;overflow-y:auto;height:100vh;box-sizing:border-box;">
+    <div style="padding:6px;border:1.5px solid var(--sidebar-main-bg-hover);border-radius:14px;margin-bottom:8px;">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--sidebar-main-bg-hover);display:flex;align-items:center;justify-content:center;">
+        <img src="assets/logo-icon-white.svg" width="22" height="22" alt="CtrlChain">
+      </div>
+    </div>
+    <div style="width:70%;height:1px;background:rgba(255,255,255,0.12);margin:2px 0 6px;"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="1.5"></rect><path d="M3 8h14M7 2.5v3M13 2.5v3"></path><path d="M8 12l1.5 1.5L13 10"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Booking</span>
+    </div>
+    <div style="width:70%;height:1px;background:rgba(255,255,255,0.12);margin:6px 0;"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8a1 1 0 0 1-1 1h-3v-5h-6v5H4a1 1 0 0 1-1-1V9z"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Home</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"></circle><path d="M10 3v7l5 2"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Dashboard</span>
+    </div>
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <span style="position:absolute;top:-2px;right:14px;background:var(--accent-purple);color:#fff;font-size:8px;font-weight:600;padding:1px 5px;border-radius:999px;">New</span>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h14v9H8l-3 3v-3H3z"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Inbox</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="12" height="14" rx="1.5"></rect><path d="M4 8h12M8 3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V3"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Taskboard</span>
+    </div>
+    <div style="width:70%;height:1px;background:rgba(255,255,255,0.12);margin:6px 0;"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l6 3v3l-6 3-6-3V5z"></path><path d="M4 8v4l6 3 6-3V8"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Shipper</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 15V9l8-5 8 5v6"></path><path d="M6 15v-4h8v4"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Carrier</span>
+    </div>
+    <div style="width:70%;height:1px;background:rgba(255,255,255,0.12);margin:6px 0;"></div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16V8l6-4 6 4v8"></path><rect x="6" y="12" width="3" height="3"></rect><rect x="11" y="12" width="3" height="3"></rect></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Enterprise</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;border-radius:10px;background:var(--sidebar-main-bg-selected);color:var(--sidebar-main-text-selected);cursor:pointer;width:calc(100% - 8px);">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="14" height="10" rx="1.5"></rect><path d="M3 8h14"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Finance</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9l-2-2M16 14H7l2 2"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Integration</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h6l3 3v13H6z"></path><path d="M8 10l1.5 1.5L13 8"></path></svg>
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Release</span>
+    </div>
+
+    <div style="flex:1;min-height:8px;"></div>
+    <div style="display:flex;justify-content:center;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 6l4 4 4-4"></path></svg>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+      <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Address</span>
+    </div>
+  </aside>
+
+  <!-- SECONDARY NAV -->
+  <nav style="width:260px;flex-shrink:0;background:#fff;border-right:1px solid var(--border-default);display:flex;flex-direction:column;height:100vh;box-sizing:border-box;overflow-y:auto;">
+    <div style="padding:24px;border-bottom:1px solid var(--border-default);">
+      <span style="font-family:var(--font-display);font-weight:800;font-size:28px;color:var(--text-brand-default);">CtrlChain</span>
+    </div>
+    <div style="padding:20px 24px;border-bottom:1px solid var(--border-default);">
+      <button style="width:100%;background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:999px;padding:14px 20px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+        New Invoice
+      </button>
+    </div>
+    <div style="padding:20px 24px 12px;font-size:17px;color:var(--text-subtitle);">Finance</div>
+    <div style="display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;cursor:pointer;font-size:17px;color:var(--text-title);position:relative;">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12"></path><circle cx="10" cy="9" r="2.6"></circle><path d="M10 7.6v2.8M9.2 9h1.6"></path></svg>
+        Invoicing
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;cursor:pointer;font-size:17px;color:var(--text-title);">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 8h6M7 11h6M7 14h3"></path></svg>
+        Invoice Validation
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;cursor:pointer;font-size:17px;font-weight:600;color:var(--text-brand-default);background:var(--surface-brand-lighter);position:relative;">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="2" y="5" width="16" height="11" rx="1.5"></rect><path d="M10 8v6M12 9.3c0-.7-.9-1.3-2-1.3s-2 .6-2 1.4.9 1.3 2 1.3 2 .6 2 1.3-.9 1.3-2 1.3-2-.6-2-1.3"></path></svg>
+        Rate Configuration
+        <div style="position:absolute;right:0;top:0;bottom:0;width:4px;background:var(--border-brand-default);"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;">
+
+    <!-- TOP BAR -->
+    <header style="height:64px;flex-shrink:0;background:#fff;border-bottom:1px solid var(--border-default);display:flex;align-items:center;justify-content:space-between;padding:0 24px;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div onClick="{{ goGroups }}" style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-brand-default);cursor:pointer;">
+          <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L5 9l6 6"></path></svg>
+        </div>
+        <h1 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ pageTitle }}</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;">
+        <div style="position:relative;color:var(--icon-neutral);cursor:pointer;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8a5 5 0 0 1 10 0v4l1.5 2.5h-13L5 12z"></path><path d="M8 17a2 2 0 0 0 4 0"></path></svg>
+          <span style="position:absolute;top:-4px;right:-6px;background:var(--badge-bg-red);color:var(--badge-text-white);font-size:9px;font-weight:600;padding:1px 5px;border-radius:8px;">1</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-body);cursor:pointer;">
+          <span style="font-size:16px;">🇬🇧</span> English
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 5.5L7 8.5L10 5.5"></path></svg>
+        </div>
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--avatar-bg-color);color:var(--avatar-initials-white);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">DS</div>
+      </div>
+    </header>
+
+    <!-- BODY -->
+    <main style="flex:1;overflow:auto;padding:16px 24px;display:flex;flex-direction:column;gap:16px;">
+
+      <!-- ================= GROUPS SCREEN ================= -->
+      <sc-if value="{{ isGroups }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="flex:1;display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:11px 16px;background:#fff;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
+              <span style="color:var(--placeholder);font-size:14px;">Search by group name, subgroup name</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--border-default);border-radius:8px;padding:11px 16px;cursor:pointer;color:var(--text-body);font-size:14px;background:#fff;white-space:nowrap;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3h12l-4.5 5.5V13l-3 1.5V8.5z"></path></svg>
+              Filters
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--border-default);border-radius:8px;cursor:pointer;color:var(--text-body);background:#fff;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="4" height="12" rx="1"></rect><rect x="7" y="3" width="4" height="12" rx="1"></rect><rect x="12" y="3" width="4" height="12" rx="1"></rect></svg>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--border-default);border-radius:8px;cursor:pointer;color:var(--text-body);background:#fff;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M15 9a6 6 0 1 1-1.8-4.3M15 3v3.5h-3.5"></path></svg>
+            </div>
+            <button style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;">Add Group</button>
+          </div>
+
+          <div style="background:#fff;display:flex;flex-direction:column;border-radius:10px;box-shadow:inset 0 0 0 1px var(--border-default);">
+            <div style="display:flex;border-bottom:1px solid var(--border-default);padding:0 16px;">
+              <div onClick="{{ selectGroupsViewEnterprises }}" style="{{ groupsViewEnterprisesStyle }}">Enterprises</div>
+              <div onClick="{{ selectGroupsViewAll }}" style="{{ groupsViewAllStyle }}">All Groups</div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:1100px;">
+                <thead>
+                  <tr>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);width:70px;">Actions</th>
+                    <sc-if value="{{ groupsViewIsAll }}" hint-placeholder-val="{{ false }}">
+                      <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Subgroup</th>
+                    </sc-if>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Group</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Address</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Creation Date</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Group Types</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Service Types</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Account Manager</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Industry</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ groupRows }}" as="grp" hint-placeholder-count="4">
+                    <tr style="border-bottom:1px solid var(--border-default);">
+                      <td style="padding:16px;vertical-align:top;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color:var(--icon-neutral);cursor:pointer;"><circle cx="8" cy="3" r="1.3"></circle><circle cx="8" cy="8" r="1.3"></circle><circle cx="8" cy="13" r="1.3"></circle></svg>
+                      </td>
+                      <sc-if value="{{ groupsViewIsAll }}" hint-placeholder-val="{{ false }}">
+                        <td style="padding:16px;vertical-align:top;cursor:pointer;" onClick="{{ grp.onOpen }}">
+                          <span style="font-weight:700;color:var(--text-brand-default);">{{ grp.subgroup }}</span>
+                        </td>
+                      </sc-if>
+                      <td style="padding:16px;vertical-align:top;cursor:pointer;" onClick="{{ grp.onOpen }}">
+                        <span style="font-weight:700;color:var(--text-brand-default);">{{ grp.group }}</span>
+                      </td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:170px;">
+                        <div>{{ grp.addr1 }}</div>
+                        <div style="display:flex;align-items:flex-start;gap:6px;margin-top:4px;color:var(--text-caption);font-size:12px;">
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" style="flex-shrink:0;margin-top:2px;"><path d="M8 14s5-4.5 5-8a5 5 0 0 0-10 0c0 3.5 5 8 5 8z"></path><circle cx="8" cy="6" r="1.5"></circle></svg>
+                          <span>{{ grp.addr2 }}</span>
+                        </div>
+                      </td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">
+                        <div>{{ grp.created }}</div>
+                      </td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:160px;">{{ grp.groupType }}</td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.serviceType }}</td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.manager }}</td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.industry }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:24px;font-size:13px;color:var(--text-body);padding:16px 8px 4px;">
+              <span>Rows per page</span>
+              <span style="display:flex;align-items:center;gap:6px;border:1px solid var(--border-default);border-radius:6px;padding:6px 10px;">10
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6l4 4 4-4"></path></svg>
+              </span>
+              <span>1-10 of 100</span>
+              <div style="display:flex;gap:14px;color:var(--icon-neutral);">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3v10M12 3L6 8l6 5"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3L5 8l5 5"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3l6 5-6 5M12 3v10"></path></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= RATE CONFIGURATION SCREEN ================= -->
+      <sc-if value="{{ isRate }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="font-size:13px;color:var(--text-caption);display:flex;align-items:center;gap:6px;">
+            <sc-for list="{{ groupBreadcrumbs }}" as="crumb" hint-placeholder-count="1">
+              <sc-if value="{{ crumb.isLast }}" hint-placeholder-val="{{ false }}">
+                <span style="color:var(--text-brand-default);">{{ crumb.label }}</span>
+              </sc-if>
+              <sc-if value="{{ crumb.isNotLast }}" hint-placeholder-val="{{ true }}">
+                <span onClick="{{ crumb.onClick }}" style="cursor:pointer;color:var(--text-caption);">{{ crumb.label }}</span>
+                <span>›</span>
+              </sc-if>
+            </sc-for>
+          </div>
+
+          <!-- Group info card -->
+          <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:24px;display:flex;align-items:center;gap:24px;">
+              <div style="width:64px;height:64px;border-radius:8px;border:1px solid var(--border-default);display:flex;align-items:center;justify-content:center;color:var(--icon-neutral);flex-shrink:0;">
+                <svg width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:16px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <h2 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--text-title);">{{ activeGroup.subgroup }}</h2>
+                  <span style="color:var(--text-caption);">•</span>
+                  <span style="font-size:15px;color:var(--text-caption);">{{ groupLevelLabel }}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:12px;font-weight:400;color:#111827;background:var(--surface-neutral-lighter, #f1f2f4);border-radius:6px;padding:4px 10px;">Carrier</span>
+                  <span style="font-size:12px;font-weight:400;color:#111827;background:var(--surface-neutral-lighter, #f1f2f4);border-radius:6px;padding:4px 10px;">Shipper</span>
+                </div>
+              </div>
+              <button onClick="{{ openGroupsConnection }}" style="background:transparent;color:var(--text-brand-default);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;flex-shrink:0;display:flex;align-items:center;gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="13" cy="13" r="3"/><path d="M9.1 8.9l1.8 1.8"/></svg>
+                Other Groups
+              </button>
+            </div>
+
+          <sc-if value="{{ isEnterpriseLevel }}" hint-placeholder-val="{{ true }}">
+            <div style="background:var(--warning-surface-lighter);border:1px solid var(--warning-border-lighter);border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--text-body)" stroke-width="1.6" style="flex-shrink:0;"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
+              <span style="flex:1;font-size:13px;color:var(--text-body);">Changes made here apply to every subgroup that hasn't set its own override.</span>
+            </div>
+          </sc-if>
+
+          <!-- SCHEDULE HISTORY MODAL -->
+          <sc-if value="{{ scheduleHistoryOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
+              <div style="background:#fff;border-radius:12px;width:900px;max-width:90vw;max-height:85vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <h3 style="margin:0;font-size:16px;font-weight:600;color:var(--text-title);">Fuel Rate Setting History</h3>
+                  <svg onClick="{{ closeScheduleHistory }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <div style="padding:20px 24px;overflow-x:auto;" data-comment-anchor="bf9f8dc292-div">
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:500px;">
+                    <thead>
+                      <tr>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Status</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Range</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Value</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Rate Type</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Last Updated</th>
+                        <th style="border-bottom:1px solid var(--border-default);width:60px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <sc-for list="{{ scheduleHistoryRows }}" as="row" hint-placeholder-count="3">
+                        <tr style="border-bottom:1px solid var(--border-default);">
+                          <td style="padding:14px 12px;"><span style="{{ row.statusBadgeStyle }}">{{ row.status }}</span></td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.rangeFrom }} → {{ row.rangeTo }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.value }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.rateType }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">
+                            <div>{{ row.lastUpdated }}</div>
+                            <div style="font-size:12px;color:var(--text-subtitle);">by {{ row.updatedBy }}</div>
+                          </td>
+                          <td style="padding:14px 12px;">
+                            <sc-if value="{{ row.isExpired }}" hint-placeholder-val="{{ false }}">
+                              <button onClick="{{ row.onEdit }}" style="display:flex;align-items:center;gap:4px;background:none;border:none;padding:6px 10px;font-size:12px;font-weight:700;color:var(--color-green-700, #1c8a4d);cursor:pointer;">
+                                Edit
+                              </button>
+                            </sc-if>
+                          </td>
+                        </tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- EXCEPTION HISTORY MODAL -->
+          <sc-if value="{{ exceptionHistoryOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
+              <div style="background:#fff;border-radius:12px;width:720px;max-width:90vw;max-height:80vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <h3 style="margin:0;font-size:16px;font-weight:600;color:var(--text-title);">Rules Exception History</h3>
+                  <svg onClick="{{ closeExceptionHistory }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <div style="padding:20px 24px;overflow-x:auto;">
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:600px;">
+                    <thead>
+                      <tr>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Group Name</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Latest Range</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Value</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Rate Type</th>
+                        <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Last Updated</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <sc-for list="{{ exceptionHistoryRows }}" as="row" hint-placeholder-count="3">
+                        <tr style="border-bottom:1px solid var(--border-default);">
+                          <td style="padding:14px 12px;">
+                            <div style="display:flex;align-items:center;gap:10px;color:var(--icon-brand);">
+                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+                              <div>
+                                <div style="color:var(--text-body);">{{ row.groupName }}</div>
+                                <div style="font-size:12px;color:var(--text-brand-default);">{{ row.subGroup }}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.rangeFrom }} → {{ row.rangeTo }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.value }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.rateType }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">
+                            <div>{{ row.lastUpdated }}</div>
+                            <div style="font-size:12px;color:var(--text-subtitle);">by {{ row.updatedBy }}</div>
+                          </td>
+                        </tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- CHANGE LOG MODAL -->
+          <sc-if value="{{ changeLogOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1200;">
+              <div style="background:#fff;border-radius:12px;width:560px;max-width:90vw;max-height:80vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);display:flex;flex-direction:column;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <h3 style="margin:0;font-size:18px;font-weight:700;color:var(--text-title);">{{ changeLogTitle }}</h3>
+                  <svg onClick="{{ closeChangeLog }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;flex-shrink:0;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <div style="padding:24px;display:flex;flex-direction:column;">
+                  <sc-for list="{{ changeLogEntries }}" as="entry" hint-placeholder-count="2">
+                    <div>
+                      <div style="display:flex;align-items:flex-start;gap:12px;padding:8px 0;">
+                        <div style="font-size:15px;line-height:1.5;">
+                          <span style="color:var(--text-subtitle);">{{ entry.date }}</span>
+                          <span style="color:var(--text-title);margin-left:8px;"><b>{{ entry.user }}</b> {{ entry.action }}</span>
+                        </div>
+                      </div>
+                      <sc-if value="{{ entry.showDivider }}" hint-placeholder-val="{{ false }}">
+                        <div style="border-bottom:1px solid var(--border-default);margin:4px 0;"></div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;justify-content:flex-end;padding:16px 24px;border-top:1px solid var(--border-default);">
+                  <button onClick="{{ closeChangeLog }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;">Close</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- GROUPS CONNECTION TREE MODAL -->
+          <sc-if value="{{ groupsConnectionOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
+              <div style="background:#fff;border-radius:12px;width:900px;max-width:94vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">Other Groups</h3>
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeGroupsConnection }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <div style="padding:20px 24px;overflow-y:auto;flex:1;">
+                  <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:12px 16px;background:#fafafa;margin-bottom:20px;">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
+                    <input value="{{ groupsConnectionSearch }}" onChange="{{ setGroupsConnectionSearch }}" placeholder="Search group" style="border:none;outline:none;background:transparent;font-size:14px;flex:1;font-family:var(--font-ui);">
+                  </div>
+                  <div style="display:flex;flex-direction:column;">
+                    <sc-for list="{{ treeRows }}" as="row" hint-placeholder-count="6">
+                      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border-default);padding-left:{{ row.indent }}px;">
+                        <sc-if value="{{ row.hasChildren }}" hint-placeholder-val="{{ false }}">
+                          <svg onClick="{{ row.onToggle }}" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--text-brand-default)" stroke-width="2" style="cursor:pointer;flex-shrink:0;transform:{{ row.chevronTransform }};"><path d="M4 6l4 4 4-4"></path></svg>
+                        </sc-if>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="1.6"></circle><circle cx="2" cy="8" r="1.6"></circle><circle cx="2" cy="14" r="1.6"></circle></svg>
+                        <span style="font-size:15px;font-weight:600;color:var(--text-title);">{{ row.name }}</span>
+                        <sc-for list="{{ row.tags }}" as="tag" hint-placeholder-count="1">
+                          <span style="font-size:12px;font-weight:400;color:#111827;background:var(--surface-neutral-lighter, #f1f2f4);border-radius:6px;padding:4px 10px;">{{ tag.label }}</span>
+                        </sc-for>
+                        <sc-if value="{{ row.noAccess }}" hint-placeholder-val="{{ false }}">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5"><path d="M2 14l12-12M6 3.5A5 5 0 0 1 13 8M3 8a5 5 0 0 0 5 5"></path></svg>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ADD NEW EXCEPTION MODAL -->
+          <sc-if value="{{ addExceptionModalOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
+              <div style="background:#fff;border-radius:12px;width:820px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">Set Carrier Fuel Rate Exception</h3>
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeAddExceptionModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
+                  <div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Carrier group</div>
+                    <div style="display:flex;gap:12px;">
+                      <select value="{{ addExceptionCarrierGroup }}" onChange="{{ onAddExceptionCarrierGroup }}" style="flex:1;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);">
+                        <option value="">Carrier Name</option>
+                        <sc-for list="{{ carrierGroupOptions }}" as="g" hint-placeholder-count="3">
+                          <option value="{{ g }}">{{ g }}</option>
+                        </sc-for>
+                      </select>
+                      <select value="{{ addExceptionCarrierSubgroup }}" onChange="{{ onAddExceptionCarrierSubgroup }}" style="flex:1;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);">
+                        <option value="">Carrier Subgroup</option>
+                        <sc-for list="{{ carrierSubgroupOptions }}" as="sg" hint-placeholder-count="1">
+                          <option value="{{ sg }}">{{ sg }}</option>
+                        </sc-for>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:10px;">Rate Type</div>
+                    <div style="display:flex;gap:24px;flex-wrap:nowrap;overflow-x:auto;">
+                      <sc-for list="{{ addExceptionTypeOptions }}" as="opt" hint-placeholder-count="4">
+                        <div onClick="{{ opt.onSelect }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+                          <div style="width:18px;height:18px;border-radius:50%;border:2px solid var(--border-default);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <sc-if value="{{ opt.selected }}" hint-placeholder-val="{{ false }}">
+                              <div style="width:10px;height:10px;border-radius:50%;background:var(--text-brand-default);"></div>
+                            </sc-if>
+                          </div>
+                          <span style="font-size:15px;font-weight:600;color:var(--text-title);">{{ opt.type }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ addExceptionTypeInfo }}" hint-placeholder-val="{{ false }}">
+                      <p style="margin:10px 0 0;font-size:13px;color:var(--text-subtitle);">{{ addExceptionTypeInfo }}</p>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:150px;">
+                      <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
+                      <div style="position:relative;">
+                        <input value="{{ addExceptionStart }}" onChange="{{ onAddExceptionStart }}" placeholder="DD/MM/YYYY" style="width:100%;border:1px solid var(--border-default);border-radius:8px;padding:10px 36px 10px 12px;font-size:14px;box-sizing:border-box;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 2v3M11 2v3"></path></svg>
+                      </div>
+                      <div style="font-size:12px;color:var(--text-subtitle);margin-top:6px;">e.g. 30/05/2026</div>
+                    </div>
+                    <div style="flex:1;min-width:150px;">
+                      <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
+                      <div style="position:relative;">
+                        <input value="{{ addExceptionEnd }}" onChange="{{ onAddExceptionEnd }}" placeholder="DD/MM/YYYY" style="width:100%;border:1px solid var(--border-default);border-radius:8px;padding:10px 36px 10px 12px;font-size:14px;box-sizing:border-box;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 2v3M11 2v3"></path></svg>
+                      </div>
+                      <div style="font-size:12px;color:var(--text-subtitle);margin-top:6px;">e.g. 30/05/2026</div>
+                    </div>
+                    <div style="flex:1;min-width:150px;">
+                      <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">{{ addExceptionValueLabel }}</div>
+                      <input value="{{ addExceptionValue }}" onChange="{{ onAddExceptionValue }}" disabled="{{ addExceptionValueDisabled }}" placeholder="0.00" style="width:100%;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;">
+                    </div>
+                  </div>
+                  <div style="background:var(--warning-surface-lighter);border-radius:10px;padding:16px 18px;display:flex;gap:12px;">
+                    <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.6" style="flex-shrink:0;margin-top:2px;"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
+                    <ul style="margin:0;padding-left:18px;color:var(--warning-text);font-size:14px;line-height:1.5;">
+                      <li>This range is currently active — changing it updates the applied rate immediately.</li>
+                      <li>Orders already booked within this range will retroactively use the new value.</li>
+                    </ul>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:12px;padding:20px 24px;border-top:1px solid var(--border-default);">
+                  <button onClick="{{ closeAddExceptionModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                  <button onClick="{{ saveAddException }}" disabled="{{ addExceptionSaveDisabled }}" style="{{ addExceptionSaveStyle }}">Add</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ADD NEW RANGE MODAL -->
+          <sc-if value="{{ addRangeModalOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
+              <div style="background:#fff;border-radius:12px;width:600px;max-width:90vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <sc-if value="{{ addRangeIsPastEdit }}" hint-placeholder-val="{{ false }}">
+                      <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" onClick="{{ backToScheduleHistory }}" style="cursor:pointer;"><path d="M10 3L5 8l5 5"></path></svg>
+                    </sc-if>
+                    <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ addRangeModalTitle }}</h3>
+                  </div>
+                  <sc-if value="{{ addRangeIsNotPastEdit }}" hint-placeholder-val="{{ true }}">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeAddRangeModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                  </sc-if>
+                </div>
+                <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
+                  <sc-if value="{{ addRangeNeedsConfirm }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;">
+                      <sc-for list="{{ addRangeSteps }}" as="step" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                          <div style="{{ step.circleStyle }}">
+                            <sc-if value="{{ step.dotOn }}" hint-placeholder-val="{{ true }}">
+                              <div style="width:10px;height:10px;border-radius:50%;background:var(--text-brand-default);"></div>
+                            </sc-if>
+                          </div>
+                          <span style="{{ step.labelStyle }}">{{ step.label }}</span>
+                        </div>
+                        <sc-if value="{{ step.hasLine }}" hint-placeholder-val="{{ true }}">
+                          <div style="{{ step.lineStyle }}"></div>
+                        </sc-if>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ addRangeStepIsDetails }}" hint-placeholder-val="{{ true }}">
+                  <div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:10px;">Rate Type</div>
+                    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+                      <sc-for list="{{ addRangeTypeOptions }}" as="opt" hint-placeholder-count="3">
+                        <div onClick="{{ opt.onSelect }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                          <div style="width:18px;height:18px;border-radius:50%;border:2px solid var(--border-default);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <sc-if value="{{ opt.selected }}" hint-placeholder-val="{{ false }}">
+                              <div style="width:10px;height:10px;border-radius:50%;background:var(--text-brand-default);"></div>
+                            </sc-if>
+                          </div>
+                          <span style="font-size:15px;font-weight:600;color:var(--text-title);">{{ opt.type }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ addRangeTypeInfo }}" hint-placeholder-val="{{ false }}">
+                      <p style="margin:10px 0 0;font-size:13px;color:var(--text-subtitle);">{{ addRangeTypeInfo }}</p>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                    <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ true }}">
+                      <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
+                        <div style="display:flex;align-items:center;gap:4px;border:1px solid var(--border-default);border-radius:8px;padding:8px 10px;">
+                          <input value="{{ addRangeStartM }}" onChange="{{ onAddRangeStartM }}" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <span>/</span>
+                          <input value="{{ addRangeStartD }}" onChange="{{ onAddRangeStartD }}" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <span>/</span>
+                          <input value="{{ addRangeStartY }}" onChange="{{ onAddRangeStartY }}" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
+                        <div style="display:flex;align-items:center;gap:4px;border:1px solid var(--border-default);border-radius:8px;padding:8px 10px;">
+                          <input value="{{ addRangeEndM }}" onChange="{{ onAddRangeEndM }}" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <span>/</span>
+                          <input value="{{ addRangeEndD }}" onChange="{{ onAddRangeEndD }}" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <span>/</span>
+                          <input value="{{ addRangeEndY }}" onChange="{{ onAddRangeEndY }}" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
+                        </div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ addRangeIsEdit }}" hint-placeholder-val="{{ false }}">
+                      <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
+                        <input value="{{ addRangeStartFull }}" onChange="{{ onAddRangeStartFull }}" disabled="{{ addRangeIsPastEdit }}" style="{{ addRangeStartInputStyle }}">
+                      </div>
+                      <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
+                        <input value="{{ addRangeEndFull }}" onChange="{{ onAddRangeEndFull }}" disabled="{{ addRangeIsPastEdit }}" style="{{ addRangeEndInputStyle }}">
+                      </div>
+                    </sc-if>
+                    <div style="flex:1;min-width:160px;">
+                      <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Value</div>
+                      <input value="{{ addRangeValue }}" onChange="{{ onAddRangeValue }}" placeholder="e.g. 7.5 or 0.95" style="width:100%;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;">
+                    </div>
+                  </div>
+                  <div style="background:var(--warning-surface-lighter);border-radius:10px;padding:16px 18px;display:flex;gap:12px;">
+                    <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.6" style="flex-shrink:0;margin-top:2px;"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
+                    <ul style="margin:0;padding-left:18px;color:var(--warning-text);font-size:14px;line-height:1.5;">
+                      <sc-if value="{{ addRangeIsPastEdit }}" hint-placeholder-val="{{ false }}">
+                        <li>This corrects a rate from a date in the past.</li>
+                        <li>The corrected value takes effect from the date the proper rate should have applied, so affected orders are recalculated correctly.</li>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsCurrentEdit }}" hint-placeholder-val="{{ true }}">
+                        <li>This range is currently active — changing it updates the applied rate immediately.</li>
+                        <li>Orders already booked within this range will retroactively use the new value.</li>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsFutureEdit }}" hint-placeholder-val="{{ false }}">
+                        <li>This range is scheduled for the future — changing it won't affect any orders yet.</li>
+                        <li>The new value will take effect once the scheduled start date is reached.</li>
+                      </sc-if>
+                    </ul>
+                  </div>
+                  </sc-if>
+                  <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:20px;">
+                      <sc-if value="{{ addRangeIsFutureEdit }}" hint-placeholder-val="{{ false }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">This is a scheduled future rate</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">No orders are affected yet. The new value will take effect on the scheduled start date.</p>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsPastEdit }}" hint-placeholder-val="{{ false }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ addRangeConfirmCount }} orders affected</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This is a correction from a past date. Affected orders will be recalculated using the corrected value from the date it should have applied.</p>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsCurrentEdit }}" hint-placeholder-val="{{ true }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ addRangeConfirmCount }} orders affected</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the applied rate immediately. Orders already booked in this range will retroactively use the new value.</p>
+                        </div>
+                      </sc-if>
+                      <div>
+                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Reason for correction</div>
+                        <textarea value="{{ addRangeCorrectionReason }}" onChange="{{ onAddRangeCorrectionReason }}" placeholder="e.g. Agreement was signed for a lower rate effective this range; original entry used the wrong value." style="width:100%;min-height:88px;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;box-sizing:border-box;resize:vertical;"></textarea>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:12px;padding:20px 24px;border-top:1px solid var(--border-default);">
+                  <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ backAddRangeStep }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Back</button>
+                  </sc-if>
+                  <sc-if value="{{ addRangeStepIsDetails }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ closeAddRangeModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                  </sc-if>
+                  <button onClick="{{ saveAddRange }}" disabled="{{ addRangeSaveDisabled }}" style="{{ addRangeSaveStyle }}">{{ addRangeSaveLabel }}</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- SAVE CHANGE CONFIRM MODAL -->
+          <sc-if value="{{ confirmChangeOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1200;">
+              <div style="background:#fff;border-radius:12px;width:420px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,0.2);padding:24px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--color-green-100);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                  <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a6 6 0 0 1 10.2-4.2M15 8a6 6 0 0 1-10.2 4.2"></path><path d="M13 1v3h-3M5 15v-3h3"></path></svg>
+                </div>
+                <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">Confirm this change?</h3>
+                <p style="margin:0;font-size:15px;line-height:1.5;color:var(--text-caption);">{{ confirmChangeMessage }}</p>
+                <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-default);">
+                  <button onClick="{{ cancelChange }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                  <button onClick="{{ confirmChange }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- SUBGROUP TOGGLE CONFIRM MODAL -->
+          <sc-if value="{{ subgroupConfirmOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
+              <div style="background:#fff;border-radius:12px;width:420px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,0.2);padding:24px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--color-green-100);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                  <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6"><circle cx="9" cy="9" r="6.5"></circle><path d="M9 8v4M9 6v.01"></path></svg>
+                </div>
+                <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ subgroupConfirmTitle }}</h3>
+                <p style="margin:0;font-size:15px;line-height:1.5;color:var(--text-caption);">{{ subgroupConfirmBody }}</p>
+                <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-default);">
+                  <button onClick="{{ cancelSubgroupToggle }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                  <button onClick="{{ confirmSubgroupToggle }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;">
+            <sc-for list="{{ mainTabs }}" as="tab" hint-placeholder-count="4">
+              <div onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ isRfpTab }}" hint-placeholder-val="{{ true }}">
+            <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:24px;display:flex;flex-direction:column;gap:16px;">
+
+              <!-- Sub tabs -->
+              <sc-if value="{{ tabBarVisible }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;border-bottom:2px solid var(--border-default);">
+                  <div onClick="{{ selectSchedule }}" style="{{ scheduleTabStyle }}">Schedule</div>
+                  <div onClick="{{ selectException }}" style="{{ exceptionTabStyle }}">Exception</div>
+                </div>
+              </sc-if>
+
+              <!-- SCHEDULE SUBTAB -->
+              <sc-if value="{{ isScheduleTab }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <div style="display:flex;align-items:center;gap:8px;position:relative;">
+                      <h3 style="margin:0;font-size:16px;font-weight:500;color:var(--text-title);">Fuel Rate Setting</h3>
+                      <svg onMouseEnter="{{ showFuelInfo }}" onMouseLeave="{{ hideFuelInfo }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;flex-shrink:0;"><circle cx="8" cy="8" r="6"></circle><path d="M8 7v4M8 5v.01"></path></svg>
+                      <sc-if value="{{ fuelInfoOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:100%;left:0;margin-top:8px;background:var(--color-neutrals-800,#1f2937);color:#fff;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;width:260px;z-index:20;box-shadow:0 8px 16px rgba(0,0,0,0.2);">Scheduled fuel surcharge ranges applied to shipments based on prevailing fuel price, either as a percentage or a rate per distance.</div>
+                      </sc-if>
+                    </div>
+                    <div style="display:flex;gap:12px;">
+                      <sc-if value="{{ showResetButton }}" hint-placeholder-val="{{ true }}">
+                        <div style="position:relative;">
+                          <button onClick="{{ toggleScheduleMenu }}" style="background:#fff;border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-brand-default);">
+                            <svg width="4" height="18" viewBox="0 0 4 18" fill="currentColor"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="9" r="2"></circle><circle cx="2" cy="16" r="2"></circle></svg>
+                          </button>
+                          <sc-if value="{{ scheduleMenuOpen }}" hint-placeholder-val="{{ false }}">
+                            <div style="position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:260px;z-index:30;padding:8px;">
+                              <div onClick="{{ viewScheduleHistory }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7"></circle><path d="M9 5v4l3 2"></path></svg>
+                                View History
+                              </div>
+                              <sc-if value="{{ isSubgroupLevel }}" hint-placeholder-val="{{ false }}">
+                              <div onClick="{{ resetScheduleToDefault }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 9a5.5 5.5 0 1 1-1.7-3.97M14.5 3v3.5H11"></path></svg>
+                                Reset All Rules to Enterprise Default
+                              </div>
+                              </sc-if>
+                              <div onClick="{{ deleteAllScheduleRows }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;color:var(--icon-danger);font-size:14px;font-weight:500;">
+                                <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h10M6 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M4 4l.7 9a1 1 0 0 0 1 .9h4.6a1 1 0 0 0 1-.9L12 4"></path></svg>
+                                Delete All
+                              </div>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </sc-if>
+                      <button onClick="{{ openAddRangeModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                        Add New Range
+                      </button>
+                    </div>
+                  </div>
+                  <sc-if value="{{ scheduleHasRows }}" hint-placeholder-val="{{ true }}">
+                  <div style="overflow-x:visible;">
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:800px;">
+                      <thead>
+                        <tr>
+                          <th style="border-bottom:1px solid var(--border-default);width:44px;"></th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Status</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Range</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Value</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Rate Type</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Last Updated</th>
+                          <th style="border-bottom:1px solid var(--border-default);width:110px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <sc-for list="{{ scheduleRows }}" as="row" hint-placeholder-count="3">
+                          <tr style="border-bottom:1px solid var(--border-default);">
+                            <td style="padding:16px 20px;position:relative;">
+                              <svg onClick="{{ row.onToggleRowMenu }}" width="4" height="16" viewBox="0 0 4 18" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="9" r="2"></circle><circle cx="2" cy="16" r="2"></circle></svg>
+                              <sc-if value="{{ row.rowMenuOpen }}" hint-placeholder-val="{{ false }}">
+                                <div style="position:absolute;top:calc(100% + 4px);left:0;background:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:160px;z-index:30;padding:6px;">
+                                  <div onClick="{{ row.onEditFromMenu }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">Edit</div>
+                                  <sc-if value="{{ isSubgroupLevel }}" hint-placeholder-val="{{ false }}">
+                                  <div onClick="{{ row.onResetFromMenu }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">Reset to Enterprise Rules</div>
+                                  </sc-if>
+                                  <div onClick="{{ row.onDeleteFromMenu }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--icon-danger);font-size:14px;font-weight:500;">Delete</div>
+                                </div>
+                              </sc-if>
+                            </td>
+                            <td style="padding:16px 12px;">
+                                <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                  <select value="{{ row.status }}" onChange="{{ row.onStatus }}" style="border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                  </select>
+                                </sc-if>
+                                <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">
+                                  <span style="{{ row.statusBadgeStyle }}">{{ row.status }}</span>
+                                </sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                  <input value="{{ row.rangeFrom }}" onChange="{{ row.onRangeFrom }}" style="width:110px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                  <span>→</span>
+                                  <input value="{{ row.rangeTo }}" onChange="{{ row.onRangeTo }}" style="width:110px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                </div>
+                              </sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">
+                                <div style="display:flex;align-items:flex-start;gap:10px;">
+                                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5" style="margin-top:2px;flex-shrink:0;"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 2v3M11 2v3"></path></svg>
+                                  <div>
+                                    <div style="font-size:12px;color:var(--text-caption);">Between</div>
+                                    <div style="display:flex;align-items:center;gap:10px;">
+                                      <span>{{ row.rangeFrom }}</span>
+                                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+                                      <span>{{ row.rangeTo }}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                <input value="{{ row.value }}" onChange="{{ row.onValue }}" style="width:80px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                              </sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.value }}</sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                <input value="{{ row.rateType }}" onChange="{{ row.onRateType }}" style="width:150px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                              </sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.rateType }}</sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <div onClick="{{ row.onOpenLog }}" style="cursor:pointer;color:var(--text-brand-default);">{{ row.lastUpdated }}</div>
+                              <div style="font-size:12px;color:var(--text-subtitle);">by {{ row.updatedBy }}</div>
+                            </td>
+                            <td style="padding:14px 12px;">
+                              <div style="display:flex;gap:12px;justify-content:flex-end;">
+                                <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                  <span onClick="{{ row.onToggleEdit }}" style="color:var(--text-brand-default);font-size:13px;font-weight:600;cursor:pointer;">Save</span>
+                                </sc-if>
+                              </div>
+                            </td>
+                          </tr>
+                        </sc-for>
+                      </tbody>
+                    </table>
+                  </div>
+                  </sc-if>
+                  <sc-if value="{{ scheduleEmpty }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
+                      <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 2v3M11 2v3"></path></svg>
+                      <p style="margin:0;font-size:15px;color:var(--text-caption);">The fuel rate hasn't been set up yet.</p>
+                      <button onClick="{{ openAddRangeModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                        Add New Range
+                      </button>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+              <sc-if value="{{ isExceptionTab }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ exceptionDetailOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                      <svg onClick="{{ closeExceptionDetail }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;flex-shrink:0;"><path d="M10 3L5 8l5 5"></path></svg>
+                      <h3 style="margin:0;font-size:18px;font-weight:700;color:var(--text-title);">{{ exceptionDetailTitle }}</h3>
+                    </div>
+                    <button onClick="{{ openAddRangeModalForDetail }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                      Add New Range
+                    </button>
+                  </div>
+                  <div style="overflow-x:visible;">
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:800px;">
+                      <thead>
+                        <tr>
+                          <th style="border-bottom:1px solid var(--border-default);width:44px;"></th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Status</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Range</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Value</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Rate Type</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Last Updated</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <sc-for list="{{ exceptionDetailRanges }}" as="rg" hint-placeholder-count="2">
+                          <tr style="border-bottom:1px solid var(--border-default);">
+                            <td style="padding:16px 20px;position:relative;">
+                              <svg onClick="{{ rg.onToggleRowMenu }}" width="4" height="16" viewBox="0 0 4 18" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="9" r="2"></circle><circle cx="2" cy="16" r="2"></circle></svg>
+                              <sc-if value="{{ rg.rowMenuOpen }}" hint-placeholder-val="{{ false }}">
+                                <div style="position:absolute;top:calc(100% + 4px);left:0;background:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:160px;z-index:30;padding:6px;">
+                                  <div onClick="{{ rg.onToggleEdit }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">Edit</div>
+                                  <div onClick="{{ rg.onViewHistory }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">View History</div>
+                                  <div onClick="{{ rg.onDelete }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--icon-danger);font-size:14px;font-weight:500;">Delete</div>
+                                </div>
+                              </sc-if>
+                            </td>
+                            <td style="padding:16px 12px;">
+                              <sc-if value="{{ rg.editing }}" hint-placeholder-val="{{ false }}">
+                                <select value="{{ rg.status }}" onChange="{{ rg.onStatus }}" style="border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                  <option value="Active">Active</option>
+                                  <option value="Scheduled">Scheduled</option>
+                                  <option value="Past">Past</option>
+                                </select>
+                              </sc-if>
+                              <sc-if value="{{ rg.notEditing }}" hint-placeholder-val="{{ true }}">
+                                <span style="{{ rg.statusBadgeStyle }}">{{ rg.status }}</span>
+                              </sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ rg.editing }}" hint-placeholder-val="{{ false }}">
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                  <input value="{{ rg.rangeFrom }}" onChange="{{ rg.onRangeFrom }}" style="width:110px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                  <span>→</span>
+                                  <input value="{{ rg.rangeTo }}" onChange="{{ rg.onRangeTo }}" style="width:110px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                </div>
+                              </sc-if>
+                              <sc-if value="{{ rg.notEditing }}" hint-placeholder-val="{{ true }}">
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 2v3M11 2v3"></path></svg>
+                                  <div>
+                                    <div style="color:var(--text-subtitle);font-size:12px;">Between</div>
+                                    <div>{{ rg.rangeFrom }} → {{ rg.rangeTo }}</div>
+                                  </div>
+                                </div>
+                              </sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ rg.editing }}" hint-placeholder-val="{{ false }}">
+                                <input value="{{ rg.value }}" onChange="{{ rg.onValue }}" style="width:90px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                              </sc-if>
+                              <sc-if value="{{ rg.notEditing }}" hint-placeholder-val="{{ true }}">{{ rg.value }}</sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">{{ rg.rateType }}</td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <div onClick="{{ rg.onOpenLog }}" style="cursor:pointer;color:var(--text-brand-default);">{{ rg.lastUpdated }}</div>
+                              <div style="font-size:12px;color:var(--text-subtitle);">by {{ rg.setBy }}</div>
+                            </td>
+                          </tr>
+                        </sc-for>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ exceptionDetailClosed }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;position:relative;">
+                      <h3 style="margin:0;font-size:16px;font-weight:500;color:var(--text-title);">Rules Exception</h3>
+                      <svg onMouseEnter="{{ showExceptionInfo }}" onMouseLeave="{{ hideExceptionInfo }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;flex-shrink:0;"><circle cx="8" cy="8" r="6"></circle><path d="M8 7v4M8 5v.01"></path></svg>
+                      <sc-if value="{{ exceptionInfoOpen }}" hint-placeholder-val="{{ false }}">
+                        <div style="position:absolute;top:100%;left:0;margin-top:8px;background:var(--color-neutrals-800,#1f2937);color:#fff;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;width:260px;z-index:20;box-shadow:0 8px 16px rgba(0,0,0,0.2);">Overrides that apply the fuel rate to a specific carrier group or subgroup instead of the default schedule.</div>
+                      </sc-if>
+                    </div>
+                    <div style="display:flex;gap:12px;">
+                      <div style="position:relative;">
+                        <button onClick="{{ toggleExceptionMenu }}" style="background:#fff;border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-brand-default);">
+                          <svg width="4" height="18" viewBox="0 0 4 18" fill="currentColor"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="9" r="2"></circle><circle cx="2" cy="16" r="2"></circle></svg>
+                        </button>
+                        <sc-if value="{{ exceptionMenuOpen }}" hint-placeholder-val="{{ false }}">
+                          <div style="position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:260px;z-index:30;padding:8px;">
+                            <sc-if value="{{ isSubgroupLevel }}" hint-placeholder-val="{{ false }}">
+                            <div onClick="{{ resetExceptionToDefault }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;">
+                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 9a5.5 5.5 0 1 1-1.7-3.97M14.5 3v3.5H11"></path></svg>
+                              Reset All Rules to Enterprise Default
+                            </div>
+                            </sc-if>
+                            <div onClick="{{ deleteAllExceptionRows }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;color:var(--icon-danger);font-size:14px;font-weight:500;">
+                              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h10M6 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M4 4l.7 9a1 1 0 0 0 1 .9h4.6a1 1 0 0 0 1-.9L12 4"></path></svg>
+                              Delete All
+                            </div>
+                          </div>
+                        </sc-if>
+                      </div>
+                      <button onClick="{{ openAddExceptionModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                        Add New Exception
+                      </button>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:12px 16px;">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" style="color:var(--icon-neutral);"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
+                    <input value="{{ exceptionSearch }}" onChange="{{ setExceptionSearch }}" placeholder="Search your group name" style="border:none;outline:none;font-size:14px;flex:1;font-family:var(--font-ui);">
+                  </div>
+                  <div style="overflow-x:visible;">
+                    <sc-if value="{{ exceptionEmpty }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
+                        <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 1.5v3M11 1.5v3"></path></svg>
+                        <p style="margin:0;font-size:15px;color:var(--text-caption);">No exceptions have been set up yet.</p>
+                        <button onClick="{{ openAddExceptionModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                          Add New Exception
+                        </button>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ exceptionHasRows }}" hint-placeholder-val="{{ true }}">
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:800px;">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Group Name</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Status</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Value</th>
+                          <th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text-subtitle);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border-default);">Rate Type</th>
+                          <th style="border-bottom:1px solid var(--border-default);width:110px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <sc-for list="{{ exceptionRows }}" as="row" hint-placeholder-count="3">
+                          <tr style="border-bottom:1px solid var(--border-default);">
+                            <td style="padding:16px 20px;">
+                              <div style="display:flex;align-items:center;gap:12px;color:var(--icon-brand);">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+                                <div>
+                                  <div style="color:var(--text-body);">{{ row.groupName }}</div>
+                                  <div style="font-size:12px;color:var(--text-brand-default);">{{ row.subGroup }}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                  <input value="{{ row.rangeFrom }}" onChange="{{ row.onRangeFrom }}" style="width:110px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                  <span>→</span>
+                                  <input value="{{ row.rangeTo }}" onChange="{{ row.onRangeTo }}" style="width:110px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                                </div>
+                              </sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                  <span style="{{ row.statusBadgeStyle }}">
+                                    <sc-if value="{{ row.isWarning }}" hint-placeholder-val="{{ false }}">⚠ </sc-if>{{ row.status }}
+                                  </span>
+                                  <sc-if value="{{ row.isScheduled }}" hint-placeholder-val="{{ false }}">
+                                    <span style="font-size:12px;color:var(--text-subtitle);">from {{ row.rangeFromDate }}</span>
+                                  </sc-if>
+                                </div>
+                              </sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                <input value="{{ row.value }}" onChange="{{ row.onValue }}" style="width:90px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                              </sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.value }}</sc-if>
+                            </td>
+                            <td style="padding:14px 12px;color:var(--text-body);">
+                              <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                <input value="{{ row.rateType }}" onChange="{{ row.onRateType }}" style="width:170px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                              </sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.rateType }}</sc-if>
+                            </td>
+                            <td style="padding:14px 12px;">
+                              <div style="display:flex;gap:12px;align-items:center;justify-content:flex-end;color:var(--icon-neutral);">
+                                <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
+                                  <span onClick="{{ row.onToggleEdit }}" style="color:var(--text-brand-default);font-size:13px;font-weight:600;cursor:pointer;">Save</span>
+                                </sc-if>
+                                <svg onClick="{{ row.onOpenDetail }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;flex-shrink:0;"><path d="M6 3l5 5-5 5"></path></svg>
+                              </div>
+                            </td>
+                          </tr>
+                        </sc-for>
+                      </tbody>
+                    </table>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-if>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isRulesTab }}" hint-placeholder-val="{{ false }}">
+            <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:24px;display:flex;flex-direction:column;gap:16px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:8px;position:relative;">
+                  <h3 style="margin:0;font-size:16px;font-weight:500;color:var(--text-title);">{{ rulesTitle }}</h3>
+                  <svg onMouseEnter="{{ showRulesInfo }}" onMouseLeave="{{ hideRulesInfo }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;flex-shrink:0;"><circle cx="8" cy="8" r="6"></circle><path d="M8 7v4M8 5v.01"></path></svg>
+                  <sc-if value="{{ rulesInfoOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;top:100%;left:0;margin-top:8px;background:var(--color-neutrals-800,#1f2937);color:#fff;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;width:260px;z-index:20;box-shadow:0 8px 16px rgba(0,0,0,0.2);">{{ rulesInfoText }}</div>
+                  </sc-if>
+                </div>
+                <div style="display:flex;gap:12px;">
+                  <sc-if value="{{ isSubgroupLevel }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ resetAllRules }}" style="background:#fff;color:var(--text-brand-default);border:1px solid var(--border-default);border-radius:8px;padding:10px 18px;font-size:14px;font-weight:500;cursor:pointer;">Reset All Rules</button>
+                  </sc-if>
+                  <button onClick="{{ openRuleModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:500;cursor:pointer;">Edit Rules</button>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:11px 16px;">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
+                <input value="{{ rulesSearch }}" onChange="{{ setRulesSearch }}" placeholder="Search your article number, or article description" style="border:none;outline:none;font-size:14px;flex:1;font-family:var(--font-ui);">
+              </div>
+              <div style="overflow-x:visible;">
+                <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:700px;">
+                  <thead>
+                    <tr>
+                      <th style="border-bottom:1px solid var(--border-default);width:44px;"></th>
+                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Number</th>
+                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Description</th>
+                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Rate</th>
+                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Last Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ rulesRows }}" as="rule" hint-placeholder-count="0">
+                      <tr style="border-bottom:1px solid var(--border-default);">
+                        <td style="padding:14px 20px;position:relative;">
+                          <svg onClick="{{ rule.onToggleRowMenu }}" width="4" height="16" viewBox="0 0 4 18" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="9" r="2"></circle><circle cx="2" cy="16" r="2"></circle></svg>
+                          <sc-if value="{{ rule.rowMenuOpen }}" hint-placeholder-val="{{ false }}">
+                            <div style="position:absolute;top:calc(100% + 4px);left:0;background:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:160px;z-index:30;padding:6px;">
+                              <div onClick="{{ rule.onEditFromMenu }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">Edit</div>
+                              <sc-if value="{{ isSubgroupLevel }}" hint-placeholder-val="{{ false }}">
+                              <div onClick="{{ rule.onResetFromMenu }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">Reset to Enterprise Rules</div>
+                              </sc-if>
+                              <div onClick="{{ rule.onDeleteFromMenu }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--icon-danger);font-size:14px;font-weight:500;">Delete</div>
+                            </div>
+                          </sc-if>
+                        </td>
+                        <td style="padding:14px 12px;color:var(--text-body);">
+                          <sc-if value="{{ rule.editing }}" hint-placeholder-val="{{ false }}">
+                            <input value="{{ rule.num }}" onChange="{{ rule.onNum }}" style="width:80px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                          </sc-if>
+                          <sc-if value="{{ rule.notEditing }}" hint-placeholder-val="{{ true }}">{{ rule.num }}</sc-if>
+                        </td>
+                        <td style="padding:14px 12px;color:var(--text-body);">
+                          <sc-if value="{{ rule.editing }}" hint-placeholder-val="{{ false }}">
+                            <input value="{{ rule.desc }}" onChange="{{ rule.onDesc }}" style="width:260px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                          </sc-if>
+                          <sc-if value="{{ rule.notEditing }}" hint-placeholder-val="{{ true }}">{{ rule.desc }}</sc-if>
+                        </td>
+                        <td style="padding:14px 12px;color:var(--text-body);">
+                          <sc-if value="{{ rule.editing }}" hint-placeholder-val="{{ false }}">
+                            <input value="{{ rule.rate }}" onChange="{{ rule.onRate }}" style="width:100px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
+                          </sc-if>
+                          <sc-if value="{{ rule.notEditing }}" hint-placeholder-val="{{ true }}">{{ rule.rate }}</sc-if>
+                        </td>
+                        <td style="padding:14px 12px;color:var(--text-body);">
+                          <div onClick="{{ rule.onOpenLog }}" style="cursor:pointer;color:var(--text-brand-default);">{{ rule.lastUpdated }}</div>
+                          <div style="font-size:12px;color:var(--text-subtitle);">by {{ rule.updatedBy }}</div>
+                        </td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:24px;font-size:13px;color:var(--text-body);">
+                <span>Rows per page</span>
+                <span style="display:flex;align-items:center;gap:6px;border:1px solid var(--border-default);border-radius:6px;padding:6px 10px;">25
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6l4 4 4-4"></path></svg>
+                </span>
+                <span>1-25 of 100</span>
+                <div style="display:flex;gap:14px;color:var(--icon-neutral);">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3v10M12 3L6 8l6 5"></path></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3L5 8l5 5"></path></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"></path></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3l6 5-6 5M12 3v10"></path></svg>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ADD RULE MODAL -->
+          <sc-if value="{{ ruleModalOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
+              <div style="background:#fff;border-radius:12px;width:480px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ ruleModalTitle }}</h3>
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeRuleModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
+                  <div style="position:relative;">
+                    <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Article Number</label>
+                    <input value="{{ ruleModalNum }}" onChange="{{ onRuleModalNum }}" onFocus="{{ openRuleNumDropdown }}" onBlur="{{ closeRuleNumDropdown }}" placeholder="Search or type a new code..." style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);">
+                    <sc-if value="{{ ruleNumDropdownOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border-default);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.12);max-height:220px;overflow-y:auto;z-index:10;">
+                        <sc-for list="{{ ruleModalNumOptions }}" as="opt" hint-placeholder-count="0">
+                          <div onMouseDown="{{ opt.onSelect }}" style="padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--border-default);">
+                            <div style="font-size:14px;font-weight:700;color:var(--text-title);">{{ opt.desc }}</div>
+                            <div style="font-size:13px;color:var(--text-caption);margin-top:2px;">{{ opt.num }}</div>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:14px;color:var(--text-title);margin-bottom:8px;"><span style="font-weight:700;">Article Description</span> <span style="font-weight:400;color:var(--text-caption);">— auto-filled, editable</span></label>
+                    <input value="{{ ruleModalDesc }}" onChange="{{ onRuleModalDesc }}" placeholder="e.g. Weekend Surcharge" style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);">
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Rate</label>
+                    <div style="display:flex;gap:12px;">
+                      <div style="flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;">
+                        <span style="color:var(--text-caption);">€</span>
+                        <input value="{{ ruleModalRate }}" onChange="{{ onRuleModalRate }}" placeholder="0.00" style="border:none;outline:none;flex:1;font-size:14px;font-family:var(--font-ui);width:0;">
+                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><path d="M2 5l4-4 4 4M2 9l4 4 4-4"></path></svg>
+                      </div>
+                      <select value="{{ ruleModalUnit }}" onChange="{{ onRuleModalUnit }}" style="border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:#fff;">
+                        <option value="/ order">/ order</option>
+                        <option value="/ km">/ km</option>
+                        <option value="/ shipment">/ shipment</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px;border-top:1px solid var(--border-default);">
+                  <sc-if value="{{ ruleModalIsEdit }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ openDeleteConfirm }}" style="background:transparent;color:var(--icon-danger);border:none;padding:12px 4px;font-size:14px;font-weight:700;cursor:pointer;">Delete</button>
+                  </sc-if>
+                  <div style="display:flex;gap:12px;margin-left:auto;">
+                    <button onClick="{{ closeRuleModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                    <button onClick="{{ saveRuleModal }}" disabled="{{ ruleModalSaveDisabled }}" style="{{ ruleModalSaveStyle }}">Save</button>
+                  </div>
+                </div>
+              </div>
+
+              <sc-if value="{{ deleteConfirmOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
+                  <div style="background:#fff;border-radius:12px;width:420px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,0.2);padding:24px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--warning-surface-lighter);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                      <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.6"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
+                    </div>
+                    <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ deleteConfirmTitle }}</h3>
+                    <p style="margin:0;font-size:15px;line-height:1.5;color:var(--text-caption);">You'll need to register the article again, and any pricing list using it will be affected immediately.</p>
+                    <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-default);">
+                      <button onClick="{{ closeDeleteConfirm }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                      <button onClick="{{ confirmDeleteRule }}" style="background:transparent;color:var(--icon-danger);border:none;padding:12px 8px;font-size:14px;font-weight:700;cursor:pointer;">Delete rate</button>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;}}">
+const TABS = ['Fuel Rate', 'Surcharges', 'Kilometre Rates', 'Minimum Rate'];
+const RANGE_TYPE_INFO = {
+  'Fuel Rate/Distance': 'A fixed surcharge applied per distance unit travelled.',
+  'Fuel Percentage': 'A percentage surcharge applied to the base transport cost.',
+  'Fuel Not Applicable': 'No fuel surcharge applies for this range.',
+};
+function tagsFromGroupType(groupType) {
+  return ['Carrier', 'Shipper'];
+}
+function buildGroupsTree(groupsData) {
+  const byGroup = {};
+  groupsData.forEach(row => { (byGroup[row.group] = byGroup[row.group] || []).push(row); });
+  return Object.keys(byGroup).map(groupName => {
+    const rows = byGroup[groupName];
+    const root = rows.find(r => r.subgroup === groupName) || rows[0];
+    const nodeById = {};
+    rows.forEach(r => { nodeById[r.id] = { id: r.id, name: r.subgroup, tags: tagsFromGroupType(r.groupType), children: [] }; });
+    rows.forEach(r => {
+      if (r.id === root.id) return;
+      const parentRow = r.parentSubgroup && rows.find(pr => pr.subgroup === r.parentSubgroup);
+      const parentNode = parentRow ? nodeById[parentRow.id] : nodeById[root.id];
+      parentNode.children.push(nodeById[r.id]);
+    });
+    return nodeById[root.id];
+  });
+}
+const EXCEPTION_TYPE_INFO = {
+  'Fuel Rate/Distance': 'A fixed surcharge applied per distance unit travelled.',
+  'Fuel Percentage': 'A percentage surcharge applied to the base transport cost.',
+  'Fuel Not Applicable': 'No fuel surcharge applies for this carrier.',
+  'Transport Rate/Distance': 'A base transport rate charged per distance unit travelled.',
+};
+const RULE_MODAL_TITLES = { Surcharges: 'Edit Surcharge', 'Kilometre Rates': 'Edit Kilometre Rate', 'Minimum Rate': 'Edit Minimum Rate' };
+const RULE_INFO_TEXT = {
+  Surcharges: 'Additional fees applied on top of the base rate, such as waiting time, booking fees, or stop charges.',
+  'Kilometre Rates': 'Per-kilometre transport rates used to calculate distance-based pricing for each vehicle type.',
+  'Minimum Rate': 'The lowest chargeable rate guaranteed per ride, applied when the calculated rate falls below this floor.',
+};
+
+class Component extends DCLogic {
+  state = {
+    screen: 'groups',
+    activeTab: 'Fuel Rate',
+    subTab: 'schedule',
+    bannerVisible: true,
+    groupsView: 'enterprises',
+    enterpriseOn: true,
+    subgroupOn: false,
+    exceptionSearch: '',
+    scheduleRows: [
+      { id: 1, status: 'Active', rangeFrom: 'Sat, 01 Aug 2026', rangeTo: 'Mon, 31 Aug 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '18 Jan 2026', updatedBy: 'M. Kowalski', history: [
+        { date: '4 Feb 2026', user: 'M. Kowalski', action: 'changed the end date to 31 Aug 2026' },
+        { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to 10%' },
+        { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ] },
+      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+        { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ] },
+    ],
+    exceptionRows: [],
+    nextScheduleId: 4,
+    nextExceptionId: 4,
+    rulesSearch: '',
+    nextRuleId: { Surcharges: 12, 'Kilometre Rates': 10, 'Minimum Rate': 10 },
+    ruleModalOpen: false,
+    ruleModalNum: '',
+    ruleModalDesc: '',
+    ruleModalRate: '',
+    ruleModalUnit: '/ order',
+    ruleNumDropdownOpen: false,
+    ruleModalEditId: null,
+    deleteConfirmOpen: false,
+    rulesInfoOpen: false,
+    fuelInfoOpen: false,
+    exceptionInfoOpen: false,
+    subgroupConfirmOpen: false,
+    subgroupConfirmMode: 'on',
+    scheduleMenuOpen: false,
+    exceptionMenuOpen: false,
+    scheduleHistoryOpen: false,
+    exceptionHistoryOpen: false,
+    changeLogOpen: false,
+    changeLogTitle: '',
+    changeLogEntries: [],
+    rowMenuOpenId: null,
+    addRangeModalOpen: false,
+    addRangeType: null,
+    addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
+    addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
+    addRangeValue: '',
+    addRangeEditId: null,
+    addRangeEditListKey: null,
+    addRangeStartFull: '',
+    addRangeEndFull: '',
+    addExceptionModalOpen: false,
+    addExceptionCarrierGroup: '',
+    addExceptionCarrierSubgroup: '',
+    addExceptionType: 'Fuel Rate/Distance',
+    addExceptionStart: '',
+    addExceptionEnd: '',
+    addExceptionValue: '',
+    addRangeStep: 1,
+    groupsConnectionOpen: false,
+    confirmChangeOpen: false,
+    confirmChangeCount: 0,
+    confirmChangeAction: '',
+    groupsConnectionSearch: '',
+    treeExpandedIds: { 1: true, 4: true },
+    exceptionDetailOpen: false,
+    exceptionDetailId: null,
+    Surcharges: [
+      { id: 1, num: '402', desc: 'Waiting time pickup (courier)', rate: '€ 112.00', editing: false },
+      { id: 2, num: '403', desc: 'Waiting time delivery (courier)', rate: '€ 22.00', editing: false },
+      { id: 3, num: '460', desc: 'Booking fee', rate: '€ 5.45', editing: false },
+      { id: 4, num: '462', desc: 'Additional Stop (Courier)', rate: '€ 30.25', editing: false },
+      { id: 5, num: '470', desc: 'Evening Surcharge', rate: '€ 27.50', editing: false },
+      { id: 6, num: '472', desc: 'Weekend Surcharge', rate: '€ 55.00', editing: false },
+      { id: 7, num: '500', desc: 'Fixed price FTL', rate: '€ 223.00', editing: false },
+      { id: 8, num: '502', desc: 'Cancellation fee (FTL)', rate: '€ 232.00', editing: false },
+      { id: 9, num: '508', desc: 'Proof of delivery (Signed POD) (FTL)', rate: '€ 99.00', editing: false },
+      { id: 10, num: '509', desc: 'Paper Invoice Fee (FTL)', rate: '€ 88.00', editing: false },
+    ],
+    'Kilometre Rates': [
+      { id: 1, num: '410', desc: 'Delivery Car Transport rate', rate: '€ 0.73', editing: false },
+      { id: 2, num: '411', desc: 'L1H1 Transport rate', rate: '€ 0.80', editing: false },
+      { id: 3, num: '412', desc: 'L1H2 Transport rate', rate: '€ 0.80', editing: false },
+      { id: 4, num: '413', desc: 'L2H1 Transport rate', rate: '€ 0.80', editing: false },
+      { id: 5, num: '414', desc: 'L2H2 Transport rate', rate: '€ 0.80', editing: false },
+      { id: 6, num: '415', desc: 'L3H2 Transport rate', rate: '€ 0.86', editing: false },
+      { id: 7, num: '416', desc: 'L3H3 Transport rate', rate: '€ 0.86', editing: false },
+      { id: 8, num: '417', desc: 'L4H2 Transport rate', rate: '€ 0.92', editing: false },
+      { id: 9, num: '418', desc: 'L4H4 Transport rate', rate: '€ 0.92', editing: false },
+    ],
+    'Minimum Rate': [
+      { id: 1, num: '420', desc: 'Delivery Car Minimum rate', rate: '€ 72.60', editing: false },
+      { id: 2, num: '421', desc: 'L1H1 Minimum ride fare', rate: '€ 80.30', editing: false },
+      { id: 3, num: '422', desc: 'L1H2 Minimum ride fare', rate: '€ 80.30', editing: false },
+      { id: 4, num: '423', desc: 'L2H1 Minimum ride fare', rate: '€ 80.30', editing: false },
+      { id: 5, num: '424', desc: 'L2H2 Minimum ride fare', rate: '€ 80.30', editing: false },
+      { id: 6, num: '425', desc: 'L3H2 Minimum ride fare', rate: '€ 85.80', editing: false },
+      { id: 7, num: '426', desc: 'L3H3 Minimum ride fare', rate: '€ 85.80', editing: false },
+      { id: 8, num: '427', desc: 'L4H2 Minimum ride fare', rate: '€ 85.80', editing: false },
+      { id: 9, num: '428', desc: 'L4H4 Minimum ride fare', rate: '€ 85.80', editing: false },
+    ],
+    groupsData: [
+      { id: 1, subgroup: 'CtrlChain Enterprise', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load', manager: 'Martijn Coenen', industry: 'Transport' },
+      { id: 2, subgroup: 'Benelux Fleet', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:15', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: '-' },
+      { id: 3, subgroup: 'DACH Operations', group: 'CtrlChain Enterprise', parentSubgroup: 'Benelux Fleet', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:20', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: '-' },
+      { id: 4, subgroup: 'Ingram Enterprise', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Shipper, Finance customer, Location, Enterprise', serviceType: '-', manager: 'Sanne de Groot', industry: 'Transport' },
+      { id: 5, subgroup: 'Nordics Distribution', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '10:05', groupType: 'Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: '-' },
+      { id: 7, subgroup: 'NewCold Enterprise', group: 'NewCold Enterprise', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Thu, 16 Jul 2026', createdTime: '09:15', groupType: 'Carrier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: 'Anders Lindqvist', industry: 'Transport' },
+      { id: 6, subgroup: 'Baltic Carriers', group: 'NewCold Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '11:40', groupType: 'Carrier, Finance supplier, Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: '-' },
+    ],
+    filterChipsData: [
+      { id: 1, label: 'Assigned Operator: John Doe' },
+      { id: 2, label: 'Country: Netherlands' },
+    ],
+  };
+
+  goGroups = () => this.setState({ screen: 'groups' });
+  selectGroupsViewEnterprises = () => this.setState({ groupsView: 'enterprises' });
+  selectGroupsViewAll = () => this.setState({ groupsView: 'all' });
+  groupsViewTabStyle = (active) => ({
+    padding: '14px 20px', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+    color: active ? 'var(--text-brand-default)' : 'var(--text-subtitle)',
+    borderBottom: active ? '2px solid var(--border-brand-default)' : '2px solid transparent',
+    marginBottom: -1,
+  });
+  goRate = (id) => this.setState({ screen: 'rate', activeGroupId: id ?? this.state.activeGroupId ?? 4, activeTab: 'Fuel Rate', subTab: 'schedule' });
+  toggleEnterprise = () => this.setState(s => ({ enterpriseOn: !s.enterpriseOn }));
+  toggleSubgroup = () => this.setState(s => s.subgroupOn ? { subgroupConfirmOpen: true, subgroupConfirmMode: 'off' } : { subgroupConfirmOpen: true, subgroupConfirmMode: 'on' });
+  confirmSubgroupToggle = () => this.setState(s => ({ subgroupOn: s.subgroupConfirmMode !== 'off', subgroupConfirmOpen: false }));
+  cancelSubgroupToggle = () => this.setState({ subgroupConfirmOpen: false });
+  dismissBanner = () => this.setState({ bannerVisible: false });
+  selectSchedule = () => this.setState({ subTab: 'schedule' });
+  selectException = () => this.setState({ subTab: 'exception' });
+  setTab = (name) => this.setState({ activeTab: name });
+  setExceptionSearch = (e) => this.setState({ exceptionSearch: e.target.value });
+  setRulesSearch = (e) => this.setState({ rulesSearch: e.target.value });
+  toggleRuleEdit = (key, id) => this.setState(s => ({ [key]: s[key].map(r => r.id === id ? { ...r, editing: !r.editing } : r) }));
+  updateRuleField = (key, id, field, value) => this.setState(s => ({ [key]: s[key].map(r => r.id === id ? { ...r, [field]: value } : r) }));
+  addRuleRow = (key) => this.setState(s => ({
+    [key]: [{ id: s.nextRuleId[key], num: '', desc: 'New rule', rate: '€ 0.00', editing: true }, ...s[key]],
+    nextRuleId: { ...s.nextRuleId, [key]: s.nextRuleId[key] + 1 },
+  }));
+  resetAllRules = (key) => this.setState(s => ({ [key]: s[key].map(r => ({ ...r, editing: false })) }));
+  componentDidMount() {
+    this.ruleDefaults = {
+      Surcharges: JSON.parse(JSON.stringify(this.state.Surcharges)),
+      'Kilometre Rates': JSON.parse(JSON.stringify(this.state['Kilometre Rates'])),
+      'Minimum Rate': JSON.parse(JSON.stringify(this.state['Minimum Rate'])),
+    };
+    this.setState({ exceptionRows: this.defaultExceptionRows() });
+  }
+  resetRuleRow = (key, id) => {
+    const def = (this.ruleDefaults[key] || []).find(r => r.id === id);
+    if (!def) return;
+    this.setState(s => ({ [key]: s[key].map(r => r.id === id ? { ...def, editing: false } : r) }));
+  };
+  deleteRuleRow = (key, id) => this.setState(s => ({ [key]: s[key].filter(r => r.id !== id) }));
+  ruleMeta = (id) => {
+    const pool = [
+      { date: '18 Jan 2026', user: 'M. Kowalski' },
+      { date: '9 Dec 2025', user: 'A. de Vries' },
+      { date: '3 Nov 2025', user: 'R. Jansen' },
+    ];
+    return pool[id % pool.length];
+  };
+  openRuleChangeLog = (rule) => {
+    const meta = this.ruleMeta(rule.id);
+    this.setState({
+      changeLogOpen: true,
+      changeLogTitle: `${rule.num} · ${rule.desc}`,
+      changeLogEntries: [
+        { date: meta.date, user: meta.user, action: `change the rate to ${rule.rate}`, showDivider: true },
+        { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this article', showDivider: false },
+      ],
+    });
+  };
+  openRuleModal = () => this.setState({ ruleModalOpen: true, ruleModalNum: '', ruleModalDesc: '', ruleModalRate: '', ruleModalUnit: '/ order', ruleNumDropdownOpen: false, ruleModalEditId: null });
+  openRuleEditModal = (key, row) => {
+    const n = parseFloat((row.rate || '').replace(/[^\d.]/g, ''));
+    this.setState({
+      ruleModalOpen: true, ruleModalEditId: row.id,
+      ruleModalNum: row.num, ruleModalDesc: row.desc,
+      ruleModalRate: isNaN(n) ? '' : String(n), ruleModalUnit: '/ order', ruleNumDropdownOpen: false,
+    });
+  };
+  deleteRuleModal = () => this.setState(s => {
+    const key = s.activeTab;
+    return { [key]: s[key].filter(r => r.id !== s.ruleModalEditId), ruleModalOpen: false };
+  });
+  openDeleteConfirm = () => this.setState({ deleteConfirmOpen: true });
+  closeDeleteConfirm = () => this.setState({ deleteConfirmOpen: false });
+  showRulesInfo = () => this.setState({ rulesInfoOpen: true });
+  hideRulesInfo = () => this.setState({ rulesInfoOpen: false });
+  showFuelInfo = () => this.setState({ fuelInfoOpen: true });
+  hideFuelInfo = () => this.setState({ fuelInfoOpen: false });
+  showExceptionInfo = () => this.setState({ exceptionInfoOpen: true });
+  hideExceptionInfo = () => this.setState({ exceptionInfoOpen: false });
+  confirmDeleteRule = () => this.setState(s => {
+    const key = s.activeTab;
+    return { [key]: s[key].filter(r => r.id !== s.ruleModalEditId), ruleModalOpen: false, deleteConfirmOpen: false };
+  });
+  closeRuleModal = () => this.setState({ ruleModalOpen: false });
+  openRuleNumDropdown = () => this.setState({ ruleNumDropdownOpen: true });
+  closeRuleNumDropdown = () => this.setState({ ruleNumDropdownOpen: false });
+  selectRuleNumOption = (opt) => this.setState({ ruleModalNum: opt.num, ruleModalDesc: opt.desc, ruleNumDropdownOpen: false });
+  onRuleModalNum = (e) => this.setState({ ruleModalNum: e.target.value });
+  onRuleModalDesc = (e) => this.setState({ ruleModalDesc: e.target.value });
+  onRuleModalRate = (e) => this.setState({ ruleModalRate: e.target.value });
+  onRuleModalUnit = (e) => this.setState({ ruleModalUnit: e.target.value });
+  saveRuleModal = () => {
+    const affected = 12 + Math.floor(Math.random() * 40);
+    this.setState({ confirmChangeOpen: true, confirmChangeCount: affected, confirmChangeAction: 'ruleModal', confirmChangeUnit: 'orders' });
+  };
+  commitRuleModal = () => this.setState(s => {
+    const key = s.activeTab;
+    const n = parseFloat(s.ruleModalRate);
+    const rate = `€ ${isNaN(n) ? '0.00' : n.toFixed(2)}`;
+    if (s.ruleModalEditId != null) {
+      return {
+        [key]: s[key].map(r => r.id === s.ruleModalEditId ? { ...r, num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, editing: false } : r),
+        ruleModalOpen: false,
+      };
+    }
+    return {
+      [key]: [{ id: s.nextRuleId[key], num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, editing: false }, ...s[key]],
+      nextRuleId: { ...s.nextRuleId, [key]: s.nextRuleId[key] + 1 },
+      ruleModalOpen: false,
+    };
+  });
+  ruleModalSaveStyle = (disabled) => ({
+    background: disabled ? 'var(--button-disabled-bg, #e5e5e5)' : 'var(--button-primary-bg-default)',
+    color: disabled ? 'var(--button-disabled-label, #9e9e9e)' : 'var(--button-primary-label)',
+    border: 'none', borderRadius: 8, padding: '12px 24px', fontSize: 14, fontWeight: 700,
+    cursor: disabled ? 'not-allowed' : 'pointer',
+  });
+
+  updateRow = (listKey, id, field, value) => {
+    this.setState(s => ({ [listKey]: s[listKey].map(r => r.id === id ? { ...r, [field]: value } : r) }));
+  };
+  toggleEdit = (listKey, id) => this.setState(s => ({ [listKey]: s[listKey].map(r => r.id === id ? { ...r, editing: !r.editing } : r) }));
+  deleteRow = (listKey, id) => this.setState(s => ({ [listKey]: s[listKey].filter(r => r.id !== id) }));
+  duplicateRow = (listKey, id) => this.setState(s => {
+    const row = s[listKey].find(r => r.id === id);
+    if (!row) return null;
+    const nextIdKey = listKey === 'scheduleRows' ? 'nextScheduleId' : 'nextExceptionId';
+    const newRow = { ...row, id: s[nextIdKey], editing: false };
+    return { [listKey]: [...s[listKey], newRow], [nextIdKey]: s[nextIdKey] + 1 };
+  });
+  openAddRangeModal = () => this.setState({
+    addRangeModalOpen: true, addRangeTarget: 'schedule', addRangeType: null, addRangeStep: 1,
+    addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
+    addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
+    addRangeValue: '',
+  });
+  openAddRangeModalForDetail = () => this.setState({
+    addRangeModalOpen: true, addRangeTarget: 'detail', addRangeType: null, addRangeStep: 1,
+    addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
+    addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
+    addRangeValue: '',
+  });
+  openEditDetailRangeModal = (rg) => this.setState(s => ({
+    addRangeModalOpen: true, addRangeTarget: 'detailRange', addRangeStep: 1,
+    addRangeEditId: rg.id, addRangeDetailExceptionId: s.exceptionDetailId,
+    addRangeEditRowStatus: rg.status,
+    addRangeType: rg.rateType,
+    addRangeValue: String(rg.value).replace('%', '').replace('€', '').trim(),
+    addRangeStartFull: rg.rangeFrom, addRangeEndFull: rg.rangeTo,
+  }));
+  openEditRangeModal = (listKey, row) => this.setState({
+    addRangeModalOpen: true, addRangeTarget: 'editSchedule', addRangeStep: 1,
+    addRangeEditId: row.id, addRangeEditListKey: listKey,
+    addRangeEditRowStatus: row.status,
+    addRangeType: row.rateType,
+    addRangeValue: String(row.value).replace('%', '').replace('€', '').trim(),
+    addRangeStartFull: row.rangeFrom, addRangeEndFull: row.rangeTo,
+  });
+  closeAddRangeModal = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, addRangeCorrectionReason: '' });
+  backToScheduleHistory = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, scheduleHistoryOpen: true });
+  addRangeBack = () => this.state.addRangeEditListKey === 'scheduleHistoryRows' ? this.backToScheduleHistory() : this.closeAddRangeModal();
+  backAddRangeStep = () => this.setState({ addRangeStep: 1 });
+  setAddRangeType = (type) => this.setState({ addRangeType: type });
+  setAddRangeField = (field, value) => this.setState({ [field]: value });
+  saveAddRange = () => {
+    const s = this.state;
+    const isEnterpriseLevel = (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).group;
+    const isPastEdit = s.addRangeEditRowStatus === 'Expired';
+    const needsConfirm = (isEnterpriseLevel && s.addRangeTarget !== 'detail') || isPastEdit;
+    if (needsConfirm && s.addRangeStep === 1) {
+      const activeGroup = s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3];
+      const subgroupCount = s.groupsData.filter(g => g.group === activeGroup.group && g.id !== activeGroup.id).length;
+      const affected = subgroupCount * (18 + Math.floor(Math.random() * 30));
+      this.setState({ addRangeStep: 2, confirmChangeCount: affected });
+      return;
+    }
+    this.commitAddRange();
+  };
+  cancelChange = () => this.setState({ confirmChangeOpen: false });
+  confirmChange = () => {
+    if (this.state.confirmChangeAction === 'ruleModal') this.commitRuleModal();
+    this.setState({ confirmChangeOpen: false });
+  };
+  commitAddRange = () => this.setState(s => {
+    const startDate = `${s.addRangeStartM}/${s.addRangeStartD}/${s.addRangeStartY}`;
+    const endDate = `${s.addRangeEndM}/${s.addRangeEndD}/${s.addRangeEndY}`;
+    const valueSuffix = s.addRangeType === 'Fuel Percentage' ? '%' : '';
+    const value = valueSuffix ? `${s.addRangeValue}${valueSuffix}` : s.addRangeValue;
+    if (s.addRangeTarget === 'editSchedule') {
+      if (!Array.isArray(s[s.addRangeEditListKey])) return { addRangeModalOpen: false, addRangeStep: 1 };
+      return {
+        [s.addRangeEditListKey]: s[s.addRangeEditListKey].map(r => r.id !== s.addRangeEditId ? r : {
+          ...r, rangeFrom: s.addRangeStartFull, rangeTo: s.addRangeEndFull, value, rateType: s.addRangeType, editing: false,
+        }),
+        addRangeModalOpen: false, addRangeStep: 1,
+      };
+    }
+    if (s.addRangeTarget === 'detailRange') {
+      return {
+        exceptionRows: s.exceptionRows.map(r => r.id !== s.addRangeDetailExceptionId ? r : {
+          ...r,
+          ranges: r.ranges.map(rg => rg.id !== s.addRangeEditId ? rg : { ...rg, rangeFrom: s.addRangeStartFull, rangeTo: s.addRangeEndFull, value, rateType: s.addRangeType, editing: false }),
+        }),
+        addRangeModalOpen: false, addRangeStep: 1,
+      };
+    }
+    if (s.addRangeTarget === 'detail') {
+      return {
+        exceptionRows: s.exceptionRows.map(r => r.id !== s.exceptionDetailId ? r : {
+          ...r,
+          ranges: [{
+            id: (Math.max(0, ...r.ranges.map(x => x.id)) + 1), rangeFrom: startDate, rangeTo: endDate,
+            value, rateType: s.addRangeType, setBy: 'You', lastUpdated: 'Today', status: 'Scheduled', editing: false,
+          }, ...r.ranges],
+        }),
+        addRangeModalOpen: false, addRangeStep: 1,
+      };
+    }
+    return {
+      scheduleRows: [{
+        id: s.nextScheduleId, status: 'Active', rangeFrom: startDate, rangeTo: endDate,
+        value, rateType: s.addRangeType,
+        editing: false, lastUpdated: 'Today', updatedBy: 'You', history: [{ date: 'Today', user: 'You', action: 'created this range' }],
+      }, ...s.scheduleRows],
+      nextScheduleId: s.nextScheduleId + 1,
+      addRangeModalOpen: false, addRangeStep: 1,
+    };
+  });
+  addScheduleRow = () => this.setState(s => ({
+    scheduleRows: [{ id: s.nextScheduleId, status: 'Active', rangeFrom: 'Select date', rangeTo: 'Select date', value: '0%', rateType: 'Fuel Percentage', editing: true, lastUpdated: 'Today', updatedBy: 'You' }, ...s.scheduleRows],
+    nextScheduleId: s.nextScheduleId + 1,
+  }));
+  resetScheduleRows = () => this.setState({
+    scheduleRows: this.defaultScheduleRows(),
+    nextScheduleId: 4,
+  });
+  toggleScheduleMenu = () => this.setState(s => ({ scheduleMenuOpen: !s.scheduleMenuOpen }));
+  closeScheduleMenu = () => this.setState({ scheduleMenuOpen: false });
+  viewScheduleHistory = () => this.setState({ scheduleMenuOpen: false, scheduleHistoryOpen: true });
+  closeScheduleHistory = () => this.setState({ scheduleHistoryOpen: false });
+  editScheduleHistoryRow = (row) => {
+    this.setState({ scheduleHistoryOpen: false });
+    this.openEditRangeModal('scheduleHistoryRows', row);
+  };
+  resetScheduleToDefault = () => { this.resetScheduleRows(); this.setState({ scheduleMenuOpen: false }); };
+  deleteAllScheduleRows = () => this.setState({ scheduleRows: [], scheduleMenuOpen: false });
+  toggleExceptionMenu = () => this.setState(s => ({ exceptionMenuOpen: !s.exceptionMenuOpen }));
+  closeExceptionMenu = () => this.setState({ exceptionMenuOpen: false });
+  viewExceptionHistory = () => this.setState({ exceptionMenuOpen: false, exceptionHistoryOpen: true });
+  closeExceptionHistory = () => this.setState({ exceptionHistoryOpen: false });
+  resetExceptionToDefault = () => this.setState({
+    exceptionRows: this.defaultExceptionRows(),
+    nextExceptionId: 4,
+    exceptionMenuOpen: false,
+  });
+  deleteAllExceptionRows = () => this.setState({ exceptionRows: [], exceptionMenuOpen: false });
+  openGroupsConnection = () => this.setState({ groupsConnectionOpen: true, groupsConnectionSearch: '' });
+  closeGroupsConnection = () => this.setState({ groupsConnectionOpen: false });
+  setGroupsConnectionSearch = (e) => this.setState({ groupsConnectionSearch: e.target.value });
+  toggleTreeNode = (id) => this.setState(s => ({ treeExpandedIds: { ...s.treeExpandedIds, [id]: !s.treeExpandedIds[id] } }));
+  flattenTree = (nodes, depth, expandedIds, search, rows) => {
+    nodes.forEach(node => {
+      const matches = !search || node.name.toLowerCase().includes(search);
+      const childMatches = search && node.children.some(c => this.nodeOrDescendantMatches(c, search));
+      if (search && !matches && !childMatches) return;
+      rows.push({ node, depth });
+      if (node.children.length && (expandedIds[node.id] || search)) {
+        this.flattenTree(node.children, depth + 1, expandedIds, search, rows);
+      }
+    });
+    return rows;
+  };
+  nodeOrDescendantMatches = (node, search) => node.name.toLowerCase().includes(search) || node.children.some(c => this.nodeOrDescendantMatches(c, search));
+  openAddExceptionModal = () => this.setState({
+    addExceptionModalOpen: true, addExceptionType: 'Fuel Rate/Distance',
+    addExceptionCarrierGroup: '', addExceptionCarrierSubgroup: '',
+    addExceptionStart: '', addExceptionEnd: '', addExceptionValue: '',
+  });
+  closeAddExceptionModal = () => this.setState({ addExceptionModalOpen: false });
+  setAddExceptionType = (type) => this.setState({ addExceptionType: type });
+  setAddExceptionField = (field, value) => this.setState({ [field]: value });
+  saveAddException = () => this.setState(s => {
+    const suffix = s.addExceptionType === 'Fuel Percentage' ? '%' : '';
+    const prefix = (s.addExceptionType === 'Fuel Rate/Distance' || s.addExceptionType === 'Transport Rate/Distance') ? '€ ' : '';
+    const value = s.addExceptionType === 'Fuel Not Applicable' ? '—' : `${prefix}${s.addExceptionValue}${suffix}`;
+    return {
+      exceptionRows: [{
+        id: s.nextExceptionId, groupName: s.addExceptionCarrierGroup, subGroup: s.addExceptionCarrierSubgroup,
+        rangeFrom: s.addExceptionStart, rangeTo: s.addExceptionEnd, value, rateType: s.addExceptionType,
+        status: 'Scheduled', editing: false, lastUpdated: 'Today', updatedBy: 'You',
+        history: [{ date: 'Today', user: 'You', action: 'created this range' }],
+      }, ...s.exceptionRows],
+      nextExceptionId: s.nextExceptionId + 1,
+      addExceptionModalOpen: false,
+    };
+  });
+  addExceptionRow = () => this.setState(s => ({
+    exceptionRows: [{ id: s.nextExceptionId, groupName: 'New Group', subGroup: '', rangeFrom: 'Select date', rangeTo: 'Select date', value: '€ 0.00', rateType: 'Transport Rate/Distance', lastUpdated: 'Today', updatedBy: 'You', editing: true }, ...s.exceptionRows],
+    nextExceptionId: s.nextExceptionId + 1,
+  }));
+
+  toggleStyle = (on) => ({
+    display: 'inline-flex', alignItems: 'center', width: 36, height: 20, borderRadius: 999, padding: 2, boxSizing: 'border-box',
+    background: on ? 'var(--selection-switchOn-default)' : 'var(--selection-switchOff-bg)',
+    border: on ? 'none' : '1px solid var(--selection-switchOff-stroke)', transition: 'background .15s',
+  });
+  knobStyle = (on) => ({
+    width: 16, height: 16, borderRadius: '50%', background: on ? 'var(--selection-switchOn-handle-white)' : 'var(--selection-switchOff-handle-bg)',
+    transform: on ? 'translateX(16px)' : 'translateX(0)', transition: 'transform .15s',
+  });
+
+  mainTabStyle = (active, isFirst, isLast) => ({
+    flex: 1, textAlign: 'center', padding: '16px 12px', fontSize: 14, fontWeight: 700, cursor: 'pointer',
+    letterSpacing: '0.03em', textTransform: 'uppercase',
+    color: active ? 'var(--text-title)' : 'var(--text-subtitle)',
+    background: active ? 'var(--color-green-100)' : '#fff',
+    border: '1px solid var(--border-default)',
+    borderRadius: isFirst ? '10px 0 0 10px' : isLast ? '0 10px 10px 0' : 0,
+    marginLeft: isFirst ? 0 : -1,
+  });
+
+  subTabStyle = (active) => ({
+    flex: 1, textAlign: 'center', padding: '14px 0', fontSize: 16, fontWeight: 600, cursor: 'pointer',
+    color: active ? 'var(--text-brand-default)' : 'var(--text-subtitle)',
+    borderBottom: active ? '3px solid var(--border-brand-default)' : '1px solid var(--border-default)',
+    marginBottom: -1,
+  });
+
+  statusBadgeStyle = (status) => ({
+    display: 'inline-block', fontSize: 13, fontWeight: 600, padding: '6px 16px', borderRadius: 999,
+    background: status === 'Active' ? 'var(--color-green-100)' : (status === 'Expired' || status === 'Past') ? 'var(--color-neutrals-200)' : status === 'Deleted' ? 'var(--color-red-100, #fde3e3)' : status === 'No active range' ? 'var(--warning-surface-lighter)' : 'var(--color-blue-50)',
+    color: status === 'Active' ? 'var(--color-green-800)' : (status === 'Expired' || status === 'Past') ? 'var(--color-neutrals-700)' : status === 'Deleted' ? 'var(--color-red-700, #c0342a)' : status === 'No active range' ? 'var(--warning-text)' : 'var(--color-blue-600)',
+  });
+
+  buildRows(listKey) {
+    const activeGroup = this.state.groupsData.find(g => g.id === this.state.activeGroupId);
+    if (activeGroup && activeGroup.id === 7) return [];
+    const ACTIVE_RANGE_OVERRIDES = { 4: ['Wed, 15 Jul 2026', 'Fri, 14 Aug 2026'] };
+    let sourceRows = (listKey === 'scheduleRows' && activeGroup && (activeGroup.id === 4 || ACTIVE_RANGE_OVERRIDES[activeGroup.id]))
+      ? this.state[listKey].map(row => {
+          if (row.status === 'Scheduled' && activeGroup.id === 4) return { ...row, rangeFrom: 'Thu, 01 Oct 2026', rangeTo: 'Sat, 31 Oct 2026' };
+          if (row.status === 'Active' && ACTIVE_RANGE_OVERRIDES[activeGroup.id]) return { ...row, rangeFrom: ACTIVE_RANGE_OVERRIDES[activeGroup.id][0], rangeTo: ACTIVE_RANGE_OVERRIDES[activeGroup.id][1] };
+          return row;
+        })
+      : this.state[listKey];
+    if (listKey === 'scheduleRows' && activeGroup && activeGroup.id === 5) {
+      sourceRows = sourceRows.filter(row => row.status !== 'Scheduled').map(row => row.status === 'Active' ? {
+        ...row,
+        lastUpdated: '11 Feb 2026',
+        updatedBy: 'K. Andersen',
+        history: [{ date: '11 Feb 2026', user: 'K. Andersen', action: 'overrode the enterprise default at the subgroup level' }, ...(row.history || [])],
+      } : row);
+    }
+    return sourceRows.map(row => ({
+      ...row,
+      notEditing: !row.editing,
+      statusBadgeStyle: this.statusBadgeStyle(row.status),
+      isWarning: row.status === 'No active range',
+      isScheduled: row.status === 'Scheduled',
+      rangeFromDate: (row.rangeFrom || '').replace(/\s\d{1,2}:\d{2}$/, ''),
+      onStatus: (e) => this.updateRow(listKey, row.id, 'status', e.target.value),
+      onRangeFrom: (e) => this.updateRow(listKey, row.id, 'rangeFrom', e.target.value),
+      onRangeTo: (e) => this.updateRow(listKey, row.id, 'rangeTo', e.target.value),
+      onValue: (e) => this.updateRow(listKey, row.id, 'value', e.target.value),
+      onRateType: (e) => this.updateRow(listKey, row.id, 'rateType', e.target.value),
+      onToggleEdit: () => this.toggleEdit(listKey, row.id),
+      onDuplicate: () => this.duplicateRow(listKey, row.id),
+      onDelete: () => this.deleteRow(listKey, row.id),
+      onOpenLog: () => this.openChangeLog(row),
+      rowMenuOpen: this.state.rowMenuOpenId === (listKey + '-' + row.id),
+      onToggleRowMenu: () => this.toggleRowMenu(listKey, row.id),
+      onEditFromMenu: () => { this.openEditRangeModal(listKey, row); this.closeRowMenu(); },
+      onResetFromMenu: () => { this.resetRowToDefault(listKey, row.id); this.closeRowMenu(); },
+      onDeleteFromMenu: () => { this.deleteRow(listKey, row.id); this.closeRowMenu(); },
+      onOpenDetail: () => this.openExceptionDetail(row.id),
+    }));
+  }
+  toggleRowMenu = (listKey, id) => {
+    const key = listKey + '-' + id;
+    this.setState(s => ({ rowMenuOpenId: s.rowMenuOpenId === key ? null : key }));
+  };
+  closeRowMenu = () => this.setState({ rowMenuOpenId: null });
+  openExceptionDetail = (id) => this.setState({ exceptionDetailOpen: true, exceptionDetailId: id });
+  closeExceptionDetail = () => this.setState({ exceptionDetailOpen: false });
+  toggleDetailRangeEdit = (rowId, rangeId) => this.setState(s => ({
+    exceptionRows: s.exceptionRows.map(r => r.id !== rowId ? r : { ...r, ranges: r.ranges.map(rg => rg.id === rangeId ? { ...rg, editing: !rg.editing } : rg) }),
+  }));
+  updateDetailRange = (rowId, rangeId, field, value) => this.setState(s => ({
+    exceptionRows: s.exceptionRows.map(r => r.id !== rowId ? r : { ...r, ranges: r.ranges.map(rg => rg.id === rangeId ? { ...rg, [field]: value } : rg) }),
+  }));
+  deleteDetailRange = (rowId, rangeId) => this.setState(s => ({
+    exceptionRows: s.exceptionRows.map(r => r.id !== rowId ? r : { ...r, ranges: r.ranges.filter(rg => rg.id !== rangeId) }),
+  }));
+  toggleDetailRowMenu = (rangeId) => this.setState(s => ({ rowMenuOpenId: s.rowMenuOpenId === ('detail-' + rangeId) ? null : ('detail-' + rangeId) }));
+  addDetailRange = (rowId) => this.setState(s => ({
+    exceptionRows: s.exceptionRows.map(r => r.id !== rowId ? r : {
+      ...r,
+      ranges: [{ id: (Math.max(0, ...r.ranges.map(x => x.id)) + 1), rangeFrom: 'Select date', rangeTo: 'open', value: '€ 0.00', rateType: r.rateType, setBy: 'You', lastUpdated: 'Today', status: 'Scheduled', editing: true }, ...r.ranges],
+    }),
+  }));
+  resetRowToDefault = (listKey, id) => {
+    const defaults = listKey === 'scheduleRows' ? this.defaultScheduleRows() : this.defaultExceptionRows();
+    const def = defaults.find(r => r.id === id);
+    if (!def) return;
+    this.setState(s => ({ [listKey]: s[listKey].map(r => r.id === id ? { ...def, editing: false } : r) }));
+  };
+  defaultScheduleRows() {
+    return [
+      { id: 1, status: 'Active', rangeFrom: 'Sat, 01 Aug 2026', rangeTo: 'Mon, 31 Aug 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '18 Jan 2026', updatedBy: 'M. Kowalski', history: [
+        { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to 10%' },
+        { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ] },
+      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+        { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ] },
+    ];
+  }
+  defaultExceptionRows() {
+    return [
+      { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 06 Apr 2023 08:00', rangeTo: 'Mon, 06 Apr 2023 08:00', value: '€ 1.42', rateType: 'Transport Rate/Distance', status: 'Active', editing: false, lastUpdated: '18 Jan 2026', updatedBy: 'M. Kowalski', history: [
+        { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to € 1.42' },
+        { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ], ranges: [
+        { id: 1, rangeFrom: '1 Jun 2026', rangeTo: 'open', value: '€ 1.42', rateType: 'Transport Rate/Distance', setBy: 'M. Kowalski', lastUpdated: '18 Jan 2026', status: 'Active', editing: false },
+      ] },
+      { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Fri, 01 Sep 2023 08:00', rangeTo: 'Tue, 14 Apr 2023 08:00', value: '€ 1.18', rateType: 'Transport Rate/Distance', status: 'Scheduled', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+        { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ], ranges: [
+        { id: 1, rangeFrom: '1 Sep 2026', rangeTo: 'open', value: '€ 1.18', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025', status: 'Scheduled', editing: false },
+      ] },
+      { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 09 Apr 2023 08:00', rangeTo: 'Thu, 16 Apr 2023 08:00', value: '€ 1.65', rateType: 'Transport Rate/Distance', status: 'No active range', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+        { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
+      ], ranges: [
+        { id: 1, rangeFrom: '1 Jan 2025', rangeTo: '31 Dec 2025', value: '€ 1.65', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025', status: 'Past', editing: false },
+      ] },
+    ];
+  }
+  openChangeLog = (row) => {
+    const history = row.history || [];
+    this.setState({
+      changeLogOpen: true,
+      changeLogTitle: `${row.rangeFrom} – ${row.rangeTo}`,
+      changeLogEntries: history.map((e, i) => ({ ...e, showDivider: i < history.length - 1 })),
+    });
+  };
+  closeChangeLog = () => this.setState({ changeLogOpen: false });
+
+  renderVals() {
+    const s = this.state;
+    const groupsData = s.groupsData;
+    const activeGroup = groupsData.find(g => g.id === s.activeGroupId) || groupsData[3];
+    return {
+      isGroups: s.screen === 'groups',
+      isRate: s.screen === 'rate',
+      pageTitle: 'Rate Configuration',
+      goGroups: this.goGroups,
+      activeGroup,
+      isEnterpriseLevel: activeGroup.subgroup === activeGroup.group,
+      isSubgroupLevel: activeGroup.subgroup !== activeGroup.group,
+      groupLevelLabel: activeGroup.subgroup === activeGroup.group ? 'Enterprise' : 'Subgroup',
+      groupBreadcrumbs: (() => {
+        const chain = [activeGroup];
+        let cur = activeGroup;
+        while (cur.parentSubgroup) {
+          const parent = groupsData.find(g => g.subgroup === cur.parentSubgroup && g.group === cur.group);
+          if (!parent) break;
+          chain.unshift(parent);
+          cur = parent;
+        }
+        if (chain[0].subgroup !== chain[0].group) {
+          const root = groupsData.find(g => g.group === activeGroup.group && g.subgroup === g.group);
+          if (root) chain.unshift(root);
+        }
+        return chain.map((g, i) => ({
+          label: g.subgroup, isLast: i === chain.length - 1, isNotLast: i !== chain.length - 1,
+          onClick: () => this.goRate(g.id),
+        }));
+      })(),
+      selectGroupsViewEnterprises: this.selectGroupsViewEnterprises,
+      selectGroupsViewAll: this.selectGroupsViewAll,
+      groupsViewEnterprisesStyle: this.groupsViewTabStyle(s.groupsView === 'enterprises'),
+      groupsViewAllStyle: this.groupsViewTabStyle(s.groupsView === 'all'),
+      groupsViewIsAll: s.groupsView === 'all',
+      groupRows: groupsData.filter(g => s.groupsView === 'all' || g.subgroup === g.group).map(g => ({ ...g, onOpen: () => this.goRate(g.id) })),
+      filterChips: s.filterChipsData.map(c => ({ ...c, onRemove: () => {} })),
+
+      bannerVisible: s.subgroupOn && activeGroup.subgroup === activeGroup.group,
+      dismissBanner: this.dismissBanner,
+      enterpriseTrackStyle: this.toggleStyle(s.enterpriseOn),
+      enterpriseKnobStyle: this.knobStyle(s.enterpriseOn),
+      toggleEnterprise: this.toggleEnterprise,
+      subgroupTrackStyle: this.toggleStyle(s.subgroupOn),
+      subgroupKnobStyle: this.knobStyle(s.subgroupOn),
+      subgroupConfirmOpen: s.subgroupConfirmOpen,
+      confirmSubgroupToggle: this.confirmSubgroupToggle,
+      cancelSubgroupToggle: this.cancelSubgroupToggle,
+      toggleSubgroup: this.toggleSubgroup,
+      subgroupConfirmTitle: s.subgroupConfirmMode === 'off' ? 'Turn off Subgroup Rules?' : 'Turn on Subgroup Rules?',
+      subgroupConfirmBody: s.subgroupConfirmMode === 'off'
+        ? "Subgroups that haven't set their own override will be left with blank rules."
+        : "Subgroups that haven't set their own override will start following this.",
+
+      mainTabs: TABS.map((name, i) => ({ label: name, style: this.mainTabStyle(s.activeTab === name, i === 0, i === TABS.length - 1), onClick: () => this.setTab(name) })),
+      isRfpTab: s.activeTab === 'Fuel Rate',
+      isRulesTab: s.activeTab !== 'Fuel Rate',
+      rulesTitle: s.activeTab,
+      rulesSearch: s.rulesSearch,
+      setRulesSearch: this.setRulesSearch,
+      resetAllRules: () => this.resetAllRules(s.activeTab),
+      addRuleRow: () => this.addRuleRow(s.activeTab),
+      rulesRows: (activeGroup.id === 7 ? [] : (s[s.activeTab] || [])).map(r => ({
+        ...r,
+        notEditing: !r.editing,
+        onToggleEdit: () => this.toggleRuleEdit(s.activeTab, r.id),
+        onEdit: () => this.openRuleEditModal(s.activeTab, r),
+        rowMenuOpen: s.rowMenuOpenId === (s.activeTab + '-' + r.id),
+        onToggleRowMenu: () => this.toggleRowMenu(s.activeTab, r.id),
+        onEditFromMenu: () => { this.openRuleEditModal(s.activeTab, r); this.closeRowMenu(); },
+        onResetFromMenu: () => { this.resetRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
+        onDeleteFromMenu: () => { this.deleteRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
+        lastUpdated: this.ruleMeta(r.id).date,
+        updatedBy: this.ruleMeta(r.id).user,
+        onOpenLog: () => this.openRuleChangeLog(r),
+        onNum: (e) => this.updateRuleField(s.activeTab, r.id, 'num', e.target.value),
+        onDesc: (e) => this.updateRuleField(s.activeTab, r.id, 'desc', e.target.value),
+        onRate: (e) => this.updateRuleField(s.activeTab, r.id, 'rate', e.target.value),
+      })),
+
+      scheduleTabStyle: this.subTabStyle(s.subTab === 'schedule'),
+      exceptionTabStyle: this.subTabStyle(s.subTab === 'exception'),
+      selectSchedule: this.selectSchedule,
+      selectException: this.selectException,
+      isScheduleTab: s.subTab === 'schedule',
+      isExceptionTab: s.subTab === 'exception',
+      tabBarVisible: !(s.subTab === 'exception' && s.exceptionDetailOpen),
+
+      scheduleRows: this.buildRows('scheduleRows'),
+      scheduleHasRows: this.buildRows('scheduleRows').length > 0,
+      scheduleEmpty: this.buildRows('scheduleRows').length === 0,
+      exceptionRows: this.buildRows('exceptionRows'),
+      exceptionHasRows: this.buildRows('exceptionRows').length > 0,
+      exceptionEmpty: this.buildRows('exceptionRows').length === 0,
+      addScheduleRow: this.addScheduleRow,
+      openAddRangeModal: this.openAddRangeModal,
+      openAddRangeModalForDetail: this.openAddRangeModalForDetail,
+      addRangeModalOpen: s.addRangeModalOpen,
+      closeAddRangeModal: this.closeAddRangeModal,
+      addRangeTypeOptions: ['Fuel Rate/Distance', 'Fuel Percentage', 'Fuel Not Applicable'].map(type => ({
+        type, selected: s.addRangeType === type, onSelect: () => this.setAddRangeType(type),
+      })),
+      addRangeTypeInfo: RANGE_TYPE_INFO[s.addRangeType] || '',
+      addRangeStartM: s.addRangeStartM, addRangeStartD: s.addRangeStartD, addRangeStartY: s.addRangeStartY,
+      addRangeEndM: s.addRangeEndM, addRangeEndD: s.addRangeEndD, addRangeEndY: s.addRangeEndY,
+      addRangeValue: s.addRangeValue,
+      addRangeIsEdit: s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange',
+      addRangeIsAdd: s.addRangeTarget !== 'editSchedule' && s.addRangeTarget !== 'detailRange',
+      addRangeStartFull: s.addRangeStartFull,
+      addRangeEndFull: s.addRangeEndFull,
+      onAddRangeStartFull: (e) => this.setAddRangeField('addRangeStartFull', e.target.value),
+      onAddRangeEndFull: (e) => this.setAddRangeField('addRangeEndFull', e.target.value),
+      addRangeModalTitle: (s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange') ? 'Edit Range' : 'Add New Range',
+      addRangeNeedsConfirm: (() => {
+        const g = s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3];
+        return (g.subgroup === g.group && s.addRangeTarget !== 'detail') || s.addRangeEditRowStatus === 'Expired';
+      })(),
+      addRangeStep: s.addRangeStep,
+      addRangeStepIsDetails: s.addRangeStep === 1,
+      addRangeStepIsConfirm: s.addRangeStep === 2,
+      addRangeIsFutureEdit: s.addRangeEditRowStatus === 'Scheduled',
+      addRangeIsCurrentEdit: s.addRangeEditRowStatus !== 'Scheduled' && s.addRangeEditRowStatus !== 'Expired',
+      addRangeIsPastEdit: s.addRangeEditRowStatus === 'Expired',
+      addRangeStartInputStyle: s.addRangeEditRowStatus === 'Expired'
+        ? 'background:var(--surface-disabled, #f3f4f6);color:var(--text-subtitle);cursor:not-allowed;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;'
+        : 'border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;',
+      addRangeEndInputStyle: s.addRangeEditRowStatus === 'Expired'
+        ? 'background:var(--surface-disabled, #f3f4f6);color:var(--text-subtitle);cursor:not-allowed;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;'
+        : 'border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;',
+      addRangeCorrectionReason: s.addRangeCorrectionReason || '',
+      onAddRangeCorrectionReason: (e) => this.setAddRangeField('addRangeCorrectionReason', e.target.value),
+      addRangeIsNotPastEdit: s.addRangeEditRowStatus !== 'Expired',
+      backToScheduleHistory: this.addRangeBack,
+      backAddRangeStep: this.backAddRangeStep,
+      addRangeConfirmCount: s.confirmChangeCount,
+      addRangeSaveLabel: s.addRangeStep === 2 ? 'Confirm' : (((s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).group && s.addRangeTarget !== 'detail') ? 'Next' : (s.addRangeTarget === 'editSchedule' ? 'Save' : 'Add')),
+      addRangeSteps: [
+        { label: 'Range Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 2 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
+        { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep === 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep === 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep === 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
+      ],
+      onAddRangeStartM: (e) => this.setAddRangeField('addRangeStartM', e.target.value),
+      onAddRangeStartD: (e) => this.setAddRangeField('addRangeStartD', e.target.value),
+      onAddRangeStartY: (e) => this.setAddRangeField('addRangeStartY', e.target.value),
+      onAddRangeEndM: (e) => this.setAddRangeField('addRangeEndM', e.target.value),
+      onAddRangeEndD: (e) => this.setAddRangeField('addRangeEndD', e.target.value),
+      onAddRangeEndY: (e) => this.setAddRangeField('addRangeEndY', e.target.value),
+      onAddRangeValue: (e) => this.setAddRangeField('addRangeValue', e.target.value),
+      saveAddRange: this.saveAddRange,
+      confirmChangeOpen: s.confirmChangeOpen,
+      confirmChangeCount: s.confirmChangeCount,
+      confirmChangeMessage: `Are you sure? This change will affect ${s.confirmChangeCount} orders.`,
+      cancelChange: this.cancelChange,
+      confirmChange: this.confirmChange,
+      addRangeSaveDisabled: !(s.addRangeType && s.addRangeValue),
+      addRangeSaveStyle: this.ruleModalSaveStyle(!(s.addRangeType && s.addRangeValue)),
+      resetScheduleRows: this.resetScheduleRows,
+      showResetButton: this.props.showResetButton ?? true,
+      scheduleMenuOpen: s.scheduleMenuOpen,
+      toggleScheduleMenu: this.toggleScheduleMenu,
+      viewScheduleHistory: this.viewScheduleHistory,
+      resetScheduleToDefault: this.resetScheduleToDefault,
+      deleteAllScheduleRows: this.deleteAllScheduleRows,
+      scheduleHistoryOpen: s.scheduleHistoryOpen,
+      scheduleHistoryClosed: !s.scheduleHistoryOpen,
+      closeScheduleHistory: this.closeScheduleHistory,
+      scheduleHistoryRows: [
+        { id: 1, status: 'Expired', rangeFrom: 'Mon, 01 Jan 2024', rangeTo: 'Sun, 31 Mar 2024', value: '8%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '2 Jan 2024', updatedBy: 'M. Kowalski', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 1, rangeFrom: 'Mon, 01 Jan 2024', rangeTo: 'Sun, 31 Mar 2024', value: '8%', rateType: 'Fuel Percentage', status: 'Expired' }) },
+        { id: 2, status: 'Expired', rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '28 Mar 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 2, rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', status: 'Expired' }) },
+        { id: 4, status: 'Deleted', rangeFrom: 'Sat, 01 Jun 2024', rangeTo: 'Mon, 30 Jun 2024', value: '7%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Deleted'), lastUpdated: '15 Jun 2024', updatedBy: 'M. Kowalski', isExpired: false },
+        { id: 3, status: 'Expired', rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '25 Sep 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 3, rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', status: 'Expired' }) },
+      ],
+      exceptionDetailOpen: s.exceptionDetailOpen,
+      exceptionDetailClosed: !s.exceptionDetailOpen,
+      closeExceptionDetail: this.closeExceptionDetail,
+      exceptionDetailTitle: `Fuel Settings for ${(s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).groupName || ''}`,
+      exceptionDetailRanges: ((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).ranges || []).map(rg => ({
+        ...rg,
+        notEditing: !rg.editing,
+        statusBadgeStyle: this.statusBadgeStyle(rg.status),
+        onRangeFrom: (e) => this.updateDetailRange(s.exceptionDetailId, rg.id, 'rangeFrom', e.target.value),
+        onRangeTo: (e) => this.updateDetailRange(s.exceptionDetailId, rg.id, 'rangeTo', e.target.value),
+        onValue: (e) => this.updateDetailRange(s.exceptionDetailId, rg.id, 'value', e.target.value),
+        onStatus: (e) => this.updateDetailRange(s.exceptionDetailId, rg.id, 'status', e.target.value),
+        onToggleEdit: () => { this.openEditDetailRangeModal(rg); this.closeRowMenu(); },
+        onDelete: () => { this.deleteDetailRange(s.exceptionDetailId, rg.id); this.closeRowMenu(); },
+        rowMenuOpen: s.rowMenuOpenId === ('detail-' + rg.id),
+        onToggleRowMenu: () => this.toggleDetailRowMenu(rg.id),
+        onOpenLog: () => this.openChangeLog(rg),
+      })),
+      addDetailRange: () => this.addDetailRange(s.exceptionDetailId),
+      exceptionMenuOpen: s.exceptionMenuOpen,
+      toggleExceptionMenu: this.toggleExceptionMenu,
+      viewExceptionHistory: this.viewExceptionHistory,
+      resetExceptionToDefault: this.resetExceptionToDefault,
+      deleteAllExceptionRows: this.deleteAllExceptionRows,
+      exceptionHistoryOpen: s.exceptionHistoryOpen,
+      exceptionHistoryClosed: !s.exceptionHistoryOpen,
+      closeExceptionHistory: this.closeExceptionHistory,
+      changeLogOpen: s.changeLogOpen,
+      changeLogTitle: s.changeLogTitle,
+      changeLogEntries: s.changeLogEntries,
+      closeChangeLog: this.closeChangeLog,
+      exceptionHistoryRows: [
+        { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 03 Apr 2022 08:00', rangeTo: 'Mon, 10 Apr 2022 08:00', value: '€ 1.35', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '1 Apr 2022', updatedBy: 'A. de Vries' },
+        { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Tue, 05 Apr 2022 08:00', rangeTo: 'Tue, 12 Apr 2022 08:00', value: '€ 1.10', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '3 Apr 2022', updatedBy: 'M. Kowalski' },
+        { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 07 Apr 2022 08:00', rangeTo: 'Thu, 14 Apr 2022 08:00', value: '€ 1.55', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '5 Apr 2022', updatedBy: 'A. de Vries' },
+      ],
+      addExceptionRow: this.addExceptionRow,
+      openGroupsConnection: this.openGroupsConnection,
+      groupsConnectionOpen: s.groupsConnectionOpen,
+      closeGroupsConnection: this.closeGroupsConnection,
+      groupsConnectionSearch: s.groupsConnectionSearch,
+      setGroupsConnectionSearch: this.setGroupsConnectionSearch,
+      treeRows: this.flattenTree(buildGroupsTree(s.groupsData).filter(root => root.name === activeGroup.group), 0, s.treeExpandedIds, s.groupsConnectionSearch.trim().toLowerCase(), []).map(({ node, depth }) => ({
+        id: node.id,
+        indent: depth * 32,
+        name: node.name,
+        tags: node.tags.map(t => ({ label: t })),
+        noAccess: !!node.noAccess,
+        hasChildren: node.children.length > 0,
+        expanded: !!s.treeExpandedIds[node.id],
+        chevronTransform: s.treeExpandedIds[node.id] ? 'rotate(0deg)' : 'rotate(-90deg)',
+        onToggle: () => this.toggleTreeNode(node.id),
+      })),
+      openAddExceptionModal: this.openAddExceptionModal,
+      addExceptionModalOpen: s.addExceptionModalOpen,
+      closeAddExceptionModal: this.closeAddExceptionModal,
+      carrierGroupOptions: [...new Set(s.groupsData.map(g => g.group))],
+      addExceptionCarrierGroup: s.addExceptionCarrierGroup,
+      onAddExceptionCarrierGroup: (e) => this.setState({ addExceptionCarrierGroup: e.target.value, addExceptionCarrierSubgroup: '' }),
+      carrierSubgroupOptions: s.groupsData.filter(g => g.group === s.addExceptionCarrierGroup).map(g => g.subgroup),
+      addExceptionCarrierSubgroup: s.addExceptionCarrierSubgroup,
+      onAddExceptionCarrierSubgroup: (e) => this.setState({ addExceptionCarrierSubgroup: e.target.value }),
+      addExceptionTypeOptions: ['Fuel Rate/Distance', 'Fuel Percentage', 'Fuel Not Applicable', 'Transport Rate/Distance'].map(type => ({
+        type, selected: s.addExceptionType === type, onSelect: () => this.setAddExceptionType(type), info: EXCEPTION_TYPE_INFO[type],
+      })),
+      addExceptionTypeInfo: EXCEPTION_TYPE_INFO[s.addExceptionType] || '',
+      addExceptionStart: s.addExceptionStart,
+      addExceptionEnd: s.addExceptionEnd,
+      onAddExceptionStart: (e) => this.setAddExceptionField('addExceptionStart', e.target.value),
+      onAddExceptionEnd: (e) => this.setAddExceptionField('addExceptionEnd', e.target.value),
+      addExceptionValue: s.addExceptionValue,
+      onAddExceptionValue: (e) => this.setAddExceptionField('addExceptionValue', e.target.value),
+      addExceptionValueLabel: s.addExceptionType,
+      addExceptionValueDisabled: s.addExceptionType === 'Fuel Not Applicable',
+      addExceptionSaveDisabled: !(s.addExceptionCarrierGroup && s.addExceptionStart && (s.addExceptionType === 'Fuel Not Applicable' || s.addExceptionValue)),
+      addExceptionSaveStyle: this.ruleModalSaveStyle(!(s.addExceptionCarrierGroup && s.addExceptionStart && (s.addExceptionType === 'Fuel Not Applicable' || s.addExceptionValue))),
+      saveAddException: this.saveAddException,
+      openRuleModal: this.openRuleModal,
+      ruleModalOpen: s.ruleModalOpen,
+      ruleModalIsEdit: s.ruleModalEditId != null,
+      ruleModalTitle: RULE_MODAL_TITLES[s.activeTab] || `Edit ${s.activeTab}`,
+      deleteRuleModal: this.deleteRuleModal,
+      openDeleteConfirm: this.openDeleteConfirm,
+      closeDeleteConfirm: this.closeDeleteConfirm,
+      confirmDeleteRule: this.confirmDeleteRule,
+      deleteConfirmOpen: s.deleteConfirmOpen,
+      deleteConfirmTitle: `Delete ${s.ruleModalNum} — ${s.ruleModalDesc}?`,
+      rulesInfoOpen: s.rulesInfoOpen,
+      rulesInfoText: RULE_INFO_TEXT[s.activeTab] || '',
+      showRulesInfo: this.showRulesInfo,
+      hideRulesInfo: this.hideRulesInfo,
+      fuelInfoOpen: s.fuelInfoOpen,
+      showFuelInfo: this.showFuelInfo,
+      hideFuelInfo: this.hideFuelInfo,
+      exceptionInfoOpen: s.exceptionInfoOpen,
+      showExceptionInfo: this.showExceptionInfo,
+      hideExceptionInfo: this.hideExceptionInfo,
+      ruleModalNum: s.ruleModalNum,
+      ruleModalDesc: s.ruleModalDesc,
+      ruleModalRate: s.ruleModalRate,
+      ruleModalUnit: s.ruleModalUnit,
+      onRuleModalNum: this.onRuleModalNum,
+      onRuleModalDesc: this.onRuleModalDesc,
+      onRuleModalRate: this.onRuleModalRate,
+      onRuleModalUnit: this.onRuleModalUnit,
+      closeRuleModal: this.closeRuleModal,
+      saveRuleModal: this.saveRuleModal,
+      ruleNumDropdownOpen: s.ruleNumDropdownOpen,
+      openRuleNumDropdown: this.openRuleNumDropdown,
+      closeRuleNumDropdown: this.closeRuleNumDropdown,
+      ruleModalNumOptions: (s[s.activeTab] || []).filter(r => {
+        const q = (s.ruleModalNum || '').toLowerCase();
+        return !q || r.num.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q);
+      }).map(r => ({ num: r.num, desc: r.desc, onSelect: () => this.selectRuleNumOption(r) })),
+      ruleModalSaveDisabled: !(s.ruleModalNum && s.ruleModalDesc),
+      ruleModalSaveStyle: this.ruleModalSaveStyle(!(s.ruleModalNum && s.ruleModalDesc)),
+      exceptionSearch: s.exceptionSearch,
+      setExceptionSearch: this.setExceptionSearch,
+    };
+  }
+}
+</script>
+</body>
+</html>
