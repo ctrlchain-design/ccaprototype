@@ -208,7 +208,12 @@ actual diff, splits the work along the repo's layers — the design-system expor
 history already uses. Generated files are committed with whatever regenerated
 them, never on their own.
 
-It will not push without asking, because pushing publishes.
+**Committing publishes.** The skill commits, merges to `main` and pushes, and
+GitHub Pages serves it a minute or two later — no confirmation step, because
+that was the slow part. It stops and asks only if the merge would conflict, or
+if the prototype has not been checked in a browser.
+
+Say "just commit" or "don't publish yet" to keep something on a branch.
 
 ## Publishing
 

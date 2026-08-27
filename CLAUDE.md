@@ -51,9 +51,10 @@ The short version, which applies to every change in this repo:
 
 ## Committing
 
-Use the **`/prototype-commit` skill**. It has the message style, how to split work along the
-repo's layers, and the rule that matters most: **pushing to `main` publishes to
-GitHub Pages**, so confirm before pushing — always.
+Use the **`/prototype-commit` skill**. It has the message style and how to split
+work along the repo's layers. Committing here **merges to `main` and publishes**
+by default — that is deliberate, so don't ask each time. Stop only for a merge
+conflict, or a prototype nobody has looked at in a browser.
 
 ## Lookups
 
