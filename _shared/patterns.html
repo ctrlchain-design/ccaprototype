@@ -1,0 +1,289 @@
+<!doctype html>
+<!--
+  Prototype patterns
+  ------------------
+  Composed patterns that the design-system bundle does not document, built from
+  its tokens and components. Open this page to see them work; view source to copy
+  the markup.
+
+  These are here because each one has a trap in it that costs an afternoon to
+  find. The note above each pattern says what the trap is.
+
+  This is not a design system. When FE documents one of these properly in
+  design-system/dist, copy from there instead and delete the pattern here.
+-->
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prototype patterns · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="prototype.css" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        font-family: var(--font-ui);
+        background: var(--surface-neutral-default);
+      }
+      .pat {
+        border: 1px solid var(--border-neutral-default);
+        border-radius: var(--radius-lg);
+        background: var(--surface-neutral-light);
+        overflow: hidden;
+      }
+      .pat-note {
+        border-bottom: 1px solid var(--border-neutral-default);
+        padding: calc(var(--spacing) * 4);
+      }
+      .pat-demo {
+        padding: calc(var(--spacing) * 4);
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root class="proto-root-auto">
+      <div class="mx-auto flex max-w-5xl flex-col gap-6 p-6">
+        <header class="flex flex-col gap-1">
+          <h1 class="text-cca-label-lg text-neutral-title">Prototype patterns</h1>
+          <p class="text-cca-base-sm text-neutral-subtitle">
+            Composed from the design system. View source to copy. Each note is a
+            trap someone already hit.
+          </p>
+        </header>
+
+        <!-- ============================================== top bar cluster -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Top bar — trailing cluster</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              Contact Support, notifications, language switch with flag, user menu.
+              <strong>Staging is not a reliable reference for this bar</strong> — it
+              shows no Contact Support link and no flag, but production has both.
+              The link is <code>.proto-header-link</code>, not
+              <code>cca-btn--link</code>, which hard-codes an underline. The bell's
+              badge is hidden in the app while the count is zero, so there is none
+              here. The avatar is initials using the avatar tokens — the app shows
+              the signed-in user's photo, which a shared prototype should not carry.
+            </p>
+          </div>
+          <div class="pat-demo" style="padding: 0">
+            <div class="flex h-15 w-full items-center border-b border-neutral-default surface-neutral-light">
+              <div class="flex flex-row items-center gap-2 pl-6">
+                <h1 class="text-cca-label-lg text-neutral-title">Page title</h1>
+              </div>
+              <div class="mr-5 ml-auto flex h-full items-center">
+                <a class="proto-header-link text-cca-base mr-4" href="#">Contact Support</a>
+                <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only" aria-label="Notifications">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-bell mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+                <span class="mr-4 ml-2 block h-6 border-l border-neutral-default"></span>
+                <cca-language-switch style="display: block">
+                  <span class="flex items-center gap-2">
+                    <img class="h-6 w-6" src="assets/flags/en.svg" alt="" />
+                    <span class="text-cca-base text-neutral-body">English</span>
+                  </span>
+                </cca-language-switch>
+                <span class="mx-4 block h-6 border-l border-neutral-default"></span>
+                <cca-header-menu class="header-menu" style="display: block">
+                  <cca-avatar-group style="display: block">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full avatar-bg-color text-cca-label-md avatar-initials-white">DS</span>
+                  </cca-avatar-group>
+                </cca-header-menu>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== saved-view tabs -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Saved-view tabs</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              160×48 per tab, 1px neutral bottom border, 2px brand border on the
+              active one, plus a flexing filler so the border reaches the edge.
+              <strong>Do not use <code>mat-tab-group</code> here.</strong> Material
+              sizes its tab indicator with JavaScript at runtime; with no Angular,
+              every indicator collapses to the full width of the row and draws one
+              green line straight across under the tabs.
+            </p>
+          </div>
+          <div class="pat-demo" style="padding: 0">
+            <div class="flex items-center">
+              <div class="flex h-12 w-40 shrink-0 items-center justify-center gap-1.5 overflow-clip border-b-2 border-brand-default surface-neutral-light px-3 py-2">
+                <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-home mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                <span class="text-cca-label-lg text-brand-default">All</span>
+                <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="Saved view options">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-ellipsis-vertical mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <div class="flex h-12 w-40 shrink-0 items-center justify-center overflow-clip border-b border-neutral-default surface-neutral-light px-6 py-2">
+                <span class="text-cca-label-lg text-neutral-caption">Inbound</span>
+              </div>
+              <div class="flex h-12 w-40 shrink-0 items-center justify-center overflow-clip border-b border-neutral-default surface-neutral-light px-6 py-2">
+                <span class="text-cca-label-lg text-neutral-caption">Outbound</span>
+              </div>
+              <div class="h-12 flex-1 border-b border-neutral-default surface-neutral-light"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================ pinned filter chip -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Pinned filter chip</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              A pin glyph and a filter name. Figma draws it at a 10px radius, which
+              has no utility in the scale (4 / 6 / 8 / 12 / 16), so it uses
+              <code>rounded-lg</code>. The background is
+              <code>surface-neutral-dark</code> — counter-intuitively named, but it
+              is <code>#ebebeb</code> in light mode and inverts correctly, which a
+              raw hex would not.
+            </p>
+          </div>
+          <div class="pat-demo flex flex-wrap items-center gap-3">
+            <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
+              <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pinned mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+              <span class="truncate">Account Manager</span>
+            </span>
+            <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
+              <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pinned mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+              <span class="truncate">Assigned Operator</span>
+            </span>
+          </div>
+        </section>
+
+        <!-- ==================================================== badges -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Badges — flavour names lie</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              On <code>cca-numerical-badge</code>, <code>.primary</code> is
+              <strong>red</strong>. Green is <code>.success</code>; white-on-green is
+              <code>.inverted</code>. Flavour sets also differ per badge component.
+              Read the component's stylesheet in
+              <code>design-system/dist/ds/components/</code> rather than trusting a
+              name, and if a Figma layer names a token, grep for that token instead.
+              Sizes are not modifiers either — they come from the type and padding
+              utilities on the inner div.
+            </p>
+          </div>
+          <div class="pat-demo flex flex-wrap items-center gap-4">
+            <cca-numerical-badge><span class="rounded-full font-medium success inline-flex items-center justify-center align-middle min-w-3.75"><span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">2</span></span></cca-numerical-badge>
+            <cca-numerical-badge><span class="rounded-full font-medium inverted inline-flex items-center justify-center align-middle min-w-3.75"><span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">10</span></span></cca-numerical-badge>
+            <cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm primary">Status</div></cca-status-badge>
+            <cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal neutral emphasis-outline">Brokerage — small</div></cca-label-badge>
+            <cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-1 text-cca-base-sm leading-5 font-normal match emphasis-outline">On time — default</div></cca-label-badge>
+          </div>
+        </section>
+
+        <!-- ============================================== shell behaviour -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Rail: Dark and Collapse</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              Both are wired by <code>_shared/shell.js</code> — include it once and
+              tag the rail rows with <code>data-theme-toggle</code> and
+              <code>data-submenu-toggle</code>. Both mechanisms are the platform's:
+              theming is a <code>dark</code> class on the root element (which
+              <code>:root.dark</code> uses to redefine all 492 tokens, the same way
+              the exported catalogue's own toggle works), and collapse is
+              <code>smallSideNav</code> on <code>cca-main</code> plus
+              <code>hidden</code> on <code>cca-side-submenu</code>. Note the naming:
+              <strong><code>smallSideNav</code> is the expanded state</strong> — the
+              submenu column is 0 without it.
+            </p>
+          </div>
+          <div class="pat-demo">
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              No demo here — it needs the rail. Open any prototype and use the two
+              items at the bottom of the sidebar.
+            </p>
+          </div>
+        </section>
+
+        <!-- ============================================== drawer overlay -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Drawer overlay</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              Real CDK classes from <code>ds/material-vendor.css</code> — do not
+              hand-roll a scrim. Pick the scrim that matches the overlay: dialog
+              0.32, drawer 0.6 via <code>--mat-sidenav-scrim-color</code>, side panel
+              transparent. Add <code>cdk-overlay-backdrop-showing</code> after a
+              layout read, never in a <code>requestAnimationFrame</code> — rAF does
+              not fire in a background tab, so the scrim would stay invisible.
+            </p>
+          </div>
+          <div class="pat-demo">
+            <button ccaButton class="cca-btn cca-btn--secondary" id="open-drawer">Open the drawer</button>
+            <p class="mt-3 text-cca-label-sm text-neutral-caption">
+              Opens a real overlay: backdrop fade, page-scroll lock, Escape and
+              backdrop-click to close.
+            </p>
+          </div>
+        </section>
+      </div>
+    </cca-root>
+
+    <!-- The drawer itself: container → backdrop + pane, exactly as the CDK builds it. -->
+    <div class="cdk-overlay-container" id="overlay-container" hidden>
+      <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="drawer-backdrop"></div>
+      <div
+        class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Example drawer"
+      >
+        <div class="flex h-16 shrink-0 items-center gap-2 border-b border-neutral-default px-6">
+          <span class="text-cca-label-lg text-neutral-title">Drawer</span>
+        </div>
+        <div class="proto-drawer-body px-6 py-4">
+          <p class="text-cca-base text-neutral-body">
+            Only this middle section scrolls. The header above and the footer below
+            stay put, which is what <code>.proto-drawer-body</code> is for.
+          </p>
+        </div>
+        <div class="flex shrink-0 items-center justify-between border-t border-neutral-default px-6 py-4">
+          <button ccaButton class="cca-btn cca-btn--subtle" data-close>Cancel</button>
+          <button ccaButton class="cca-btn cca-btn--primary" data-close>Done</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // The open/close helper worth copying verbatim — the offsetWidth read is
+      // what makes the fade reliable. See the note in the Drawer overlay section.
+      (() => {
+        const container = document.getElementById('overlay-container');
+        const backdrop = document.getElementById('drawer-backdrop');
+
+        function setDrawer(open) {
+          if (open) {
+            container.hidden = false;
+            void backdrop.offsetWidth; // commits opacity 0 so there is something to animate from
+            backdrop.classList.add('cdk-overlay-backdrop-showing');
+          } else {
+            backdrop.classList.remove('cdk-overlay-backdrop-showing');
+            container.hidden = true;
+          }
+          document.documentElement.classList.toggle('cdk-global-scrollblock', open);
+        }
+
+        document.getElementById('open-drawer').addEventListener('click', () => setDrawer(true));
+        backdrop.addEventListener('click', () => setDrawer(false));
+        document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => setDrawer(false)));
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') setDrawer(false);
+        });
+      })();
+    </script>
+  </body>
+</html>
