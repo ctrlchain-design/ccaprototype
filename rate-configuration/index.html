@@ -267,8 +267,8 @@
                   <span style="font-size:15px;color:var(--text-caption);">{{ groupLevelLabel }}</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;">
-                  <span style="font-size:12px;font-weight:400;color:#111827;background:var(--surface-neutral-lighter, #f1f2f4);border-radius:6px;padding:4px 10px;">Carrier</span>
-                  <span style="font-size:12px;font-weight:400;color:#111827;background:var(--surface-neutral-lighter, #f1f2f4);border-radius:6px;padding:4px 10px;">Shipper</span>
+                  <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">Carrier</span>
+                  <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">Shipper</span>
                 </div>
               </div>
               <button onClick="{{ openGroupsConnection }}" style="background:transparent;color:var(--text-brand-default);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;flex-shrink:0;display:flex;align-items:center;gap:8px;">
@@ -430,7 +430,7 @@
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="1.6"></circle><circle cx="2" cy="8" r="1.6"></circle><circle cx="2" cy="14" r="1.6"></circle></svg>
                         <span style="font-size:15px;font-weight:600;color:var(--text-title);">{{ row.name }}</span>
                         <sc-for list="{{ row.tags }}" as="tag" hint-placeholder-count="1">
-                          <span style="font-size:12px;font-weight:400;color:#111827;background:var(--surface-neutral-lighter, #f1f2f4);border-radius:6px;padding:4px 10px;">{{ tag.label }}</span>
+                          <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">{{ tag.label }}</span>
                         </sc-for>
                         <sc-if value="{{ row.noAccess }}" hint-placeholder-val="{{ false }}">
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5"><path d="M2 14l12-12M6 3.5A5 5 0 0 1 13 8M3 8a5 5 0 0 0 5 5"></path></svg>
@@ -452,6 +452,10 @@
                   <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeAddExceptionModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
                 </div>
                 <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
+                  <div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Shipper group</div>
+                    <div style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);background:var(--color-neutrals-100);">{{ addExceptionShipperGroup }}</div>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Carrier group</div>
                     <div style="display:flex;gap:12px;">
@@ -543,7 +547,7 @@
                 <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
                   <sc-if value="{{ addRangeNeedsConfirm }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;align-items:center;">
-                      <sc-for list="{{ addRangeSteps }}" as="step" hint-placeholder-count="2">
+                      <sc-for list="{{ addRangeSteps }}" as="step" hint-placeholder-count="3">
                         <div style="display:flex;align-items:center;gap:8px;">
                           <div style="{{ step.circleStyle }}">
                             <sc-if value="{{ step.dotOn }}" hint-placeholder-val="{{ true }}">
@@ -582,21 +586,21 @@
                       <div>
                         <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
                         <div style="display:flex;align-items:center;gap:4px;border:1px solid var(--border-default);border-radius:8px;padding:8px 10px;">
-                          <input value="{{ addRangeStartM }}" onChange="{{ onAddRangeStartM }}" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <input value="{{ addRangeStartM }}" onChange="{{ onAddRangeStartM }}" onKeyDown="{{ onAddRangeStartMKey }}" ref="{{ refAddRangeStartM }}" inputMode="numeric" maxLength="2" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
                           <span>/</span>
-                          <input value="{{ addRangeStartD }}" onChange="{{ onAddRangeStartD }}" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <input value="{{ addRangeStartD }}" onChange="{{ onAddRangeStartD }}" onKeyDown="{{ onAddRangeStartDKey }}" ref="{{ refAddRangeStartD }}" inputMode="numeric" maxLength="2" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
                           <span>/</span>
-                          <input value="{{ addRangeStartY }}" onChange="{{ onAddRangeStartY }}" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <input value="{{ addRangeStartY }}" onChange="{{ onAddRangeStartY }}" onKeyDown="{{ onAddRangeStartYKey }}" ref="{{ refAddRangeStartY }}" inputMode="numeric" maxLength="4" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
                         </div>
                       </div>
                       <div>
                         <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
                         <div style="display:flex;align-items:center;gap:4px;border:1px solid var(--border-default);border-radius:8px;padding:8px 10px;">
-                          <input value="{{ addRangeEndM }}" onChange="{{ onAddRangeEndM }}" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <input value="{{ addRangeEndM }}" onChange="{{ onAddRangeEndM }}" onKeyDown="{{ onAddRangeEndMKey }}" ref="{{ refAddRangeEndM }}" inputMode="numeric" maxLength="2" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
                           <span>/</span>
-                          <input value="{{ addRangeEndD }}" onChange="{{ onAddRangeEndD }}" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <input value="{{ addRangeEndD }}" onChange="{{ onAddRangeEndD }}" onKeyDown="{{ onAddRangeEndDKey }}" ref="{{ refAddRangeEndD }}" inputMode="numeric" maxLength="2" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
                           <span>/</span>
-                          <input value="{{ addRangeEndY }}" onChange="{{ onAddRangeEndY }}" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
+                          <input value="{{ addRangeEndY }}" onChange="{{ onAddRangeEndY }}" onKeyDown="{{ onAddRangeEndYKey }}" ref="{{ refAddRangeEndY }}" inputMode="numeric" maxLength="4" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
                         </div>
                       </div>
                     </sc-if>
@@ -653,6 +657,72 @@
                           <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the applied rate immediately. Orders already booked in this range will retroactively use the new value.</p>
                         </div>
                       </sc-if>
+                      <sc-if value="{{ addRangeConfirmHasOrders }}" hint-placeholder-val="{{ false }}">
+                        <div>
+                          <sc-if value="{{ addRangeViewIsDetailed }}" hint-placeholder-val="{{ false }}">
+                            <div style="display:flex;flex-direction:column;gap:16px;">
+                              <div style="background:var(--color-neutrals-100);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:6px;">
+                                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                                  <span style="color:var(--text-caption);">Current value</span>
+                                  <span style="color:var(--text-title);font-weight:700;">{{ addRangeOriginalValueDisplay }}</span>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                                  <span style="color:var(--text-caption);">New value</span>
+                                  <span style="color:var(--text-title);font-weight:700;">{{ addRangeNewValueDisplay }}</span>
+                                </div>
+                              </div>
+                              <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ true }}">
+                              <div style="border:1px solid var(--border-default);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+                                <div style="width:32px;height:32px;border-radius:8px;background:var(--warning-surface-lighter);display:flex;align-items:center;justify-content:center;">
+                                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.8"><path d="M15 3v4h-4M3 15v-4h4"></path><path d="M4 8a5 5 0 018-3.2L15 7M14 10a5 5 0 01-8 3.2L3 11"></path></svg>
+                                </div>
+                                <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+                                  <span style="font-size:15px;font-weight:700;color:var(--text-title);">{{ addRangeEligibleCount }} ELIGIBLE</span>
+                                  <span style="font-size:15px;font-weight:700;color:var(--text-caption);">{{ addRangeIneligibleCount }} INELIGIBLE — KEPT AS EXCEPTIONS</span>
+                                </div>
+                                <div style="font-size:14px;color:var(--text-caption);">{{ addRangeConfirmCount }} affected in total</div>
+                              </div>
+                              </sc-if>
+                              <div style="display:flex;gap:4px;border-bottom:1px solid var(--border-default);">
+                                <div onClick="{{ setAddRangeOrdersTabAffected }}" style="{{ addRangeOrdersTabAffectedStyle }}">Affected ({{ addRangeEligibleCount }})</div>
+                                <div onClick="{{ setAddRangeOrdersTabIneligible }}" style="{{ addRangeOrdersTabIneligibleStyle }}">Ineligible ({{ addRangeIneligibleCount }})</div>
+                              </div>
+                              <div style="border:1px solid var(--border-default);border-radius:8px;overflow:hidden;">
+                                <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                                  <thead>
+                                    <tr style="background:var(--surface-neutral-lighter,#f5f5f5);">
+                                      <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Order</th>
+                                      <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Current</th>
+                                      <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Recalculated</th>
+                                      <th style="text-align:right;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Status</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <sc-for list="{{ addRangeVisibleOrders }}" as="ord" hint-placeholder-count="0">
+                                      <tr style="border-top:1px solid var(--border-default);">
+                                        <td style="padding:10px 12px;color:var(--text-body);">
+                                          <div>{{ ord.id }}</div>
+                                          <sc-if value="{{ ord.note }}" hint-placeholder-val="{{ false }}">
+                                            <div style="font-size:12px;font-style:italic;color:var(--text-caption);">{{ ord.note }}</div>
+                                          </sc-if>
+                                        </td>
+                                        <td style="padding:10px 12px;color:var(--text-caption);">{{ ord.current }}</td>
+                                        <td style="padding:10px 12px;color:var(--text-title);font-weight:600;">{{ ord.recalculated }}</td>
+                                        <td style="padding:10px 12px;text-align:right;"><span style="{{ ord.statusPillStyle }}">{{ ord.status }}</span></td>
+                                      </tr>
+                                    </sc-for>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div style="font-size:12px;color:var(--text-caption);">Showing {{ addRangeVisibleOrders.length }} of {{ addRangeOrdersTabTotal }} {{ addRangeOrdersTabLabel }} orders</div>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ addRangeStepIsReason }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:20px;">
                       <div>
                         <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Reason for correction</div>
                         <textarea value="{{ addRangeCorrectionReason }}" onChange="{{ onAddRangeCorrectionReason }}" placeholder="e.g. Agreement was signed for a lower rate effective this range; original entry used the wrong value." style="width:100%;min-height:88px;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;box-sizing:border-box;resize:vertical;"></textarea>
@@ -664,27 +734,18 @@
                   <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
                     <button onClick="{{ backAddRangeStep }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Back</button>
                   </sc-if>
+                  <sc-if value="{{ addRangeStepIsReason }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ backAddRangeStepToConfirm }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Back</button>
+                  </sc-if>
                   <sc-if value="{{ addRangeStepIsDetails }}" hint-placeholder-val="{{ true }}">
                     <button onClick="{{ closeAddRangeModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
                   </sc-if>
-                  <button onClick="{{ saveAddRange }}" disabled="{{ addRangeSaveDisabled }}" style="{{ addRangeSaveStyle }}">{{ addRangeSaveLabel }}</button>
-                </div>
-              </div>
-            </div>
-          </sc-if>
-
-          <!-- SAVE CHANGE CONFIRM MODAL -->
-          <sc-if value="{{ confirmChangeOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1200;">
-              <div style="background:#fff;border-radius:12px;width:420px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,0.2);padding:24px;">
-                <div style="width:44px;height:44px;border-radius:50%;background:var(--color-green-100);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                  <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a6 6 0 0 1 10.2-4.2M15 8a6 6 0 0 1-10.2 4.2"></path><path d="M13 1v3h-3M5 15v-3h3"></path></svg>
-                </div>
-                <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">Confirm this change?</h3>
-                <p style="margin:0;font-size:15px;line-height:1.5;color:var(--text-caption);">{{ confirmChangeMessage }}</p>
-                <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-default);">
-                  <button onClick="{{ cancelChange }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
-                  <button onClick="{{ confirmChange }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Confirm</button>
+                  <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ continueToReasonStep }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Continue</button>
+                  </sc-if>
+                  <sc-if value="{{ addRangeStepIsReasonOrDetails }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ saveAddRange }}" disabled="{{ addRangeSaveDisabled }}" style="{{ addRangeSaveStyle }}">{{ addRangeSaveLabel }}</button>
+                  </sc-if>
                 </div>
               </div>
             </div>
@@ -1109,6 +1170,10 @@
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Number</th>
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Description</th>
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Rate</th>
+                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Transport Services</th>
+                      <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
+                        <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Vehicle Type</th>
+                      </sc-if>
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Last Updated</th>
                     </tr>
                   </thead>
@@ -1146,6 +1211,16 @@
                           <sc-if value="{{ rule.notEditing }}" hint-placeholder-val="{{ true }}">{{ rule.rate }}</sc-if>
                         </td>
                         <td style="padding:14px 12px;color:var(--text-body);">
+                          <div style="display:flex;flex-wrap:wrap;gap:6px;max-width:220px;">
+                            <sc-for list="{{ rule.serviceTags }}" as="tag" hint-placeholder-count="0">
+                              <span style="background:var(--surface-neutral-lighter,#f5f5f5);color:var(--text-body);font-size:12px;font-weight:500;padding:4px 8px;border-radius:4px;white-space:nowrap;">{{ tag }}</span>
+                            </sc-for>
+                          </div>
+                        </td>
+                        <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ rule.vehicleType }}</td>
+                        </sc-if>
+                        <td style="padding:14px 12px;color:var(--text-body);">
                           <div onClick="{{ rule.onOpenLog }}" style="cursor:pointer;color:var(--text-brand-default);">{{ rule.lastUpdated }}</div>
                           <div style="font-size:12px;color:var(--text-subtitle);">by {{ rule.updatedBy }}</div>
                         </td>
@@ -1173,11 +1248,31 @@
           <!-- ADD RULE MODAL -->
           <sc-if value="{{ ruleModalOpen }}" hint-placeholder-val="{{ false }}">
             <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
-              <div style="background:#fff;border-radius:12px;width:480px;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+              <div style="background:#fff;border-radius:12px;width:600px;max-width:90vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
                   <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ ruleModalTitle }}</h3>
-                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeRuleModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                  <sc-if value="{{ ruleModalStepIsDetails }}" hint-placeholder-val="{{ true }}">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeRuleModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                  </sc-if>
                 </div>
+                <div style="padding:20px 24px 0;">
+                  <div style="display:flex;align-items:center;">
+                    <sc-for list="{{ ruleModalSteps }}" as="step" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <div style="{{ step.circleStyle }}">
+                          <sc-if value="{{ step.dotOn }}" hint-placeholder-val="{{ true }}">
+                            <div style="width:10px;height:10px;border-radius:50%;background:var(--text-brand-default);"></div>
+                          </sc-if>
+                        </div>
+                        <span style="{{ step.labelStyle }}">{{ step.label }}</span>
+                      </div>
+                      <sc-if value="{{ step.hasLine }}" hint-placeholder-val="{{ true }}">
+                        <div style="{{ step.lineStyle }}"></div>
+                      </sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+                <sc-if value="{{ ruleModalStepIsDetails }}" hint-placeholder-val="{{ true }}">
                 <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
                   <div style="position:relative;">
                     <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Article Number</label>
@@ -1194,8 +1289,8 @@
                     </sc-if>
                   </div>
                   <div>
-                    <label style="display:block;font-size:14px;color:var(--text-title);margin-bottom:8px;"><span style="font-weight:700;">Article Description</span> <span style="font-weight:400;color:var(--text-caption);">— auto-filled, editable</span></label>
-                    <input value="{{ ruleModalDesc }}" onChange="{{ onRuleModalDesc }}" placeholder="e.g. Weekend Surcharge" style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);">
+                    <label style="display:block;font-size:14px;color:var(--text-title);margin-bottom:8px;"><span style="font-weight:700;">Article Description</span> <span style="font-weight:400;color:var(--text-caption);">— set by the selected article</span></label>
+                    <input value="{{ ruleModalDesc }}" onChange="{{ onRuleModalDesc }}" readOnly="{{ ruleModalDescReadonly }}" placeholder="Select an article number first" style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:{{ ruleModalDescBg }};color:{{ ruleModalDescColor }};">
                   </div>
                   <div>
                     <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Rate</label>
@@ -1212,14 +1307,118 @@
                       </select>
                     </div>
                   </div>
+                  <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Vehicle Type</label>
+                      <select value="{{ ruleModalVehicleType }}" onChange="{{ onRuleModalVehicleType }}" style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:#fff;">
+                        <option value="Boxwagon">Boxwagon</option>
+                        <option value="Semi-tractor">Semi-tractor</option>
+                        <option value="Motorwagen">Motorwagen</option>
+                      </select>
+                    </div>
+                  </sc-if>
+                  <div>
+                    <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Transport Services</label>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                      <sc-for list="{{ ruleModalServiceOptions }}" as="svc" hint-placeholder-count="0">
+                        <label onClick="{{ svc.onToggle }}" style="display:flex;align-items:center;gap:6px;border:1px solid var(--form-border);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--text-title);cursor:pointer;user-select:none;">
+                          <input type="checkbox" checked="{{ svc.checked }}" onChange="{{ svc.onToggle }}" style="cursor:pointer;">
+                          {{ svc.label }}
+                        </label>
+                      </sc-for>
+                    </div>
+                  </div>
                 </div>
+                </sc-if>
+                <sc-if value="{{ ruleModalStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+                    <div>
+                      <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ confirmChangeCount }} orders affected</h3>
+                      <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the rate used for this rule. Affected orders will be recalculated using the new value.</p>
+                    </div>
+                    <div style="background:var(--color-neutrals-100);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:6px;">
+                      <div style="display:flex;justify-content:space-between;font-size:14px;">
+                        <span style="color:var(--text-caption);">Current value</span>
+                        <span style="color:var(--text-title);font-weight:700;">{{ ruleModalOriginalValueDisplay }}</span>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;font-size:14px;">
+                        <span style="color:var(--text-caption);">New value</span>
+                        <span style="color:var(--text-title);font-weight:700;">{{ ruleModalNewValueDisplay }}</span>
+                      </div>
+                    </div>
+                    <div style="border:1px solid var(--border-default);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+                      <div style="width:32px;height:32px;border-radius:8px;background:var(--warning-surface-lighter);display:flex;align-items:center;justify-content:center;">
+                        <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.8"><path d="M15 3v4h-4M3 15v-4h4"></path><path d="M4 8a5 5 0 018-3.2L15 7M14 10a5 5 0 01-8 3.2L3 11"></path></svg>
+                      </div>
+                      <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+                        <span style="font-size:15px;font-weight:700;color:var(--text-title);">{{ ruleModalEligibleCount }} ELIGIBLE</span>
+                        <span style="font-size:15px;font-weight:700;color:var(--text-caption);">{{ ruleModalIneligibleCount }} INELIGIBLE — KEPT AS EXCEPTIONS</span>
+                      </div>
+                      <div style="font-size:14px;color:var(--text-caption);">{{ confirmChangeCount }} affected in total</div>
+                    </div>
+                    <div style="display:flex;gap:4px;border-bottom:1px solid var(--border-default);">
+                      <div onClick="{{ setRuleModalOrdersTabAffected }}" style="{{ ruleModalOrdersTabAffectedStyle }}">Affected ({{ ruleModalEligibleCount }})</div>
+                      <div onClick="{{ setRuleModalOrdersTabIneligible }}" style="{{ ruleModalOrdersTabIneligibleStyle }}">Ineligible ({{ ruleModalIneligibleCount }})</div>
+                    </div>
+                    <div style="border:1px solid var(--border-default);border-radius:8px;overflow:hidden;">
+                      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                          <tr style="background:var(--surface-neutral-lighter,#f5f5f5);">
+                            <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Order</th>
+                            <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Current</th>
+                            <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Recalculated</th>
+                            <th style="text-align:right;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <sc-for list="{{ ruleModalVisibleOrders }}" as="ord" hint-placeholder-count="0">
+                            <tr style="border-top:1px solid var(--border-default);">
+                              <td style="padding:10px 12px;color:var(--text-body);">
+                                <div>{{ ord.id }}</div>
+                                <sc-if value="{{ ord.note }}" hint-placeholder-val="{{ false }}">
+                                  <div style="font-size:12px;font-style:italic;color:var(--text-caption);">{{ ord.note }}</div>
+                                </sc-if>
+                              </td>
+                              <td style="padding:10px 12px;color:var(--text-caption);">{{ ord.current }}</td>
+                              <td style="padding:10px 12px;color:var(--text-title);font-weight:600;">{{ ord.recalculated }}</td>
+                              <td style="padding:10px 12px;text-align:right;"><span style="{{ ord.statusPillStyle }}">{{ ord.status }}</span></td>
+                            </tr>
+                          </sc-for>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div style="font-size:12px;color:var(--text-caption);">Showing {{ ruleModalVisibleOrders.length }} of {{ ruleModalOrdersTabTotal }} {{ ruleModalOrdersTabLabel }} orders</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ ruleModalStepIsReason }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:24px;">
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Reason for correction</div>
+                    <textarea value="{{ ruleModalCorrectionReason }}" onChange="{{ onRuleModalCorrectionReason }}" placeholder="e.g. Agreement was signed for a lower rate effective this range; original entry used the wrong value." style="width:100%;min-height:88px;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;box-sizing:border-box;resize:vertical;"></textarea>
+                  </div>
+                </sc-if>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px;border-top:1px solid var(--border-default);">
-                  <sc-if value="{{ ruleModalIsEdit }}" hint-placeholder-val="{{ false }}">
+                  <sc-if value="{{ ruleModalShowDelete }}" hint-placeholder-val="{{ false }}">
                     <button onClick="{{ openDeleteConfirm }}" style="background:transparent;color:var(--icon-danger);border:none;padding:12px 4px;font-size:14px;font-weight:700;cursor:pointer;">Delete</button>
                   </sc-if>
                   <div style="display:flex;gap:12px;margin-left:auto;">
-                    <button onClick="{{ closeRuleModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
-                    <button onClick="{{ saveRuleModal }}" disabled="{{ ruleModalSaveDisabled }}" style="{{ ruleModalSaveStyle }}">Save</button>
+                    <sc-if value="{{ ruleModalStepIsDetails }}" hint-placeholder-val="{{ true }}">
+                      <button onClick="{{ closeRuleModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                    </sc-if>
+                    <sc-if value="{{ ruleModalStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ backRuleModalStep }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Back</button>
+                    </sc-if>
+                    <sc-if value="{{ ruleModalStepIsReason }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ backRuleModalStepToConfirm }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Back</button>
+                    </sc-if>
+                    <sc-if value="{{ ruleModalStepIsDetails }}" hint-placeholder-val="{{ true }}">
+                      <button onClick="{{ saveRuleModal }}" disabled="{{ ruleModalSaveDisabled }}" style="{{ ruleModalSaveStyle }}">Next</button>
+                    </sc-if>
+                    <sc-if value="{{ ruleModalStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ continueRuleModalToReason }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Continue</button>
+                    </sc-if>
+                    <sc-if value="{{ ruleModalStepIsReason }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ confirmChange }}" style="{{ ruleModalSaveStyle }}">Confirm</button>
+                    </sc-if>
                   </div>
                 </div>
               </div>
@@ -1247,8 +1446,10 @@
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;},&quot;showDetailedBreakdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Confirm Changes step&quot;}}">
 const TABS = ['Fuel Rate', 'Surcharges', 'Kilometre Rates', 'Minimum Rate'];
+const TRANSPORT_SERVICES = ['Full Truckload (FTL)', 'Full Container Load (FCL)', 'Less-than-Truckload (LTL)', 'Courier', 'Pallet network', 'Parcel'];
+const SERVICE_ABBR = { 'Full Truckload (FTL)': 'FTL', 'Full Container Load (FCL)': 'FCL', 'Less-than-Truckload (LTL)': 'LTL', 'Courier': 'Courier', 'Pallet network': 'Pallet network', 'Parcel': 'Parcel' };
 const RANGE_TYPE_INFO = {
   'Fuel Rate/Distance': 'A fixed surcharge applied per distance unit travelled.',
   'Fuel Percentage': 'A percentage surcharge applied to the base transport cost.',
@@ -1291,6 +1492,7 @@ class Component extends DCLogic {
   state = {
     screen: 'groups',
     activeTab: 'Fuel Rate',
+    addRangeOrdersTab: 'affected',
     subTab: 'schedule',
     bannerVisible: true,
     groupsView: 'enterprises',
@@ -1313,10 +1515,16 @@ class Component extends DCLogic {
     rulesSearch: '',
     nextRuleId: { Surcharges: 12, 'Kilometre Rates': 10, 'Minimum Rate': 10 },
     ruleModalOpen: false,
+    ruleModalStep: 1,
+    ruleModalOriginalRate: '',
+    ruleModalOrdersTab: 'affected',
+    ruleModalCorrectionReason: '',
     ruleModalNum: '',
     ruleModalDesc: '',
     ruleModalRate: '',
     ruleModalUnit: '/ order',
+    ruleModalServices: [],
+    ruleModalVehicleType: 'Boxwagon',
     ruleNumDropdownOpen: false,
     ruleModalEditId: null,
     deleteConfirmOpen: false,
@@ -1338,6 +1546,8 @@ class Component extends DCLogic {
     addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
     addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
     addRangeValue: '',
+    addRangeOriginalValue: '',
+    addRangeDetailView: 'summary',
     addRangeEditId: null,
     addRangeEditListKey: null,
     addRangeStartFull: '',
@@ -1359,38 +1569,38 @@ class Component extends DCLogic {
     exceptionDetailOpen: false,
     exceptionDetailId: null,
     Surcharges: [
-      { id: 1, num: '402', desc: 'Waiting time pickup (courier)', rate: '€ 112.00', editing: false },
-      { id: 2, num: '403', desc: 'Waiting time delivery (courier)', rate: '€ 22.00', editing: false },
-      { id: 3, num: '460', desc: 'Booking fee', rate: '€ 5.45', editing: false },
-      { id: 4, num: '462', desc: 'Additional Stop (Courier)', rate: '€ 30.25', editing: false },
-      { id: 5, num: '470', desc: 'Evening Surcharge', rate: '€ 27.50', editing: false },
-      { id: 6, num: '472', desc: 'Weekend Surcharge', rate: '€ 55.00', editing: false },
-      { id: 7, num: '500', desc: 'Fixed price FTL', rate: '€ 223.00', editing: false },
-      { id: 8, num: '502', desc: 'Cancellation fee (FTL)', rate: '€ 232.00', editing: false },
-      { id: 9, num: '508', desc: 'Proof of delivery (Signed POD) (FTL)', rate: '€ 99.00', editing: false },
-      { id: 10, num: '509', desc: 'Paper Invoice Fee (FTL)', rate: '€ 88.00', editing: false },
+      { id: 1, num: '402', desc: 'Waiting time pickup (courier)', rate: '€ 112.00', editing: false, services: ['Courier'] },
+      { id: 2, num: '403', desc: 'Waiting time delivery (courier)', rate: '€ 22.00', editing: false, services: ['Courier'] },
+      { id: 3, num: '460', desc: 'Booking fee', rate: '€ 5.45', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)', 'Pallet network'] },
+      { id: 4, num: '462', desc: 'Additional Stop (Courier)', rate: '€ 30.25', editing: false, services: ['Courier'] },
+      { id: 5, num: '470', desc: 'Evening Surcharge', rate: '€ 27.50', editing: false, services: ['Courier', 'Parcel'] },
+      { id: 6, num: '472', desc: 'Weekend Surcharge', rate: '€ 55.00', editing: false, services: ['Courier', 'Parcel', 'Less-than-Truckload (LTL)'] },
+      { id: 7, num: '500', desc: 'Fixed price FTL', rate: '€ 223.00', editing: false, services: ['Full Truckload (FTL)'] },
+      { id: 8, num: '502', desc: 'Cancellation fee (FTL)', rate: '€ 232.00', editing: false, services: ['Full Truckload (FTL)'] },
+      { id: 9, num: '508', desc: 'Proof of delivery (Signed POD) (FTL)', rate: '€ 99.00', editing: false, services: ['Full Truckload (FTL)'] },
+      { id: 10, num: '509', desc: 'Paper Invoice Fee (FTL)', rate: '€ 88.00', editing: false, services: ['Full Truckload (FTL)'] },
     ],
     'Kilometre Rates': [
-      { id: 1, num: '410', desc: 'Delivery Car Transport rate', rate: '€ 0.73', editing: false },
-      { id: 2, num: '411', desc: 'L1H1 Transport rate', rate: '€ 0.80', editing: false },
-      { id: 3, num: '412', desc: 'L1H2 Transport rate', rate: '€ 0.80', editing: false },
-      { id: 4, num: '413', desc: 'L2H1 Transport rate', rate: '€ 0.80', editing: false },
-      { id: 5, num: '414', desc: 'L2H2 Transport rate', rate: '€ 0.80', editing: false },
-      { id: 6, num: '415', desc: 'L3H2 Transport rate', rate: '€ 0.86', editing: false },
-      { id: 7, num: '416', desc: 'L3H3 Transport rate', rate: '€ 0.86', editing: false },
-      { id: 8, num: '417', desc: 'L4H2 Transport rate', rate: '€ 0.92', editing: false },
-      { id: 9, num: '418', desc: 'L4H4 Transport rate', rate: '€ 0.92', editing: false },
+      { id: 1, num: '410', desc: 'Delivery Car Transport rate', rate: '€ 0.73', editing: false, services: ['Courier', 'Parcel'], vehicleType: 'Motorwagen' },
+      { id: 2, num: '411', desc: 'L1H1 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'], vehicleType: 'Boxwagon' },
+      { id: 3, num: '412', desc: 'L1H2 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'], vehicleType: 'Boxwagon' },
+      { id: 4, num: '413', desc: 'L2H1 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'], vehicleType: 'Semi-tractor' },
+      { id: 5, num: '414', desc: 'L2H2 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'], vehicleType: 'Semi-tractor' },
+      { id: 6, num: '415', desc: 'L3H2 Transport rate', rate: '€ 0.86', editing: false, services: ['Full Truckload (FTL)', 'Pallet network'], vehicleType: 'Semi-tractor' },
+      { id: 7, num: '416', desc: 'L3H3 Transport rate', rate: '€ 0.86', editing: false, services: ['Full Truckload (FTL)', 'Pallet network'], vehicleType: 'Semi-tractor' },
+      { id: 8, num: '417', desc: 'L4H2 Transport rate', rate: '€ 0.92', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'], vehicleType: 'Semi-tractor' },
+      { id: 9, num: '418', desc: 'L4H4 Transport rate', rate: '€ 0.92', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'], vehicleType: 'Semi-tractor' },
     ],
     'Minimum Rate': [
-      { id: 1, num: '420', desc: 'Delivery Car Minimum rate', rate: '€ 72.60', editing: false },
-      { id: 2, num: '421', desc: 'L1H1 Minimum ride fare', rate: '€ 80.30', editing: false },
-      { id: 3, num: '422', desc: 'L1H2 Minimum ride fare', rate: '€ 80.30', editing: false },
-      { id: 4, num: '423', desc: 'L2H1 Minimum ride fare', rate: '€ 80.30', editing: false },
-      { id: 5, num: '424', desc: 'L2H2 Minimum ride fare', rate: '€ 80.30', editing: false },
-      { id: 6, num: '425', desc: 'L3H2 Minimum ride fare', rate: '€ 85.80', editing: false },
-      { id: 7, num: '426', desc: 'L3H3 Minimum ride fare', rate: '€ 85.80', editing: false },
-      { id: 8, num: '427', desc: 'L4H2 Minimum ride fare', rate: '€ 85.80', editing: false },
-      { id: 9, num: '428', desc: 'L4H4 Minimum ride fare', rate: '€ 85.80', editing: false },
+      { id: 1, num: '420', desc: 'Delivery Car Minimum rate', rate: '€ 72.60', editing: false, services: ['Courier', 'Parcel'] },
+      { id: 2, num: '421', desc: 'L1H1 Minimum ride fare', rate: '€ 80.30', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'] },
+      { id: 3, num: '422', desc: 'L1H2 Minimum ride fare', rate: '€ 80.30', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'] },
+      { id: 4, num: '423', desc: 'L2H1 Minimum ride fare', rate: '€ 80.30', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'] },
+      { id: 5, num: '424', desc: 'L2H2 Minimum ride fare', rate: '€ 80.30', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'] },
+      { id: 6, num: '425', desc: 'L3H2 Minimum ride fare', rate: '€ 85.80', editing: false, services: ['Full Truckload (FTL)', 'Pallet network'] },
+      { id: 7, num: '426', desc: 'L3H3 Minimum ride fare', rate: '€ 85.80', editing: false, services: ['Full Truckload (FTL)', 'Pallet network'] },
+      { id: 8, num: '427', desc: 'L4H2 Minimum ride fare', rate: '€ 85.80', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'] },
+      { id: 9, num: '428', desc: 'L4H4 Minimum ride fare', rate: '€ 85.80', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'] },
     ],
     groupsData: [
       { id: 1, subgroup: 'CtrlChain Enterprise', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load', manager: 'Martijn Coenen', industry: 'Transport' },
@@ -1467,13 +1677,13 @@ class Component extends DCLogic {
       ],
     });
   };
-  openRuleModal = () => this.setState({ ruleModalOpen: true, ruleModalNum: '', ruleModalDesc: '', ruleModalRate: '', ruleModalUnit: '/ order', ruleNumDropdownOpen: false, ruleModalEditId: null });
+  openRuleModal = () => this.setState({ ruleModalOpen: true, ruleModalStep: 1, ruleModalOriginalRate: '', ruleModalOrdersTab: 'affected', ruleModalCorrectionReason: '', ruleModalNum: '', ruleModalDesc: '', ruleModalRate: '', ruleModalUnit: '/ order', ruleModalServices: [], ruleModalVehicleType: 'Boxwagon', ruleNumDropdownOpen: false, ruleModalEditId: null });
   openRuleEditModal = (key, row) => {
     const n = parseFloat((row.rate || '').replace(/[^\d.]/g, ''));
     this.setState({
-      ruleModalOpen: true, ruleModalEditId: row.id,
+      ruleModalOpen: true, ruleModalEditId: row.id, ruleModalStep: 1, ruleModalOriginalRate: row.rate, ruleModalOrdersTab: 'affected', ruleModalCorrectionReason: '',
       ruleModalNum: row.num, ruleModalDesc: row.desc,
-      ruleModalRate: isNaN(n) ? '' : String(n), ruleModalUnit: '/ order', ruleNumDropdownOpen: false,
+      ruleModalRate: isNaN(n) ? '' : String(n), ruleModalUnit: '/ order', ruleModalServices: row.services ? [...row.services] : [], ruleModalVehicleType: row.vehicleType || 'Boxwagon', ruleNumDropdownOpen: false,
     });
   };
   deleteRuleModal = () => this.setState(s => {
@@ -1492,30 +1702,47 @@ class Component extends DCLogic {
     const key = s.activeTab;
     return { [key]: s[key].filter(r => r.id !== s.ruleModalEditId), ruleModalOpen: false, deleteConfirmOpen: false };
   });
-  closeRuleModal = () => this.setState({ ruleModalOpen: false });
+  closeRuleModal = () => this.setState({ ruleModalOpen: false, ruleModalStep: 1 });
+  backRuleModalStep = () => this.setState({ ruleModalStep: 1 });
+  backRuleModalStepToConfirm = () => this.setState(s => ({ ruleModalStep: s.activeTab === 'Fuel Rate' ? 2 : 1 }));
+  continueRuleModalToReason = () => this.setState({ ruleModalStep: 3 });
+  setRuleModalOrdersTab = (tab) => this.setState({ ruleModalOrdersTab: tab });
   openRuleNumDropdown = () => this.setState({ ruleNumDropdownOpen: true });
   closeRuleNumDropdown = () => this.setState({ ruleNumDropdownOpen: false });
-  selectRuleNumOption = (opt) => this.setState({ ruleModalNum: opt.num, ruleModalDesc: opt.desc, ruleNumDropdownOpen: false });
+  selectRuleNumOption = (opt) => {
+    const n = parseFloat((opt.rate || '').replace(/[^\d.]/g, ''));
+    this.setState({
+      ruleModalNum: opt.num, ruleModalDesc: opt.desc, ruleModalEditId: opt.id,
+      ruleModalRate: isNaN(n) ? '' : String(n), ruleModalServices: opt.services ? [...opt.services] : [],
+      ruleModalVehicleType: opt.vehicleType || 'Boxwagon', ruleNumDropdownOpen: false,
+    });
+  };
   onRuleModalNum = (e) => this.setState({ ruleModalNum: e.target.value });
   onRuleModalDesc = (e) => this.setState({ ruleModalDesc: e.target.value });
   onRuleModalRate = (e) => this.setState({ ruleModalRate: e.target.value });
   onRuleModalUnit = (e) => this.setState({ ruleModalUnit: e.target.value });
+  onRuleModalVehicleType = (e) => this.setState({ ruleModalVehicleType: e.target.value });
+  toggleRuleModalService = (service) => this.setState(s => ({
+    ruleModalServices: s.ruleModalServices.includes(service) ? s.ruleModalServices.filter(x => x !== service) : [...s.ruleModalServices, service],
+  }));
   saveRuleModal = () => {
     const affected = 12 + Math.floor(Math.random() * 40);
-    this.setState({ confirmChangeOpen: true, confirmChangeCount: affected, confirmChangeAction: 'ruleModal', confirmChangeUnit: 'orders' });
+    const hasConfirmStep = this.state.activeTab === 'Fuel Rate';
+    this.setState({ ruleModalStep: hasConfirmStep ? 2 : 3, confirmChangeCount: affected, confirmChangeAction: 'ruleModal', confirmChangeUnit: 'orders' });
   };
   commitRuleModal = () => this.setState(s => {
     const key = s.activeTab;
     const n = parseFloat(s.ruleModalRate);
     const rate = `€ ${isNaN(n) ? '0.00' : n.toFixed(2)}`;
+    const vehicleType = key === 'Kilometre Rates' ? s.ruleModalVehicleType : undefined;
     if (s.ruleModalEditId != null) {
       return {
-        [key]: s[key].map(r => r.id === s.ruleModalEditId ? { ...r, num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, editing: false } : r),
+        [key]: s[key].map(r => r.id === s.ruleModalEditId ? { ...r, num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, services: s.ruleModalServices, ...(vehicleType ? { vehicleType } : {}), editing: false } : r),
         ruleModalOpen: false,
       };
     }
     return {
-      [key]: [{ id: s.nextRuleId[key], num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, editing: false }, ...s[key]],
+      [key]: [{ id: s.nextRuleId[key], num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, services: s.ruleModalServices, ...(vehicleType ? { vehicleType } : {}), editing: false }, ...s[key]],
       nextRuleId: { ...s.nextRuleId, [key]: s.nextRuleId[key] + 1 },
       ruleModalOpen: false,
     };
@@ -1540,13 +1767,13 @@ class Component extends DCLogic {
     return { [listKey]: [...s[listKey], newRow], [nextIdKey]: s[nextIdKey] + 1 };
   });
   openAddRangeModal = () => this.setState({
-    addRangeModalOpen: true, addRangeTarget: 'schedule', addRangeType: null, addRangeStep: 1,
+    addRangeModalOpen: true, addRangeTarget: 'schedule', addRangeType: null, addRangeStep: 1, addRangeEditRowStatus: null,
     addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
     addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
     addRangeValue: '',
   });
   openAddRangeModalForDetail = () => this.setState({
-    addRangeModalOpen: true, addRangeTarget: 'detail', addRangeType: null, addRangeStep: 1,
+    addRangeModalOpen: true, addRangeTarget: 'detail', addRangeType: null, addRangeStep: 1, addRangeEditRowStatus: null,
     addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
     addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
     addRangeValue: '',
@@ -1557,6 +1784,7 @@ class Component extends DCLogic {
     addRangeEditRowStatus: rg.status,
     addRangeType: rg.rateType,
     addRangeValue: String(rg.value).replace('%', '').replace('€', '').trim(),
+    addRangeOriginalValue: rg.value, addRangeDetailView: 'summary',
     addRangeStartFull: rg.rangeFrom, addRangeEndFull: rg.rangeTo,
   }));
   openEditRangeModal = (listKey, row) => this.setState({
@@ -1565,20 +1793,84 @@ class Component extends DCLogic {
     addRangeEditRowStatus: row.status,
     addRangeType: row.rateType,
     addRangeValue: String(row.value).replace('%', '').replace('€', '').trim(),
+    addRangeOriginalValue: row.value, addRangeDetailView: 'summary',
     addRangeStartFull: row.rangeFrom, addRangeEndFull: row.rangeTo,
   });
-  closeAddRangeModal = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, addRangeCorrectionReason: '' });
+  closeAddRangeModal = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, addRangeCorrectionReason: '', addRangeOrdersTab: 'affected' });
   backToScheduleHistory = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, scheduleHistoryOpen: true });
   addRangeBack = () => this.state.addRangeEditListKey === 'scheduleHistoryRows' ? this.backToScheduleHistory() : this.closeAddRangeModal();
   backAddRangeStep = () => this.setState({ addRangeStep: 1 });
+  backAddRangeStepToConfirm = () => this.setState({ addRangeStep: 2 });
+  continueToReasonStep = () => this.setState({ addRangeStep: 3 });
+  setAddRangeDetailView = (view) => this.setState({ addRangeDetailView: view });
+  setAddRangeOrdersTab = (tab) => this.setState({ addRangeOrdersTab: tab });
+  buildAffectedOrderGroups = (count, originalValue, newValue) => {
+    const valueChanged = (originalValue ?? '').toString().trim() !== (newValue ?? '').toString().trim();
+    const ineligibleCount = Math.max(1, Math.round(count * 0.32));
+    const eligibleCount = Math.max(0, count - ineligibleCount);
+    const eligibleShown = Math.min(eligibleCount, 8);
+    const eligible = [];
+    for (let i = 0; i < eligibleShown; i++) {
+      const cur = 40 + i * 8.4, next = valueChanged ? cur * 1.25 : cur;
+      eligible.push({
+        id: `ORD-${88214 + i * 17}`,
+        current: `€${cur.toFixed(2)}`,
+        recalculated: `€${next.toFixed(2)}`,
+        status: 'Eligible',
+        statusPillStyle: 'display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--color-green-100);color:var(--color-green-800);',
+      });
+    }
+    const ineligibleShown = Math.min(ineligibleCount, 8);
+    const ineligibleNotes = ['Already invoiced', 'Order cancelled', 'Manual override applied'];
+    const ineligible = [];
+    for (let i = 0; i < ineligibleShown; i++) {
+      const cur = 55 + i * 9.1;
+      ineligible.push({
+        id: `ORD-${88257 + i * 23}`,
+        current: `€${cur.toFixed(2)}`,
+        recalculated: `€${cur.toFixed(2)}`,
+        status: 'Ineligible',
+        note: ineligibleNotes[i % ineligibleNotes.length],
+        statusPillStyle: 'display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--color-neutrals-200);color:var(--color-neutrals-700);',
+      });
+    }
+    return { eligible, ineligible, eligibleCount, ineligibleCount };
+  };
   setAddRangeType = (type) => this.setState({ addRangeType: type });
   setAddRangeField = (field, value) => this.setState({ [field]: value });
+  dateSegRefs = {};
+  dateSegChain = {
+    start: [['addRangeStartM', 2], ['addRangeStartD', 2], ['addRangeStartY', 4]],
+    end: [['addRangeEndM', 2], ['addRangeEndD', 2], ['addRangeEndY', 4]],
+  };
+  onDateSeg = (which, idx) => (e) => {
+    const chain = this.dateSegChain[which];
+    let digits = (e.target.value || '').replace(/\D/g, '');
+    const patch = {};
+    let i = idx;
+    while (digits.length && i < chain.length) {
+      const [field, max] = chain[i];
+      patch[field] = digits.slice(0, max);
+      digits = digits.slice(max);
+      i++;
+    }
+    if (!Object.keys(patch).length) patch[chain[idx][0]] = '';
+    const lastFilled = i - 1;
+    this.setState(patch, () => {
+      const filledToMax = patch[chain[lastFilled]?.[0]]?.length === chain[lastFilled]?.[1];
+      const next = chain[filledToMax ? lastFilled + 1 : lastFilled];
+      if (next && this.dateSegRefs[next[0]]) this.dateSegRefs[next[0]].focus();
+    });
+  };
+  onDateSegKey = (which, idx) => (e) => {
+    if (e.key !== 'Backspace' || e.target.value !== '' || idx === 0) return;
+    const prev = this.dateSegChain[which][idx - 1];
+    const el = this.dateSegRefs[prev[0]];
+    if (el) { e.preventDefault(); el.focus(); }
+  };
   saveAddRange = () => {
     const s = this.state;
-    const isEnterpriseLevel = (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).group;
-    const isPastEdit = s.addRangeEditRowStatus === 'Expired';
-    const needsConfirm = (isEnterpriseLevel && s.addRangeTarget !== 'detail') || isPastEdit;
-    if (needsConfirm && s.addRangeStep === 1) {
+    if (s.addRangeStep === 1) {
       const activeGroup = s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3];
       const subgroupCount = s.groupsData.filter(g => g.group === activeGroup.group && g.id !== activeGroup.id).length;
       const affected = subgroupCount * (18 + Math.floor(Math.random() * 30));
@@ -1590,7 +1882,7 @@ class Component extends DCLogic {
   cancelChange = () => this.setState({ confirmChangeOpen: false });
   confirmChange = () => {
     if (this.state.confirmChangeAction === 'ruleModal') this.commitRuleModal();
-    this.setState({ confirmChangeOpen: false });
+    this.setState({ confirmChangeOpen: false, ruleModalStep: 1 });
   };
   commitAddRange = () => this.setState(s => {
     const startDate = `${s.addRangeStartM}/${s.addRangeStartD}/${s.addRangeStartY}`;
@@ -1858,6 +2150,14 @@ class Component extends DCLogic {
 
   renderVals() {
     const s = this.state;
+    const addRangeOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.addRangeOriginalValue, s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue);
+    const ruleModalOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.ruleModalOriginalRate, s.ruleModalRate ? `€ ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '');
+    const addRangeOrdersTabStyle = (active) => ({
+      padding: '10px 4px', fontSize: 14, fontWeight: 700, cursor: 'pointer',
+      color: active ? 'var(--text-brand-default)' : 'var(--text-subtitle)',
+      borderBottom: active ? '2px solid var(--border-brand-default)' : '2px solid transparent',
+      marginBottom: -1, marginRight: 20,
+    });
     const groupsData = s.groupsData;
     const activeGroup = groupsData.find(g => g.id === s.activeGroupId) || groupsData[3];
     return {
@@ -1917,6 +2217,7 @@ class Component extends DCLogic {
       rulesTitle: s.activeTab,
       rulesSearch: s.rulesSearch,
       setRulesSearch: this.setRulesSearch,
+      isKilometreRatesTab: s.activeTab === 'Kilometre Rates',
       resetAllRules: () => this.resetAllRules(s.activeTab),
       addRuleRow: () => this.addRuleRow(s.activeTab),
       rulesRows: (activeGroup.id === 7 ? [] : (s[s.activeTab] || [])).map(r => ({
@@ -1929,6 +2230,7 @@ class Component extends DCLogic {
         onEditFromMenu: () => { this.openRuleEditModal(s.activeTab, r); this.closeRowMenu(); },
         onResetFromMenu: () => { this.resetRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
         onDeleteFromMenu: () => { this.deleteRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
+        serviceTags: (r.services || []).map(svc => SERVICE_ABBR[svc] || svc),
         lastUpdated: this.ruleMeta(r.id).date,
         updatedBy: this.ruleMeta(r.id).user,
         onOpenLog: () => this.openRuleChangeLog(r),
@@ -1970,21 +2272,22 @@ class Component extends DCLogic {
       onAddRangeStartFull: (e) => this.setAddRangeField('addRangeStartFull', e.target.value),
       onAddRangeEndFull: (e) => this.setAddRangeField('addRangeEndFull', e.target.value),
       addRangeModalTitle: (s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange') ? 'Edit Range' : 'Add New Range',
-      addRangeNeedsConfirm: (() => {
-        const g = s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3];
-        return (g.subgroup === g.group && s.addRangeTarget !== 'detail') || s.addRangeEditRowStatus === 'Expired';
-      })(),
+      addRangeNeedsConfirm: true,
       addRangeStep: s.addRangeStep,
       addRangeStepIsDetails: s.addRangeStep === 1,
       addRangeStepIsConfirm: s.addRangeStep === 2,
+      addRangeStepIsReason: s.addRangeStep === 3,
+      addRangeStepIsReasonOrDetails: s.addRangeStep === 1 || s.addRangeStep === 3,
+      continueToReasonStep: this.continueToReasonStep,
+      backAddRangeStepToConfirm: this.backAddRangeStepToConfirm,
       addRangeIsFutureEdit: s.addRangeEditRowStatus === 'Scheduled',
-      addRangeIsCurrentEdit: s.addRangeEditRowStatus !== 'Scheduled' && s.addRangeEditRowStatus !== 'Expired',
+      addRangeIsCurrentEdit: s.addRangeEditRowStatus === 'Active',
       addRangeIsPastEdit: s.addRangeEditRowStatus === 'Expired',
       addRangeStartInputStyle: s.addRangeEditRowStatus === 'Expired'
-        ? 'background:var(--surface-disabled, #f3f4f6);color:var(--text-subtitle);cursor:not-allowed;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;'
+        ? 'background:var(--color-neutrals-200);color:var(--text-subtitle);cursor:not-allowed;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;'
         : 'border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;',
       addRangeEndInputStyle: s.addRangeEditRowStatus === 'Expired'
-        ? 'background:var(--surface-disabled, #f3f4f6);color:var(--text-subtitle);cursor:not-allowed;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;'
+        ? 'background:var(--color-neutrals-200);color:var(--text-subtitle);cursor:not-allowed;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;'
         : 'border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;width:170px;box-sizing:border-box;',
       addRangeCorrectionReason: s.addRangeCorrectionReason || '',
       onAddRangeCorrectionReason: (e) => this.setAddRangeField('addRangeCorrectionReason', e.target.value),
@@ -1992,17 +2295,44 @@ class Component extends DCLogic {
       backToScheduleHistory: this.addRangeBack,
       backAddRangeStep: this.backAddRangeStep,
       addRangeConfirmCount: s.confirmChangeCount,
-      addRangeSaveLabel: s.addRangeStep === 2 ? 'Confirm' : (((s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).group && s.addRangeTarget !== 'detail') ? 'Next' : (s.addRangeTarget === 'editSchedule' ? 'Save' : 'Add')),
+      addRangeConfirmHasOrders: s.addRangeEditRowStatus === 'Expired' || s.addRangeEditRowStatus === 'Active',
+      addRangeViewIsSummary: !(this.props.showDetailedBreakdown ?? false),
+      addRangeViewIsDetailed: this.props.showDetailedBreakdown ?? false,
+      addRangeOrderGroups: addRangeOrderGroups,
+      addRangeEligibleCount: addRangeOrderGroups.eligibleCount,
+      addRangeIneligibleCount: addRangeOrderGroups.ineligibleCount,
+      addRangeOrdersTabAffectedStyle: addRangeOrdersTabStyle(s.addRangeOrdersTab !== 'ineligible'),
+      addRangeOrdersTabIneligibleStyle: addRangeOrdersTabStyle(s.addRangeOrdersTab === 'ineligible'),
+      addRangeVisibleOrders: s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligible : addRangeOrderGroups.eligible,
+      addRangeOrdersTabTotal: s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligibleCount : addRangeOrderGroups.eligibleCount,
+      addRangeOrdersTabLabel: s.addRangeOrdersTab === 'ineligible' ? 'ineligible' : 'affected',
+      addRangeNewValueDisplay: s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue,
+      addRangeOriginalValueDisplay: s.addRangeOriginalValue || '—',      setAddRangeOrdersTabAffected: () => this.setAddRangeOrdersTab('affected'),
+      setAddRangeOrdersTabIneligible: () => this.setAddRangeOrdersTab('ineligible'),
+      addRangeSaveLabel: s.addRangeStep === 3 ? 'Confirm' : (((s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).group && s.addRangeTarget !== 'detail') ? 'Next' : (s.addRangeTarget === 'editSchedule' ? 'Save' : 'Add')),
       addRangeSteps: [
         { label: 'Range Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 2 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
-        { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep === 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep === 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep === 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
+        { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep >= 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep >= 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep >= 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
+        { label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
       ],
-      onAddRangeStartM: (e) => this.setAddRangeField('addRangeStartM', e.target.value),
-      onAddRangeStartD: (e) => this.setAddRangeField('addRangeStartD', e.target.value),
-      onAddRangeStartY: (e) => this.setAddRangeField('addRangeStartY', e.target.value),
-      onAddRangeEndM: (e) => this.setAddRangeField('addRangeEndM', e.target.value),
-      onAddRangeEndD: (e) => this.setAddRangeField('addRangeEndD', e.target.value),
-      onAddRangeEndY: (e) => this.setAddRangeField('addRangeEndY', e.target.value),
+      onAddRangeStartM: this.onDateSeg('start', 0),
+      onAddRangeStartD: this.onDateSeg('start', 1),
+      onAddRangeStartY: this.onDateSeg('start', 2),
+      onAddRangeEndM: this.onDateSeg('end', 0),
+      onAddRangeEndD: this.onDateSeg('end', 1),
+      onAddRangeEndY: this.onDateSeg('end', 2),
+      onAddRangeStartMKey: this.onDateSegKey('start', 0),
+      onAddRangeStartDKey: this.onDateSegKey('start', 1),
+      onAddRangeStartYKey: this.onDateSegKey('start', 2),
+      onAddRangeEndMKey: this.onDateSegKey('end', 0),
+      onAddRangeEndDKey: this.onDateSegKey('end', 1),
+      onAddRangeEndYKey: this.onDateSegKey('end', 2),
+      refAddRangeStartM: (el) => { this.dateSegRefs.addRangeStartM = el; },
+      refAddRangeStartD: (el) => { this.dateSegRefs.addRangeStartD = el; },
+      refAddRangeStartY: (el) => { this.dateSegRefs.addRangeStartY = el; },
+      refAddRangeEndM: (el) => { this.dateSegRefs.addRangeEndM = el; },
+      refAddRangeEndD: (el) => { this.dateSegRefs.addRangeEndD = el; },
+      refAddRangeEndY: (el) => { this.dateSegRefs.addRangeEndY = el; },
       onAddRangeValue: (e) => this.setAddRangeField('addRangeValue', e.target.value),
       saveAddRange: this.saveAddRange,
       confirmChangeOpen: s.confirmChangeOpen,
@@ -2085,6 +2415,7 @@ class Component extends DCLogic {
       addExceptionModalOpen: s.addExceptionModalOpen,
       closeAddExceptionModal: this.closeAddExceptionModal,
       carrierGroupOptions: [...new Set(s.groupsData.map(g => g.group))],
+      addExceptionShipperGroup: (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).subgroup,
       addExceptionCarrierGroup: s.addExceptionCarrierGroup,
       onAddExceptionCarrierGroup: (e) => this.setState({ addExceptionCarrierGroup: e.target.value, addExceptionCarrierSubgroup: '' }),
       carrierSubgroupOptions: s.groupsData.filter(g => g.group === s.addExceptionCarrierGroup).map(g => g.subgroup),
@@ -2108,6 +2439,38 @@ class Component extends DCLogic {
       openRuleModal: this.openRuleModal,
       ruleModalOpen: s.ruleModalOpen,
       ruleModalIsEdit: s.ruleModalEditId != null,
+      ruleModalShowDelete: s.ruleModalEditId != null && s.ruleModalStep === 1,
+      ruleModalStepIsDetails: s.ruleModalStep === 1,
+      ruleModalStepIsConfirm: s.ruleModalStep === 2,
+      ruleModalStepIsReason: s.ruleModalStep === 3,
+      backRuleModalStep: this.backRuleModalStep,
+      backRuleModalStepToConfirm: this.backRuleModalStepToConfirm,
+      continueRuleModalToReason: this.continueRuleModalToReason,
+      ruleModalCorrectionReason: s.ruleModalCorrectionReason,
+      onRuleModalCorrectionReason: (e) => this.setState({ ruleModalCorrectionReason: e.target.value }),
+      ruleModalHasConfirmStep: s.activeTab === 'Fuel Rate',
+      ruleModalSteps: s.activeTab === 'Fuel Rate' ? [
+        { label: 'Rule Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.ruleModalStep >= 2 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
+        { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.ruleModalStep >= 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.ruleModalStep >= 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.ruleModalStep >= 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.ruleModalStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
+        { label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.ruleModalStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.ruleModalStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.ruleModalStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
+      ] : [
+        { label: 'Rule Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.ruleModalStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
+        { label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.ruleModalStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.ruleModalStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.ruleModalStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
+      ],
+      ruleModalOriginalValueDisplay: s.ruleModalOriginalRate || '—',
+      ruleModalNewValueDisplay: s.ruleModalRate ? `€ ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '—',
+      ruleModalEligibleCount: ruleModalOrderGroups.eligibleCount,
+      ruleModalIneligibleCount: ruleModalOrderGroups.ineligibleCount,
+      ruleModalOrdersTabAffectedStyle: addRangeOrdersTabStyle(s.ruleModalOrdersTab !== 'ineligible'),
+      ruleModalOrdersTabIneligibleStyle: addRangeOrdersTabStyle(s.ruleModalOrdersTab === 'ineligible'),
+      ruleModalVisibleOrders: s.ruleModalOrdersTab === 'ineligible' ? ruleModalOrderGroups.ineligible : ruleModalOrderGroups.eligible,
+      ruleModalOrdersTabTotal: s.ruleModalOrdersTab === 'ineligible' ? ruleModalOrderGroups.ineligibleCount : ruleModalOrderGroups.eligibleCount,
+      ruleModalOrdersTabLabel: s.ruleModalOrdersTab === 'ineligible' ? 'ineligible' : 'affected',
+      setRuleModalOrdersTabAffected: () => this.setRuleModalOrdersTab('affected'),
+      setRuleModalOrdersTabIneligible: () => this.setRuleModalOrdersTab('ineligible'),
+      ruleModalDescReadonly: s.ruleModalEditId != null,
+      ruleModalDescBg: s.ruleModalEditId != null ? 'var(--surface-neutral-lighter,#f5f5f5)' : '#fff',
+      ruleModalDescColor: s.ruleModalEditId != null ? 'var(--text-caption)' : 'var(--text-title)',
       ruleModalTitle: RULE_MODAL_TITLES[s.activeTab] || `Edit ${s.activeTab}`,
       deleteRuleModal: this.deleteRuleModal,
       openDeleteConfirm: this.openDeleteConfirm,
@@ -2133,6 +2496,15 @@ class Component extends DCLogic {
       onRuleModalDesc: this.onRuleModalDesc,
       onRuleModalRate: this.onRuleModalRate,
       onRuleModalUnit: this.onRuleModalUnit,
+      ruleModalServices: s.ruleModalServices,
+      ruleModalIsKilometreTab: s.activeTab === 'Kilometre Rates',
+      ruleModalVehicleType: s.ruleModalVehicleType,
+      onRuleModalVehicleType: this.onRuleModalVehicleType,
+      ruleModalServiceOptions: TRANSPORT_SERVICES.map(svc => ({
+        label: svc,
+        checked: s.ruleModalServices.includes(svc),
+        onToggle: () => this.toggleRuleModalService(svc),
+      })),
       closeRuleModal: this.closeRuleModal,
       saveRuleModal: this.saveRuleModal,
       ruleNumDropdownOpen: s.ruleNumDropdownOpen,
@@ -2141,7 +2513,7 @@ class Component extends DCLogic {
       ruleModalNumOptions: (s[s.activeTab] || []).filter(r => {
         const q = (s.ruleModalNum || '').toLowerCase();
         return !q || r.num.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q);
-      }).map(r => ({ num: r.num, desc: r.desc, onSelect: () => this.selectRuleNumOption(r) })),
+      }).map(r => ({ num: r.num, desc: r.desc, id: r.id, rate: r.rate, services: r.services, vehicleType: r.vehicleType, onSelect: () => this.selectRuleNumOption(r) })),
       ruleModalSaveDisabled: !(s.ruleModalNum && s.ruleModalDesc),
       ruleModalSaveStyle: this.ruleModalSaveStyle(!(s.ruleModalNum && s.ruleModalDesc)),
       exceptionSearch: s.exceptionSearch,
