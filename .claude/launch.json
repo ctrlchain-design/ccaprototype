@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "prototypes",
+      "//": "Static file server for the prototypes. Nothing depends on a specific port — no OAuth callbacks, webhooks or CORS — so autoPort lets it move if 4321 is taken (a stray server, or a colleague's). python3 -m http.server takes its port positionally and ignores $PORT, so it is wrapped in a shell that reads the assigned port and falls back to 4321.",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "exec python3 -m http.server \"${PORT:-4321}\""],
+      "port": 4321,
+      "autoPort": true
+    }
+  ]
+}

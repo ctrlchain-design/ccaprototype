@@ -1,0 +1,250 @@
+<!doctype html>
+<!--
+  CtrlChain prototype starter.
+
+  Copied from .claude/skills/prototype/templates/index.html. Everything below is
+  the platform's own markup and CSS — see design-system/dist/ and the /prototype
+  skill. Replace the page content; leave the shell and the two <link>s alone.
+
+  class="light" on <html> is not decoration: the platform tokens flip to dark
+  under prefers-color-scheme, so without it the prototype renders dark on any
+  reviewer whose OS is in dark mode.
+-->
+<html lang="en" class="light" data-screen="CHANGE.ME">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PROTOTYPE NAME · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /*
+        The bundle ships no page-level reset — the app's own index.html has it.
+
+        Everything else lives in ../_shared/prototype.css: the cca-root rule that
+        makes the page clickable at all, drawer and overlay geometry, the
+        form-field subscript fix, and the header link. Read its comments before
+        adding anything here — most of what a prototype needs is already solved.
+      */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--
+      cca-main > .appContent is the platform's shell grid:
+
+        grid-template-areas: "sidenav submenu header"
+                             "sidenav submenu topbar"
+                             "sidenav submenu page";
+
+      Children claim an area by element or class — cca-side-menu, cca-side-submenu,
+      cca-header, cca-message-banner, .page. That ancestry is load-bearing: the
+      rail's sizing, hover and active states are all scoped to
+      `cca-main .appContent cca-side-menu`, so they vanish if you flatten it.
+    -->
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!-- Rail — switches domain. Icon names: the Icons section of design-system/INDEX.md -->
+          <cca-side-menu>
+            <div class="menu-wrapper">
+              <div class="logo-wrapper cursor-pointer">
+                <img class="w-8" src="../design-system/dist/assets/images/ctrlchain-logo-white.svg" alt="CtrlChain" />
+              </div>
+              <div class="side-menu">
+                <div class="menu-items">
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-booking mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Booking</span>
+                </div></a>
+              </cca-side-menu-item>
+              <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-home mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Home</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-dashboardkpi mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Dashboard</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-taskboard mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Taskboard</span>
+                </div></a>
+              </cca-side-menu-item>
+              <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item active" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-boxes mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Shipper TMS</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-truck mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Carrier TMS</span>
+                </div></a>
+              </cca-side-menu-item>
+              <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-group mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Enterprise</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-invoice-euro mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Finance</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-swap mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Integrations</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-no-more-task mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Release Notes</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-phonebook mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Addressbook</span>
+                </div></a>
+              </cca-side-menu-item>
+              <cca-side-menu-item style="display: block; width: 100%">
+                <a class="a-menu-item" href="#"><div class="menu-item">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-Gear-Settings mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Admin</span>
+                </div></a>
+              </cca-side-menu-item>
+              <div class="mt-auto flex flex-col gap-2">
+                <hr class="my-2 w-full border-NC-blue-lighter opacity-30" />
+                <div class="menu-item" role="button" tabindex="0" data-theme-toggle>
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-moon mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Dark</span>
+                </div>
+                <div class="menu-item submenu-toggle" role="button" tabindex="0" data-submenu-toggle>
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="menu-item-title">Collapse</span>
+                </div>
+              </div>
+                </div>
+              </div>
+            </div>
+          </cca-side-menu>
+
+          <!-- Submenu — routes within the domain. Delete for a full-width prototype. -->
+          <cca-side-submenu>
+            <div class="submenu-container">
+              <div class="min-h-15 w-full content-center border-b border-neutral-default">
+                <img class="mr-auto max-w-32 px-4 py-3" src="../design-system/dist/assets/images/ctrlchain-text-green.svg" alt="CtrlChain" />
+              </div>
+              <div class="flex w-full flex-col gap-4 border-b border-neutral-default p-4">
+                <button ccaButton class="cca-btn cca-btn--primary icon-button-rounded w-full shadow">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-plus mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>New trip
+                </button>
+              </div>
+              <div class="flex w-full flex-col gap-4">
+                <span class="mt-4 pl-4 font-medium text-neutral-caption">Trips</span>
+                <a class="sub-item active" href="#">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-list mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-base font-normal wrap-break-word">Overview</span>
+                </a>
+                <a class="sub-item" href="#">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-calendar mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-base font-normal wrap-break-word">Planning</span>
+                </a>
+              </div>
+            </div>
+          </cca-side-submenu>
+
+          <!-- Top bar — 60px, composed from utilities. See components/top-bar.html -->
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <div class="flex flex-row items-center gap-2 pl-6">
+                <h1 class="text-cca-label-lg text-neutral-title">Page title</h1>
+              </div>
+              <!--
+                The app's real trailing cluster. Note that staging shows neither
+                Contact Support nor the flag, but production has both — do not
+                "correct" this against staging. See _shared/patterns.html.
+              -->
+              <div class="mr-5 ml-auto flex h-full items-center">
+                <a class="proto-header-link text-cca-base mr-4" href="#">Contact Support</a>
+                <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only" aria-label="Notifications">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-bell mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+                <span class="mr-4 ml-2 block h-6 border-l border-neutral-default"></span>
+                <cca-language-switch style="display: block">
+                  <span class="flex items-center gap-2">
+                    <img class="h-6 w-6" src="../_shared/assets/flags/en.svg" alt="" />
+                    <span class="text-cca-base text-neutral-body">English</span>
+                  </span>
+                </cca-language-switch>
+                <span class="mx-4 block h-6 border-l border-neutral-default"></span>
+                <cca-header-menu class="header-menu" style="display: block">
+                  <cca-avatar-group style="display: block">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full avatar-bg-color text-cca-label-md avatar-initials-white">DS</span>
+                  </cca-avatar-group>
+                </cca-header-menu>
+              </div>
+            </div>
+          </cca-header>
+
+          <!--
+            .page owns the scroll and the 16px gutter. Its direct child inherits
+            full height (`.page > *` is `height: inherit`), so give it exactly one
+            child — a layout wrapper — and put the content inside that.
+            proto-hug then releases that inherited height so a short page does not
+            leave a tall empty panel below its content. Drop the class for a view
+            that genuinely fills the viewport.
+          -->
+          <div class="page">
+            <div class="proto-hug flex flex-col gap-4">
+              <!-- PAGE CONTENT. Compose from design-system/dist/components/*.html. -->
+              <div class="rounded-lg border border-neutral-default surface-neutral-light p-4">
+                <h2 class="text-cca-label-md text-neutral-title">Card</h2>
+                <p class="text-cca-base-sm text-neutral-subtitle">
+                  Replace this. Copy real markup out of the component pages — do not
+                  write your own hex values, pixel sizes or radii.
+                </p>
+                <div class="mt-4 flex gap-2">
+                  <button ccaButton class="cca-btn cca-btn--primary">Primary action</button>
+                  <button ccaButton class="cca-btn cca-btn--secondary">Secondary</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </cca-main>
+    </cca-root>
+    <!--
+      Shared modules load BEFORE any page script: data.js defines the records a
+      page renders, routes.js resolves data-screen links, shell.js wires the
+      rail's Dark and Collapse. Put a page's own <script> after these.
+    -->
+    <script src="../_shared/data.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/shell.js"></script>
+  </body>
+</html>
