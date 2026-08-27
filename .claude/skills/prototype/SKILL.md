@@ -401,6 +401,24 @@ find which flavour actually sets it.
 Badge **sizes** are not modifiers either: they come from the type and padding
 utilities on the inner div. There is no `--small` class.
 
+**Never string-replace a structural tag in a page that builds HTML at runtime.**
+Several prototypes generate markup from template literals, so `</body>`,
+`</html>` and `<aside>` appear more than once in the source — once in the
+document and once inside a JavaScript string. A blind replace silently edits the
+generated page. Check first:
+
+```bash
+python3 - <<'EOF'
+import re
+s = open('PROTOTYPE/index.html').read()
+for m in re.finditer(r'</body>', s):
+    inside = s[:m.start()].count('`') % 2       # odd = inside a template literal
+    print(m.start(), 'INSIDE a JS string' if inside else 'real document')
+EOF
+```
+
+Only the occurrence with an even backtick count is the document.
+
 **`cca-btn--link` always underlines.** It hard-codes
 `text-decoration: underline`, which is right for a link in prose and wrong for a
 header action. Use `.proto-header-link` from `_shared/prototype.css`.
