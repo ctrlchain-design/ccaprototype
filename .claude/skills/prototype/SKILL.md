@@ -173,6 +173,32 @@ Shared scripts load in this order, before any page script:
 
 ## Workflow
 
+### 0. Start on a branch — before touching a file
+
+Never build or edit a prototype on `main`. Committing publishes, so work done on
+`main` goes live the moment it is committed, half-finished and unreviewed.
+
+    git checkout main
+    git pull
+    git checkout -b orders-detail
+
+**Name the branch after the prototype folder.** The folder name is already the
+public URL and the screen name, so reusing it means one name for the whole thing:
+
+    orders-detail/            the folder
+    orders-detail             the branch
+    orders.detail             the screen name
+    /ccaprototype/orders-detail/   the live URL
+
+Editing an existing prototype? Branch on what you are changing:
+`orders-detail-empty-state`, `taskboard-redesign-27aug`.
+
+Branch from an up-to-date `main`, not from whatever branch happens to be checked
+out — otherwise you inherit someone else's unpublished work and it rides along
+when yours is published.
+
+If the user is already on a branch for this prototype, stay on it.
+
 ### 1. Find the vocabulary
 
 `design-system/INDEX.md` is a generated lookup table. It is far too large to

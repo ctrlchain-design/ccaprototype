@@ -21,9 +21,9 @@ asking every commit is the thing this policy exists to remove.
     git add <paths>            # explicit paths, never -A
     git commit                 # one commit per layer, see below
     git checkout main
-    git merge <branch>
+    git merge <prototype-branch>
     git push
-    git checkout <branch>      # back where the user was
+    git branch -d <prototype-branch>   # merged, so it is done
 
 ### Stop and ask only when
 
@@ -37,6 +37,21 @@ asking every commit is the thing this policy exists to remove.
   and stop.
 - **The user says otherwise** — "just commit", "don't publish yet", "keep it on
   the branch". Then commit and stop.
+
+### One branch per prototype
+
+Prototypes are built on their own branch, named after the folder — see the
+`/prototype` skill. So a normal publish is: commit on `orders-detail`, merge it
+into `main`, push, and the branch has served its purpose.
+
+Delete it once merged, so the branch list stays a list of work in progress
+rather than a graveyard:
+
+    git branch -d orders-detail
+    git push origin --delete orders-detail   # only if it was pushed
+
+Never delete a branch that has not been merged. If `git branch -d` refuses, that
+is the signal — report it rather than forcing with `-D`.
 
 ### Check before merging
 

@@ -54,9 +54,17 @@ The skill lives in the repo at `.claude/skills/prototype/`, so it is committed a
 shared — everyone who clones gets the same one, and improving it improves it for
 the team.
 
-By hand it is a folder and a file:
+**Prototypes are built on a branch**, named after the folder — never on `main`,
+because committing publishes and half-finished work would go live. One name for
+the whole thing: the folder `orders-detail/` is the branch `orders-detail`, the
+screen `orders.detail`, and the URL `/ccaprototype/orders-detail/`.
+
+By hand it is a branch, a folder and a file:
 
 ```bash
+git checkout main && git pull
+git checkout -b my-prototype
+
 mkdir -p my-prototype
 cp .claude/skills/prototype/templates/index.html my-prototype/index.html
 python3 .claude/skills/prototype/scripts/build-screens.py
@@ -208,7 +216,8 @@ actual diff, splits the work along the repo's layers — the design-system expor
 history already uses. Generated files are committed with whatever regenerated
 them, never on their own.
 
-**Committing publishes.** The skill commits, merges to `main` and pushes, and
+**Committing publishes.** The skill commits on your prototype branch, merges to
+`main`, pushes and deletes the merged branch, and
 GitHub Pages serves it a minute or two later — no confirmation step, because
 that was the slow part. It stops and asks only if the merge would conflict, or
 if the prototype has not been checked in a browser.

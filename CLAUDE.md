@@ -18,6 +18,9 @@ overwrites the whole folder on each export.
 
 ## Building or changing a prototype
 
+**Start on a branch, named after the prototype folder** — never build on `main`,
+because committing publishes and half-finished work would go live.
+
 Use the **`/prototype` skill** — it has the workflow, the lookup recipes, the
 starter template and the gotchas. Load it before writing prototype markup, not
 after.
