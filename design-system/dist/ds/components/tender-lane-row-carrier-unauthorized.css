@@ -1,0 +1,16 @@
+/*
+ * cca-tender-lane-row-carrier-unauthorized
+ * Source:  libs/carrier-tms/feature-public-tender/src/lib/tender-lane-row-carrier-unauthorized/tender-lane-row-carrier-unauthorized.component.scss
+ * :host resolves to:  cca-tender-lane-row-carrier-unauthorized
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-lane-row-carrier-unauthorized .sticky-header {
+  background: none;
+  border: none;
+  box-shadow: none;
+  width: 50%;
+}

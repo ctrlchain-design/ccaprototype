@@ -1,0 +1,16 @@
+/*
+ * cca-select-ltl-locations
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-locations/booking-ltl-locations.component.scss
+ * :host resolves to:  cca-select-ltl-locations
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-select-ltl-locations .SelectThirdPartyLTLLocations {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}

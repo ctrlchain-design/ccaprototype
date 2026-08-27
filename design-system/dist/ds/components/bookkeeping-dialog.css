@@ -1,0 +1,14 @@
+/*
+ * cca-bookkeeping-dialog
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-edit-finance/bookkeeping-dialog/bookkeeping-dialog.component.scss
+ * :host resolves to:  cca-bookkeeping-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-bookkeeping-dialog .mdc-data-table__cell {
+  padding-block: calc(var(--spacing, 0.25rem) * 8);
+}

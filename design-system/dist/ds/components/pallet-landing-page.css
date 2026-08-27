@@ -1,0 +1,491 @@
+/*
+ * cca-public-pallet-landing
+ * Source:  libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/pallet-landing-page.component.scss
+ * :host resolves to:  cca-public-pallet-landing
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-public-pallet-landing .mat-horizontal-stepper-header-container {
+  --tw-border-style: none;
+  border-style: none;
+  background-color: var(--surface-neutral-light) !important;
+}
+cca-public-pallet-landing cca-main .appContent .page {
+  padding: 0px;
+}
+cca-public-pallet-landing .mat-horizontal-content-container {
+  padding: 0px !important;
+}
+cca-public-pallet-landing body::before {
+  background-image: none;
+}
+cca-public-pallet-landing {
+  --container-padding: 5rem;
+  --heading-1: 5rem;
+  --heading-2: 3.5rem;
+  --heading-3: 2.5rem;
+  --heading-3b: 2rem;
+  --heading-4: 1.25rem;
+  --heading-5: 1.125rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+cca-public-pallet-landing::after {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  display: block;
+  height: calc(var(--spacing, 0.25rem) * 183);
+  width: 100%;
+  background-color: var(--surface-brand-lightest);
+  --tw-content: '';
+  content: var(--tw-content);
+}
+cca-public-pallet-landing header {
+  z-index: 10;
+  width: 100%;
+}
+cca-public-pallet-landing header .bar {
+  width: 100%;
+  background-color: var(--surface-neutral-light);
+  padding: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-public-pallet-landing header .bar .container {
+  margin-inline: auto;
+  display: flex;
+  max-width: 1680px;
+  align-items: center;
+  justify-content: space-between;
+}
+cca-public-pallet-landing header .title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing, 0.25rem) * 7);
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  padding-top: calc(var(--spacing, 0.25rem) * 36);
+  padding-bottom: calc(var(--spacing, 0.25rem) * 18);
+  text-align: center;
+}
+cca-public-pallet-landing header h1 {
+  font-size: var(--heading-1);
+  --tw-leading: 1;
+  line-height: 1;
+  color: #10152E;
+}
+cca-public-pallet-landing header h3 {
+  font-size: var(--heading-3);
+  --tw-leading: 1;
+  line-height: 1;
+  --tw-font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--text-brand-darker);
+}
+cca-public-pallet-landing hr {
+  width: calc(var(--spacing, 0.25rem) * 25);
+  border-color: var(--border-brand-default);
+}
+cca-public-pallet-landing main {
+  z-index: 10;
+  margin-inline: calc(var(--spacing, 0.25rem) * 4);
+  max-width: calc(var(--spacing, 0.25rem) * 216);
+  border-radius: var(--radius-2xl, 1rem);
+  background-color: var(--surface-neutral-light);
+  --tw-drop-shadow-size: drop-shadow(0 15px 30px var(--tw-drop-shadow-color, #00000010));
+  --tw-drop-shadow: var(--tw-drop-shadow-size);
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+}
+cca-public-pallet-landing main nav {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 8);
+  padding-inline: calc(var(--spacing, 0.25rem) * 16);
+  padding-block: calc(var(--spacing, 0.25rem) * 10);
+}
+cca-public-pallet-landing .info-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  padding-top: calc(var(--spacing, 0.25rem) * 32);
+  padding-bottom: calc(var(--spacing, 0.25rem) * 16);
+}
+cca-public-pallet-landing .info-wrapper h2 {
+  text-align: center;
+  --tw-font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1.2;
+  font-size: var(--heading-2);
+}
+cca-public-pallet-landing .info-wrapper h2 span {
+  color: var(--text-brand-default);
+}
+cca-public-pallet-landing .info-wrapper .info-container {
+  margin-inline: auto;
+  display: grid;
+  max-width: 1680px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(var(--spacing, 0.25rem) * 28);
+  padding: 0 var(--container-padding);
+}
+cca-public-pallet-landing .info-wrapper .info-container .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-public-pallet-landing .info-wrapper .info-container .info cca-themed-vector img {
+  height: calc(var(--spacing, 0.25rem) * 36);
+}
+cca-public-pallet-landing .info-wrapper .info-container .info > div {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  text-align: center;
+}
+cca-public-pallet-landing .info-wrapper .info-container .info > div h4 {
+  font-size: var(--heading-4);
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  color: #10152E;
+}
+cca-public-pallet-landing footer {
+  width: 100%;
+  overflow: hidden;
+  padding-top: 6.5rem;
+  background: linear-gradient(320.3deg, #6f8f2f 35.46%, #30430a 127.84%);
+}
+cca-public-pallet-landing footer > section {
+  margin-inline: auto;
+  display: flex;
+  max-width: 105rem;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 6.5rem;
+  padding: 0 var(--container-padding);
+}
+cca-public-pallet-landing footer > section.faq-section {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--surface-brand-lightest);
+  padding-inline: 0px;
+  padding-block: calc(var(--spacing, 0.25rem) * 26);
+}
+cca-public-pallet-landing footer > section.faq-section h2 {
+  text-align: center;
+  --tw-font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1.2;
+  font-size: var(--heading-2);
+}
+cca-public-pallet-landing footer > section.faq-section h2 span {
+  color: var(--text-brand-default);
+}
+cca-public-pallet-landing footer > section.faq-section > .faq-content {
+  padding: 0 var(--container-padding);
+  max-width: 105rem;
+}
+cca-public-pallet-landing footer > section.faq-section > .faq-content .faq-questions {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-public-pallet-landing footer > section.faq-section > .faq-content .faq-questions > mat-expansion-panel {
+  padding: calc(var(--spacing, 0.25rem) * 4);
+  font-size: var(--text-xl, 1.25rem);
+  line-height: var(--tw-leading, var(--text-xl--line-height, calc(1.75 / 1.25)));
+  color: var(--text-neutral-title);
+}
+cca-public-pallet-landing footer > section.faq-section > .faq-content .faq-questions > mat-expansion-panel mat-panel-title {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  font-size: var(--text-2xl, 1.5rem);
+  line-height: var(--tw-leading, var(--text-2xl--line-height, calc(2 / 1.5)));
+  --tw-font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold, 700);
+}
+cca-public-pallet-landing footer > section.faq-section > .faq-content .faq-questions > mat-expansion-panel p {
+  padding-left: calc(var(--spacing, 0.25rem) * 12);
+}
+cca-public-pallet-landing footer > section article {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 166);
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 12);
+  color: var(--text-brand-lighter);
+  padding-bottom: var(--container-padding);
+}
+cca-public-pallet-landing footer > section article > div {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-public-pallet-landing footer > section article h5 {
+  font-size: var(--heading-5);
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  text-transform: capitalize;
+}
+cca-public-pallet-landing footer > section article h3 {
+  font-size: var(--heading-3b);
+  line-height: 1;
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-neutral-invert);
+}
+cca-public-pallet-landing footer > section article p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: var(--text-neutral-invert);
+}
+cca-public-pallet-landing footer > section article nav {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--spacing, 0.25rem) * 6);
+  color: var(--text-brand-lighter);
+}
+cca-public-pallet-landing footer > section img {
+  margin-top: calc(var(--spacing, 0.25rem) * -4);
+  margin-right: calc(var(--spacing, 0.25rem) * -24);
+  height: calc(var(--spacing, 0.25rem) * 126);
+  width: 56rem;
+}
+cca-public-pallet-landing footer > nav {
+  display: flex;
+  justify-content: center;
+  background-color: #10152E;
+  padding: calc(var(--spacing, 0.25rem) * 6);
+  text-align: center;
+  color: var(--text-neutral-disabled);
+}
+cca-public-pallet-landing footer > nav ul {
+  display: flex;
+  gap: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-public-pallet-landing footer > nav ul li a {
+  text-decoration-line: underline;
+}
+@media only screen and (max-width: 1200px) {
+  cca-public-pallet-landing {
+    --container-padding: 4rem;
+    --heading-1: 4.5rem;
+    --heading-2: 3rem;
+    --heading-3: 2rem;
+    --heading-3b: 1.75rem;
+    --heading-4: 1.125rem;
+    --heading-5: 1rem;
+  }
+  cca-public-pallet-landing .info-wrapper .info-container {
+    gap: calc(var(--spacing, 0.25rem) * 10);
+  }
+  cca-public-pallet-landing footer section {
+    gap: calc(var(--spacing, 0.25rem) * 8);
+  }
+  cca-public-pallet-landing footer section article {
+    min-width: 400px;
+  }
+  cca-public-pallet-landing footer section.faq-section > .faq-content .faq-questions > mat-expansion-panel mat-panel-title {
+    font-size: var(--heading-4);
+  }
+  cca-public-pallet-landing footer section.faq-section > .faq-content .faq-questions > mat-expansion-panel p {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  cca-public-pallet-landing main {
+    width: calc(100% - 2rem);
+  }
+  cca-public-pallet-landing main nav {
+    padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  }
+}
+@media only screen and (max-width: 768px) {
+  cca-public-pallet-landing .info-wrapper .info-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  cca-public-pallet-landing .mat-horizontal-stepper-wrapper .mat-horizontal-stepper-header-container {
+    padding: 0px !important;
+    padding-top: calc(var(--spacing, 0.25rem) * 4) !important;
+    padding-bottom: calc(var(--spacing, 0.25rem) * 3) !important;
+  }
+  cca-public-pallet-landing .mat-step-text-label {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+  }
+  cca-public-pallet-landing .mat-horizontal-stepper-wrapper .mat-horizontal-stepper-header-container .mat-step-header:not(:first-child)::before {
+    width: calc(var(--spacing, 0.25rem) * 4);
+  }
+  cca-public-pallet-landing .mat-horizontal-stepper-header .mat-step-icon {
+    margin-right: 0px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  cca-public-pallet-landing {
+    --container-padding: 1rem;
+    --heading-1: 2.5rem;
+    --heading-2: 2.125rem;
+    --heading-3: 2rem;
+    --heading-3b: 1.75rem;
+    --heading-4: 1rem;
+    --heading-5: 0.75rem;
+  }
+  cca-public-pallet-landing header .title {
+    padding-top: calc(var(--spacing, 0.25rem) * 12);
+    padding-bottom: calc(var(--spacing, 0.25rem) * 8);
+  }
+  cca-public-pallet-landing .info-wrapper {
+    padding-top: calc(var(--spacing, 0.25rem) * 8);
+    padding-bottom: calc(var(--spacing, 0.25rem) * 8);
+  }
+  cca-public-pallet-landing .info-wrapper .info-container {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: calc(var(--spacing, 0.25rem) * 4);
+  }
+  cca-public-pallet-landing .info-wrapper .info-container .info cca-themed-vector img {
+    height: calc(var(--spacing, 0.25rem) * 20);
+  }
+  cca-public-pallet-landing main {
+    width: 100%;
+    border-radius: 0;
+  }
+  cca-public-pallet-landing main nav {
+    padding: calc(var(--spacing, 0.25rem) * 4);
+  }
+  cca-public-pallet-landing footer {
+    padding-top: calc(var(--spacing, 0.25rem) * 8);
+  }
+  cca-public-pallet-landing footer section article {
+    gap: calc(var(--spacing, 0.25rem) * 4);
+    padding-bottom: calc(var(--spacing, 0.25rem) * 8);
+    min-width: 100%;
+  }
+  cca-public-pallet-landing footer .faq-section {
+    padding-block: calc(var(--spacing, 0.25rem) * 8) !important;
+  }
+  cca-public-pallet-landing footer .faq-section > .faq-content .faq-questions {
+    gap: calc(var(--spacing, 0.25rem) * 2) !important;
+  }
+  cca-public-pallet-landing footer .faq-section > .faq-content .faq-questions > mat-expansion-panel {
+    padding: calc(var(--spacing, 0.25rem) * 2) !important;
+  }
+  cca-public-pallet-landing footer img {
+    display: none;
+  }
+  cca-public-pallet-landing footer > nav ul {
+    flex-direction: column;
+    gap: calc(var(--spacing, 0.25rem) * 2);
+  }
+  cca-public-pallet-landing .mat-horizontal-stepper-wrapper {
+    gap: var(--spacing, 0.25rem);
+  }
+  cca-public-pallet-landing .mat-step-label {
+    display: none !important;
+  }
+  cca-public-pallet-landing .mat-horizontal-stepper-header .mat-step-icon {
+    margin-right: 0px;
+  }
+}
+@property --tw-content {
+  syntax: "*";
+  inherits: false;
+  initial-value: "";
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-content: "";
+      --tw-leading: initial;
+      --tw-font-weight: initial;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
+    }
+  }
+}

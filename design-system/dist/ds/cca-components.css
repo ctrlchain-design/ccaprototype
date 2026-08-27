@@ -1,0 +1,1085 @@
+/* ---- ccaButton — button[ccaButton], a[ccaButton]
+     libs/ui/src/lib/button/button.component.scss ---- */
+.cca-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  border-radius: var(--mat-shape-small, 0.5rem);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  white-space: nowrap;
+  user-select: none;
+  outline-offset: 0;
+}
+.cca-btn cca-icon,
+.cca-btn cca-icon mat-icon,
+.cca-btn cca-icon .mat-icon {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  flex-shrink: 0;
+}
+.cca-btn:disabled {
+  cursor: not-allowed;
+}
+.cca-btn:hover {
+  text-decoration: none;
+}
+
+.cca-btn.cca-btn--x-small {
+  height: 2rem;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+}
+.cca-btn.cca-btn--x-small cca-icon,
+.cca-btn.cca-btn--x-small cca-icon mat-icon,
+.cca-btn.cca-btn--x-small cca-icon .mat-icon {
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  line-height: 1rem !important;
+}
+
+.cca-btn.cca-btn--small {
+  height: 2.25rem;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+}
+.cca-btn.cca-btn--small cca-icon,
+.cca-btn.cca-btn--small cca-icon mat-icon,
+.cca-btn.cca-btn--small cca-icon .mat-icon {
+  font-size: 1.25rem !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  line-height: 1.25rem !important;
+}
+
+.cca-btn.cca-btn--large {
+  height: 3.5rem;
+  padding: 0 1rem;
+}
+
+.cca-btn.cca-btn--x-large {
+  height: 4rem;
+  padding: 0 1.25rem;
+}
+.cca-btn.cca-btn--x-large cca-icon,
+.cca-btn.cca-btn--x-large cca-icon mat-icon,
+.cca-btn.cca-btn--x-large cca-icon .mat-icon {
+  font-size: 2rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  line-height: 2rem !important;
+}
+
+.cca-btn.cca-btn--icon-only {
+  height: auto;
+  padding: 0.75rem;
+}
+.cca-btn.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 1.5rem !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  line-height: 1.5rem !important;
+}
+
+.cca-btn.cca-btn--x-small.cca-btn--icon-only {
+  height: auto;
+  padding: 0.5rem;
+}
+.cca-btn.cca-btn--x-small.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--x-small.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--x-small.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  line-height: 1rem !important;
+}
+
+.cca-btn.cca-btn--small.cca-btn--icon-only {
+  height: auto;
+  padding: 0.5rem;
+}
+.cca-btn.cca-btn--small.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--small.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--small.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 1.25rem !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  line-height: 1.25rem !important;
+}
+
+.cca-btn.cca-btn--large.cca-btn--icon-only {
+  height: auto;
+  padding: 1rem;
+}
+
+.cca-btn.cca-btn--x-large.cca-btn--icon-only {
+  height: auto;
+  padding: 1.25rem;
+}
+.cca-btn.cca-btn--x-large.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--x-large.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--x-large.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 2rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  line-height: 2rem !important;
+}
+
+.cca-btn.cca-btn--tertiary.cca-btn--icon-only,
+.cca-btn.cca-btn--danger-text.cca-btn--icon-only {
+  border: none;
+}
+
+.cca-btn.cca-btn--primary {
+  background-color: var(--button-primary-bg-default);
+  color: var(--button-primary-label);
+}
+.cca-btn.cca-btn--primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-hovered);
+}
+.cca-btn.cca-btn--primary:focus-visible:not(:active) {
+  background-color: var(--button-primary-bg-default);
+  border-color: var(--button-primary-border-focused);
+  outline: 2px solid var(--button-primary-border-focused);
+}
+.cca-btn.cca-btn--primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-pressed);
+}
+.cca-btn.cca-btn--primary:disabled {
+  background-color: var(--surface-neutral-disabled);
+  color: var(--text-neutral-invert);
+}
+
+.cca-btn.cca-btn--secondary {
+  background-color: transparent;
+  color: var(--button-secondary-label);
+  border-color: var(--button-secondary-border-default);
+}
+.cca-btn.cca-btn--secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-hovered);
+}
+.cca-btn.cca-btn--secondary:focus-visible:not(:active) {
+  background-color: transparent;
+  border-color: var(--button-secondary-border-focused);
+  outline: 2px solid var(--button-secondary-border-focused);
+}
+.cca-btn.cca-btn--secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-pressed);
+  border-color: var(--button-secondary-border-pressed);
+}
+.cca-btn.cca-btn--secondary:disabled {
+  color: var(--icon-disabled);
+  border-color: var(--button-disabled);
+}
+
+.cca-btn.cca-btn--subtle {
+  background-color: transparent;
+  color: var(--button-subtle-label-default);
+  border-color: var(--button-subtle-border-default);
+}
+.cca-btn.cca-btn--subtle:hover:not(:disabled) {
+  color: var(--button-subtle-label-hovered);
+  border-color: var(--button-subtle-border-hovered);
+}
+.cca-btn.cca-btn--subtle:focus-visible:not(:active) {
+  border-color: var(--button-subtle-border-focused);
+  outline: 2px solid var(--button-subtle-border-focused);
+}
+.cca-btn.cca-btn--subtle:active:not(:disabled) {
+  background-color: var(--button-subtle-bg-pressed);
+  color: var(--button-subtle-label-pressed);
+  border-color: var(--button-subtle-border-pressed);
+}
+.cca-btn.cca-btn--subtle:disabled {
+  color: var(--icon-disabled);
+  border-color: var(--button-disabled);
+}
+
+.cca-btn.cca-btn--subtle.cca-btn--icon-only {
+  color: var(--icon-neutral);
+}
+.cca-btn.cca-btn--subtle.cca-btn--icon-only:disabled {
+  color: var(--icon-disabled);
+}
+
+.cca-btn.cca-btn--tertiary {
+  background-color: transparent;
+  color: var(--button-text-label);
+}
+.cca-btn.cca-btn--tertiary:hover:not(:disabled) {
+  color: var(--button-text-label-hover);
+  background-color: var(--button-text-bg-hover);
+}
+.cca-btn.cca-btn--tertiary:focus-visible:not(:active) {
+  outline: 2px solid var(--button-secondary-border-focused);
+}
+.cca-btn.cca-btn--tertiary:active:not(:disabled) {
+  background-color: var(--button-text-bg-pressed);
+}
+.cca-btn.cca-btn--tertiary:disabled {
+  color: var(--icon-disabled);
+}
+
+.cca-btn.cca-btn--link {
+  background-color: transparent;
+  color: var(--text-brand-default);
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.cca-btn.cca-btn--link:hover:not(:disabled) {
+  color: var(--text-brand-dark);
+}
+.cca-btn.cca-btn--link:focus-visible:not(:active) {
+  outline: 2px solid var(--border-brand-light);
+  border-radius: 2px;
+}
+.cca-btn.cca-btn--link:active:not(:disabled) {
+  color: var(--text-brand-darker);
+}
+.cca-btn.cca-btn--link:disabled {
+  color: var(--text-neutral-disabled);
+  text-decoration-color: var(--text-neutral-disabled);
+}
+
+.cca-btn.cca-btn--danger-primary {
+  background-color: var(--button-primary-bg-critical);
+  color: var(--button-primary-label);
+}
+.cca-btn.cca-btn--danger-primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-critical-hovered);
+}
+.cca-btn.cca-btn--danger-primary:focus-visible:not(:active) {
+  background-color: var(--button-primary-bg-critical);
+  outline: 2px solid var(--button-secondary-border-critical-focused);
+}
+.cca-btn.cca-btn--danger-primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-critical-pressed);
+}
+.cca-btn.cca-btn--danger-primary:disabled {
+  background-color: var(--surface-neutral-disabled);
+  color: var(--text-neutral-invert);
+}
+
+.cca-btn.cca-btn--danger-secondary {
+  background-color: transparent;
+  color: var(--button-text-label-critical);
+  border-color: var(--button-secondary-border-critical);
+}
+.cca-btn.cca-btn--danger-secondary:hover:not(:disabled) {
+  background-color: var(--critical-surface-lighter);
+  border-color: var(--button-secondary-border-critical);
+}
+.cca-btn.cca-btn--danger-secondary:focus-visible:not(:active) {
+  border-color: var(--button-secondary-border-critical-focused);
+  outline: 2px solid var(--button-secondary-border-critical-focused);
+}
+.cca-btn.cca-btn--danger-secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-critical-pressed);
+  border-color: var(--button-secondary-border-critical);
+}
+.cca-btn.cca-btn--danger-secondary:disabled {
+  color: var(--text-neutral-disabled);
+  border-color: var(--text-neutral-disabled);
+}
+
+.cca-btn.cca-btn--danger-text {
+  background-color: transparent;
+  color: var(--button-text-label-critical);
+}
+.cca-btn.cca-btn--danger-text:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-critical-hovered);
+}
+.cca-btn.cca-btn--danger-text:focus-visible:not(:active) {
+  outline: 2px solid var(--button-secondary-border-critical-focused);
+}
+.cca-btn.cca-btn--danger-text:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-critical-pressed);
+}
+.cca-btn.cca-btn--danger-text:disabled {
+  color: var(--icon-disabled);
+}
+
+.cca-btn.cca-btn--danger-text.cca-btn--icon-only {
+  color: var(--icon-danger);
+}
+
+.cca-btn.cca-btn--warning-primary {
+  background-color: var(--button-primary-bg-warning);
+  color: var(--button-primary-label);
+}
+.cca-btn.cca-btn--warning-primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-warning-hovered);
+}
+.cca-btn.cca-btn--warning-primary:focus-visible:not(:active) {
+  background-color: var(--button-primary-bg-warning);
+  outline: 2px solid var(--warning-border-light);
+}
+.cca-btn.cca-btn--warning-primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-warning-pressed);
+}
+.cca-btn.cca-btn--warning-primary:disabled {
+  background-color: var(--surface-neutral-disabled);
+  color: var(--text-neutral-invert);
+}
+
+.cca-btn.cca-btn--warning-secondary {
+  background-color: transparent;
+  color: var(--button-text-label-warning);
+  border-color: var(--button-secondary-border-warning);
+}
+.cca-btn.cca-btn--warning-secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-warning-hovered);
+}
+.cca-btn.cca-btn--warning-secondary:focus-visible:not(:active) {
+  border-color: var(--button-secondary-border-warning-focused);
+  outline: 2px solid var(--button-secondary-border-warning-focused);
+}
+.cca-btn.cca-btn--warning-secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-warning-pressed);
+}
+.cca-btn.cca-btn--warning-secondary:disabled {
+  color: var(--button-disabled);
+  border-color: var(--button-disabled);
+}
+
+.cca-btn.cca-btn--icon {
+  background-color: transparent;
+  color: var(--text-neutral-default);
+  height: auto;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--mat-shape-small, 0.5rem);
+}
+.cca-btn.cca-btn--icon:hover:not(:disabled) {
+  background-color: var(--surface-neutral-default);
+}
+.cca-btn.cca-btn--icon:focus-visible:not(:active) {
+  outline: 2px solid var(--border-brand-light);
+}
+.cca-btn.cca-btn--icon:active:not(:disabled) {
+  background-color: var(--surface-neutral-dark);
+}
+.cca-btn.cca-btn--icon:disabled {
+  color: var(--text-neutral-disabled);
+}
+
+.cca-btn.cca-btn--icon.cca-btn--small {
+  height: auto;
+  padding: 0.5rem;
+}
+
+.cca-btn.cca-btn--icon.cca-btn--x-small {
+  height: auto;
+  padding: 0.375rem;
+}
+
+/* ---- cca-search-field
+     libs/ui/src/lib/search-field/search-field.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-search-field {
+  display: block;
+}
+cca-search-field input[matInput] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+cca-search-field .mat-mdc-form-field-icon-prefix > :is(cca-icon) {
+  padding-block: calc(var(--spacing, 0.25rem) * 2.5);
+  padding-right: calc(var(--spacing, 0.25rem) * 3);
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-search-field .mat-mdc-form-field-icon-suffix > button[ccaButton] {
+  height: 2.5rem !important;
+  padding: 0 !important;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}
+cca-search-field .mat-mdc-form-field-icon-prefix > mat-progress-spinner,
+cca-search-field .mat-mdc-form-field-text-prefix > mat-progress-spinner {
+  margin-block: auto;
+  margin-right: calc(var(--spacing, 0.25rem) * 3);
+  margin-left: calc(var(--spacing, 0.25rem) * 4);
+  color: var(--text-neutral-subtitle);
+  --mat-progress-spinner-active-indicator-color: currentColor;
+}
+
+/* ---- cca-info-banner
+     libs/ui/src/lib/info-banner/info-banner.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-info-banner .primary {
+  background-color: var(--alert-bg-success);
+}
+cca-info-banner .warning {
+  background-color: var(--alert-bg-warning);
+}
+cca-info-banner .danger {
+  background-color: var(--alert-bg-error);
+}
+cca-info-banner .highlight {
+  background-color: var(--alert-bg-info);
+}
+cca-info-banner .default {
+  background-color: var(--alert-bg-info);
+}
+
+/* ---- cca-avatar
+     libs/ui/src/lib/avatar/avatar.component.scss ---- */
+
+
+/* ---- cca-accordion
+     libs/ui/src/lib/accordion/accordion.component.scss ---- */
+
+
+/* ---- cca-spinner
+     libs/ui/src/lib/spinner/spinner.component.scss ---- */
+cca-spinner cca-logo.spinner {
+  animation: spin 1s cubic-bezier(0.68, -1, 0.68, 0.55) infinite;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- cca-tree-view
+     libs/ui/src/lib/tree-view/tree-view.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-tree-view .example-tree ul,
+cca-tree-view .example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+cca-tree-view mat-tree button[mat-icon-button]:focus-visible {
+  box-shadow: 0 0 0 2px var(--button-primary-border-focused) inset;
+  border-radius: var(--radius-md, 0.375rem);
+  --tw-outline-style: none !important;
+  outline-style: none !important;
+}
+cca-tree-view .mat-nested-tree-node:last-child > div.nested-node,
+cca-tree-view .nested-node:last-child {
+  border-left-color: var(--surface-neutral-default) !important;
+  border-image: linear-gradient(var(--border-neutral-default), var(--border-neutral-default)) !important;
+  border-image: linear-gradient(to bottom, var(--border-neutral-default) 50%, rgba(0, 0, 0, 0) 52%) !important;
+  border-image-slice: 1 !important;
+}
+cca-tree-view .mat-nested-tree-node:last-child > .not-last {
+  border-color: var(--surface-neutral-light) !important;
+}
+cca-tree-view .nested-node {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-left-style: var(--tw-border-style) !important;
+  border-left-width: 2px !important;
+  border-color: var(--border-neutral-default);
+}
+cca-tree-view .not-last {
+  border-left-style: var(--tw-border-style) !important;
+  border-left-width: 2px !important;
+  border-color: var(--border-neutral-default);
+}
+cca-tree-view .nodeLine {
+  display: flex;
+  align-items: center;
+}
+cca-tree-view .nodeLine button {
+  border-left-color: var(--surface-neutral-light) !important;
+}
+cca-tree-view .horizontal-line {
+  margin-left: -2px;
+  height: 0.5rem;
+  width: 1rem;
+  border-bottom: 2px solid var(--border-neutral-default);
+}
+cca-tree-view .horizontal-line:before,
+cca-tree-view .horizontal-line:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -1px;
+}
+cca-tree-view .borderBottomWithRadius {
+  border-bottom-left-radius: 0.5rem;
+  margin-left: -2px;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}
+
+/* ---- cca-no-data
+     libs/ui/src/lib/no-data/no-data.component.scss ---- */
+
+
+/* ---- cca-side-menu
+     apps/platform/src/app/core/side-menu/side-menu.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-side-menu .menu-wrapper {
+  display: flex;
+  height: 100%;
+  width: calc(var(--spacing, 0.25rem) * 18);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sidebar-main-bg-default);
+}
+cca-side-menu .menu-wrapper .logo-wrapper {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 15);
+  width: 100%;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--border-NC-blue-lighter);
+  padding-inline: calc(var(--spacing, 0.25rem) * 3);
+}
+cca-side-menu .menu-wrapper .side-menu {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 18);
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+  padding-block: calc(var(--spacing, 0.25rem) * 4);
+  padding-top: 1.1rem;
+}
+cca-side-menu .menu-wrapper .menu-items {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing, 0.25rem) * 2);
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+cca-side-menu .menu-wrapper .menu-items::-webkit-scrollbar {
+  display: none;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}
+
+/* ---- cca-side-menu-item
+     apps/platform/src/app/core/side-menu-item/side-menu-item.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-side-menu-item .a-menu-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-lg, 0.5rem);
+  font-size: var(--text-lg, 1.125rem);
+  line-height: var(--tw-leading, var(--text-lg--line-height, calc(1.75 / 1.125)));
+  text-decoration-line: none;
+}
+cca-side-menu-item .a-menu-item:not(.active):focus-visible {
+  border-style: var(--tw-border-style) !important;
+  border-width: 0px !important;
+  background-color: var(--sidebar-main-bg-hover);
+  color: var(--sidebar-second-text-default);
+  outline-style: var(--tw-outline-style) !important;
+  outline-width: 2px !important;
+  outline-offset: calc(2px * -1);
+  outline-color: var(--border-neutral-dark);
+}
+cca-side-menu-item .a-menu-item:focus-visible {
+  border-style: var(--tw-border-style) !important;
+  border-width: 0px !important;
+  color: var(--sidebar-second-text-default);
+  outline-style: var(--tw-outline-style) !important;
+  outline-width: 1px !important;
+  outline-offset: calc(1px * -1);
+  outline-color: var(--border-neutral-dark);
+}
+cca-side-menu-item .sub-item {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: calc(var(--spacing, 0.25rem) * 2);
+  border-radius: var(--radius-xl, 0.75rem);
+  padding: calc(var(--spacing, 0.25rem) * 2);
+  padding-left: 0px;
+}
+cca-side-menu-item .sub-item:focus-visible {
+  margin-left: 3px;
+  width: 209px;
+  border-radius: var(--radius-xl, 0.75rem);
+  border-style: var(--tw-border-style) !important;
+  border-width: 0px !important;
+  background-color: var(--sidebar-second-bg-hover);
+  color: var(--sidebar-second-text-default);
+  outline-style: var(--tw-outline-style) !important;
+  outline-width: 1px !important;
+  outline-offset: 0px;
+  outline-color: var(--border-neutral-dark);
+}
+cca-side-menu-item .sub-item:focus-visible cca-icon {
+  color: var(--sidebar-second-icon-default);
+}
+cca-side-menu-item .sub-item:hover {
+  background-color: var(--sidebar-second-bg-hover);
+}
+cca-side-menu-item .sub-item:hover cca-icon {
+  color: var(--sidebar-second-icon-hover);
+}
+cca-side-menu-item .sub-item:hover span {
+  color: var(--sidebar-second-text-hover);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-outline-style: solid;
+    }
+  }
+}
+
+/* ---- cca-side-submenu
+     apps/platform/src/app/core/side-submenu/side-submenu.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-side-submenu .submenu-container {
+  z-index: 20;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  border-right-style: var(--tw-border-style);
+  border-right-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+}
+cca-side-submenu .sub-item {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  border-right-style: var(--tw-border-style);
+  border-right-width: 4px;
+  border-color: transparent;
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+  overflow-wrap: break-word;
+}
+cca-side-submenu .sub-item cca-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--text-2xl, 1.5rem);
+  line-height: var(--tw-leading, var(--text-2xl--line-height, calc(2 / 1.5)));
+  --tw-leading: calc(var(--spacing, 0.25rem) * 6);
+  line-height: calc(var(--spacing, 0.25rem) * 6);
+  color: var(--text-neutral-subtitle);
+}
+cca-side-submenu .sub-item:not(.active):hover {
+  border-radius: var(--radius-xl, 0.75rem);
+  background-color: var(--sidebar-second-bg-hover);
+}
+cca-side-submenu .sub-item:not(.active):hover cca-icon {
+  color: var(--sidebar-second-icon-hover);
+}
+cca-side-submenu .sub-item:not(.active):hover span {
+  color: var(--sidebar-second-text-hover);
+}
+cca-side-submenu .sub-item:focus-visible, cca-side-submenu .sub-item.active:focus-visible {
+  margin-left: 3px;
+  width: 209px;
+  border-radius: var(--radius-xl, 0.75rem);
+  border-style: var(--tw-border-style) !important;
+  border-width: 0px !important;
+  background-color: var(--sidebar-second-bg-hover);
+  color: var(--sidebar-second-text-default);
+  outline-style: var(--tw-outline-style) !important;
+  outline-width: 1px !important;
+  outline-offset: 0px;
+  outline-color: var(--border-neutral-dark);
+}
+cca-side-submenu .sub-item:focus-visible cca-icon, cca-side-submenu .sub-item.active:focus-visible cca-icon {
+  color: var(--sidebar-second-icon-default);
+}
+cca-side-submenu .sub-item.active {
+  width: 100%;
+  border-color: var(--border-brand-default);
+  background-color: var(--surface-brand-lightest);
+}
+cca-side-submenu .sub-item.active cca-icon {
+  color: var(--text-brand-dark);
+}
+cca-side-submenu .sub-item.active span {
+  color: var(--text-brand-dark);
+}
+cca-side-submenu .shadow {
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.062745098);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-leading: initial;
+      --tw-outline-style: solid;
+    }
+  }
+}
+
+/* ---- cca-status-badge
+     libs/ui/src/lib/badges/status-badge/status-badge.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-status-badge .primary {
+  background-color: var(--badge-bg-green-light);
+  color: var(--badge-text-green);
+}
+cca-status-badge .warning {
+  background-color: var(--badge-bg-orange-light);
+  color: var(--badge-text-orange);
+}
+cca-status-badge .danger {
+  background-color: var(--badge-bg-red-light);
+  color: var(--badge-text-red);
+}
+cca-status-badge .accent-blue {
+  background-color: var(--badge-bg-blue-light);
+  color: var(--badge-text-blue);
+}
+cca-status-badge .highlight {
+  background-color: var(--badge-bg-purple-light);
+  color: var(--badge-text-purple);
+}
+cca-status-badge .match {
+  background-color: var(--badge-bg-purple-light);
+  color: var(--badge-text-purple);
+}
+cca-status-badge .neutral {
+  background-color: var(--badge-bg-neutral-light);
+  color: var(--badge-text-NCBlue);
+}
+
+/* ---- cca-label-badge
+     libs/ui/src/lib/badges/label-badge/label-badge.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-label-badge .primary {
+  background-color: var(--badge-bg-green-light);
+  color: var(--badge-text-green);
+}
+cca-label-badge .warning {
+  background-color: var(--badge-bg-orange-light);
+  color: var(--badge-text-orange);
+}
+cca-label-badge .highlight {
+  background-color: var(--badge-bg-NCblue-light);
+  color: var(--badge-text-NCBlue);
+}
+cca-label-badge .match {
+  background-color: var(--badge-bg-NCblue-light);
+  color: var(--badge-text-NCBlue);
+}
+cca-label-badge .neutral {
+  background-color: var(--badge-bg-NCblue-light);
+  color: var(--badge-text-NCBlue);
+}
+cca-label-badge .danger {
+  background-color: var(--badge-bg-red-light);
+  color: var(--badge-text-red);
+}
+cca-label-badge .accent-blue {
+  background-color: var(--badge-bg-blue-light);
+  color: var(--badge-text-blue);
+}
+cca-label-badge .new-feature {
+  background-color: var(--badge-bg-purple);
+  color: var(--badge-text-purple-light);
+}
+cca-label-badge .outline {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--badge-stroke-white);
+  background-color: transparent;
+  color: var(--badge-text-NCBlue);
+}
+cca-label-badge .emphasis-outline {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  background-color: transparent !important;
+  border-color: currentColor;
+}
+cca-label-badge .neutral.emphasis-outline {
+  border-color: var(--color-newCold-300);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}
+
+/* ---- cca-text-badge
+     libs/ui/src/lib/badges/text-badge/text-badge.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-text-badge .primary {
+  color: var(--text-brand-default);
+}
+cca-text-badge .primary .dot {
+  background-color: var(--surface-brand-default);
+}
+cca-text-badge .highlight {
+  color: var(--info-text);
+}
+cca-text-badge .highlight .dot {
+  background-color: var(--info-surface);
+}
+cca-text-badge .neutral {
+  color: var(--text-neutral-body);
+}
+cca-text-badge .neutral .dot {
+  background-color: var(--surface-neutral-darkest);
+}
+cca-text-badge .neutral-caption {
+  color: var(--text-neutral-caption);
+}
+cca-text-badge .neutral-caption .dot {
+  background-color: var(--neutral-surface-dark);
+}
+cca-text-badge .match {
+  color: var(--info-text-dark);
+}
+cca-text-badge .match .dot {
+  background-color: var(--surface-neutral-default);
+}
+cca-text-badge .danger {
+  color: var(--critical-text);
+}
+cca-text-badge .danger .dot {
+  background-color: var(--critical-surface);
+}
+cca-text-badge .warning {
+  color: var(--warning-text-darker);
+}
+cca-text-badge .warning .dot {
+  background-color: var(--warning-surface-lighter);
+}
+cca-text-badge .accent-blue {
+  color: var(--info-text-dark);
+}
+cca-text-badge .accent-blue .dot {
+  background-color: var(--info-surface-dark);
+}
+cca-text-badge .new .dot {
+  height: calc(var(--spacing, 0.25rem) * 3);
+  width: calc(var(--spacing, 0.25rem) * 3);
+}
+cca-text-badge .new.primary {
+  color: var(--badge-text-green-darker);
+}
+cca-text-badge .new.primary .dot {
+  background-color: var(--badge-bg-green-dark);
+}
+cca-text-badge .new.warning {
+  color: var(--badge-text-orange-darkest);
+}
+cca-text-badge .new.warning .dot {
+  background-color: var(--badge-bg-orange-dark);
+}
+cca-text-badge .new.danger {
+  color: var(--badge-text-red-darker);
+}
+cca-text-badge .new.danger .dot {
+  background-color: var(--badge-bg-red-dark);
+}
+cca-text-badge .new.neutral {
+  color: var(--badge-text-NCBlue);
+}
+cca-text-badge .new.neutral .dot {
+  background-color: var(--badge-bg-grey);
+}
+cca-text-badge .new.info {
+  color: var(--badge-text-blue);
+}
+cca-text-badge .new.info .dot {
+  background-color: var(--badge-bg-blue);
+}
+cca-text-badge .new.compact .dot {
+  height: calc(var(--spacing, 0.25rem) * 2);
+  width: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-text-badge .new.compact {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+cca-text-badge .new.extra-compact .dot {
+  height: calc(var(--spacing, 0.25rem) * 1.5);
+  width: calc(var(--spacing, 0.25rem) * 1.5);
+}
+cca-text-badge .new.extra-compact {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+
+/* ---- cca-numerical-badge
+     libs/ui/src/lib/badges/numerical-badge/numerical-badge.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-numerical-badge .primary {
+  background-color: var(--badge-bg-red);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .warning {
+  background-color: var(--badge-bg-orange);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .danger {
+  background-color: var(--badge-bg-red);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .highlight {
+  background-color: var(--badge-bg-blue-light);
+  color: var(--badge-text-blue);
+}
+cca-numerical-badge .match {
+  background-color: var(--badge-bg-blue-light);
+  color: var(--badge-text-blue);
+}
+cca-numerical-badge .neutral {
+  background-color: var(--badge-bg-grey);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .thirdparty {
+  background-color: var(--badge-bg-blue);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .success {
+  background-color: var(--badge-bg-green);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .inverted {
+  background-color: var(--badge-bg-white);
+  color: var(--badge-text-green);
+}
+cca-numerical-badge .accent-blue {
+  background-color: var(--badge-bg-blue);
+  color: var(--badge-text-white);
+}
+
+/* ---- cca-attention-flag-badge
+     libs/ui/src/lib/badges/attention-flag/attention-flag-badge.component.scss ---- */
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-attention-flag-badge .neutral {
+  border-color: var(--border-neutral-light);
+  color: var(--badge-text-grey-dark);
+}
+cca-attention-flag-badge .neutral .icon-flag {
+  color: var(--icon-neutral);
+}
+cca-attention-flag-badge .accent-blue {
+  border-color: var(--info-border-light);
+  color: var(--info-text-lighter);
+}
+cca-attention-flag-badge .accent-blue .icon-flag {
+  color: var(--icon-blue);
+}
+cca-attention-flag-badge .warning {
+  border-color: var(--warning-border-lighter);
+  color: var(--badge-text-orange);
+}
+cca-attention-flag-badge .warning .icon-flag {
+  color: var(--icon-warning-darkest);
+}
+cca-attention-flag-badge .danger {
+  border-color: var(--critical-border-lighter);
+  color: var(--badge-text-red);
+}
+cca-attention-flag-badge .danger .icon-flag {
+  color: var(--icon-danger-darker);
+}

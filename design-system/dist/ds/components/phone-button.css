@@ -1,0 +1,13 @@
+/*
+ * cca-phone-button
+ * Source:  libs/ui/src/lib/phone-button/phone-button.component.scss
+ * :host resolves to:  cca-phone-button
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-phone-button {
+  display: block;
+}

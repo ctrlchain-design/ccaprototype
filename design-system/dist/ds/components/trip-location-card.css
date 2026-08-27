@@ -1,0 +1,27 @@
+/*
+ * cca-trip-location-card
+ * Source:  libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-info/trip-stops-overview/trip-stop/trip-location-card/trip-location-card.component.scss
+ * :host resolves to:  cca-trip-location-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-trip-location-card .custom-grid {
+  grid-template-columns: repeat(auto-fill, 50%);
+  gap: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-trip-location-card .grid-column-last {
+  grid-column: 2/2;
+}
+@container (min-width: 700px) {
+  cca-trip-location-card .custom-grid {
+    grid-template-columns: repeat(auto-fill, 33.33%);
+    grid-auto-flow: dense;
+  }
+  cca-trip-location-card .grid-column-last {
+    grid-column: 3/3;
+  }
+}

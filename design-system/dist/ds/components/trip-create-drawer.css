@@ -1,0 +1,14 @@
+/*
+ * cca-trip-create-drawer
+ * Source:  libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-details-drawer/trip-create-drawer/trip-create-drawer.component.scss
+ * :host resolves to:  cca-trip-create-drawer
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-trip-create-drawer .mat-expansion-panel-body {
+  padding-bottom: 0px !important;
+}

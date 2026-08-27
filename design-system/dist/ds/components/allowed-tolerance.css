@@ -1,0 +1,52 @@
+/*
+ * cca-allowed-tolerance
+ * Source:  libs/finance/feature-invoice-validation/src/lib/invoice-validation-settings/allowed-tolerance/allowed-tolerance.component.scss
+ * :host resolves to:  cca-allowed-tolerance
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-allowed-tolerance .mat-column-name {
+  width: calc(1 / 2 * 100%);
+}
+cca-allowed-tolerance .mat-column-tolerance,
+cca-allowed-tolerance .mat-column-edit {
+  width: calc(1 / 4 * 100%);
+}
+cca-allowed-tolerance .mat-mdc-row {
+  min-height: 64px !important;
+  height: auto !important;
+}
+cca-allowed-tolerance .mat-mdc-cell {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  line-height: normal !important;
+}
+cca-allowed-tolerance .mat-mdc-form-field-subscript-wrapper {
+  position: relative !important;
+  font-size: 11px !important;
+  padding: 0 !important;
+  margin-top: 4px !important;
+}
+cca-allowed-tolerance .mat-mdc-text-field-wrapper {
+  height: 48px !important;
+  min-height: 48px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+cca-allowed-tolerance .mat-mdc-form-field-infix {
+  min-height: 0 !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+cca-allowed-tolerance .mat-mdc-form-field-flex {
+  height: 48px !important;
+  align-items: center !important;
+}
+cca-allowed-tolerance .mat-mdc-form-field-bottom-align {
+  display: block !important;
+  height: auto !important;
+}

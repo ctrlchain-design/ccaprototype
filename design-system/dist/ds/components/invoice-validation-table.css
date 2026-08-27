@@ -1,0 +1,23 @@
+/*
+ * cca-invoice-validation-table
+ * Source:  libs/finance/feature-invoice-validation/src/lib/invoice-validation-table/invoice-validation-table.component.scss
+ * :host resolves to:  cca-invoice-validation-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-invoice-validation-table .primary {
+  color: var(--badge-text-green-darker);
+}
+cca-invoice-validation-table .warning {
+  color: var(--badge-text-orange-darkest);
+}
+cca-invoice-validation-table .danger {
+  color: var(--badge-text-red-darker);
+}
+cca-invoice-validation-table .neutral {
+  color: var(--badge-text-NCBlue);
+}

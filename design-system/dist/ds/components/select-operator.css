@@ -1,0 +1,13 @@
+/*
+ * cca-select-operator
+ * Source:  libs/common/shared-operator/src/lib/select-operator/select-operator.component.scss
+ * :host resolves to:  cca-select-operator
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-select-operator .custom-grid {
+  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+}

@@ -1,0 +1,15 @@
+/*
+ * cca-track-trace
+ * Source:  libs/shipper-tms/feature-tracktrace/src/lib/track-trace/track-trace.component.scss
+ * :host resolves to:  cca-track-trace
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-track-trace {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}

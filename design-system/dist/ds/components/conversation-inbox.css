@@ -1,0 +1,19 @@
+/*
+ * cca-conversation-inbox
+ * Source:  libs/common/shared-conversation/src/lib/conversation-inbox/conversation-inbox.component.scss
+ * :host resolves to:  cca-conversation-inbox
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-conversation-inbox {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+cca-conversation-inbox .selected-conversation {
+  border-color: var(--border-brand-default);
+}

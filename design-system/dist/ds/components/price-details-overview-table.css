@@ -1,0 +1,13 @@
+/*
+ * cca-price-details-overview-table
+ * Source:  libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/price-details-overview-dialog/price-details-overview-table/price-details-overview-table.component.scss
+ * :host resolves to:  cca-price-details-overview-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-price-details-overview-table .mat-mdc-table .mdc-data-table__row {
+  height: 88px;
+}

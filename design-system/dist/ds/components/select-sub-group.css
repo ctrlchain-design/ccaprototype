@@ -1,0 +1,21 @@
+/*
+ * cca-select-sub-group
+ * Source:  libs/ui/src/lib/select-sub-group/select-sub-group.component.scss
+ * :host resolves to:  cca-select-sub-group
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-select-sub-group {
+  display: flex;
+  min-height: 0px;
+  flex: 1;
+  flex-direction: column;
+}
+cca-select-sub-group table .mdc-data-table__row .mat-mdc-cell {
+  --tw-border-style: none !important;
+  border-style: none !important;
+}

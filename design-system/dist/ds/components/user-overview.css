@@ -1,0 +1,13 @@
+/*
+ * cca-user-detail-overview
+ * Source:  libs/enterprise/feature-user-management/src/lib/user-overview/user-overview.component.scss
+ * :host resolves to:  cca-user-detail-overview
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-user-detail-overview {
+  height: inherit;
+}

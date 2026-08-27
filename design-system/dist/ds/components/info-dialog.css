@@ -1,0 +1,14 @@
+/*
+ * cca-ltl-cargo-info-dialog
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-cargo-data/info-dialog/ltl-cargo-info-dialog.component.scss
+ * :host resolves to:  cca-ltl-cargo-info-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-ltl-cargo-info-dialog a {
+  color: var(--button-link-default);
+}

@@ -1,0 +1,28 @@
+/*
+ * cca-select-address-type-dialog
+ * Source:  libs/common/addressbook/src/lib/select-address-type-dialog/select-address-type-dialog.component.scss
+ * :host resolves to:  cca-select-address-type-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-select-address-type-dialog .select-card:focus,
+cca-select-address-type-dialog .select-card:focus-visible,
+cca-select-address-type-dialog .select-card.cdk-program-focused {
+  outline: none !important;
+  border-color: var(--button-primary-border-focused) !important;
+  box-shadow: 0 0 0 2px var(--button-primary-border-focused) !important;
+}
+cca-select-address-type-dialog .dialog-close-button {
+  box-sizing: content-box;
+  height: calc(var(--spacing, 0.25rem) * 7);
+  width: calc(var(--spacing, 0.25rem) * 7);
+  justify-content: center;
+}
+cca-select-address-type-dialog .dialog-close-button:focus {
+  border-radius: var(--radius-lg, 0.5rem);
+  box-shadow: inset 0 0 0 2px var(--button-primary-border-focused);
+}

@@ -1,0 +1,25 @@
+/*
+ * cca-trip-details-drawer-stops
+ * Source:  libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-details-drawer/components/trip-details-drawer-stops/trip-details-drawer-stops.component.scss
+ * :host resolves to:  cca-trip-details-drawer-stops
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-trip-details-drawer-stops .cdk-drag-preview {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: var(--surface-neutral-light) !important;
+}
+cca-trip-details-drawer-stops .cdk-drag-placeholder {
+  opacity: 0;
+}
+cca-trip-details-drawer-stops .cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+cca-trip-details-drawer-stops .cdk-drag-none-order-stop-list.cdk-drop-list-dragging .cdk-drag-none-order-stop:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

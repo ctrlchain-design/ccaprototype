@@ -1,0 +1,18 @@
+/*
+ * cca-select-address-enterprise
+ * Source:  libs/common/addressbook/src/lib/address-create/steps/select-address-enterprise/select-address-enterprise.component.scss
+ * :host resolves to:  cca-select-address-enterprise
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-select-address-enterprise table .mdc-data-table__cell {
+  border: none;
+  padding: 0.5rem 0;
+}
+
+cca-select-address-enterprise .mdc-data-table__row:last-child .mat-mdc-cell {
+  border-bottom: 0 !important;
+}

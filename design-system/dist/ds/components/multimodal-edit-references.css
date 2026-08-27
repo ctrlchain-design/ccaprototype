@@ -1,0 +1,21 @@
+/*
+ * cca-multimodal-edit-references
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/multimodal-edit-references/multimodal-edit-references.component.scss
+ * :host resolves to:  cca-multimodal-edit-references
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-multimodal-edit-references .mat-expansion-panel:first-child:last-child {
+  border: none;
+}
+cca-multimodal-edit-references .mat-expansion-panel:first-child:last-child .mat-expansion-panel-body {
+  padding: 0;
+}
+cca-multimodal-edit-references .mat-expansion-panel:first-child:last-child .mat-expansion-panel-body .references-card {
+  background-color: var(--surface-neutral-light);
+  padding: 0px;
+}

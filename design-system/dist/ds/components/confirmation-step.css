@@ -1,0 +1,97 @@
+/*
+ * cca-confirmation-step
+ * Source:  libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/confirmation-step/confirmation-step.component.scss
+ * :host resolves to:  cca-confirmation-step
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-confirmation-step .confirmation-list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  border-radius: var(--radius-2xl, 1rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-default);
+  padding: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-confirmation-step .confirmation-list ul {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-confirmation-step .confirmation-list ul li {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-confirmation-step .confirmation-list ul li hr {
+  width: 100%;
+  --tw-border-style: dashed;
+  border-style: dashed;
+}
+cca-confirmation-step .confirmation-list ul li span {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 8);
+  width: calc(var(--spacing, 0.25rem) * 8);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(infinity * 1px);
+  background-color: var(--surface-neutral-dark);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+}
+cca-confirmation-step .confirmation-list ul li h6 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  color: #10152E;
+}
+cca-confirmation-step .confirmation-list ul li p {
+  color: var(--text-neutral-subtitle);
+}
+cca-confirmation-step .confirmation-list ul li cca-themed-vector img {
+  height: calc(var(--spacing, 0.25rem) * 16);
+  width: calc(var(--spacing, 0.25rem) * 16);
+}
+@media only screen and (max-width: 768px) {
+  cca-confirmation-step section {
+    padding-inline: 0px;
+    padding-top: calc(var(--spacing, 0.25rem) * 4);
+  }
+}
+cca-confirmation-step section {
+  counter-reset: steps;
+}
+cca-confirmation-step .step-bulletpoint::before {
+  counter-increment: steps;
+  content: counter(steps);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-font-weight: initial;
+    }
+  }
+}

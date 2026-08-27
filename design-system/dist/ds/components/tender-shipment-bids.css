@@ -1,0 +1,16 @@
+/*
+ * cca-tender-shipment-bids
+ * Source:  libs/common/shared-tender/src/lib/tender-shipment-bids/tender-shipment-bids.component.scss
+ * :host resolves to:  cca-tender-shipment-bids
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-shipment-bids .mat-mdc-tab-body-wrapper {
+  height: 100%;
+}
+cca-tender-shipment-bids .mat-mdc-tab-body-content {
+  overflow: hidden;
+}

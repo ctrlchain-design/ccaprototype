@@ -1,0 +1,13 @@
+/*
+ * cca-platform-overview
+ * Source:  libs/admin/feature-legal-management/src/lib/terms-management/platform-overview/platform-overview.component.scss
+ * :host resolves to:  cca-platform-overview
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-platform-overview {
+  height: inherit;
+}

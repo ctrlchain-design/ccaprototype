@@ -1,0 +1,146 @@
+/*
+ * cca-data-table
+ * Source:  libs/common/pagination/src/lib/data-table/data-table.component.scss
+ * :host resolves to:  cca-data-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-data-table {
+  min-height: 500px;
+  height: inherit;
+}
+cca-data-table .spinner {
+  height: calc(var(--spacing, 0.25rem) * 12);
+  display: grid;
+  width: 100%;
+  place-items: center;
+}
+.cca-data-table-header {
+  display: grid;
+  grid-template-columns: auto;
+}
+.cca-data-table-buttons {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+.cca-data-table-buttons:has(.cca-data-table-left:empty) {
+  grid-template-columns: 0 minmax(0, 1fr);
+}
+.cca-data-table-left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 1rem;
+}
+.cca-data-table-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  justify-content: flex-end;
+}
+@media (max-width: 1919px) {
+  .cca-data-table-left,
+  .cca-data-table-right,
+  .cca-data-table-buttons {
+    gap: 0.75rem;
+  }
+}
+cca-data-table cca-pagination-search-field.cca-search-field {
+  display: block;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 240px;
+  max-width: 560px;
+}
+@media (max-width: 1919px) {
+  cca-data-table cca-pagination-search-field.cca-search-field {
+    max-width: 400px;
+  }
+}
+cca-data-table mat-drawer {
+  padding: 24px;
+  padding-word-wrap: break-word;
+}
+cca-data-table mat-drawer.filters {
+  width: 46.25rem;
+}
+cca-data-table mat-drawer.column-options h2 {
+  margin-top: 32px;
+  margin-bottom: 40px;
+}
+cca-data-table mat-drawer.column-options p {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+cca-data-table mat-drawer.column-options {
+  padding-left: 24px;
+  width: 350px;
+}
+cca-data-table mat-drawer-container {
+  height: inherit;
+  background-color: inherit;
+  position: initial;
+}
+cca-data-table .hoverStyle.mat-mdc-row:hover {
+  background-color: var(--surface-brand-lighter);
+}
+.cca-data-table-wrapper {
+  height: inherit;
+}
+cca-data-table mat-drawer-content {
+  overflow: hidden;
+}
+cca-data-table .mat-drawer-inner-container {
+  overscroll-behavior: contain;
+}
+cca-data-table .compact-table-header {
+  margin-bottom: calc(var(--spacing, 0.25rem) * 3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: calc(var(--spacing, 0.25rem) * 2);
+  row-gap: calc(var(--spacing, 0.25rem) * 3);
+}
+cca-data-table .compact .footer {
+  align-items: flex-start;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  border-color: var(--border-neutral-default);
+}
+cca-data-table .compact .mat-mdc-paginator-page-size {
+  margin-block: calc(var(--spacing, 0.25rem) * 3);
+}
+cca-data-table .compact .mat-mdc-paginator-container {
+  justify-content: flex-start !important;
+}
+cca-data-table .compact .mat-mdc-paginator-page-size {
+  margin-right: calc(var(--spacing, 0.25rem) * 6) !important;
+}
+cca-data-table .compact .mat-mdc-paginator-range-label {
+  margin-right: calc(var(--spacing, 0.25rem) * 6) !important;
+  margin-left: var(--spacing, 0.25rem) !important;
+}
+cca-data-table .compact .table-container {
+  max-height: initial;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

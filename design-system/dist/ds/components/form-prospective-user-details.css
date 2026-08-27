@@ -1,0 +1,14 @@
+/*
+ * cca-form-prospective-user-details
+ * Source:  libs/common/shared-user/src/lib/components/form-prospective-user-details/form-prospective-user-details.component.scss
+ * :host resolves to:  cca-form-prospective-user-details
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-form-prospective-user-details cca-form-preferences > form {
+  width: 100%;
+  max-width: 100%;
+}

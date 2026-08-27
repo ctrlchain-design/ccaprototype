@@ -1,0 +1,37 @@
+/*
+ * cca-rate-reset-dialog
+ * Source:  libs/finance/feature-group-rate-management/src/lib/dialogs/rate-reset-dialog/rate-reset-dialog.component.scss
+ * :host resolves to:  cca-rate-reset-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-rate-reset-dialog h1 {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-neutral-caption);
+}
+cca-rate-reset-dialog h1 div {
+  background-color: var(--surface-brand-lighter);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+cca-rate-reset-dialog h1 div cca-icon {
+  color: var(--text-brand-light);
+}
+cca-rate-reset-dialog h1 div:hover {
+  background-color: var(--surface-neutral-default);
+}
+cca-rate-reset-dialog h1 div:active {
+  background-color: var(--surface-neutral-default);
+}
+cca-rate-reset-dialog div[mat-dialog-content] {
+  width: 100%;
+  padding: 20px;
+}

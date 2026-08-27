@@ -1,0 +1,13 @@
+/*
+ * cca-booking-detail-edit-instruction
+ * Source:  libs/common/shared-shipment-detail/src/lib/booking-detail-comments/booking-detail-edit-instruction/booking-detail-edit-instruction.component.scss
+ * :host resolves to:  cca-booking-detail-edit-instruction
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-booking-detail-edit-instruction .ql-editor {
+  padding: 0.75rem 1rem !important;
+}

@@ -1,0 +1,45 @@
+/*
+ * cca-multi-stop-list
+ * Source:  libs/ui/src/lib/multi-stop-list/multi-stop-list.component.scss
+ * :host resolves to:  cca-multi-stop-list
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-multi-stop-list .multi-stop .mat-expansion-panel {
+  box-shadow: none;
+  border-radius: 0 !important;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+cca-multi-stop-list .multi-stop .mat-expansion-panel .mat-expansion-panel-header {
+  padding: 0;
+  margin: 0;
+  flex-direction: row;
+  align-items: flex-start;
+  height: auto;
+  border-radius: 0;
+}
+cca-multi-stop-list .multi-stop .mat-expansion-panel .mat-expansion-panel-header:hover {
+  background: transparent;
+}
+cca-multi-stop-list .multi-stop .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+  padding: 0;
+  margin: 0;
+  max-height: 24px;
+}
+cca-multi-stop-list .multi-stop .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator::after {
+  color: var(--text-brand-default);
+  line-height: normal;
+}
+cca-multi-stop-list .multi-stop .mat-expansion-panel .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+  background: transparent;
+}
+cca-multi-stop-list .multi-stop .mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0;
+}

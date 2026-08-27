@@ -1,0 +1,111 @@
+/*
+ * cca-text-badge
+ * Source:  libs/ui/src/lib/badges/text-badge/text-badge.component.scss
+ * :host resolves to:  cca-text-badge
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-text-badge .primary {
+  color: var(--text-brand-default);
+}
+cca-text-badge .primary .dot {
+  background-color: var(--surface-brand-default);
+}
+cca-text-badge .highlight {
+  color: var(--info-text);
+}
+cca-text-badge .highlight .dot {
+  background-color: var(--info-surface);
+}
+cca-text-badge .neutral {
+  color: var(--text-neutral-body);
+}
+cca-text-badge .neutral .dot {
+  background-color: var(--surface-neutral-darkest);
+}
+cca-text-badge .neutral-caption {
+  color: var(--text-neutral-caption);
+}
+cca-text-badge .neutral-caption .dot {
+  background-color: var(--neutral-surface-dark);
+}
+cca-text-badge .match {
+  color: var(--info-text-dark);
+}
+cca-text-badge .match .dot {
+  background-color: var(--surface-neutral-default);
+}
+cca-text-badge .danger {
+  color: var(--critical-text);
+}
+cca-text-badge .danger .dot {
+  background-color: var(--critical-surface);
+}
+cca-text-badge .warning {
+  color: var(--warning-text-darker);
+}
+cca-text-badge .warning .dot {
+  background-color: var(--warning-surface-lighter);
+}
+cca-text-badge .accent-blue {
+  color: var(--info-text-dark);
+}
+cca-text-badge .accent-blue .dot {
+  background-color: var(--info-surface-dark);
+}
+cca-text-badge .new .dot {
+  height: calc(var(--spacing, 0.25rem) * 3);
+  width: calc(var(--spacing, 0.25rem) * 3);
+}
+cca-text-badge .new.primary {
+  color: var(--badge-text-green-darker);
+}
+cca-text-badge .new.primary .dot {
+  background-color: var(--badge-bg-green-dark);
+}
+cca-text-badge .new.warning {
+  color: var(--badge-text-orange-darkest);
+}
+cca-text-badge .new.warning .dot {
+  background-color: var(--badge-bg-orange-dark);
+}
+cca-text-badge .new.danger {
+  color: var(--badge-text-red-darker);
+}
+cca-text-badge .new.danger .dot {
+  background-color: var(--badge-bg-red-dark);
+}
+cca-text-badge .new.neutral {
+  color: var(--badge-text-NCBlue);
+}
+cca-text-badge .new.neutral .dot {
+  background-color: var(--badge-bg-grey);
+}
+cca-text-badge .new.info {
+  color: var(--badge-text-blue);
+}
+cca-text-badge .new.info .dot {
+  background-color: var(--badge-bg-blue);
+}
+cca-text-badge .new.compact .dot {
+  height: calc(var(--spacing, 0.25rem) * 2);
+  width: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-text-badge .new.compact {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+cca-text-badge .new.extra-compact .dot {
+  height: calc(var(--spacing, 0.25rem) * 1.5);
+  width: calc(var(--spacing, 0.25rem) * 1.5);
+}
+cca-text-badge .new.extra-compact {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+}

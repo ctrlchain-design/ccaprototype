@@ -1,0 +1,56 @@
+/*
+ * cca-load-details
+ * Source:  libs/common/shared-shipment-detail/src/lib/load-and-vehicle-details/load-details/load-details.component.scss
+ * :host resolves to:  cca-load-details
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-load-details .mat-expansion-panel,
+cca-load-details .mat-expansion-panel-header {
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+}
+cca-load-details .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator::after {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+}
+cca-load-details .mat-expansion-panel-header-title {
+  margin-right: 0px;
+}
+cca-load-details .mat-content.mat-content-hide-toggle {
+  margin-right: 0px;
+}
+cca-load-details .mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0;
+}
+cca-load-details .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+  margin-right: calc(var(--spacing, 0.25rem) * 2) !important;
+}
+cca-load-details .mat-expansion-panel-header {
+  margin-inline: calc(var(--spacing, 0.25rem) * -3) !important;
+  height: calc(var(--spacing, 0.25rem) * 10) !important;
+  background-color: var(--surface-neutral-default) !important;
+  padding-block: calc(var(--spacing, 0.25rem) * 2) !important;
+  padding-right: calc(var(--spacing, 0.25rem) * 0.5) !important;
+  padding-left: calc(var(--spacing, 0.25rem) * 3) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+}
+cca-load-details .mat-expansion-panel.mat-elevation-z0 .mat-expanded {
+  padding-block: calc(var(--spacing, 0.25rem) * 2) !important;
+  padding-right: calc(var(--spacing, 0.25rem) * 0.5) !important;
+  padding-left: calc(var(--spacing, 0.25rem) * 3) !important;
+}
+cca-load-details .mat-expansion-panel-header[aria-disabled=true] {
+  cursor: default !important;
+}
+cca-load-details .mat-expansion-panel .mat-expansion-panel-body {
+  overflow: hidden;
+}

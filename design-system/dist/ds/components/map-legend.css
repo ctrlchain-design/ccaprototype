@@ -1,0 +1,33 @@
+/*
+ * cca-map-legend
+ * Source:  libs/common/map/src/lib/components/map-legend/map-legend.component.scss
+ * :host resolves to:  cca-map-legend
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+@reference '#tailwind-config.css';
+cca-map-legend .map-settings {
+  position: absolute;
+  right: 3.75rem;
+  top: 1rem;
+}
+cca-map-legend .map-settings-button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--surface-neutral-light);
+}
+cca-map-legend .map-settings-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 18rem;
+  padding: 0.75rem;
+  z-index: 1000;
+}
+
+cca-map-legend .mat-button-toggle-button {
+  justify-items: center;
+}

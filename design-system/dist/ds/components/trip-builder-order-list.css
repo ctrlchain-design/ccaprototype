@@ -1,0 +1,314 @@
+/*
+ * cca-trip-builder-order-list
+ * Source:  libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-builder-order-list/trip-builder-order-list.component.scss
+ * :host resolves to:  cca-trip-builder-order-list
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-trip-builder-order-list .order-col-drag {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 7);
+  align-items: center !important;
+  justify-content: center;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: var(--surface-neutral-light);
+}
+cca-trip-builder-order-list .order-col-checkbox {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 10);
+  align-items: center !important;
+  justify-content: center;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+  transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  position: sticky;
+  left: 1.75rem;
+  z-index: 2;
+  height: 100%;
+  background-color: var(--surface-neutral-light);
+}
+cca-trip-builder-order-list .order-col-checkbox::after {
+  width: 0.5rem;
+  right: -7px;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  display: block;
+  opacity: 0.6;
+  content: "";
+  border-left-style: var(--tw-border-style);
+  border-left-width: 1px;
+  border-color: var(--border-neutral-default);
+  --tw-gradient-position: to right;
+  @supports (background-image: linear-gradient(in lab, red, red)) {
+    --tw-gradient-position: to right in oklab;
+  }
+  background-image: linear-gradient(var(--tw-gradient-stops));
+  --tw-gradient-from: var(rgba(0, 0, 0, 0.08));
+  --tw-gradient-to: rgba(0, 0, 0, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  --tw-gradient-to: transparent;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0));
+}
+cca-trip-builder-order-list .order-col-ref {
+  width: calc(var(--spacing, 0.25rem) * 35);
+  align-items: center !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-shipper-ref {
+  width: calc(var(--spacing, 0.25rem) * 25);
+  align-items: center !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-cargo {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 22.5);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-cargo.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-shipper {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 30);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-shipper.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-origin {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 32);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-origin.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-destination {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 47);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-destination.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-time {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 37.5);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-time.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-time.time-window {
+  width: calc(var(--spacing, 0.25rem) * 73);
+}
+cca-trip-builder-order-list .order-col-distance {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 20);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-distance.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-temp {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 28);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-temp.row-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+cca-trip-builder-order-list .order-col-zone {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 30);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-zone.row-cell {
+  align-items: center !important;
+  justify-content: flex-start;
+}
+cca-trip-builder-order-list .order-col-created {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 36);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-created.row-cell {
+  align-items: center !important;
+  justify-content: flex-start;
+}
+cca-trip-builder-order-list .order-col-sales-org {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 44);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-builder-order-list .order-col-sales-org.row-cell {
+  align-items: center !important;
+  justify-content: flex-start;
+}
+cca-trip-builder-order-list .order-table-header {
+  min-height: calc(var(--spacing, 0.25rem) * 10);
+  background-color: var(--surface-neutral-light);
+}
+cca-trip-builder-order-list .order-table-header .header-cell {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-neutral-title);
+}
+cca-trip-builder-order-list .order-table-header .sortable-header {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: var(--spacing, 0.25rem);
+  -webkit-user-select: none;
+  user-select: none;
+}
+cca-trip-builder-order-list .order-table-header .sortable-header .sort-icon {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+cca-trip-builder-order-list .order-table-header .sortable-header .sort-icon--active {
+  color: var(--text-neutral-title);
+}
+cca-trip-builder-order-list .order-table-header .sortable-header .sort-icon--hint {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  color: var(--text-neutral-body);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+cca-trip-builder-order-list .order-table-header .sortable-header:hover .sort-icon--hint {
+  opacity: 1;
+}
+cca-trip-builder-order-list .order-table-row {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 12);
+  align-items: center;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+  padding-inline-end: var(--spacing, 0.25rem);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+  transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--surface-neutral-default);
+    }
+  }
+}
+cca-trip-builder-order-list .order-table-row .row-cell {
+  display: flex;
+  height: 100%;
+  align-items: flex-start;
+  overflow: hidden;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+cca-trip-builder-order-list .order-table-row:hover .order-col-drag, cca-trip-builder-order-list .order-table-row:hover .order-col-checkbox {
+  background-color: var(--surface-neutral-default);
+}
+cca-trip-builder-order-list cdk-virtual-scroll-viewport .cdk-virtual-scroll-content-wrapper {
+  min-width: max-content;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-gradient-position {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-via {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-to {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-via-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --tw-gradient-via-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --tw-gradient-to-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-gradient-position: initial;
+      --tw-gradient-from: #0000;
+      --tw-gradient-via: #0000;
+      --tw-gradient-to: #0000;
+      --tw-gradient-stops: initial;
+      --tw-gradient-via-stops: initial;
+      --tw-gradient-from-position: 0%;
+      --tw-gradient-via-position: 50%;
+      --tw-gradient-to-position: 100%;
+      --tw-font-weight: initial;
+    }
+  }
+}

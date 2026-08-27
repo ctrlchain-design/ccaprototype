@@ -1,0 +1,325 @@
+/*
+ * cca-rich-text-editor
+ * Source:  libs/ui/rich-text-editor/src/lib/rich-text-editor/rich-text-editor.component.scss
+ * :host resolves to:  cca-rich-text-editor
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-rich-text-editor .ql-toolbar {
+  max-height: 43px;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+cca-rich-text-editor .ql-snow .ql-picker-label {
+  max-height: 20px;
+}
+cca-rich-text-editor .noToolbar .ql-toolbar {
+  display: none;
+}
+cca-rich-text-editor .noToolbar .ql-snow {
+  border: none;
+}
+cca-rich-text-editor .ql-snow .ql-stroke {
+  stroke: var(--text-neutral-body);
+}
+cca-rich-text-editor .ql-snow .ql-fill,
+cca-rich-text-editor .ql-snow .ql-stroke.ql-fill {
+  fill: var(--text-neutral-body);
+}
+cca-rich-text-editor .ql-snow .ql-picker {
+  color: var(--text-neutral-body);
+}
+cca-rich-text-editor .ql-snow.ql-toolbar button:hover,
+cca-rich-text-editor .ql-snow .ql-toolbar button:hover,
+cca-rich-text-editor .ql-snow.ql-toolbar button:focus,
+cca-rich-text-editor .ql-snow .ql-toolbar button:focus,
+cca-rich-text-editor .ql-snow.ql-toolbar button.ql-active,
+cca-rich-text-editor .ql-snow .ql-toolbar button.ql-active,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label:hover,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label:hover,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label.ql-active,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item:hover,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item:hover,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+  color: var(--text-brand-default);
+}
+cca-rich-text-editor .ql-snow.ql-toolbar button:hover .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar button:hover .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar button:focus .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar button:focus .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar button.ql-active .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+cca-rich-text-editor .ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+cca-rich-text-editor .ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+cca-rich-text-editor .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+  stroke: var(--text-brand-default);
+}
+cca-rich-text-editor .ql-snow.ql-toolbar button:hover .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar button:hover .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar button:focus .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar button:focus .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar button.ql-active .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar button.ql-active .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+cca-rich-text-editor .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+  fill: var(--text-brand-default);
+}
+cca-rich-text-editor .ql-container {
+  border-bottom-left-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+  overflow: auto;
+}
+cca-rich-text-editor .ql-toolbar.ql-snow {
+  border-color: var(--form-border);
+}
+cca-rich-text-editor .ql-container.ql-snow {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-color: var(--form-border);
+}
+cca-rich-text-editor .ng-invalid .ql-container.ql-snow {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-color: var(--critical-border-dark);
+}
+cca-rich-text-editor .ng-invalid .ql-toolbar.ql-snow {
+  border-bottom-color: var(--color-cca-red-600, #9d1818);
+}
+cca-rich-text-editor .ql-editing {
+  margin-left: 9.06rem;
+  border-radius: 0.5rem;
+}
+cca-rich-text-editor .ql-tooltip {
+  margin-left: 9.06rem;
+  border-radius: 0.5rem;
+}
+cca-rich-text-editor .ql-editor {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+cca-rich-text-editor .ql-editor.ql-blank::before {
+  color: var(--text-neutral-caption);
+}
+cca-rich-text-editor .ql-action,
+cca-rich-text-editor .ql-remove {
+  color: var(--text-brand-default);
+}
+cca-rich-text-editor #emoji-palette {
+  position: static !important;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-color: var(--border-neutral-disabled);
+  min-width: min-content !important;
+  min-height: min-content !important;
+  top: 1.25rem !important;
+  left: 1.25rem !important;
+}
+cca-rich-text-editor #emoji-palette #tab-toolbar {
+  width: 25rem;
+}
+cca-rich-text-editor #emoji-palette #tab-toolbar ul {
+  display: flex !important;
+  flex-direction: row;
+  gap: 1.25rem !important;
+}
+cca-rich-text-editor #emoji-palette #tab-panel {
+  width: 25rem;
+  display: flex !important;
+  gap: 0.25rem !important;
+}
+cca-rich-text-editor .ql-editor {
+  min-height: inherit;
+}
+cca-rich-text-editor .ql-editor p {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  --tw-leading: calc(var(--spacing, 0.25rem) * 5);
+  line-height: calc(var(--spacing, 0.25rem) * 5);
+  font-family: Roboto;
+}
+cca-rich-text-editor .mention {
+  border-radius: var(--radius-md, 0.375rem);
+  background-color: var(--color-cca-blue-100, #cbdae7);
+  padding-inline: var(--spacing, 0.25rem);
+  padding-block: calc(var(--spacing, 0.25rem) * 0.5);
+  color: var(--color-cca-neutrals-800, #3e3e3e);
+  margin-right: 0.25rem;
+  user-select: all;
+}
+cca-rich-text-editor .mention > span {
+  margin: 0 3px;
+}
+cca-rich-text-editor .mention:before {
+  content: attr(data-task-owner) "@";
+}
+cca-rich-text-editor .ql-toolbar.ql-snow + .ql-container.ql-snow.ql-disabled {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-top-color: var(--color-cca-neutrals-400, #b3b3b3);
+  background-color: var(--surface-neutral-default);
+}
+cca-rich-text-editor.editor-read-only {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 50%;
+}
+cca-rich-text-editor .ql-mention-list-container {
+  background-color: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(30, 30, 30, 0.08);
+  overflow: auto;
+  width: 270px;
+  z-index: 9001;
+}
+cca-rich-text-editor .ql-mention-loading {
+  font-size: 16px;
+  line-height: 44px;
+  padding: 0 20px;
+  vertical-align: middle;
+}
+cca-rich-text-editor .ql-mention-list {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+cca-rich-text-editor .ql-mention-list-item {
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 44px;
+  padding: 0 20px;
+  vertical-align: middle;
+}
+cca-rich-text-editor .ql-mention-list-item.disabled {
+  cursor: auto;
+}
+cca-rich-text-editor .ql-mention-list-item.selected {
+  background-color: #d3e1eb;
+  text-decoration: none;
+}
+cca-rich-text-editor .mention {
+  background-color: #d3e1eb;
+  border-radius: 6px;
+  height: 24px;
+  margin-right: 2px;
+  padding: 3px 0;
+  user-select: all;
+  width: 65px;
+}
+cca-rich-text-editor .mention > span {
+  margin: 0 3px;
+}
+cca-rich-text-editor .ql-mention-list-container {
+  width: auto;
+  background-color: var(--surface-neutral-light);
+}
+cca-rich-text-editor .ql-mention-list-container .ql-mention-list-item.selected {
+  background-color: var(--surface-brand-default);
+  color: var(--text-neutral-invert);
+}
+cca-rich-text-editor mat-error {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal, 400);
+  color: var(--critical-text-light);
+}
+cca-rich-text-editor .ql-container.ql-snow:focus-within {
+  border-bottom-color: var(--button-primary-bg-default) !important;
+  border-right-color: var(--button-primary-bg-default) !important;
+  border-left-color: var(--button-primary-bg-default) !important;
+  border-width: 2px;
+}
+cca-rich-text-editor .ql-toolbar.ql-snow:has(+ .ql-container.ql-snow:focus-within) {
+  border-bottom-color: var(--button-primary-bg-default) !important;
+  border-width: 2px !important;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-leading: initial;
+      --tw-font-weight: initial;
+    }
+  }
+}

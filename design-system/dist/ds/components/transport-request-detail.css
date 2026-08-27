@@ -1,0 +1,24 @@
+/*
+ * cca-transport-request-detail
+ * Source:  libs/shipper-tms/feature-spot-quote-management/src/lib/transport-request-detail/transport-request-detail.component.scss
+ * :host resolves to:  cca-transport-request-detail
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-transport-request-detail .mat-badge-content {
+  position: relative;
+  left: auto !important;
+  bottom: auto !important;
+}
+cca-transport-request-detail .mat-badge-medium.mat-badge-after .mat-badge-content {
+  right: -0.25rem;
+  font-weight: 400;
+}
+cca-transport-request-detail .active .mat-badge-content {
+  background-color: var(--surface-neutral-light);
+  color: var(--text-brand-default);
+}

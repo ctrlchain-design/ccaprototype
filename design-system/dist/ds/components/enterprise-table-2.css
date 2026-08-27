@@ -1,0 +1,13 @@
+/*
+ * cca-enterprise-table
+ * Source:  libs/carrier-tms/shared-trip/src/lib/enterprise-table/enterprise-table.component.scss
+ * :host resolves to:  cca-enterprise-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-enterprise-table {
+  height: inherit;
+}

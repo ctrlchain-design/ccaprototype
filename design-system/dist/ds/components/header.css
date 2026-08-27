@@ -1,0 +1,64 @@
+/*
+ * cca-header
+ * Source:  apps/platform/src/app/core/header/header.component.scss
+ * :host resolves to:  cca-header
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-header .mat-badge-warn .mat-badge-content {
+  background-color: var(--badge-bg-red);
+  font-size: 0.625rem;
+  color: var(--badge-text-white);
+  width: 1rem;
+  height: 1rem;
+  line-height: 1rem;
+  font-weight: 400;
+  z-index: 2;
+  left: auto !important;
+  bottom: auto !important;
+}
+cca-header .mat-badge-medium.mat-badge-after .mat-badge-content {
+  right: 1rem;
+}
+cca-header .mat-badge-medium.mat-badge-above .mat-badge-content {
+  top: 1rem;
+}
+cca-header .notifications {
+  border-radius: 10px;
+}
+cca-header cca-language-switch {
+  border-radius: 10px;
+}
+cca-header .header-menu a[mat-menu-trigger-for]:focus-visible,
+cca-header .header-menu a#userMenu:focus-visible,
+cca-header .header-menu:focus-visible {
+  border-radius: calc(infinity * 1px) !important;
+  border-style: var(--tw-border-style) !important;
+  border-width: 2px !important;
+  border-color: var(--button-secondary-border-focused) !important;
+  outline-style: var(--tw-outline-style) !important;
+  outline-width: 0px !important;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-outline-style: solid;
+    }
+  }
+}

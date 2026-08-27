@@ -1,0 +1,68 @@
+/*
+ * cca-booking-agent-widget
+ * Source:  libs/common/grid/src/lib/booking-agent-widget/booking-agent-widget.component.scss
+ * :host resolves to:  .flex
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+@reference '#tailwind-config.css';
+.flex mat-progress-bar {
+  --mat-progress-bar-active-indicator-color: var(--surface-brand-default);
+  --mat-progress-bar-track-color: var(--surface-brand-lightest);
+}
+
+.flex .lane-choice-selected {
+  background-color: var(--surface-brand-lightest) !important;
+  border-color: var(--border-brand-default) !important;
+  color: var(--text-brand-default) !important;
+  font-weight: 600;
+}
+
+.flex .markdown-body {
+  white-space: normal;
+}
+.flex .markdown-body > :first-child {
+  margin-top: 0;
+}
+.flex .markdown-body > :last-child {
+  margin-bottom: 0;
+}
+.flex .markdown-body p {
+  margin: 0.25em 0;
+}
+.flex .markdown-body ul,
+.flex .markdown-body ol {
+  margin: 0.25em 0;
+  padding-left: 1.25em;
+}
+.flex .markdown-body li {
+  margin: 0.125em 0;
+}
+.flex .markdown-body h1,
+.flex .markdown-body h2,
+.flex .markdown-body h3,
+.flex .markdown-body h4 {
+  margin: 0.5em 0 0.25em;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.flex .markdown-body strong {
+  font-weight: 600;
+}
+.flex .markdown-body table {
+  border-collapse: collapse;
+  margin: 0.375em 0;
+  font-size: 0.85em;
+}
+.flex .markdown-body table th,
+.flex .markdown-body table td {
+  border: 1px solid var(--border-neutral-default);
+  padding: 0.25em 0.5em;
+}
+.flex .markdown-body table th {
+  font-weight: 600;
+  background: var(--surface-neutral-default);
+}

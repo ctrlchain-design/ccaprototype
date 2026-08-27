@@ -1,0 +1,13 @@
+/*
+ * cca-conversation-thread-pane
+ * Source:  libs/common/shared-conversation/src/lib/conversation-thread/conversation-thread-pane.component.scss
+ * :host resolves to:  cca-conversation-thread-pane
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-conversation-thread-pane .messages-container {
+  overflow-anchor: none;
+}

@@ -1,0 +1,15 @@
+/*
+ * cca-tender-detail-info
+ * Source:  libs/carrier-tms/shared-tender-detail/src/lib/tender-detail-info/tender-detail-info.component.scss
+ * :host resolves to:  cca-tender-detail-info
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-detail-info .locationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 60px 50px;
+}

@@ -1,0 +1,48 @@
+/*
+ * cca-weekly-shipments
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-calendar/multiple-shipments/weekly-shipments/weekly-shipments.component.scss
+ * :host resolves to:  cca-weekly-shipments
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-weekly-shipments .checkbox-button .mdc-checkbox {
+  display: none;
+}
+cca-weekly-shipments .checkbox-button label {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 10);
+  width: calc(var(--spacing, 0.25rem) * 16);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg, 0.5rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-disabled);
+  padding: 0px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: var(--text-neutral-body);
+}
+cca-weekly-shipments .checkbox-button.mat-mdc-checkbox-checked label {
+  border-style: var(--tw-border-style);
+  border-width: 2px;
+  border-color: var(--border-brand-default);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

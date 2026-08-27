@@ -1,0 +1,50 @@
+/*
+ * cca-user-sub-groups
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-sub-groups/group-sub-groups.component.scss
+ * :host resolves to:  cca-user-sub-groups
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-user-sub-groups .root {
+  border-left: 0.25rem red solid;
+  padding-left: 2rem;
+}
+cca-user-sub-groups .seperator {
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-bottom-color: var(--color-cca-neutrals-200, #ebebeb);
+}
+cca-user-sub-groups .mat-tree-node,
+cca-user-sub-groups .mat-nested-tree-node {
+  font-weight: 500;
+  font-size: 1rem;
+}
+cca-user-sub-groups .mat-tree-node .disabled,
+cca-user-sub-groups .mat-nested-tree-node .disabled {
+  color: var(--text-neutral-disabled);
+  font-weight: 500;
+  font-size: 1rem;
+}
+cca-user-sub-groups .borderBottomWithRadius {
+  border-bottom-left-radius: 0.5rem;
+  margin-left: -2px;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+/*
+ * cca-rates-history-dialog
+ * Source:  libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/dialogs/rates-history-dialog/rates-history-dialog.component.scss
+ * :host resolves to:  cca-rates-history-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-rates-history-dialog .mat-mdc-header-cell {
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-rates-history-dialog .mdc-data-table__cell {
+  padding-block: calc(var(--spacing, 0.25rem) * 7);
+}
+cca-rates-history-dialog .mat-column-index {
+  max-width: calc(var(--spacing, 0.25rem) * 20);
+}
+cca-rates-history-dialog .mat-column-name {
+  overflow-wrap: anywhere;
+}
+cca-rates-history-dialog .mat-column-range {
+  min-width: calc(var(--spacing, 0.25rem) * 75);
+}

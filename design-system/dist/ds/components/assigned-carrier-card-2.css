@@ -1,0 +1,58 @@
+/*
+ * cca-assigned-carrier-card
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/order-assigned-carrier/assigned-carrier-card/assigned-carrier-card.component.scss
+ * :host resolves to:  cca-assigned-carrier-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-assigned-carrier-card .carrier-card {
+  margin-top: calc(var(--spacing, 0.25rem) * 2);
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  border-radius: 0.25rem;
+  background-color: var(--surface-neutral-default);
+  padding-inline: calc(var(--spacing, 0.25rem) * 3);
+  padding-block: calc(var(--spacing, 0.25rem) * 4);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  @container (width >= 32rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+cca-assigned-carrier-card .carrier-card .company-title {
+  display: none;
+}
+cca-assigned-carrier-card .active {
+  position: relative;
+  display: block;
+  height: calc(var(--spacing, 0.25rem) * 2.5);
+  width: calc(var(--spacing, 0.25rem) * 2.5);
+  border-radius: calc(infinity * 1px);
+  background-color: var(--surface-brand-default);
+}
+cca-assigned-carrier-card .active::before, cca-assigned-carrier-card .active::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: calc(var(--spacing, 0.25rem) * 2.5);
+  width: calc(var(--spacing, 0.25rem) * 2.5);
+  border-radius: calc(infinity * 1px);
+  background-color: inherit;
+}
+cca-assigned-carrier-card .active:before {
+  animation: blip 2s infinite;
+}
+@keyframes blip {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}

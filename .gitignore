@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+._*
+
+# Editor / OS noise
+Thumbs.db
+*.swp
+
+# Local Claude state (the skills, template and launch config ARE committed —
+# they are the shared setup; only per-user settings are ignored)
+.claude/settings.local.json

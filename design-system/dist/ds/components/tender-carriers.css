@@ -1,0 +1,13 @@
+/*
+ * cca-tender-carriers
+ * Source:  libs/carrier-tms/feature-tender-adhoc/src/lib/tender-carriers/tender-carriers.component.scss
+ * :host resolves to:  cca-tender-carriers
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-carriers .ql-container {
+  height: auto;
+}

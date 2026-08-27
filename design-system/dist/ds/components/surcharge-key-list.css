@@ -1,0 +1,48 @@
+/*
+ * cca-surcharge-key-list
+ * Source:  libs/finance/feature-invoice-validation/src/lib/invoice-validation-settings/surcharge-harmonisation/surcharge-key-list/surcharge-key-list.component.scss
+ * :host resolves to:  cca-surcharge-key-list
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-surcharge-key-list .key-card {
+  margin-right: var(--spacing, 0.25rem);
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  gap: var(--spacing, 0.25rem);
+  border-radius: var(--radius-lg, 0.5rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-default);
+  padding: calc(var(--spacing, 0.25rem) * 3);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+  transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  -webkit-user-select: none;
+  user-select: none;
+}
+cca-surcharge-key-list .key-card:hover:not(.selected) {
+  background-color: var(--surface-neutral-light);
+}
+cca-surcharge-key-list .key-card.selected {
+  border-color: var(--border-brand-default);
+  background-color: var(--surface-brand-lightest);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

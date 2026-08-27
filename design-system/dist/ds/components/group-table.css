@@ -1,0 +1,23 @@
+/*
+ * cca-group-table
+ * Source:  libs/common/shared-group-table/src/lib/group-table/group-table.component.scss
+ * :host resolves to:  cca-group-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-group-table {
+  height: inherit;
+}
+
+cca-group-table button {
+  margin-top: 4px;
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+cca-group-table mat-icon {
+  cursor: pointer;
+}

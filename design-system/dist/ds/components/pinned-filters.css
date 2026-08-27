@@ -1,0 +1,25 @@
+/*
+ * cca-pinned-filters
+ * Source:  libs/common/filters/src/lib/components/pinned-filters/pinned-filters.component.scss
+ * :host resolves to:  cca-pinned-filters
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-pinned-filters ng-select > div > div > div.ng-placeholder {
+  display: none !important;
+}
+
+cca-pinned-filters .ng-select.ng-select-custom.ng-select-multiple .ng-select-container .ng-value-container {
+  min-width: 0 !important;
+}
+
+cca-pinned-filters .ng-dropdown-panel.ng-select-custom {
+  min-width: 200px !important;
+}
+
+cca-pinned-filters .ng-select .ng-clear-wrapper {
+  display: none;
+}

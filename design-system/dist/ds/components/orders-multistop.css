@@ -1,0 +1,13 @@
+/*
+ * cca-orders-multistop
+ * Source:  libs/shipper-tms/feature-spot-quote-management/src/lib/transport-request-detail/orders-multistop/orders-multistop.component.scss
+ * :host resolves to:  cca-orders-multistop
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-orders-multistop .expanded-row td {
+  border-bottom-width: 0;
+}

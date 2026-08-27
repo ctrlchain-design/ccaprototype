@@ -1,0 +1,16 @@
+/*
+ * cca-order-table
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-table/order-table.component.scss
+ * :host resolves to:  cca-order-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-order-table .mat-drawer-container {
+  overflow: visible;
+}
+cca-order-table .mat-drawer-container .mat-drawer-content {
+  overflow: visible;
+}

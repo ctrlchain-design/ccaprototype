@@ -1,0 +1,38 @@
+/*
+ * cca-booking-detail-assignees
+ * Source:  libs/common/shared-shipment-detail/src/lib/booking-detail-assignees/booking-detail-assignees.component.scss
+ * :host resolves to:  cca-booking-detail-assignees
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-booking-detail-assignees .active {
+  position: relative;
+  display: block;
+  height: calc(var(--spacing, 0.25rem) * 4);
+  width: calc(var(--spacing, 0.25rem) * 4);
+  border-radius: calc(infinity * 1px);
+  background-color: var(--surface-brand-default);
+}
+cca-booking-detail-assignees .active::before, cca-booking-detail-assignees .active::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: calc(var(--spacing, 0.25rem) * 4);
+  width: calc(var(--spacing, 0.25rem) * 4);
+  border-radius: calc(infinity * 1px);
+  background-color: inherit;
+}
+cca-booking-detail-assignees .active:before {
+  animation: blip 2s infinite;
+}
+@keyframes blip {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}

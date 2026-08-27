@@ -1,0 +1,20 @@
+/*
+ * cca-address-text
+ * Source:  libs/ui/src/lib/address-text/address-text.component.scss
+ * :host resolves to:  cca-address-text
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-address-text span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+cca-address-text {
+  max-width: 24ch;
+  display: inline-table;
+}

@@ -1,0 +1,49 @@
+/*
+ * cca-stops-modalities-column
+ * Source:  libs/common/shared-stops/src/lib/stops-modalities-column/stops-modalities-column.component.scss
+ * :host resolves to:  cca-stops-modalities-column
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-stops-modalities-column .multi-stop .mat-expansion-panel {
+  box-shadow: none;
+  border-radius: 0 !important;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+cca-stops-modalities-column .multi-stop .mat-expansion-panel .mat-expansion-panel-header {
+  padding: 0;
+  margin: 0;
+  flex-direction: row;
+  align-items: flex-start;
+  height: auto;
+  border-radius: 0;
+}
+cca-stops-modalities-column .multi-stop .mat-expansion-panel .mat-expansion-panel-header:hover {
+  background: transparent;
+}
+cca-stops-modalities-column .multi-stop .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+  padding: 0;
+  margin: 0;
+  max-height: 24px;
+}
+cca-stops-modalities-column .multi-stop .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator::after {
+  color: var(--text-brand-default);
+  line-height: normal;
+}
+cca-stops-modalities-column .multi-stop .mat-expansion-panel .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+  background: transparent;
+}
+cca-stops-modalities-column .multi-stop .mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0;
+}
+cca-stops-modalities-column ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}

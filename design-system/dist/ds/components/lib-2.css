@@ -1,0 +1,133 @@
+/*
+ * cca-map
+ * Source:  libs/common/map/src/lib/map.component.scss
+ * :host resolves to:  cca-map
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-map {
+  position: relative;
+  width: 100%;
+  height: inherit;
+  min-height: inherit;
+  display: block;
+}
+cca-map .gm-style-iw {
+  padding: 0 !important;
+}
+cca-map .gm-style-iw-d {
+  padding: 0.5rem !important;
+  overflow: hidden !important;
+  background-color: var(--surface-neutral-light);
+}
+cca-map .gm-style-iw-tc::after {
+  background-color: var(--surface-neutral-light);
+}
+cca-map .gm-style iframe + div {
+  border: none !important;
+}
+cca-map .map-container {
+  min-height: inherit;
+}
+cca-map .gmnoprint.gm-style-mtc-bbw {
+  width: max-content;
+  backdrop-filter: blur(2px);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+cca-map .gm-style-mtc-bbw {
+  top: 1rem !important;
+  right: 4.25rem !important;
+  left: auto !important;
+  margin: 0 !important;
+}
+cca-map .gm-style-mtc-bbw .gm-style-mtc > button {
+  background-color: var(--surface-neutral-light) !important;
+  color: var(--text-neutral-body) !important;
+  box-shadow: none !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.25rem !important;
+  letter-spacing: 0 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  height: 2.25rem !important;
+  padding: 0.5rem !important;
+}
+cca-map .gm-style-mtc-bbw .gm-style-mtc:first-of-type > button {
+  border-start-start-radius: 0.5rem;
+  border-end-start-radius: 0.5rem;
+  border-right: 0.0625rem solid var(--border-neutral-default) !important;
+}
+cca-map .gm-style-mtc-bbw .gm-style-mtc:last-of-type > button {
+  border-start-end-radius: 0.5rem;
+  border-end-end-radius: 0.5rem;
+}
+cca-map .gm-style-mtc-bbw .gm-style-mtc > button[aria-checked=true] {
+  color: var(--text-neutral-heading) !important;
+  font-weight: 700 !important;
+}
+cca-map .gm-style-mtc ul {
+  display: none !important;
+}
+cca-map.no-fullscreen-control .gm-style-mtc-bbw {
+  right: 1rem !important;
+}
+cca-map .geofence-controls {
+  background-color: var(--surface-neutral-light);
+  position: absolute;
+  width: 2.25rem;
+  height: 4.5625rem;
+  bottom: 8.75rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+}
+cca-map .geofence-controls button {
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+}
+cca-map .custom-zoom-controls {
+  background-color: var(--surface-neutral-light);
+  width: 2.25rem;
+  height: 4.5625rem;
+  position: absolute;
+  bottom: 3.75rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+}
+cca-map .custom-zoom-controls button {
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+}
+cca-map .reset-zoom-control {
+  background-color: var(--surface-neutral-light);
+  width: 2.25rem;
+  height: 2.25rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  border-radius: 0.5rem;
+}
+cca-map .fullscreen-control {
+  background-color: var(--surface-neutral-light);
+  width: 2.25rem;
+  height: 2.25rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  border-radius: 0.5rem;
+}

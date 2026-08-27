@@ -1,0 +1,20 @@
+/*
+ * cca-submenu-action-dialog
+ * Source:  apps/platform/src/app/core/submenu-action-dialog/submenu-action-dialog.component.scss
+ * :host resolves to:  cca-submenu-action-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-submenu-action-dialog button:focus-visible {
+  outline-offset: 2px;
+  outline-color: var(--border-neutral-dark) !important;
+  --tw-outline-style: solid;
+  outline-style: solid;
+}
+cca-submenu-action-dialog .card-button:focus {
+  outline-color: var(--border-neutral-dark);
+}

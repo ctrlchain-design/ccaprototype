@@ -1,0 +1,15 @@
+/*
+ * cca-group-detail-relations
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/group-detail-relations.component.scss
+ * :host resolves to:  cca-group-detail-relations
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-group-detail-relations {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}

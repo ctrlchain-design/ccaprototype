@@ -1,0 +1,29 @@
+/*
+ * cca-statuses-count
+ * Source:  libs/ui/src/lib/info-header/statuses-bar/statuses-count.component.scss
+ * :host resolves to:  cca-statuses-count
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-statuses-count .primary {
+  color: var(--text-brand-default);
+}
+cca-statuses-count .warning {
+  color: var(--warning-text);
+}
+cca-statuses-count .danger {
+  color: var(--critical-text);
+}
+cca-statuses-count .highlight {
+  color: var(--info-text);
+}
+cca-statuses-count .match {
+  color: var(--info-text);
+}
+cca-statuses-count .neutral {
+  color: var(--neutral-text);
+}

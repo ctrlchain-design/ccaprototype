@@ -1,0 +1,38 @@
+/*
+ * cca-search-field
+ * Source:  libs/ui/src/lib/search-field/search-field.component.scss
+ * :host resolves to:  cca-search-field
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-search-field {
+  display: block;
+}
+cca-search-field input[matInput] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+cca-search-field .mat-mdc-form-field-icon-prefix > :is(cca-icon) {
+  padding-block: calc(var(--spacing, 0.25rem) * 2.5);
+  padding-right: calc(var(--spacing, 0.25rem) * 3);
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-search-field .mat-mdc-form-field-icon-suffix > button[ccaButton] {
+  height: 2.5rem !important;
+  padding: 0 !important;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}
+cca-search-field .mat-mdc-form-field-icon-prefix > mat-progress-spinner,
+cca-search-field .mat-mdc-form-field-text-prefix > mat-progress-spinner {
+  margin-block: auto;
+  margin-right: calc(var(--spacing, 0.25rem) * 3);
+  margin-left: calc(var(--spacing, 0.25rem) * 4);
+  color: var(--text-neutral-subtitle);
+  --mat-progress-spinner-active-indicator-color: currentColor;
+}

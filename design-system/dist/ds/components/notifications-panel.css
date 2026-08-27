@@ -1,0 +1,50 @@
+/*
+ * cca-notifications-panel
+ * Source:  libs/common/notifications/src/lib/notifications-panel/notifications-panel.component.scss
+ * :host resolves to:  cca-notifications-panel
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-notifications-panel {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 106);
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  overflow: hidden;
+  padding: calc(var(--spacing, 0.25rem) * 4);
+  height: inherit;
+}
+cca-notifications-panel .mat-mdc-tab-body-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: calc(var(--spacing, 0.25rem) * 4) !important;
+  overflow: auto !important;
+}
+cca-notifications-panel .mat-mdc-tab-group {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+cca-notifications-panel .mat-accordion {
+  padding-block: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-notifications-panel .mat-expansion-panel .mat-expansion-panel-header {
+  height: calc(var(--spacing, 0.25rem) * 7);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-notifications-panel .mat-mdc-tab-body-active {
+  margin-top: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-notifications-panel .mat-expansion-panel-content > .mat-expansion-panel-body {
+  padding: 0px;
+}
+cca-notifications-panel .mat-expansion-panel {
+  box-shadow: none;
+  border: 0;
+}

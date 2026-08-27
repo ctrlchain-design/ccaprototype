@@ -1,0 +1,147 @@
+/*
+ * cca-booking-calendar
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-calendar/booking-calendar.component.scss
+ * :host resolves to:  cca-booking-calendar
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-booking-calendar .BookingCalendar {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+cca-booking-calendar .SelectShipments {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+cca-booking-calendar .calendar-button {
+  display: flex;
+  gap: var(--spacing, 0.25rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 0px;
+  border-left-style: var(--tw-border-style);
+  border-left-width: 0px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-color: var(--maintab-border-default);
+  background-color: var(--maintab-bg-default);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--maintab-text-default);
+  text-transform: uppercase;
+  @container (width >= 56rem) {
+    padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  }
+}
+cca-booking-calendar .calendar-button:first-child {
+  border-top-left-radius: var(--radius-xl, 0.75rem);
+  border-left-style: var(--tw-border-style);
+  border-left-width: 1px;
+}
+cca-booking-calendar .calendar-button:first-child span {
+  display: block;
+}
+@container (width >= 80rem) {
+  cca-booking-calendar .calendar-button:first-child span.max-size {
+    display: block;
+  }
+}
+cca-booking-calendar .calendar-button:last-child {
+  border-top-right-radius: var(--radius-xl, 0.75rem);
+}
+cca-booking-calendar .calendar-button:last-child span {
+  display: block;
+}
+@container (width >= 80rem) {
+  cca-booking-calendar .calendar-button:last-child span.max-size {
+    display: block;
+  }
+}
+cca-booking-calendar .calendar-button.active {
+  border-color: var(--maintab-border-selected);
+  background-color: var(--maintab-bg-selected);
+  color: var(--maintab-text-selected);
+}
+cca-booking-calendar .calendar-button span {
+  display: none;
+  @container (width >= 80rem) {
+    display: block;
+  }
+}
+cca-booking-calendar .calendar-button span.max-size {
+  display: none;
+}
+cca-booking-calendar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  padding-top: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-booking-calendar ul li {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing, 0.25rem) * 1.5);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--text-neutral-body);
+}
+cca-booking-calendar ul li::before {
+  content: "";
+  height: calc(var(--spacing, 0.25rem) * 2);
+  width: calc(var(--spacing, 0.25rem) * 2);
+  flex-shrink: 0;
+  border-radius: calc(infinity * 1px);
+  background-color: var(--calendar-holiday-fill);
+}
+cca-booking-calendar ul li:first-child::before {
+  background-color: var(--calendar-today-fill);
+}
+cca-booking-calendar ul li.pickup::before {
+  background-color: var(--calendar-pickup-fill);
+}
+cca-booking-calendar ul li.delivery::before {
+  background-color: var(--calendar-delivery-fill);
+}
+cca-booking-calendar ul li.drop::before {
+  background-color: var(--calendar-drop-fill);
+}
+cca-booking-calendar ul li.stop::before {
+  background-color: var(--calendar-stop-fill);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-font-weight: initial;
+    }
+  }
+}

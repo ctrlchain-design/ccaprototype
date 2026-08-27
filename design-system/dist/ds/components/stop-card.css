@@ -1,0 +1,22 @@
+/*
+ * cca-stop-card
+ * Source:  libs/common/shared-shipment-detail/src/lib/location-info/stop-card/stop-card.component.scss
+ * :host resolves to:  cca-stop-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+@reference '#tailwind-config.css';
+cca-stop-card .ql-editor {
+  padding: 0rem !important;
+}
+cca-stop-card .ql-container.ql-snow {
+  border: none !important;
+  background-color: transparent !important;
+  overflow: hidden !important;
+}
+cca-stop-card .mat-expansion-panel-body {
+  padding: 0;
+}

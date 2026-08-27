@@ -1,0 +1,46 @@
+/*
+ * cca-documents-upload
+ * Source:  libs/common/documents/src/lib/documents-upload/documents-upload.component.scss
+ * :host resolves to:  cca-documents-upload
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-documents-upload .mat-expansion-panel {
+  border: 0rem !important;
+  border-radius: 0 !important;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header {
+  padding-left: 0rem !important;
+  padding-right: 0rem !important;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-body,
+cca-documents-upload .mat-expansion-panel-body {
+  padding: 0rem;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header {
+  flex-direction: row !important;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator::after {
+  font-size: 1rem;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header {
+  height: 1.5rem;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+  margin-right: 1rem;
+}
+
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]),
+cca-documents-upload .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]),
+cca-documents-upload .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background: none;
+}

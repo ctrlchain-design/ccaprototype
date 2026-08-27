@@ -1,0 +1,31 @@
+/*
+ * cca-ltl-date-time-detail
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/ltl-date-time-detail/ltl-date-time-detail.component.scss
+ * :host resolves to:  cca-ltl-date-time-detail
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-ltl-date-time-detail .date-time-detail-table .mat-mdc-row .mat-mdc-cell {
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-ltl-date-time-detail .date-time-detail-table .mat-column-location {
+  flex: 0 0 130px !important;
+}
+cca-ltl-date-time-detail .date-time-detail-table .mat-column-desired {
+  flex: 0 0 350px !important;
+}
+cca-ltl-date-time-detail .date-time-detail-table .mat-column-waitingTime {
+  min-width: calc(var(--spacing, 0.25rem) * 44);
+  flex-grow: 1;
+}
+cca-ltl-date-time-detail .date-time-detail-table .mat-column-expected,
+cca-ltl-date-time-detail .date-time-detail-table .mat-column-arrived {
+  flex: 0 0 175px !important;
+}
+cca-ltl-date-time-detail .date-time-detail-table .mat-column-cargoLoad {
+  flex: 0 0 250px !important;
+}

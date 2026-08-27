@@ -1,0 +1,14 @@
+/*
+ * cca-trip-optimization-settings-side-panel
+ * Source:  libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-optimization-settings/trip-optimization-settings-side-panel.component.scss
+ * :host resolves to:  cca-trip-optimization-settings-side-panel
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-trip-optimization-settings-side-panel {
+  display: block;
+  height: 100%;
+}

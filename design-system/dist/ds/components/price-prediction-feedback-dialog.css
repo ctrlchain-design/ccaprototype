@@ -1,0 +1,26 @@
+/*
+ * cca-price-prediction-feedback-dialog
+ * Source:  libs/common/shared-tender/src/lib/dialogs/price-prediction-feedback-dialog/price-prediction-feedback-dialog.component.scss
+ * :host resolves to:  cca-price-prediction-feedback-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-price-prediction-feedback-dialog .header-text:after {
+  content: "*";
+  margin-left: 1px;
+  margin-right: 0px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  color: var(--form-required);
+}
+cca-price-prediction-feedback-dialog .focused-green {
+  background-color: var(--surface-brand-lightest);
+}
+cca-price-prediction-feedback-dialog .focused-red {
+  background-color: var(--critical-surface-lighter);
+}

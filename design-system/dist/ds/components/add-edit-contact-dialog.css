@@ -1,0 +1,23 @@
+/*
+ * cca-add-new-contact-dialog
+ * Source:  libs/common/shared-contacts/src/lib/add-edit-contact-dialog/add-edit-contact-dialog.component.scss
+ * :host resolves to:  cca-add-new-contact-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-add-new-contact-dialog .contact::after {
+  content: "*";
+  color: var(--form-required);
+  width: 6px;
+  height: 16px;
+}
+cca-add-new-contact-dialog .mat-mdc-form-field-icon-suffix > button[ccaButton] {
+  height: 2.5rem !important;
+  padding: 0 !important;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}

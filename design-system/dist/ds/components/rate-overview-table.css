@@ -1,0 +1,38 @@
+/*
+ * cca-rate-overview-table
+ * Source:  libs/finance/feature-group-rate-management/src/lib/rate-overview/rate-overview-table/rate-overview-table.component.scss
+ * :host resolves to:  cca-rate-overview-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-rate-overview-table table {
+  width: 100%;
+}
+
+cca-rate-overview-table .mat-column-rate {
+  flex: 0 0 350px !important;
+  width: 350px !important;
+}
+
+cca-rate-overview-table .mat-column-actions {
+  flex: 0 0 250px !important;
+  width: 250px !important;
+}
+
+cca-rate-overview-table .mat-button-toggle-group {
+  --mat-button-toggle-height: 48px;
+  height: 48px;
+}
+cca-rate-overview-table .mat-button-toggle-group .mat-button-toggle,
+cca-rate-overview-table .mat-button-toggle-group .mat-button-toggle-button {
+  height: 48px;
+}
+cca-rate-overview-table .mat-button-toggle-group .mat-button-toggle-label-content {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  line-height: 48px;
+}

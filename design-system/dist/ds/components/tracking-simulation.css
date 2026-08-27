@@ -1,0 +1,52 @@
+/*
+ * cca-tracking-simulation
+ * Source:  libs/enterprise/feature-tracking/src/lib/tracking-simulation/tracking-simulation.component.scss
+ * :host resolves to:  cca-tracking-simulation
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tracking-simulation .simulation-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 8px;
+  max-height: 600px;
+}
+
+cca-tracking-simulation .map-container {
+  width: 50%;
+  height: 100%;
+  min-height: 600px;
+}
+
+cca-tracking-simulation .controls-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+cca-tracking-simulation .controls-container .controls {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+cca-tracking-simulation .controls-container .points-table {
+  height: auto;
+}
+
+cca-tracking-simulation .mat-mdc-option .mdc-list-item__primary-text {
+  width: 100%;
+}
+
+cca-tracking-simulation .debug-container {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  max-height: 500px;
+}

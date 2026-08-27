@@ -1,0 +1,69 @@
+/*
+ * cca-side-menu
+ * Source:  apps/platform/src/app/core/side-menu/side-menu.component.scss
+ * :host resolves to:  cca-side-menu
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-side-menu .menu-wrapper {
+  display: flex;
+  height: 100%;
+  width: calc(var(--spacing, 0.25rem) * 18);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sidebar-main-bg-default);
+}
+cca-side-menu .menu-wrapper .logo-wrapper {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 15);
+  width: 100%;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--border-NC-blue-lighter);
+  padding-inline: calc(var(--spacing, 0.25rem) * 3);
+}
+cca-side-menu .menu-wrapper .side-menu {
+  display: flex;
+  width: calc(var(--spacing, 0.25rem) * 18);
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+  padding-block: calc(var(--spacing, 0.25rem) * 4);
+  padding-top: 1.1rem;
+}
+cca-side-menu .menu-wrapper .menu-items {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing, 0.25rem) * 2);
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+cca-side-menu .menu-wrapper .menu-items::-webkit-scrollbar {
+  display: none;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

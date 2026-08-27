@@ -1,0 +1,89 @@
+/*
+ * cca-tile-template
+ * Source:  libs/common/grid/src/lib/kpi-tile-widget/tile-template/tile-template.component.scss
+ * :host resolves to:  cca-tile-template
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-tile-template .tile-drawer-view {
+  min-height: 138px;
+  width: 400px;
+  max-width: 400px;
+  border-radius: var(--radius-xl, 0.75rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  padding: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-tile-template .horizontal-orientation {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  overflow: hidden;
+}
+cca-tile-template .horizontal-orientation .subtitle {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal, 400);
+}
+cca-tile-template .title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+  overflow-wrap: break-word;
+}
+cca-tile-template .subtitle {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal, 400);
+  overflow-wrap: break-word;
+}
+cca-tile-template .export {
+  cursor: auto;
+  font-size: var(--text-lg, 1.125rem);
+  line-height: var(--tw-leading, var(--text-lg--line-height, calc(1.75 / 1.125)));
+}
+cca-tile-template .export:hover {
+  border-radius: calc(infinity * 1px);
+  background-color: var(--info-surface-lightest);
+  padding-inline: var(--spacing, 0.25rem);
+  color: var(--text-neutral-title);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-font-weight: initial;
+    }
+  }
+}

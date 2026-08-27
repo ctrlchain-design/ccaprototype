@@ -1,0 +1,13 @@
+/*
+ * cca-carrier-corridor-search
+ * Source:  libs/enterprise/feature-carrier-corridor-management/src/lib/carrier-corridor-search/carrier-corridor-search.component.scss
+ * :host resolves to:  cca-carrier-corridor-search
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-carrier-corridor-search .mat-mdc-tab-body-content {
+  height: auto !important;
+}

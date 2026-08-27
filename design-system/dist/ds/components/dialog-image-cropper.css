@@ -1,0 +1,14 @@
+/*
+ * cca-dialog-image-cropper
+ * Source:  libs/ui/src/lib/dialog-image-cropper/dialog-image-cropper.component.scss
+ * :host resolves to:  cca-dialog-image-cropper
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-dialog-image-cropper .round-cropper cropper-selection {
+  border-radius: 50%;
+  overflow: hidden;
+}

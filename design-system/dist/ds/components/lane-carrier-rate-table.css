@@ -1,0 +1,113 @@
+/*
+ * cca-lane-carrier-rate-table
+ * Source:  libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/tables/lane-carrier-rate-table/lane-carrier-rate-table.component.scss
+ * :host resolves to:  cca-lane-carrier-rate-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-lane-carrier-rate-table .mat-mdc-header-cell {
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-lane-carrier-rate-table .mdc-data-table__cell {
+  padding-block: calc(var(--spacing, 0.25rem) * 7);
+}
+cca-lane-carrier-rate-table .mat-column-assign {
+  max-width: calc(var(--spacing, 0.25rem) * 40);
+}
+cca-lane-carrier-rate-table .mat-column-name {
+  min-width: calc(var(--spacing, 0.25rem) * 56);
+}
+cca-lane-carrier-rate-table .mat-column-range {
+  min-width: calc(var(--spacing, 0.25rem) * 88);
+  overflow-wrap: break-word;
+}
+cca-lane-carrier-rate-table .mat-column-actions {
+  max-width: calc(var(--spacing, 0.25rem) * 16);
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.mat-mdc-row .mat-mdc-cell {
+  background-color: var(--surface-brand-lightest);
+  cursor: move;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.cdk-drag-preview {
+  background-color: var(--surface-brand-lightest);
+  cursor: move;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row .mat-mdc-cell > img {
+  display: block !important;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.mat-mdc-row .mat-mdc-cell > img {
+  display: block;
+  margin: auto;
+  align-items: center;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.cdk-drag-preview .mat-mdc-cell > img {
+  display: none;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.mat-mdc-row .cdk-column-assign {
+  background-color: var(--surface-brand-default);
+  padding: 0px;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.mat-mdc-row .mat-mdc-cell {
+  background-color: var(--surface-brand-lightest);
+  cursor: move;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.cdk-drag-preview {
+  background-color: var(--surface-brand-lightest);
+  cursor: move;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row .mat-mdc-cell > img {
+  display: block !important;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.mat-mdc-row .mat-mdc-cell > img {
+  display: block;
+  margin: auto;
+  align-items: center;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.cdk-drag-preview .mat-mdc-cell > img {
+  display: none;
+}
+cca-lane-carrier-rate-table .first-auto-assign-row.mat-mdc-row .cdk-column-assign {
+  background-color: var(--surface-brand-default);
+  padding: 0px;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-column-assign {
+  max-width: calc(var(--spacing, 0.25rem) * 7);
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-column-actions {
+  max-width: calc(var(--spacing, 0.25rem) * 16);
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row:hover .mat-mdc-cell,
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row.menu-open .mat-mdc-cell {
+  background-color: var(--surface-brand-lightest);
+  cursor: move;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .cdk-drag-preview {
+  background-color: var(--surface-brand-lightest);
+  cursor: move;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row .mat-mdc-cell > img {
+  display: none;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row:hover .mat-mdc-cell > img,
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row.menu-open .mat-mdc-cell > img {
+  display: block;
+  margin: auto;
+  align-items: center;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .cdk-drag-preview .mat-mdc-cell > img {
+  display: block;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row:hover .cdk-column-assign,
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row.menu-open .cdk-column-assign {
+  background-color: var(--surface-brand-default);
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .mat-mdc-row .cdk-column-assign {
+  padding: 0px;
+}
+cca-lane-carrier-rate-table .drag-and-drop-table .cdk-header-cell .mat-sort-header-arrow {
+  display: none;
+}

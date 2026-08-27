@@ -1,0 +1,30 @@
+/*
+ * cca-address-map-dialog
+ * Source:  libs/common/address-field/src/lib/address-map-dialog/address-map-dialog.component.scss
+ * :host resolves to:  cca-address-map-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-address-map-dialog .maps-container {
+  position: relative;
+  width: 70vw;
+  height: 65vh;
+}
+
+cca-address-map-dialog .dialog-container main {
+  padding: 0;
+  margin: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+cca-address-map-dialog .autocomplete {
+  position: absolute;
+  top: 0;
+  z-index: 50;
+  width: calc(100% - 12.938rem);
+  margin: 0.4rem 0.75rem;
+  background: transparent;
+}

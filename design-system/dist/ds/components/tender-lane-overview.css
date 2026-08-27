@@ -1,0 +1,13 @@
+/*
+ * cca-tender-lane-overview
+ * Source:  libs/carrier-tms/feature-rfp-bid-management/src/lib/tender-lane-overview/tender-lane-overview.component.scss
+ * :host resolves to:  cca-tender-lane-overview
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-lane-overview {
+  height: inherit;
+}

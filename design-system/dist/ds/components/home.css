@@ -1,0 +1,13 @@
+/*
+ * cca-home
+ * Source:  libs/dashboard/feature-home/src/lib/home/home.component.scss
+ * :host resolves to:  cca-home
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-home {
+  display: block;
+}

@@ -1,0 +1,44 @@
+/*
+ * cca-trip-pricing
+ * Source:  libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-pricing/trip-pricing.component.scss
+ * :host resolves to:  cca-trip-pricing
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-trip-pricing mat-tab-group.trip-detail-pricing .mat-mdc-tab-header {
+  border-top-left-radius: var(--radius-xl, 0.75rem);
+  border-top-right-radius: var(--radius-xl, 0.75rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 0px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+  padding: calc(var(--spacing, 0.25rem) * 6);
+  padding-bottom: 0px;
+}
+cca-trip-pricing mat-tab-group.trip-detail-pricing .mat-mdc-tab-header .mat-mdc-tab-labels {
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--border-neutral-default);
+}
+cca-trip-pricing mat-tab-group.trip-detail-pricing .mat-mdc-tab-header .mat-mdc-tab-labels div {
+  flex-grow: 1;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

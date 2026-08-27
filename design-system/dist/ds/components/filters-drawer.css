@@ -1,0 +1,36 @@
+/*
+ * cca-filters-drawer
+ * Source:  libs/common/filters/src/lib/components/filters-drawer/filters-drawer.component.scss
+ * :host resolves to:  cca-filters-drawer
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/* Sticky search inside drawer */
+cca-filters-drawer .drawer-search {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding-bottom: 1rem;
+  background: var(--mat-sidenav-container-background-color, var(--mat-sys-surface));
+}
+
+cca-filters-drawer .filter-item-enter-animation {
+  animation: slide-fade-enter 500ms;
+}
+
+@keyframes slide-fade-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+cca-filters-drawer .filter-row {
+  scroll-margin-top: 4.5rem;
+}

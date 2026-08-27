@@ -1,0 +1,13 @@
+/*
+ * cca-product-form-dialog
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-cargo-data/package-form/product-form-dialog/product-form-dialog.component.scss
+ * :host resolves to:  cca-product-form-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-product-form-dialog .custom-grid {
+  grid-template-columns: repeat(5, auto) 3rem;
+}

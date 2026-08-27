@@ -1,0 +1,27 @@
+/*
+ * cca-logging-table
+ * Source:  libs/admin/feature-logging/src/lib/logging-table/logging-table.component.scss
+ * :host resolves to:  cca-logging-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-logging-table .mat-column-serverDate,
+cca-logging-table .mat-column-clientDate {
+  min-width: 10rem;
+}
+
+cca-logging-table .mat-column-message {
+  min-width: 20rem;
+}
+
+cca-logging-table .groupKey {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

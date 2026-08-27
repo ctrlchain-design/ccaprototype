@@ -1,0 +1,13 @@
+/*
+ * cca-address
+ * Source:  libs/common/addressbook/src/lib/address-create/address.component.scss
+ * :host resolves to:  cca-address
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-address-create {
+  height: inherit;
+}

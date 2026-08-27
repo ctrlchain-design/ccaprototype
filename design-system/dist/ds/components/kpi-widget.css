@@ -1,0 +1,52 @@
+/*
+ * cca-kpi-widget
+ * Source:  libs/common/grid/src/lib/kpi-widget/kpi-widget.component.scss
+ * :host resolves to:  cca-kpi-widget
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-kpi-widget cca-no-data > div {
+  background-color: var(--surface-neutral-light);
+}
+cca-kpi-widget .mat-mdc-slider {
+  height: 43px;
+  width: 95%;
+}
+cca-kpi-widget .mat-mdc-slider .mdc-slider__track .mdc-slider__track--active {
+  height: 9px;
+  border-radius: var(--radius-lg, 0.5rem);
+  background-color: var(--surface-neutral-dark);
+}
+cca-kpi-widget .mat-mdc-slider .mdc-slider__track .mdc-slider__track--active .mdc-slider__track--active_fill {
+  border-radius: var(--radius-lg, 0.5rem);
+  border-top-style: var(--tw-border-style);
+  border-top-width: 9px;
+  border-color: var(--border-brand-light);
+}
+cca-kpi-widget .mat-mdc-slider .mdc-slider__thumb {
+  height: 45px !important;
+}
+cca-kpi-widget .mat-mdc-slider .mdc-slider__thumb .mdc-slider__thumb-knob {
+  border-color: var(--border-brand-darker);
+}
+cca-kpi-widget .chart-container {
+  height: 100%;
+  min-height: 300px;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

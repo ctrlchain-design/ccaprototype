@@ -1,0 +1,1267 @@
+{
+  "$comment": "CtrlChain icon font. Use <cca-icon icon=\"name\" /> in the app.",
+  "fontFamily": "CtrlChainIcons",
+  "count": 252,
+  "icons": [
+    {
+      "name": "about-us",
+      "class": "cca-icon-about-us",
+      "codepoint": "\\e900"
+    },
+    {
+      "name": "additional-requirements",
+      "class": "cca-icon-additional-requirements",
+      "codepoint": "\\e9e9"
+    },
+    {
+      "name": "address-card",
+      "class": "cca-icon-address-card",
+      "codepoint": "\\e901"
+    },
+    {
+      "name": "alarm-clock",
+      "class": "cca-icon-alarm-clock",
+      "codepoint": "\\e902"
+    },
+    {
+      "name": "alignCenter",
+      "class": "cca-icon-alignCenter",
+      "codepoint": "\\e903"
+    },
+    {
+      "name": "alignJustify",
+      "class": "cca-icon-alignJustify",
+      "codepoint": "\\e904"
+    },
+    {
+      "name": "alignLeft",
+      "class": "cca-icon-alignLeft",
+      "codepoint": "\\e905"
+    },
+    {
+      "name": "alignRight",
+      "class": "cca-icon-alignRight",
+      "codepoint": "\\e906"
+    },
+    {
+      "name": "android-face-Icon",
+      "class": "cca-icon-android-face-Icon",
+      "codepoint": "\\e907"
+    },
+    {
+      "name": "android-fingerprint",
+      "class": "cca-icon-android-fingerprint",
+      "codepoint": "\\e908"
+    },
+    {
+      "name": "arrow-curve-down-right",
+      "class": "cca-icon-arrow-curve-down-right",
+      "codepoint": "\\e909"
+    },
+    {
+      "name": "arrow-down",
+      "class": "cca-icon-arrow-down",
+      "codepoint": "\\e90a"
+    },
+    {
+      "name": "arrow-down-left",
+      "class": "cca-icon-arrow-down-left",
+      "codepoint": "\\e90b"
+    },
+    {
+      "name": "arrow-down-right",
+      "class": "cca-icon-arrow-down-right",
+      "codepoint": "\\e90c"
+    },
+    {
+      "name": "arrow-left",
+      "class": "cca-icon-arrow-left",
+      "codepoint": "\\e90d"
+    },
+    {
+      "name": "arrow-right",
+      "class": "cca-icon-arrow-right",
+      "codepoint": "\\e90e"
+    },
+    {
+      "name": "arrow-rotate-left",
+      "class": "cca-icon-arrow-rotate-left",
+      "codepoint": "\\e90f"
+    },
+    {
+      "name": "arrow-rotate-right",
+      "class": "cca-icon-arrow-rotate-right",
+      "codepoint": "\\e910"
+    },
+    {
+      "name": "arrow-up",
+      "class": "cca-icon-arrow-up",
+      "codepoint": "\\e911"
+    },
+    {
+      "name": "arrow-up-left",
+      "class": "cca-icon-arrow-up-left",
+      "codepoint": "\\e912"
+    },
+    {
+      "name": "balance",
+      "class": "cca-icon-balance",
+      "codepoint": "\\e913"
+    },
+    {
+      "name": "ban",
+      "class": "cca-icon-ban",
+      "codepoint": "\\e914"
+    },
+    {
+      "name": "bar-chart",
+      "class": "cca-icon-bar-chart",
+      "codepoint": "\\e915"
+    },
+    {
+      "name": "barcode",
+      "class": "cca-icon-barcode",
+      "codepoint": "\\e9f8"
+    },
+    {
+      "name": "bell",
+      "class": "cca-icon-bell",
+      "codepoint": "\\e916"
+    },
+    {
+      "name": "bell-off",
+      "class": "cca-icon-bell-off",
+      "codepoint": "\\e917"
+    },
+    {
+      "name": "Bold",
+      "class": "cca-icon-Bold",
+      "codepoint": "\\e918"
+    },
+    {
+      "name": "book",
+      "class": "cca-icon-book",
+      "codepoint": "\\e919"
+    },
+    {
+      "name": "booking",
+      "class": "cca-icon-booking",
+      "codepoint": "\\e91a"
+    },
+    {
+      "name": "bookmark",
+      "class": "cca-icon-bookmark",
+      "codepoint": "\\e91b"
+    },
+    {
+      "name": "box",
+      "class": "cca-icon-box",
+      "codepoint": "\\e91c"
+    },
+    {
+      "name": "box-check",
+      "class": "cca-icon-box-check",
+      "codepoint": "\\e91d"
+    },
+    {
+      "name": "box-taped",
+      "class": "cca-icon-box-taped",
+      "codepoint": "\\e91f"
+    },
+    {
+      "name": "boxes",
+      "class": "cca-icon-boxes",
+      "codepoint": "\\e91e"
+    },
+    {
+      "name": "briefcase",
+      "class": "cca-icon-briefcase",
+      "codepoint": "\\e920"
+    },
+    {
+      "name": "brush",
+      "class": "cca-icon-brush",
+      "codepoint": "\\e921"
+    },
+    {
+      "name": "building",
+      "class": "cca-icon-building",
+      "codepoint": "\\e922"
+    },
+    {
+      "name": "calendar",
+      "class": "cca-icon-calendar",
+      "codepoint": "\\e923"
+    },
+    {
+      "name": "calendar-1",
+      "class": "cca-icon-calendar-1",
+      "codepoint": "\\e924"
+    },
+    {
+      "name": "calendar-check",
+      "class": "cca-icon-calendar-check",
+      "codepoint": "\\e925"
+    },
+    {
+      "name": "car",
+      "class": "cca-icon-car",
+      "codepoint": "\\e926"
+    },
+    {
+      "name": "caret-down",
+      "class": "cca-icon-caret-down",
+      "codepoint": "\\e927"
+    },
+    {
+      "name": "caret-down-1",
+      "class": "cca-icon-caret-down-1",
+      "codepoint": "\\e928"
+    },
+    {
+      "name": "caret-left",
+      "class": "cca-icon-caret-left",
+      "codepoint": "\\e929"
+    },
+    {
+      "name": "caret-right",
+      "class": "cca-icon-caret-right",
+      "codepoint": "\\e92a"
+    },
+    {
+      "name": "caret-up",
+      "class": "cca-icon-caret-up",
+      "codepoint": "\\e92b"
+    },
+    {
+      "name": "caret-up-1",
+      "class": "cca-icon-caret-up-1",
+      "codepoint": "\\e92c"
+    },
+    {
+      "name": "check",
+      "class": "cca-icon-check",
+      "codepoint": "\\e92d"
+    },
+    {
+      "name": "check-circle",
+      "class": "cca-icon-check-circle",
+      "codepoint": "\\e92e"
+    },
+    {
+      "name": "check-double",
+      "class": "cca-icon-check-double",
+      "codepoint": "\\e92f"
+    },
+    {
+      "name": "chevron-down",
+      "class": "cca-icon-chevron-down",
+      "codepoint": "\\e930"
+    },
+    {
+      "name": "chevron-left",
+      "class": "cca-icon-chevron-left",
+      "codepoint": "\\e931"
+    },
+    {
+      "name": "chevron-right",
+      "class": "cca-icon-chevron-right",
+      "codepoint": "\\e932"
+    },
+    {
+      "name": "chevron-up",
+      "class": "cca-icon-chevron-up",
+      "codepoint": "\\e937"
+    },
+    {
+      "name": "chevrons-down",
+      "class": "cca-icon-chevrons-down",
+      "codepoint": "\\e933"
+    },
+    {
+      "name": "chevrons-left",
+      "class": "cca-icon-chevrons-left",
+      "codepoint": "\\e934"
+    },
+    {
+      "name": "chevrons-right",
+      "class": "cca-icon-chevrons-right",
+      "codepoint": "\\e935"
+    },
+    {
+      "name": "chevrons-up",
+      "class": "cca-icon-chevrons-up",
+      "codepoint": "\\e936"
+    },
+    {
+      "name": "child",
+      "class": "cca-icon-child",
+      "codepoint": "\\e938"
+    },
+    {
+      "name": "circle-arrow-left",
+      "class": "cca-icon-circle-arrow-left",
+      "codepoint": "\\e939"
+    },
+    {
+      "name": "circle-arrow-right",
+      "class": "cca-icon-circle-arrow-right",
+      "codepoint": "\\e93a"
+    },
+    {
+      "name": "circle-exclamation",
+      "class": "cca-icon-circle-exclamation",
+      "codepoint": "\\e93b"
+    },
+    {
+      "name": "circle-info",
+      "class": "cca-icon-circle-info",
+      "codepoint": "\\e93c"
+    },
+    {
+      "name": "circle-notch",
+      "class": "cca-icon-circle-notch",
+      "codepoint": "\\e93d"
+    },
+    {
+      "name": "circle-small",
+      "class": "cca-icon-circle-small",
+      "codepoint": "\\e93e"
+    },
+    {
+      "name": "circle-xmark",
+      "class": "cca-icon-circle-xmark",
+      "codepoint": "\\e93f"
+    },
+    {
+      "name": "clear",
+      "class": "cca-icon-clear",
+      "codepoint": "\\e940"
+    },
+    {
+      "name": "clock",
+      "class": "cca-icon-clock",
+      "codepoint": "\\e941"
+    },
+    {
+      "name": "cloud-arrow-up",
+      "class": "cca-icon-cloud-arrow-up",
+      "codepoint": "\\e942"
+    },
+    {
+      "name": "coachmark",
+      "class": "cca-icon-coachmark",
+      "codepoint": "\\e943"
+    },
+    {
+      "name": "code-commit",
+      "class": "cca-icon-code-commit",
+      "codepoint": "\\e944"
+    },
+    {
+      "name": "columns",
+      "class": "cca-icon-columns",
+      "codepoint": "\\e945"
+    },
+    {
+      "name": "columns-2",
+      "class": "cca-icon-columns-2",
+      "codepoint": "\\e946"
+    },
+    {
+      "name": "columns-applied",
+      "class": "cca-icon-columns-applied",
+      "codepoint": "\\e947"
+    },
+    {
+      "name": "comment-dollar",
+      "class": "cca-icon-comment-dollar",
+      "codepoint": "\\e948"
+    },
+    {
+      "name": "comment-euro",
+      "class": "cca-icon-comment-euro",
+      "codepoint": "\\e949"
+    },
+    {
+      "name": "comment-question",
+      "class": "cca-icon-comment-question",
+      "codepoint": "\\e94a"
+    },
+    {
+      "name": "comments-question",
+      "class": "cca-icon-comments-question",
+      "codepoint": "\\e94b"
+    },
+    {
+      "name": "container-storage",
+      "class": "cca-icon-container-storage",
+      "codepoint": "\\e94c"
+    },
+    {
+      "name": "copy",
+      "class": "cca-icon-copy",
+      "codepoint": "\\e94d"
+    },
+    {
+      "name": "crop-and-rotate",
+      "class": "cca-icon-crop-and-rotate",
+      "codepoint": "\\e94e"
+    },
+    {
+      "name": "cross-dock",
+      "class": "cca-icon-cross-dock",
+      "codepoint": "\\e9e1"
+    },
+    {
+      "name": "cube",
+      "class": "cca-icon-cube",
+      "codepoint": "\\e94f"
+    },
+    {
+      "name": "current-location",
+      "class": "cca-icon-current-location",
+      "codepoint": "\\e9f2"
+    },
+    {
+      "name": "dashboardkpi",
+      "class": "cca-icon-dashboardkpi",
+      "codepoint": "\\e9e3"
+    },
+    {
+      "name": "date-time-picker",
+      "class": "cca-icon-date-time-picker",
+      "codepoint": "\\e950"
+    },
+    {
+      "name": "direction",
+      "class": "cca-icon-direction",
+      "codepoint": "\\e9f0"
+    },
+    {
+      "name": "dollar-sign",
+      "class": "cca-icon-dollar-sign",
+      "codepoint": "\\e951"
+    },
+    {
+      "name": "dolly-flatbed-empty",
+      "class": "cca-icon-dolly-flatbed-empty",
+      "codepoint": "\\e952"
+    },
+    {
+      "name": "dot-circle",
+      "class": "cca-icon-dot-circle",
+      "codepoint": "\\e953"
+    },
+    {
+      "name": "droplet",
+      "class": "cca-icon-droplet",
+      "codepoint": "\\e954"
+    },
+    {
+      "name": "duplicate",
+      "class": "cca-icon-duplicate",
+      "codepoint": "\\e955"
+    },
+    {
+      "name": "ellipsis-vertical",
+      "class": "cca-icon-ellipsis-vertical",
+      "codepoint": "\\e956"
+    },
+    {
+      "name": "enterprise",
+      "class": "cca-icon-enterprise",
+      "codepoint": "\\e957"
+    },
+    {
+      "name": "envelope-open-euro",
+      "class": "cca-icon-envelope-open-euro",
+      "codepoint": "\\e958"
+    },
+    {
+      "name": "euro-sign",
+      "class": "cca-icon-euro-sign",
+      "codepoint": "\\e959"
+    },
+    {
+      "name": "exchange",
+      "class": "cca-icon-exchange",
+      "codepoint": "\\e9f3"
+    },
+    {
+      "name": "exchange2",
+      "class": "cca-icon-exchange2",
+      "codepoint": "\\e9f4"
+    },
+    {
+      "name": "exclamation",
+      "class": "cca-icon-exclamation",
+      "codepoint": "\\e95a"
+    },
+    {
+      "name": "expand",
+      "class": "cca-icon-expand",
+      "codepoint": "\\e95b"
+    },
+    {
+      "name": "export",
+      "class": "cca-icon-export",
+      "codepoint": "\\e95c"
+    },
+    {
+      "name": "external-link",
+      "class": "cca-icon-external-link",
+      "codepoint": "\\e95d"
+    },
+    {
+      "name": "eye",
+      "class": "cca-icon-eye",
+      "codepoint": "\\e95e"
+    },
+    {
+      "name": "eye-slash",
+      "class": "cca-icon-eye-slash",
+      "codepoint": "\\e95f"
+    },
+    {
+      "name": "file-certificate",
+      "class": "cca-icon-file-certificate",
+      "codepoint": "\\e960"
+    },
+    {
+      "name": "file-check",
+      "class": "cca-icon-file-check",
+      "codepoint": "\\e961"
+    },
+    {
+      "name": "file-exclamation",
+      "class": "cca-icon-file-exclamation",
+      "codepoint": "\\e962"
+    },
+    {
+      "name": "file-image",
+      "class": "cca-icon-file-image",
+      "codepoint": "\\e963"
+    },
+    {
+      "name": "file-image-1",
+      "class": "cca-icon-file-image-1",
+      "codepoint": "\\e964"
+    },
+    {
+      "name": "file-invoice",
+      "class": "cca-icon-file-invoice",
+      "codepoint": "\\e965"
+    },
+    {
+      "name": "file-invoice-dollar",
+      "class": "cca-icon-file-invoice-dollar",
+      "codepoint": "\\e966"
+    },
+    {
+      "name": "file-lines",
+      "class": "cca-icon-file-lines",
+      "codepoint": "\\e967"
+    },
+    {
+      "name": "file-warning",
+      "class": "cca-icon-file-warning",
+      "codepoint": "\\e9fa"
+    },
+    {
+      "name": "file-xmark",
+      "class": "cca-icon-file-xmark",
+      "codepoint": "\\e969"
+    },
+    {
+      "name": "files",
+      "class": "cca-icon-files",
+      "codepoint": "\\e968"
+    },
+    {
+      "name": "filter",
+      "class": "cca-icon-filter",
+      "codepoint": "\\e96a"
+    },
+    {
+      "name": "filter-circle-applied",
+      "class": "cca-icon-filter-circle-applied",
+      "codepoint": "\\e96b"
+    },
+    {
+      "name": "filter-circle-xmark",
+      "class": "cca-icon-filter-circle-xmark",
+      "codepoint": "\\e96c"
+    },
+    {
+      "name": "first-page",
+      "class": "cca-icon-first-page",
+      "codepoint": "\\e96d"
+    },
+    {
+      "name": "flash-on",
+      "class": "cca-icon-flash-on",
+      "codepoint": "\\e96e"
+    },
+    {
+      "name": "floppy-disk",
+      "class": "cca-icon-floppy-disk",
+      "codepoint": "\\e96f"
+    },
+    {
+      "name": "folder",
+      "class": "cca-icon-folder",
+      "codepoint": "\\e970"
+    },
+    {
+      "name": "folder-open",
+      "class": "cca-icon-folder-open",
+      "codepoint": "\\e971"
+    },
+    {
+      "name": "forklift",
+      "class": "cca-icon-forklift",
+      "codepoint": "\\e972"
+    },
+    {
+      "name": "fullscreen",
+      "class": "cca-icon-fullscreen",
+      "codepoint": "\\e973"
+    },
+    {
+      "name": "gas-pump",
+      "class": "cca-icon-gas-pump",
+      "codepoint": "\\e974"
+    },
+    {
+      "name": "gauge-low",
+      "class": "cca-icon-gauge-low",
+      "codepoint": "\\e975"
+    },
+    {
+      "name": "Gear-Settings",
+      "class": "cca-icon-Gear-Settings",
+      "codepoint": "\\e976"
+    },
+    {
+      "name": "grid-view",
+      "class": "cca-icon-grid-view",
+      "codepoint": "\\e977"
+    },
+    {
+      "name": "group",
+      "class": "cca-icon-group",
+      "codepoint": "\\e978"
+    },
+    {
+      "name": "hand-holding-seedling",
+      "class": "cca-icon-hand-holding-seedling",
+      "codepoint": "\\e979"
+    },
+    {
+      "name": "hashtag",
+      "class": "cca-icon-hashtag",
+      "codepoint": "\\e97a"
+    },
+    {
+      "name": "help-circle",
+      "class": "cca-icon-help-circle",
+      "codepoint": "\\e97b"
+    },
+    {
+      "name": "high-value",
+      "class": "cca-icon-high-value",
+      "codepoint": "\\e9e0"
+    },
+    {
+      "name": "history",
+      "class": "cca-icon-history",
+      "codepoint": "\\e97c"
+    },
+    {
+      "name": "home",
+      "class": "cca-icon-home",
+      "codepoint": "\\e97d"
+    },
+    {
+      "name": "hourglass",
+      "class": "cca-icon-hourglass",
+      "codepoint": "\\e97e"
+    },
+    {
+      "name": "info",
+      "class": "cca-icon-info",
+      "codepoint": "\\e97f"
+    },
+    {
+      "name": "internal",
+      "class": "cca-icon-internal",
+      "codepoint": "\\e980"
+    },
+    {
+      "name": "invoice",
+      "class": "cca-icon-invoice",
+      "codepoint": "\\e981"
+    },
+    {
+      "name": "invoice-euro",
+      "class": "cca-icon-invoice-euro",
+      "codepoint": "\\e982"
+    },
+    {
+      "name": "ios-face-id",
+      "class": "cca-icon-ios-face-id",
+      "codepoint": "\\e983"
+    },
+    {
+      "name": "ios-touch-id",
+      "class": "cca-icon-ios-touch-id",
+      "codepoint": "\\e984"
+    },
+    {
+      "name": "Italic",
+      "class": "cca-icon-Italic",
+      "codepoint": "\\e985"
+    },
+    {
+      "name": "key",
+      "class": "cca-icon-key",
+      "codepoint": "\\e986"
+    },
+    {
+      "name": "keyboard",
+      "class": "cca-icon-keyboard",
+      "codepoint": "\\e987"
+    },
+    {
+      "name": "last-page",
+      "class": "cca-icon-last-page",
+      "codepoint": "\\e988"
+    },
+    {
+      "name": "leaf",
+      "class": "cca-icon-leaf",
+      "codepoint": "\\e989"
+    },
+    {
+      "name": "link",
+      "class": "cca-icon-link",
+      "codepoint": "\\e98a"
+    },
+    {
+      "name": "list",
+      "class": "cca-icon-list",
+      "codepoint": "\\e98b"
+    },
+    {
+      "name": "list-view",
+      "class": "cca-icon-list-view",
+      "codepoint": "\\e98c"
+    },
+    {
+      "name": "loading",
+      "class": "cca-icon-loading",
+      "codepoint": "\\e98d"
+    },
+    {
+      "name": "location-dot",
+      "class": "cca-icon-location-dot",
+      "codepoint": "\\e98e"
+    },
+    {
+      "name": "location-xmark",
+      "class": "cca-icon-location-xmark",
+      "codepoint": "\\e98f"
+    },
+    {
+      "name": "lock",
+      "class": "cca-icon-lock",
+      "codepoint": "\\e990"
+    },
+    {
+      "name": "mail",
+      "class": "cca-icon-mail",
+      "codepoint": "\\e991"
+    },
+    {
+      "name": "mail-add-circle",
+      "class": "cca-icon-mail-add-circle",
+      "codepoint": "\\e992"
+    },
+    {
+      "name": "map-location-dot",
+      "class": "cca-icon-map-location-dot",
+      "codepoint": "\\e993"
+    },
+    {
+      "name": "memo",
+      "class": "cca-icon-memo",
+      "codepoint": "\\e994"
+    },
+    {
+      "name": "memo-circle-check",
+      "class": "cca-icon-memo-circle-check",
+      "codepoint": "\\e995"
+    },
+    {
+      "name": "menu",
+      "class": "cca-icon-menu",
+      "codepoint": "\\e996"
+    },
+    {
+      "name": "message-inbox",
+      "class": "cca-icon-message-inbox",
+      "codepoint": "\\e9f5"
+    },
+    {
+      "name": "messages",
+      "class": "cca-icon-messages",
+      "codepoint": "\\e997"
+    },
+    {
+      "name": "messages-dollar",
+      "class": "cca-icon-messages-dollar",
+      "codepoint": "\\e998"
+    },
+    {
+      "name": "messages-euro",
+      "class": "cca-icon-messages-euro",
+      "codepoint": "\\e999"
+    },
+    {
+      "name": "microchip-ai",
+      "class": "cca-icon-microchip-ai",
+      "codepoint": "\\e99a"
+    },
+    {
+      "name": "minus",
+      "class": "cca-icon-minus",
+      "codepoint": "\\e99b"
+    },
+    {
+      "name": "mobile",
+      "class": "cca-icon-mobile",
+      "codepoint": "\\e9e4"
+    },
+    {
+      "name": "mobile-off",
+      "class": "cca-icon-mobile-off",
+      "codepoint": "\\e9e5"
+    },
+    {
+      "name": "mobile-on",
+      "class": "cca-icon-mobile-on",
+      "codepoint": "\\e9e6"
+    },
+    {
+      "name": "money-bill",
+      "class": "cca-icon-money-bill",
+      "codepoint": "\\e99c"
+    },
+    {
+      "name": "moon",
+      "class": "cca-icon-moon",
+      "codepoint": "\\e9e7"
+    },
+    {
+      "name": "no-more-task",
+      "class": "cca-icon-no-more-task",
+      "codepoint": "\\e99d"
+    },
+    {
+      "name": "octagon-xmark",
+      "class": "cca-icon-octagon-xmark",
+      "codepoint": "\\e99e"
+    },
+    {
+      "name": "orderedList",
+      "class": "cca-icon-orderedList",
+      "codepoint": "\\e99f"
+    },
+    {
+      "name": "pallet-box",
+      "class": "cca-icon-pallet-box",
+      "codepoint": "\\e9a0"
+    },
+    {
+      "name": "paper-plane",
+      "class": "cca-icon-paper-plane",
+      "codepoint": "\\e9a1"
+    },
+    {
+      "name": "parking",
+      "class": "cca-icon-parking",
+      "codepoint": "\\e9f6"
+    },
+    {
+      "name": "pause",
+      "class": "cca-icon-pause",
+      "codepoint": "\\e9a2"
+    },
+    {
+      "name": "pen-to-square",
+      "class": "cca-icon-pen-to-square",
+      "codepoint": "\\e9a4"
+    },
+    {
+      "name": "pencil",
+      "class": "cca-icon-pencil",
+      "codepoint": "\\e9a3"
+    },
+    {
+      "name": "percent",
+      "class": "cca-icon-percent",
+      "codepoint": "\\e9a5"
+    },
+    {
+      "name": "person-carry",
+      "class": "cca-icon-person-carry",
+      "codepoint": "\\e9a6"
+    },
+    {
+      "name": "person-dolly-empty",
+      "class": "cca-icon-person-dolly-empty",
+      "codepoint": "\\e9a7"
+    },
+    {
+      "name": "phone",
+      "class": "cca-icon-phone",
+      "codepoint": "\\e9a8"
+    },
+    {
+      "name": "phonebook",
+      "class": "cca-icon-phonebook",
+      "codepoint": "\\e9a9"
+    },
+    {
+      "name": "pinned",
+      "class": "cca-icon-pinned",
+      "codepoint": "\\e9aa"
+    },
+    {
+      "name": "pinned-no",
+      "class": "cca-icon-pinned-no",
+      "codepoint": "\\e9ab"
+    },
+    {
+      "name": "pinned-yes",
+      "class": "cca-icon-pinned-yes",
+      "codepoint": "\\e9ac"
+    },
+    {
+      "name": "placeholder",
+      "class": "cca-icon-placeholder",
+      "codepoint": "\\e9ad"
+    },
+    {
+      "name": "plus",
+      "class": "cca-icon-plus",
+      "codepoint": "\\e9ae"
+    },
+    {
+      "name": "polygon",
+      "class": "cca-icon-polygon",
+      "codepoint": "\\e9af"
+    },
+    {
+      "name": "pound-sign",
+      "class": "cca-icon-pound-sign",
+      "codepoint": "\\e9b0"
+    },
+    {
+      "name": "power",
+      "class": "cca-icon-power",
+      "codepoint": "\\e9b1"
+    },
+    {
+      "name": "receipt",
+      "class": "cca-icon-receipt",
+      "codepoint": "\\e9b2"
+    },
+    {
+      "name": "refresh",
+      "class": "cca-icon-refresh",
+      "codepoint": "\\e9b3"
+    },
+    {
+      "name": "request",
+      "class": "cca-icon-request",
+      "codepoint": "\\e9b4"
+    },
+    {
+      "name": "road",
+      "class": "cca-icon-road",
+      "codepoint": "\\e9b5"
+    },
+    {
+      "name": "rotate",
+      "class": "cca-icon-rotate",
+      "codepoint": "\\e9b6"
+    },
+    {
+      "name": "rotate-camera",
+      "class": "cca-icon-rotate-camera",
+      "codepoint": "\\e9b7"
+    },
+    {
+      "name": "route",
+      "class": "cca-icon-route",
+      "codepoint": "\\e9b8"
+    },
+    {
+      "name": "scale-balanced",
+      "class": "cca-icon-scale-balanced",
+      "codepoint": "\\e9b9"
+    },
+    {
+      "name": "search",
+      "class": "cca-icon-search",
+      "codepoint": "\\e9ba"
+    },
+    {
+      "name": "security",
+      "class": "cca-icon-security",
+      "codepoint": "\\e9ea"
+    },
+    {
+      "name": "share",
+      "class": "cca-icon-share",
+      "codepoint": "\\e9bb"
+    },
+    {
+      "name": "simple-map",
+      "class": "cca-icon-simple-map",
+      "codepoint": "\\e9bc"
+    },
+    {
+      "name": "smog",
+      "class": "cca-icon-smog",
+      "codepoint": "\\e9bd"
+    },
+    {
+      "name": "sort",
+      "class": "cca-icon-sort",
+      "codepoint": "\\e9be"
+    },
+    {
+      "name": "steering-wheel",
+      "class": "cca-icon-steering-wheel",
+      "codepoint": "\\e9bf"
+    },
+    {
+      "name": "stopwatch",
+      "class": "cca-icon-stopwatch",
+      "codepoint": "\\e9c0"
+    },
+    {
+      "name": "story",
+      "class": "cca-icon-story",
+      "codepoint": "\\e9c1"
+    },
+    {
+      "name": "sun",
+      "class": "cca-icon-sun",
+      "codepoint": "\\e9e8"
+    },
+    {
+      "name": "support",
+      "class": "cca-icon-support",
+      "codepoint": "\\e9f7"
+    },
+    {
+      "name": "swap",
+      "class": "cca-icon-swap",
+      "codepoint": "\\e9f1"
+    },
+    {
+      "name": "tags",
+      "class": "cca-icon-tags",
+      "codepoint": "\\e9c2"
+    },
+    {
+      "name": "tail-lift",
+      "class": "cca-icon-tail-lift",
+      "codepoint": "\\e9c3"
+    },
+    {
+      "name": "task-warning",
+      "class": "cca-icon-task-warning",
+      "codepoint": "\\e9f9"
+    },
+    {
+      "name": "taskboard",
+      "class": "cca-icon-taskboard",
+      "codepoint": "\\e9c4"
+    },
+    {
+      "name": "temperature-3",
+      "class": "cca-icon-temperature-3",
+      "codepoint": "\\e9c5"
+    },
+    {
+      "name": "trailer",
+      "class": "cca-icon-trailer",
+      "codepoint": "\\e9c6"
+    },
+    {
+      "name": "trailer-clock",
+      "class": "cca-icon-trailer-clock",
+      "codepoint": "\\e9ef"
+    },
+    {
+      "name": "trailer-off",
+      "class": "cca-icon-trailer-off",
+      "codepoint": "\\e9ee"
+    },
+    {
+      "name": "trailer-on",
+      "class": "cca-icon-trailer-on",
+      "codepoint": "\\e9ed"
+    },
+    {
+      "name": "train",
+      "class": "cca-icon-train",
+      "codepoint": "\\e9e2"
+    },
+    {
+      "name": "translation",
+      "class": "cca-icon-translation",
+      "codepoint": "\\e9c7"
+    },
+    {
+      "name": "trash-can",
+      "class": "cca-icon-trash-can",
+      "codepoint": "\\e9c8"
+    },
+    {
+      "name": "tree",
+      "class": "cca-icon-tree",
+      "codepoint": "\\e9c9"
+    },
+    {
+      "name": "truck",
+      "class": "cca-icon-truck",
+      "codepoint": "\\e9ca"
+    },
+    {
+      "name": "truck-check",
+      "class": "cca-icon-truck-check",
+      "codepoint": "\\e9ec"
+    },
+    {
+      "name": "truck-clock",
+      "class": "cca-icon-truck-clock",
+      "codepoint": "\\e9cb"
+    },
+    {
+      "name": "truck-fast",
+      "class": "cca-icon-truck-fast",
+      "codepoint": "\\e9cc"
+    },
+    {
+      "name": "truck-pickup",
+      "class": "cca-icon-truck-pickup",
+      "codepoint": "\\e9cd"
+    },
+    {
+      "name": "truck-ramp",
+      "class": "cca-icon-truck-ramp",
+      "codepoint": "\\e9ce"
+    },
+    {
+      "name": "truck-ramp-box",
+      "class": "cca-icon-truck-ramp-box",
+      "codepoint": "\\e9cf"
+    },
+    {
+      "name": "truck-xmark",
+      "class": "cca-icon-truck-xmark",
+      "codepoint": "\\e9d0"
+    },
+    {
+      "name": "two-switch-horizontal-config",
+      "class": "cca-icon-two-switch-horizontal-config",
+      "codepoint": "\\e9fb"
+    },
+    {
+      "name": "Underline",
+      "class": "cca-icon-Underline",
+      "codepoint": "\\e9d1"
+    },
+    {
+      "name": "unorderedList",
+      "class": "cca-icon-unorderedList",
+      "codepoint": "\\e9d2"
+    },
+    {
+      "name": "upload",
+      "class": "cca-icon-upload",
+      "codepoint": "\\e9d3"
+    },
+    {
+      "name": "user",
+      "class": "cca-icon-user",
+      "codepoint": "\\e9d4"
+    },
+    {
+      "name": "user-check",
+      "class": "cca-icon-user-check",
+      "codepoint": "\\e9eb"
+    },
+    {
+      "name": "user-minus",
+      "class": "cca-icon-user-minus",
+      "codepoint": "\\e9d5"
+    },
+    {
+      "name": "user-pen",
+      "class": "cca-icon-user-pen",
+      "codepoint": "\\e9d6"
+    },
+    {
+      "name": "user-plus",
+      "class": "cca-icon-user-plus",
+      "codepoint": "\\e9d7"
+    },
+    {
+      "name": "user-slash",
+      "class": "cca-icon-user-slash",
+      "codepoint": "\\e9d9"
+    },
+    {
+      "name": "user-xmark",
+      "class": "cca-icon-user-xmark",
+      "codepoint": "\\e9db"
+    },
+    {
+      "name": "users",
+      "class": "cca-icon-users",
+      "codepoint": "\\e9d8"
+    },
+    {
+      "name": "users-slash",
+      "class": "cca-icon-users-slash",
+      "codepoint": "\\e9da"
+    },
+    {
+      "name": "vessel",
+      "class": "cca-icon-vessel",
+      "codepoint": "\\e9dc"
+    },
+    {
+      "name": "warning",
+      "class": "cca-icon-warning",
+      "codepoint": "\\e9dd"
+    },
+    {
+      "name": "weight-hanging",
+      "class": "cca-icon-weight-hanging",
+      "codepoint": "\\e9de"
+    },
+    {
+      "name": "xmark",
+      "class": "cca-icon-xmark",
+      "codepoint": "\\e9df"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+/*
+ * cca-form-group-licenses
+ * Source:  libs/enterprise/feature-group-management/src/lib/components/form-group-licenses/form-group-licenses.component.scss
+ * :host resolves to:  cca-form-group-licenses
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-form-group-licenses ul {
+  list-style-type: none;
+  margin-top: 4px;
+}

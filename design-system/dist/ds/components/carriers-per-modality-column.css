@@ -1,0 +1,18 @@
+/*
+ * cca-carriers-per-modality-column
+ * Source:  libs/ui/src/lib/carriers-per-modality-column/carriers-per-modality-column.component.scss
+ * :host resolves to:  cca-carriers-per-modality-column
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-carriers-per-modality-column .suppliersTippy .tippy-content {
+  padding: 0px !important;
+}
+cca-carriers-per-modality-column ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}

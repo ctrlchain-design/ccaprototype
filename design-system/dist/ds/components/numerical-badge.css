@@ -1,0 +1,51 @@
+/*
+ * cca-numerical-badge
+ * Source:  libs/ui/src/lib/badges/numerical-badge/numerical-badge.component.scss
+ * :host resolves to:  cca-numerical-badge
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-numerical-badge .primary {
+  background-color: var(--badge-bg-red);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .warning {
+  background-color: var(--badge-bg-orange);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .danger {
+  background-color: var(--badge-bg-red);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .highlight {
+  background-color: var(--badge-bg-blue-light);
+  color: var(--badge-text-blue);
+}
+cca-numerical-badge .match {
+  background-color: var(--badge-bg-blue-light);
+  color: var(--badge-text-blue);
+}
+cca-numerical-badge .neutral {
+  background-color: var(--badge-bg-grey);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .thirdparty {
+  background-color: var(--badge-bg-blue);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .success {
+  background-color: var(--badge-bg-green);
+  color: var(--badge-text-white);
+}
+cca-numerical-badge .inverted {
+  background-color: var(--badge-bg-white);
+  color: var(--badge-text-green);
+}
+cca-numerical-badge .accent-blue {
+  background-color: var(--badge-bg-blue);
+  color: var(--badge-text-white);
+}
