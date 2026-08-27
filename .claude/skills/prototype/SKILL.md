@@ -101,6 +101,9 @@ carries a comment explaining what breaks without it.
   and `smallSideNav` on `cca-main` plus `hidden` on `cca-side-submenu` for the
   collapse. It no-ops when the markup is absent, so it is safe on a page with no
   rail. **`smallSideNav` is the EXPANDED state**, despite the name.
+- **`_shared/nav.js`** — makes the sidebar navigate between prototypes. Maps nav
+  labels to screens; add a line to its `NAV` map when a prototype covers a new
+  part of the product. Load it after `routes.js`.
 - **`_shared/data.js`** — the fixture records every prototype renders. One set of
   orders, so the row clicked in a list is the record a detail page opens.
 - **`_shared/routes.js`** — the screen registry. Prototypes link to each other by

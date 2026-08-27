@@ -148,6 +148,8 @@
     screens: SCREENS,
     url: url,
     notice: notice,
+    // Re-resolve after something adds data-screen late — nav.js does.
+    resolve: resolveAll,
     // Which screen is this page? From data-screen on <html>.
     current: document.documentElement.getAttribute('data-screen') || null,
     // Read a param the link carried, e.g. the id of the order to show.

@@ -11,11 +11,11 @@
 window.CCA_SCREENS = {
   "orders.list": { path: "orders-pinned-filters/", title: "Orders · Pinned filters · CtrlChain" },
   "playground": { path: "playground/", title: "Playground · CtrlChain prototypes" },
-  "rate-configuration": { path: "rate-configuration/", title: "rate-configuration" },  // name derived from folder
-  "resource-availability": { path: "resource-availability/", title: "Resource Availability — CtrlChain UX" },  // name derived from folder
+  "rate-configuration": { path: "rate-configuration/", title: "rate-configuration" },
+  "resource-availability": { path: "resource-availability/", title: "Resource Availability — CtrlChain UX" },
   "resource-availability.internal": { path: "resource-availability/internal/", title: "Bundled Page" },  // name derived from folder
   "resource-availability.prototype": { path: "resource-availability/prototype/", title: "Bundled Page" },  // name derived from folder
   "resource-availability.test-cases": { path: "resource-availability/test-cases/", title: "Usability Test Cases, Resource Availability | CtrlChain" },  // name derived from folder
-  "taskboard-redesign": { path: "taskboard-redesign/", title: "Taskboard — Concept Exploration" },  // name derived from folder
+  "taskboard-redesign": { path: "taskboard-redesign/", title: "Taskboard — Concept Exploration" },
   "orders.detail": null, // linked to, not built yet
 };

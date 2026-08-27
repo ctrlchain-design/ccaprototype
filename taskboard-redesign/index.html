@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-screen="taskboard-redesign">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -471,7 +471,7 @@
 </head>
 <body>
 
-<div class="sidebar">
+<div class="sidebar" data-nav>
   <div class="logo">CC</div>
   <div class="navitem"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Booking</div>
   <div class="navitem"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg>Home</div>
@@ -1743,7 +1743,10 @@ li span{color:#8b8f84;font-size:12px}
     <div class="act"><b>${t.action}</b><button onclick="alert('In the real product this performs the action and completes the linked task.')">Confirm</button></div>
   </div>
   <p class="note">This stand-in page represents the existing trip screen the Taskboard hands off to.</p>
-</div></body></html>`;
+</div>    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+  </body></html>`;
 }
 
 // "Mark as completed" closes the task out from here without a trip round-trip —
@@ -1793,5 +1796,8 @@ function renderAll(){
 }
 renderAll();
 </script>
-</body>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+  </body>
 </html>

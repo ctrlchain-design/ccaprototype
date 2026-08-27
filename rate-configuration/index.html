@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-screen="rate-configuration">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,7 @@
 <div style="display:flex;height:100vh;width:100%;font-family:var(--font-ui);background:var(--surface-neutral-default);overflow:hidden;">
 
   <!-- SIDEBAR -->
-  <aside style="width:88px;flex-shrink:0;background:var(--sidebar-main-bg-default);display:flex;flex-direction:column;align-items:center;padding:16px 8px;gap:4px;overflow-y:auto;height:100vh;box-sizing:border-box;">
+  <aside data-nav style="width:88px;flex-shrink:0;background:var(--sidebar-main-bg-default);display:flex;flex-direction:column;align-items:center;padding:16px 8px;gap:4px;overflow-y:auto;height:100vh;box-sizing:border-box;">
     <div style="padding:6px;border:1.5px solid var(--sidebar-main-bg-hover);border-radius:14px;margin-bottom:8px;">
       <div style="width:36px;height:36px;border-radius:50%;background:var(--sidebar-main-bg-hover);display:flex;align-items:center;justify-content:center;">
         <img src="assets/logo-icon-white.svg" width="22" height="22" alt="CtrlChain">
@@ -2150,5 +2150,8 @@ class Component extends DCLogic {
   }
 }
 </script>
-</body>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+  </body>
 </html>
