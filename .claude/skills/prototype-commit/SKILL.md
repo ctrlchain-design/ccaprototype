@@ -9,19 +9,45 @@ This is not a code repo. Nobody reads this history to debug a regression — the
 read it to find **the version we showed in the workshop on the 25th**, or to work
 out why a prototype stopped matching the Figma. Write for that reader.
 
-## Publishing is a push to `main`
+## Commit, merge and publish — in one go
 
-`main` is served by GitHub Pages at
-`https://ctrlchain-design.github.io/ccaprototype/`. Pushing puts prototypes in
-front of anyone with the link, within a minute or two.
+**The default is to publish.** Committing means: commit on the current branch,
+merge it into `main`, push, and let GitHub Pages serve it at
+`https://ctrlchain-design.github.io/ccaprototype/` within a minute or two.
 
-- Committing is safe. **Pushing to `main` publishes** — confirm with the user
-  first, every single time, even when they asked you to commit.
-- Check `git branch --show-current` before doing anything.
-- Never push a prototype the user has not looked at in a browser.
-- The `/prototype` skill's verification step comes *before* this one: screenshot
-  it, click things, run the class and icon audits. Publishing an unstyled or
-  unclickable prototype wastes a reviewer's session.
+Do not ask for confirmation each time. The team has authorised this standing —
+asking every commit is the thing this policy exists to remove.
+
+    git add <paths>            # explicit paths, never -A
+    git commit                 # one commit per layer, see below
+    git checkout main
+    git merge <branch>
+    git push
+    git checkout <branch>      # back where the user was
+
+### Stop and ask only when
+
+- **The merge would conflict.** Never resolve a publish-path conflict silently —
+  show the user which files clash and let them decide. `git merge --abort` and
+  report rather than guessing at intent.
+- **The prototype has not been verified.** The `/prototype` skill's checks are
+  the gate that replaced the confirmation prompt: screenshot it, click things,
+  run the class and icon audits. An unstyled or unclickable prototype going live
+  wastes a reviewer's session. If it has not been looked at in a browser, say so
+  and stop.
+- **The user says otherwise** — "just commit", "don't publish yet", "keep it on
+  the branch". Then commit and stop.
+
+### Check before merging
+
+    git fetch origin
+    git merge-base --is-ancestor main HEAD   # clean fast-forward?
+
+If `main` has moved on since the branch started, the merge may conflict. Check
+before touching `main`, not after.
+
+After pushing, tell the user the live URL of what changed — that is the thing
+they are about to send someone.
 
 ## The versioned-replacement pattern
 
@@ -112,7 +138,9 @@ Few lines, wrapped at 72. What and why — the diff already shows how.
 3. Stage explicitly by path. **Never `git add -A`** — it sweeps up scratch files
    and half-finished prototypes.
 4. Commit each group.
-5. Show `git log --oneline` for what you created, then stop. Ask before pushing.
+5. Merge to `main` and push — that publishes. Only stop if one of the
+   conditions above applies.
+6. Show `git log --oneline` and the live URL of what changed.
 
 ### A large batch of untracked work
 
