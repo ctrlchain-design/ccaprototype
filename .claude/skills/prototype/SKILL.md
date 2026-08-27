@@ -171,6 +171,33 @@ Shared scripts load in this order, before any page script:
 <script src="../_shared/shell.js"></script>
 ```
 
+## First: ask where the design comes from
+
+If the user invoked this without a brief — just `/prototype`, or "let's build
+something" — **ask before doing anything else.** Do not pick for them. Guessing
+wastes the build and, worse, produces a prototype that answers a question nobody
+asked.
+
+Put it to them as a choice of starting point:
+
+| They pick | What you do |
+| --- | --- |
+| **A Figma design** | Ask for a node-specific link. Read the frames, the designer's notes on the board, and the component names — the notes are usually where the real rules live. |
+| **They describe it** | Let them talk. Ask what it needs to *do* before what it looks like. |
+| **From staging** | Open the live app, read the real DOM, and copy structure, classes and content from it. The most accurate source there is. |
+| **Extend an existing prototype** | Work in the page that already exists rather than starting a new folder — a new feature on a built screen is an edit, not a new prototype. |
+
+Two follow-ups worth asking once the source is known, because they change the
+shape of the work:
+
+- **Static screen or clickable?** A click-through needs state and verification;
+  a single frame does not.
+- **Does it link to anything here?** If it opens from an existing prototype, wire
+  the link now — see "Prototypes link to each other".
+
+Skip the question when the brief is already clear: a Figma URL, "add an empty
+state to the taskboard", or a description with enough in it to start.
+
 ## Workflow
 
 ### 0. Start on a branch — before touching a file
@@ -215,7 +242,7 @@ grep -A400 "^## Icons" design-system/INDEX.md | grep -i map
 ```
 
 It indexes: every documented page and the classes and element tags it renders
-with, all 13 type styles, all 490 tokens with light and dark values, all 492
+with, all 13 type styles, all 492 tokens with light and dark values, all 492
 utility classes and what they set, all 252 icon names, the raw palette, and the
 40 design-system components.
 
@@ -411,8 +438,6 @@ rather than composing one.
 - **`shell/` is the catalogue's own chrome.** It ships now, so the documentation
   pages render properly. Never upload `shell/*` to the published design project —
   it has a richer shell at the same paths and this would overwrite it.
-- **No gear, cog or settings glyph exists** in the icon font, though the running
-  app shows one for Admin. Substitute and say so; do not invent a name.
 - **Use the CDK overlay classes for anything modal** — dialogs, drawers, side
   panels. `ds/material-vendor.css` carries them, so do not hand-roll a scrim. The
   working version is in `_shared/patterns.html`; copy that rather than rebuilding:
