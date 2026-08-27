@@ -1,0 +1,62 @@
+/*
+ * cca-yes-no-radio
+ * Source:  libs/ui/src/lib/yes-no-radio/yes-no-radio.component.scss
+ * :host resolves to:  cca-yes-no-radio
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-yes-no-radio .yesno-group {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+cca-yes-no-radio .yesno-option {
+  flex: 1;
+  width: 100%;
+  display: block;
+}
+
+cca-yes-no-radio .yesno-option .mdc-form-field {
+  position: relative;
+  width: 100%;
+}
+
+cca-yes-no-radio .yesno-option .mdc-label {
+  display: block;
+  width: 100%;
+  padding: 1.5rem 1.5rem 1.5rem 4rem; /* increased spacing for radio */
+  border: 1px solid var(--border-neutral-default);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  position: relative;
+}
+
+cca-yes-no-radio .yesno-option .mdc-radio {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  margin: 0;
+}
+
+cca-yes-no-radio .yesno-option .mdc-label:hover {
+  border-color: var(--brand-default);
+}
+
+cca-yes-no-radio .yesno-option.mat-mdc-radio-checked .mdc-label {
+  border-color: var(--button-primary-bg-default);
+}
+
+cca-yes-no-radio .yesno-option .mdc-label {
+  outline: none !important;
+}
+
+cca-yes-no-radio .yesno-option:focus-within .mdc-label {
+  outline: none !important;
+  box-shadow: none !important;
+}

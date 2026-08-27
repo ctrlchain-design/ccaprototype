@@ -1,0 +1,16 @@
+/*
+ * cca-sequence-dev-tool
+ * Source:  libs/common/sequence/core/src/lib/components/dev-tool/dev-tool.component.scss
+ * :host resolves to:  cca-sequence-dev-tool
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-sequence-dev-tool table,
+cca-sequence-dev-tool th,
+cca-sequence-dev-tool td {
+  border: 1px solid gray;
+  border-collapse: collapse;
+}

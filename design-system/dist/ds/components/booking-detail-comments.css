@@ -1,0 +1,19 @@
+/*
+ * cca-booking-detail-comments
+ * Source:  libs/common/shared-shipment-detail/src/lib/booking-detail-comments/booking-detail-comments.component.scss
+ * :host resolves to:  cca-booking-detail-comments
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+@reference '#tailwind-config.css';
+cca-booking-detail-comments .ql-editor {
+  padding: 0rem !important;
+}
+cca-booking-detail-comments .ql-container.ql-snow {
+  border: none !important;
+  background-color: transparent !important;
+  overflow: hidden !important;
+}

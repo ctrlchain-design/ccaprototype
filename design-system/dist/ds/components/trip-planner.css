@@ -1,0 +1,371 @@
+/*
+ * cca-trip-planner
+ * Source:  libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/trip-planner.component.scss
+ * :host resolves to:  cca-trip-planner
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-trip-planner :root:not(.b-nothing) {
+  --b-grid-header-background: var(--surface-neutral-default);
+  --b-grid-header-hover-color: var(--text-neutral-subtitle);
+  --b-grid-cell-border-color: var(--border-neutral-default);
+  --b-grid-row-border-color: var(--border-neutral-default);
+  --b-grid-cell-background: transparent;
+  --b-grid-cell-hover-background: transparent;
+  --b-grid-header-container-border-width: 0px;
+  --b-grid-cell-padding-inline: 0;
+  --b-splitter-color: var(--border-neutral-default) !important;
+  --b-splitter-hover-color: var(--border-brand-default) !important;
+  --b-splitter-size: 1px !important;
+  --b-splitter-hover-size: 2px !important;
+}
+cca-trip-planner .b-bryntum:not(.b-nothing) {
+  --b-grid-header-font-size: 0.875rem;
+  --b-horizontal-time-axis-lowest-font-size: 0.875rem;
+  --b-grid-header-color: var(--text-neutral-subtitle);
+  --b-grid-header-font-weight: 400;
+  --b-time-range-line-label-color: var(--accent-blue-dark);
+  --b-time-range-line-primary: var(--accent-blue-lighter);
+  --b-time-range-line-label-border-radius: 4rem;
+  --b-time-range-line-label-padding-y: calc(var(--spacing, 0.25rem ) * 1);
+  --b-time-range-line-label-padding-x: calc(var(--spacing, 0.25rem ) * 2);
+  --b-time-range-line-label-padding: var(--b-time-range-line-label-padding-y)
+    var(--b-time-range-line-label-padding-x);
+  --b-time-range-label-font-size: var(--text-cca-base-sm, 0.875rem );
+  --b-time-range-header-font-weight: var(--font-weight-medium, 500);
+  --b-time-range-line-style: dashed;
+  --b-time-range-opacity: 1;
+  --b-time-range-background: transparent;
+  --b-column-lines-tick-color: var(--border-neutral-default);
+  --b-column-lines-major-color: var(--border-neutral-default);
+  --b-column-lines-resource-color: var(--border-neutral-default);
+  --b-grid-cell-selected-background: transparent;
+  --b-grid-cell-hover-selected-background: transparent;
+}
+cca-trip-planner .b-colorize:not(.b-nothing) {
+  --b-time-range-line-color: var(--accent-blue-light);
+  --b-time-range-line-header-background: var(--accent-blue-lighter);
+  --b-time-range-line-label-background: var(--accent-blue-lighter);
+}
+cca-trip-planner .unplanned-orders {
+  border-radius: var(--radius-xl, 0.75rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+  padding: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-trip-planner .unplanned-orders.collapsed-orders {
+  width: calc(var(--spacing, 0.25rem) * 16);
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-planner .unplanned-orders:not(.collapsed-orders) {
+  min-width: 454px;
+}
+@media (min-width: 1536px) {
+  cca-trip-planner .unplanned-orders:not(.collapsed-orders) {
+    min-width: 532px;
+  }
+}
+cca-trip-planner .b-grid-header.b-depth-0 {
+  border-block-end: 0px !important;
+}
+cca-trip-planner .b-sch-header-row-0 {
+  height: calc(var(--spacing, 0.25rem) * 10) !important;
+  flex: 0 auto !important;
+}
+cca-trip-planner .b-sch-header-row-1 {
+  height: calc(var(--spacing, 0.25rem) * 8) !important;
+}
+cca-trip-planner .trip-planner-current-time label {
+  bottom: var(--spacing, 0.25rem) !important;
+  margin-left: var(--spacing, 0.25rem) !important;
+  border-radius: 4rem !important;
+}
+cca-trip-planner .b-grid-splitter .b-grid-splitter-buttons {
+  display: none !important;
+}
+cca-trip-planner .b-grid-splitter-inner.b-grid-splitter-main {
+  background-color: var(--border-brand-default) !important;
+}
+cca-trip-planner .b-time-axis .b-sch-header-row:last-child {
+  flex: 1 0 1em !important;
+}
+cca-trip-planner .b-grid-cell[data-column=_column1],
+cca-trip-planner .b-grid-cell[data-column=_column2],
+cca-trip-planner .b-grid-cell[data-column=_column3] {
+  cursor: move;
+}
+cca-trip-planner .b-disabled-resource {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: var(--neutral-surface-light) !important;
+}
+cca-trip-planner .b-disabled-resource * {
+  color: var(--text-neutral-caption) !important;
+}
+cca-trip-planner .b-sch-event-content {
+  margin: 0px !important;
+  width: 100% !important;
+}
+cca-trip-planner .b-nested-events-container {
+  background-color: transparent !important;
+}
+cca-trip-planner .b-sch-dependency {
+  stroke-dasharray: 2px, 5px !important;
+}
+cca-trip-planner .b-grid-header-container {
+  border-bottom-style: var(--tw-border-style) !important;
+  border-bottom-width: 0px !important;
+}
+cca-trip-planner .b-grid-body-container {
+  border-width: 0px;
+  border-bottom: 0px !important;
+  border-right: 0px !important;
+}
+cca-trip-planner .b-grid-header-container {
+  height: calc(var(--spacing, 0.25rem) * 18) !important;
+}
+cca-trip-planner .b-grid-header-container .b-grid-header {
+  border-radius: 0;
+  padding: 0px !important;
+}
+cca-trip-planner .b-grid-header-container .b-grid-header.b-focused {
+  --tw-border-style: none !important;
+  border-style: none !important;
+  --tw-outline-style: none !important;
+  outline-style: none !important;
+}
+cca-trip-planner .b-grid-header-container .b-grid-header:hover {
+  background-color: var(--surface-neutral-default) !important;
+}
+cca-trip-planner .b-grid-header-text {
+  height: 100% !important;
+  padding: 0px !important;
+}
+cca-trip-planner .b-grid-header-text .b-grid-header-text-content {
+  height: 100% !important;
+  width: 100% !important;
+}
+cca-trip-planner .b-grid-header-container,
+cca-trip-planner .b-grid-body-container {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-color: var(--border-neutral-default);
+}
+cca-trip-planner .b-visible-scrollbar .b-show-yscroll-padding > .b-yscroll-pad {
+  display: none !important;
+}
+cca-trip-planner .b-virtual-scrollers {
+  border-left: var(--b-grid-row-border-width) solid var(--b-grid-row-border-color) !important;
+  border-right: var(--b-grid-row-border-width) solid var(--b-grid-row-border-color) !important;
+}
+cca-trip-planner .b-grid-body-container {
+  border-right: var(--b-grid-row-border-width) solid var(--b-grid-row-border-color) !important;
+}
+cca-trip-planner .b-virtual-scrollers,
+cca-trip-planner .b-virtual-scroller,
+cca-trip-planner .b-grid-panel-body *::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+cca-trip-planner .b-grid-panel-body {
+  border-bottom: var(--b-grid-row-border-width) solid var(--b-grid-row-border-color);
+  background-color: var(--surface-neutral-light) !important;
+}
+cca-trip-planner .trip-status-unassigned {
+  background-color: var(--scheduler-card-bg-partiallyassigned);
+}
+cca-trip-planner .trip-status-inplanning {
+  background-color: var(--scheduler-card-bg-inplanning);
+}
+cca-trip-planner .trip-status-assigned {
+  background-color: var(--scheduler-card-bg-assigned);
+}
+cca-trip-planner .trip-status-intransit {
+  background-color: var(--scheduler-card-bg-intransit);
+}
+cca-trip-planner .trip-status-completed {
+  background-color: var(--scheduler-card-bg-completed);
+}
+cca-trip-planner .trip-status-missingpod {
+  background-color: var(--scheduler-card-bg-missingpod);
+}
+cca-trip-planner .trip-status-drafted,
+cca-trip-planner .trip-status-unconfirmed,
+cca-trip-planner .trip-status-cancelled {
+  background-color: var(--surface-neutral-default);
+}
+.event-soft-highlight cca-trip-planner-trip-card {
+  border-radius: var(--radius-md, 0.375rem);
+  border-style: var(--tw-border-style);
+  border-width: 4px;
+  border-color: var(--button-primary-border-focused);
+}
+cca-trip-planner .trip-outer {
+  container-type: inline-size;
+  container-name: tripContainer;
+}
+cca-trip-planner .flex-wrapper {
+  flex-direction: row;
+}
+cca-trip-planner .compact-header {
+  max-height: calc(var(--spacing, 0.25rem) * 6) !important;
+  padding: var(--spacing, 0.25rem) !important;
+}
+cca-trip-planner .card-container {
+  max-height: calc(var(--spacing, 0.25rem) * 31.5);
+  min-height: calc(var(--spacing, 0.25rem) * 23.5);
+  border-radius: 0.25rem;
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-brand-default);
+}
+cca-trip-planner .card-container.compact {
+  max-height: calc(var(--spacing, 0.25rem) * 6);
+  min-height: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-trip-planner .card-container.show-resources {
+  max-height: calc(var(--spacing, 0.25rem) * 9.5);
+  min-height: calc(var(--spacing, 0.25rem) * 9.5);
+}
+cca-trip-planner .text-container {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+cca-trip-planner .planning-unit-item-row {
+  display: flex;
+  padding-block: calc(var(--spacing, 0.25rem) * 4);
+  padding-right: calc(var(--spacing, 0.25rem) * 5);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+cca-trip-planner .planning-unit-item-row.compact {
+  min-height: calc(var(--spacing, 0.25rem) * 11.5);
+  align-items: center;
+  overflow: hidden;
+  padding-block: calc(var(--spacing, 0.25rem) * 0.5);
+  padding-right: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-planner .planning-unit-item-row.compact .planning-unit-item-content {
+  gap: calc(var(--spacing, 0.25rem) * 0.5);
+  overflow: hidden;
+}
+cca-trip-planner .planning-unit-item-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing, 0.25rem);
+  color: var(--text-neutral-body);
+}
+cca-trip-planner .planning-unit-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--spacing, 0.25rem) * 0.5);
+  color: var(--text-neutral-body);
+}
+cca-trip-planner .planning-unit-details .entity-row {
+  gap: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-planner .planning-unit-details.compact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--spacing, 0.25rem);
+}
+cca-trip-planner .planning-unit-details.compact .entity-row {
+  gap: var(--spacing, 0.25rem);
+}
+cca-trip-planner .trip-planner-stop {
+  display: flex;
+  width: 100%;
+  min-width: 0px;
+  overflow: hidden;
+  border-radius: var(--radius-sm, 0.25rem);
+  background-color: var(--surface-neutral-light);
+  color: var(--text-neutral-body);
+}
+cca-trip-planner .trip-card-loading {
+  --tw-border-style: dashed;
+  border-style: dashed;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-default);
+}
+cca-trip-planner .trip-card-loading .trip-card-header {
+  position: relative;
+}
+cca-trip-planner .trip-card-loading .trip-card-header::after {
+  left: 4px;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 0.25rem;
+}
+cca-trip-planner .trip-card-loading .trip-card-container {
+  flex-grow: 1;
+  border-style: var(--tw-border-style);
+  border-width: 0px;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-default);
+}
+cca-trip-planner .trip-card-loading .trip-card-container .trip-planner-stop {
+  border-color: var(--border-neutral-default) !important;
+  position: relative;
+}
+cca-trip-planner .trip-card-loading .trip-card-container .trip-planner-stop::after {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+cca-trip-planner .trip-card-loading .trip-card-container .extra-stops {
+  position: relative;
+}
+cca-trip-planner .trip-card-loading .trip-card-container .extra-stops::after {
+  left: -1px;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 0.25rem;
+}
+cca-trip-planner .trip-card-loading .trip-card-header::after,
+cca-trip-planner .trip-card-loading .trip-planner-stop::after,
+cca-trip-planner .trip-card-loading .extra-stops::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(90deg, var(--surface-neutral-default) 25%, var(--surface-neutral-dark) 50%, var(--surface-neutral-default) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

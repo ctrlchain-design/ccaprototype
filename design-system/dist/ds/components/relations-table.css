@@ -1,0 +1,15 @@
+/*
+ * cca-relations-table
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/relations-table/relations-table.component.scss
+ * :host resolves to:  cca-relations-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-relations-table {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}

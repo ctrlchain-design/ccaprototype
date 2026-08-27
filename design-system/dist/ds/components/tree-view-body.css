@@ -1,0 +1,17 @@
+/*
+ * cca-tree-view-body
+ * Source:  libs/common/tree-view/src/lib/tree-view-body/tree-view-body.component.scss
+ * :host resolves to:  cca-tree-view-body
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-tree-view-body .pt-0.pt-0 {
+  padding-top: 0px;
+}
+cca-tree-view-body .disabled {
+  color: var(--text-neutral-caption);
+}

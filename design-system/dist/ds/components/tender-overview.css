@@ -1,0 +1,13 @@
+/*
+ * cca-tender-overview
+ * Source:  libs/carrier-tms/feature-tender-adhoc/src/lib/tender-overview/tender-overview.component.scss
+ * :host resolves to:  cca-tender-overview
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-overview {
+  height: inherit;
+}

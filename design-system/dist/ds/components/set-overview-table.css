@@ -1,0 +1,45 @@
+/*
+ * cca-set-overview-table
+ * Source:  libs/common/shared-finance/src/lib/set-overview-table/set-overview-table.component.scss
+ * :host resolves to:  cca-set-overview-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-set-overview-table .mat-sort-header-content {
+  text-align: left;
+}
+cca-set-overview-table table td {
+  padding-block: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-set-overview-table table tr.expanded td {
+  border: none !important;
+}
+cca-set-overview-table table tr.expanded td.chevron-icon .icon::before {
+  content: "\e937";
+}
+cca-set-overview-table table .chevron-icon .icon::before {
+  content: "\e930";
+  font-family: CtrlChainIcons;
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 6);
+  width: calc(var(--spacing, 0.25rem) * 6);
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-2xl, 1.5rem);
+  line-height: var(--tw-leading, var(--text-2xl--line-height, calc(2 / 1.5)));
+}
+cca-set-overview-table table table tr td:first-child,
+cca-set-overview-table table table tr th:first-child {
+  padding-left: calc(var(--spacing, 0.25rem) * 6);
+}
+cca-set-overview-table table table tr td,
+cca-set-overview-table table table tr th {
+  padding-block: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-set-overview-table table table tr:last-child td {
+  border: none !important;
+}

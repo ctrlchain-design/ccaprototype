@@ -1,0 +1,17 @@
+/*
+ * cca-invoice-validation-actions
+ * Source:  libs/finance/feature-invoice-validation/src/lib/shared/invoice-validation-actions/invoice-validation-actions.component.scss
+ * :host resolves to:  cca-invoice-validation-actions
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-invoice-validation-actions .tooltip-wrapper {
+  display: inline-flex;
+  cursor: not-allowed;
+}
+cca-invoice-validation-actions .tooltip-wrapper button:disabled {
+  pointer-events: none;
+}

@@ -1,0 +1,127 @@
+{
+  "$comment": "Raw ramps from shared/styles/tailwind/colors.css and new-cold.css. Use the semantic tokens in tokens.json for anything that ships.",
+  "ramps": {
+    "Neutrals": {
+      "neutrals-50": "#ffffff",
+      "neutrals-100": "#fafafa",
+      "neutrals-200": "#ebebeb",
+      "neutrals-300": "#d9d9d9",
+      "neutrals-400": "#b3b3b3",
+      "neutrals-500": "#8b8b8b",
+      "neutrals-600": "#717171",
+      "neutrals-700": "#565656",
+      "neutrals-800": "#3e3e3e",
+      "neutrals-900": "#333333"
+    },
+    "Green": {
+      "green-50": "#f6fbe9",
+      "green-100": "#e3f2c4",
+      "green-200": "#d5eba9",
+      "green-300": "#b7d47f",
+      "green-400": "#a7c46c",
+      "green-500": "#8dab51",
+      "green-600": "#6f8f2f",
+      "green-700": "#638029",
+      "green-800": "#4b6615",
+      "green-900": "#3d5213",
+      "green-950": "#343630",
+      "green-1000": "#282925"
+    },
+    "Purple": {
+      "purple-50": "#efecf8",
+      "purple-100": "#c6bae7",
+      "purple-200": "#b3a3de",
+      "purple-300": "#9984d3",
+      "purple-400": "#775bc5",
+      "purple-500": "#53389e",
+      "purple-600": "#473086",
+      "purple-700": "#3c2872",
+      "purple-800": "#332261",
+      "purple-900": "#2b1d53"
+    },
+    "Orange": {
+      "orange-50": "#fcf0de",
+      "orange-100": "#fadfba",
+      "orange-200": "#f7c988",
+      "orange-300": "#f5b153",
+      "orange-400": "#f4a12d",
+      "orange-500": "#f5930b",
+      "orange-600": "#eb8900",
+      "orange-700": "#e08300",
+      "orange-800": "#b25900",
+      "orange-900": "#804000"
+    },
+    "Red": {
+      "red-50": "#f9e1e1",
+      "red-100": "#f3adad",
+      "red-200": "#ef9292",
+      "red-300": "#e96e6e",
+      "red-400": "#e23e3e",
+      "red-500": "#b91c1c",
+      "red-600": "#9d1818",
+      "red-700": "#861414",
+      "red-800": "#721111",
+      "red-900": "#610f0f"
+    },
+    "Bluegreen": {
+      "bluegreen-50": "#e3f8f1",
+      "bluegreen-100": "#c4f2e3",
+      "bluegreen-200": "#a0e8d0",
+      "bluegreen-300": "#7fdbbd",
+      "bluegreen-400": "#52d1a7",
+      "bluegreen-500": "#3bc497",
+      "bluegreen-600": "#2db286",
+      "bluegreen-700": "#1b966d",
+      "bluegreen-800": "#0b7d57",
+      "bluegreen-900": "#0d6648"
+    },
+    "Blue": {
+      "blue-50": "#e7eff7",
+      "blue-100": "#cbdae7",
+      "blue-200": "#a5c3d9",
+      "blue-300": "#759dbd",
+      "blue-400": "#4b82af",
+      "blue-500": "#2a628f",
+      "blue-600": "#1d5a8b",
+      "blue-700": "#17476d",
+      "blue-800": "#0d3759",
+      "blue-900": "#0a2a44"
+    },
+    "NewCold Official": {
+      "newCold-50": "#e7e8ea",
+      "newCold-100": "#cfd0d5",
+      "newCold-200": "#9fa1ab",
+      "newCold-300": "#707382",
+      "newCold-400": "#404458",
+      "newCold-500": "#10152e",
+      "newCold-600": "#0c1024",
+      "newCold-700": "#090c19",
+      "newCold-800": "#05070f",
+      "newCold-900": "#020205"
+    },
+    "Newcold-1": {
+      "newcold-1-50": "#f8faff",
+      "newcold-1-100": "#e4edff",
+      "newcold-1-200": "#c1d6ff",
+      "newcold-1-300": "#9dc0fa",
+      "newcold-1-400": "#085bff",
+      "newcold-1-500": "#003aae",
+      "newcold-1-600": "#001847",
+      "newcold-1-700": "#000b20",
+      "newcold-1-800": "#000308",
+      "newcold-1-900": "#000000"
+    },
+    "Newcold-2": {
+      "newcold-2-50": "#fafdff",
+      "newcold-2-100": "#ecf6ff",
+      "newcold-2-200": "#d4ecff",
+      "newcold-2-300": "#b3ddff",
+      "newcold-2-400": "#53b2ff",
+      "newcold-2-500": "#1596ff",
+      "newcold-2-600": "#0070cc",
+      "newcold-2-700": "#004177",
+      "newcold-2-800": "#002544",
+      "newcold-2-900": "#001c33"
+    }
+  }
+}

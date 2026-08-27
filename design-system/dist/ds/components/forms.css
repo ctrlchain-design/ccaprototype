@@ -1,0 +1,76 @@
+/*
+ * cca-day-selector
+ * Source:  libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/forms/day-selector.component.scss
+ * :host resolves to:  cca-day-selector
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-day-selector .checkbox-button .mdc-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+cca-day-selector .checkbox-button label {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 10);
+  width: calc(var(--spacing, 0.25rem) * 16);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg, 0.5rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-default);
+  padding: 0px;
+  font-size: var(--text-base, 1rem);
+  line-height: var(--tw-leading, var(--text-base--line-height, calc(1.5 / 1)));
+  color: var(--text-neutral-body);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+  transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  background-color: var(--surface-neutral-light);
+}
+cca-day-selector .checkbox-button:not(.mat-mdc-checkbox-disabled) label:hover {
+  border-style: var(--tw-border-style);
+  border-width: 2px;
+  border-color: var(--border-brand-default);
+  background-color: var(--surface-brand-lightest);
+}
+cca-day-selector .checkbox-button.mat-mdc-checkbox-checked label {
+  border-style: var(--tw-border-style);
+  border-width: 2px;
+  border-color: var(--border-brand-default);
+}
+cca-day-selector .checkbox-button.mat-mdc-checkbox-disabled label {
+  cursor: not-allowed;
+  border-color: var(--border-neutral-default);
+  color: var(--text-neutral-disabled);
+}
+cca-day-selector .checkbox-button:has(.mdc-checkbox__native-control:focus-visible) label {
+  border-style: var(--tw-border-style);
+  border-width: 2px;
+  border-color: var(--border-brand-light);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

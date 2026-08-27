@@ -1,0 +1,13 @@
+/*
+ * cca-run-migration-dialog
+ * Source:  libs/admin/feature-migrations/src/lib/run-migration-dialog/run-migration-dialog.component.scss
+ * :host resolves to:  cca-run-migration-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-run-migration-dialog {
+  display: block;
+}

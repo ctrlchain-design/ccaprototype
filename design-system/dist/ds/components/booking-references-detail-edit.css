@@ -1,0 +1,17 @@
+/*
+ * cca-booking-references-detail-edit
+ * Source:  libs/common/shared-expendable-table/src/lib/expandable-table-contents/booking-references-detail-edit/booking-references-detail-edit.component.scss
+ * :host resolves to:  cca-booking-references-detail-edit
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-booking-references-detail-edit mat-hint {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  color: var(--text-neutral-caption);
+}

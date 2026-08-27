@@ -1,0 +1,27 @@
+/*
+ * cca-trip-builder-order-item-skeleton
+ * Source:  libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-builder-order-list/trip-builder-order-item-skeleton/trip-builder-order-item-skeleton.component.scss
+ * :host resolves to:  cca-trip-builder-order-item-skeleton
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-trip-builder-order-item-skeleton .skeleton-bar {
+  height: calc(var(--spacing, 0.25rem) * 4);
+  width: 100%;
+  border-radius: var(--radius-xs, 0.125rem);
+  background: linear-gradient(90deg, var(--surface-neutral-default) 25%, var(--surface-neutral-dark) 50%, var(--surface-neutral-default) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

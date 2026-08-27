@@ -1,0 +1,35 @@
+/*
+ * cca-action-resend-transport-data
+ * Source:  libs/common/shared-actions/src/lib/components/action-resend-transport-data/action-resend-transport-data.component.scss
+ * :host resolves to:  cca-action-resend-transport-data
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-action-resend-transport-data mat-form-field.clipboard {
+  width: 100%;
+}
+cca-action-resend-transport-data p.clipboard {
+  white-space: pre-wrap;
+}
+cca-action-resend-transport-data div.clipboard-header {
+  display: flex;
+  justify-content: space-between;
+}
+cca-action-resend-transport-data div.clipboard-header > span {
+  color: var(--text-neutral-body);
+  font-size: 24px;
+  font-weight: 500;
+}
+cca-action-resend-transport-data div.clipboard-header div.button {
+  display: flex;
+  color: var(--text-neutral-disabled);
+  font-size: 14px;
+  font-weight: 400;
+}
+cca-action-resend-transport-data .align.align {
+  text-align: center !important;
+}

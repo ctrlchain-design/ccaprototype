@@ -1,0 +1,13 @@
+/*
+ * cca-lane-request-quotes-carrier-lane
+ * Source:  libs/shipper-tms/feature-rfp-management/src/lib/lane-request-quotes-carrier-lane/lane-request-quotes-carrier-lane.component.scss
+ * :host resolves to:  cca-lane-request-quotes-carrier-lane
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-lane-request-quotes-carrier-lane .max-inline-size-75px {
+  max-inline-size: 75px;
+}

@@ -1,0 +1,14 @@
+/*
+ * cca-trip-documents
+ * Source:  libs/carrier-tms/feature-trip-management/src/lib/trip-detail-documents/trip-documents/trip-documents.component.scss
+ * :host resolves to:  cca-trip-documents
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-trip-documents .mat-expansion-panel {
+  border-radius: 0 !important;
+}

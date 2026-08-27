@@ -1,0 +1,13 @@
+/*
+ * cca-order-detail-info
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-detail/order-detail-info/order-detail-info.component.scss
+ * :host resolves to:  cca-order-detail-info
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-order-detail-info .text-shadow {
+  text-shadow: 0px 0px 3px #737373;
+}

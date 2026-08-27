@@ -1,0 +1,13 @@
+/*
+ * cca-tender-add-carriers-dialog
+ * Source:  libs/common/shared-tender/src/lib/dialogs/tender-add-carriers-dialog/tender-add-carriers-dialog.component.scss
+ * :host resolves to:  cca-tender-add-carriers-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-add-carriers-dialog .mat-mdc-tab-body-content {
+  height: calc(100% - 3rem);
+}

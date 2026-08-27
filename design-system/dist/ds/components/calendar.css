@@ -1,0 +1,304 @@
+/*
+ * cca-calendar
+ * Source:  libs/ui/calendar/src/lib/calendar/calendar.component.scss
+ * :host resolves to:  cca-calendar
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-calendar :root:not(.b-nothing) {
+  --b-font-family: Roboto, 'Helvetica Neue', sans-serif;
+  --b-font-size: 0.875rem;
+  --b-primary: var(--surface-brand-default);
+  --b-panel-background: var(--surface-neutral-light);
+  --b-panel-header-background: var(--surface-neutral-default);
+  --b-panel-header-color: var(--text-neutral-title);
+  --b-toolbar-background: var(--surface-neutral-default);
+  --b-grid-header-background: var(--surface-neutral-default);
+  --b-calendar-panel-color: var(--text-neutral-title);
+  --b-calendar-border-color: var(--border-neutral-default);
+  --b-today-color: var(--calendar-today-fill);
+  --b-month-view-weeknumber-color: var(--text-neutral-disabled);
+  --b-month-view-cell-color: var(--text-neutral-disabled);
+  --b-month-view-cell-header-color: var(--text-neutral-body);
+  --b-month-view-cell-header-week-color: var(--text-neutral-disabled);
+  --b-month-view-cell-weekend-color: var(--text-neutral-disabled);
+  --b-month-view-cell-other-month-color: var(--text-neutral-caption);
+  --b-month-view-non-working-day-background: var(--surface-neutral-default);
+  --b-month-view-weeknumber-background: transparent;
+  --b-month-view-cell-header-content-height: 1.375rem;
+  --b-month-view-cell-header-day-num-font-size: 0.8125rem;
+  --b-month-view-cell-header-day-num-font-weight: 600;
+  --b-month-view-today-background: var(--calendar-today-fill);
+  --b-month-view-today-color: var(--text-neutral-body);
+  --b-date-picker-today-color: var(--calendar-today-fill);
+  --b-calendar-solid-bar-background: var(--b-primary);
+}
+cca-calendar :root:not(.b-nothing) .b-colorize {
+  --b-calendar-event-color: var(--b-primary);
+  --b-calendar-solid-bar-background: var(--b-primary);
+  --b-calendar-solid-bar-selected-background: var(--b-primary);
+  --b-calendar-solid-bar-color: var(--b-primary);
+}
+cca-calendar :root:not(.b-nothing) .b-button.b-button-text,
+cca-calendar :root:not(.b-nothing) .b-button.b-transparent {
+  --b-button-hover-background: var(--surface-brand-lightest);
+}
+cca-calendar {
+  cursor: not-allowed;
+}
+cca-calendar .b-calendar .b-calendar-view-desc-text {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  color: var(--text-neutral-body);
+}
+cca-calendar .b-month-view .b-day-num[data-start-of]::before {
+  color: var(--text-neutral-body);
+}
+cca-calendar .b-calendar-cell.b-today .b-day-num {
+  background-color: var(--calendar-today-fill) !important;
+  --tw-font-weight: var(--font-weight-normal, 400) !important;
+  font-weight: var(--font-weight-normal, 400) !important;
+  color: var(--text-neutral-invert) !important;
+}
+cca-calendar .b-calendar-cell.b-today .b-day-num strong {
+  color: var(--text-neutral-body) !important;
+}
+cca-calendar .b-calendar-cell.b-today .b-day-num[data-start-of]::before {
+  position: absolute;
+  right: 100%;
+}
+cca-calendar .b-panel-body-wrap .b-cal-cell-header {
+  padding: 0.25rem;
+  max-height: 2.5rem;
+  position: relative;
+}
+cca-calendar .b-panel-body-wrap .b-calendar-week {
+  pointer-events: none;
+}
+cca-calendar .disabled {
+  pointer-events: none;
+}
+cca-calendar .disabled .b-cal-cell-header:not(.b-today) .b-day-num {
+  color: var(--text-neutral-disabled) !important;
+}
+cca-calendar .b-panel-body-wrap .b-week-number-cell.b-other-month .b-day-num,
+cca-calendar .b-panel-body-wrap .b-calendar-cell.b-other-month .b-day-num {
+  color: inherit;
+}
+cca-calendar .add-event:hover .b-cal-cell-header::before {
+  font-family: CtrlChainIcons;
+  content: "\e9ae";
+  position: absolute;
+  top: calc(var(--spacing, 0.25rem) * 2);
+  left: calc(var(--spacing, 0.25rem) * 2);
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 5);
+  width: calc(var(--spacing, 0.25rem) * 5);
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  --tw-border-style: solid;
+  border-style: solid;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+  --tw-leading: calc(var(--spacing, 0.25rem) * 4);
+  line-height: calc(var(--spacing, 0.25rem) * 4);
+  color: var(--text-neutral-body);
+}
+cca-calendar .add-event .b-cal-cell-header::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  pointer-events: all;
+}
+cca-calendar .add-event {
+  pointer-events: all !important;
+  cursor: pointer !important;
+}
+cca-calendar .add-event:hover {
+  background: var(--surface-neutral-light);
+}
+cca-calendar .b-month-view .b-month-view-content {
+  contain: inherit;
+}
+cca-calendar .b-calendar.b-outer {
+  min-height: 30rem;
+  height: auto;
+}
+cca-calendar .b-card-container > .b-card-item {
+  min-height: auto !important;
+}
+cca-calendar .b-cal-event-body {
+  width: 100%;
+}
+cca-calendar .b-calendar .b-cal-nav-next {
+  margin-left: 0;
+}
+cca-calendar .b-daycellrenderer .b-cal-event-bar-container .b-cal-event-wrap {
+  padding: 0;
+}
+cca-calendar .b-cal-event-bar-container .b-cal-event-wrap.b-solid-bar {
+  opacity: 1;
+}
+cca-calendar .b-cal-event-bar-container .b-cal-event-wrap.b-solid-bar.b-overflow {
+  display: none;
+}
+cca-calendar .b-continues-past .b-sch-event-start,
+cca-calendar .b-continues-future .b-sch-event-end {
+  opacity: 0;
+  font-size: 0;
+}
+cca-calendar .b-cal-event-wrap.b-intraday:not(.b-solid-bar) .b-cal-event:hover {
+  background: var(--b-primary);
+}
+cca-calendar :is(.b-toolbar.b-dock-top, .b-toolbar.b-dock-bottom) .b-box-center.b-toolbar-content {
+  height: 2rem;
+  min-height: 2rem;
+  margin-bottom: 0;
+  padding: 0;
+  align-items: center;
+}
+cca-calendar :is(.b-toolbar.b-dock-top, .b-toolbar.b-dock-bottom) .b-box-center.b-toolbar-content .b-button {
+  width: 2rem;
+  height: 2rem;
+  min-height: 2rem;
+  border-radius: 50%;
+}
+cca-calendar :is(.b-toolbar.b-dock-top, .b-toolbar.b-dock-bottom) .b-box-center.b-toolbar-content .b-button:hover:not(.b-disabled).b-transparent {
+  background-color: var(--surface-brand-lightest);
+}
+cca-calendar .b-calendar > * > .b-top-toolbar {
+  border: none;
+}
+cca-calendar .b-calendar-weekdays {
+  height: 2.5rem;
+}
+cca-calendar .b-short-event .b-cal-event,
+cca-calendar .b-intraday .b-cal-event {
+  background-color: var(--b-primary);
+  padding: 0 0 0 0.3em;
+}
+cca-calendar .b-short-event .b-cal-event section,
+cca-calendar .b-intraday .b-cal-event section {
+  border: none;
+}
+cca-calendar .b-short-event .b-cal-event .b-cal-event-icon,
+cca-calendar .b-intraday .b-cal-event .b-cal-event-icon {
+  display: none;
+}
+cca-calendar .b-short-event .b-cal-event .b-sch-event-end,
+cca-calendar .b-intraday .b-cal-event .b-sch-event-end {
+  display: none;
+}
+cca-calendar .b-panel-body-wrap .b-week-num,
+cca-calendar .b-panel-body-wrap .b-day-num {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  color: var(--text-neutral-body);
+}
+cca-calendar .b-panel-body-wrap .b-week-num::before,
+cca-calendar .b-panel-body-wrap .b-day-num::before {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 400 !important;
+  color: var(--text-neutral-body) !important;
+}
+cca-calendar .b-panel-body-wrap .b-weeks-container .b-calendar-panel-row {
+  min-height: 5.125rem !important;
+}
+cca-calendar .b-toolbar.b-dock-top {
+  min-height: auto;
+}
+cca-calendar .b-calendar .b-calendar-viewcontainer > .b-panel-body-wrap > .b-panel-body-wrap > .b-panel-content,
+cca-calendar .b-calendar .b-calendar-viewcontainer > .b-yearview > .b-panel-body-wrap > .b-panel-content {
+  padding-top: 0;
+  display: block;
+}
+cca-calendar .b-calendar-day-header {
+  padding-bottom: 0;
+  padding-inline-end: 0;
+  align-items: center;
+  justify-content: center !important;
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+  font-weight: 400 !important;
+  color: var(--text-neutral-caption) !important;
+}
+cca-calendar .b-cal-event-bar-container .b-cal-event {
+  border-radius: 0;
+  gap: 0;
+}
+cca-calendar .b-cal-event-wrap.b-continues-future:not(.b-rtl) .b-cal-event {
+  padding-right: 0;
+}
+cca-calendar .b-cal-event-wrap.b-continues-past:not(.b-rtl) .b-cal-event {
+  padding-left: 0;
+}
+cca-calendar .b-cal-event-body .b-cal-event-desc {
+  padding-block-end: 0;
+}
+cca-calendar .b-panel-body-wrap .b-weeks-container {
+  background: none !important;
+  --flexed-row-height: auto;
+}
+cca-calendar .b-panel-body-wrap .b-weeks-container .b-calendar-row.b-empty-row {
+  flex: 1 1 0 !important;
+}
+cca-calendar .b-panel-body-wrap .b-week-num {
+  display: none;
+}
+cca-calendar .b-calendar-view-desc-text {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  color: var(--text-neutral-body);
+}
+cca-calendar .b-icon-previous::before,
+cca-calendar .b-icon-next::before {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal, 400);
+  color: var(--text-neutral-caption);
+  font-family: CtrlChainIcons;
+  content: "\e931";
+}
+cca-calendar .b-icon-next::before {
+  content: "\e932";
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-font-weight: initial;
+      --tw-border-style: solid;
+      --tw-leading: initial;
+    }
+  }
+}

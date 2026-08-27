@@ -1,0 +1,32 @@
+/*
+ * cca-finalize-details-step
+ * Source:  libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/finalize-details-step/finalize-details-step.component.scss
+ * :host resolves to:  cca-finalize-details-step
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-finalize-details-step .mat-horizontal-stepper-header-container {
+  --tw-border-style: none;
+  border-style: none;
+  background-color: var(--surface-neutral-light) !important;
+}
+cca-finalize-details-step cca-main .appContent .page {
+  padding: 0px;
+}
+cca-finalize-details-step div.gradient-footer {
+  background: linear-gradient(320.3deg, #6f8f2f 35.46%, #30430a 127.84%);
+}
+cca-finalize-details-step .field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--spacing, 0.25rem) * 4);
+}
+@media only screen and (max-width: 600px) {
+  cca-finalize-details-step .field-row {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

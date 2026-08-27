@@ -1,0 +1,51 @@
+/*
+ * cca-select-frequency-and-volume
+ * Source:  libs/common/sequence/steps/src/lib/steps/select-frequency-and-volume/select-frequency-and-volume.component.scss
+ * :host resolves to:  cca-select-frequency-and-volume
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-select-frequency-and-volume .checkbox-button .mdc-checkbox {
+  display: none;
+}
+cca-select-frequency-and-volume .checkbox-button label {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 10);
+  width: calc(var(--spacing, 0.25rem) * 16);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg, 0.5rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-disabled);
+  padding: 0px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: var(--text-neutral-body);
+}
+cca-select-frequency-and-volume .checkbox-button .mdc-form-field.mat-internal-form-field:hover {
+  border-radius: var(--radius-lg, 0.5rem);
+  background-color: var(--surface-brand-lighter);
+}
+cca-select-frequency-and-volume .checkbox-button.mat-mdc-checkbox-checked label {
+  background-color: var(--surface-brand-default);
+  color: var(--text-neutral-invert);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

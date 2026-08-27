@@ -1,0 +1,69 @@
+/*
+ * cca-trip-stop-card
+ * Source:  libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-info/trip-stops-overview/trip-stop/trip-stop.component.scss
+ * :host resolves to:  cca-trip-stop-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-trip-stop-card .table td,
+cca-trip-stop-card .table th {
+  border-top-style: var(--tw-border-style) !important;
+  border-top-width: 1px !important;
+  --tw-border-style: solid !important;
+  border-style: solid !important;
+  border-color: var(--border-neutral-default) !important;
+  padding: calc(var(--spacing, 0.25rem) * 2) !important;
+  text-align: left !important;
+  vertical-align: top !important;
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+  font-weight: 400 !important;
+  --tw-font-weight: var(--font-weight-normal, 400) !important;
+  font-weight: var(--font-weight-normal, 400) !important;
+  color: var(--text-neutral-caption) !important;
+}
+cca-trip-stop-card .table td span,
+cca-trip-stop-card .table th span {
+  color: var(--text-neutral-body);
+}
+cca-trip-stop-card .table tr:last-child td {
+  padding-bottom: 0px !important;
+}
+cca-trip-stop-card .edit-btn-hover-container .edit-btn-hover {
+  opacity: 0;
+  pointer-events: none;
+}
+cca-trip-stop-card mat-expansion-panel-header:hover .edit-btn-hover-container .edit-btn-hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+cca-trip-stop-card .edit-btn-hover-container .edit-btn-hover.edit-btn-always-visible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+cca-trip-stop-card .mat-expansion-panel .mat-expansion-panel-body {
+  background-color: var(--surface-neutral-default);
+  min-height: 6rem;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-font-weight: initial;
+    }
+  }
+}

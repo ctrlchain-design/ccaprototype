@@ -1,0 +1,186 @@
+<!doctype html>
+<!--
+  Front door for the prototype repo. Lists what lives here and links out to it.
+
+  Built against the design system in design-system/dist/ like everything else —
+  no hand-picked colours, sizes or radii. Paths are root-relative (no ../),
+  because this file sits at the repo root rather than inside a prototype folder.
+
+  class="light" is load-bearing: the platform tokens flip to dark under
+  prefers-color-scheme, so without it this page renders dark for anyone whose
+  Mac is in dark mode.
+-->
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CtrlChain prototypes</title>
+
+    <link rel="stylesheet" href="design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="design-system/dist/ds/index.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it. */
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        font-family: var(--font-ui);
+        background: var(--surface-neutral-default);
+      }
+      /*
+        cca-root is not decoration — it is what makes this page clickable.
+
+        The platform ships a full-page `body::before` overlay (a faint background
+        graphic). It is `position: absolute`, so it paints above every static
+        in-flow box and swallows clicks on all of them. The app escapes it because
+        app content lives inside `cca-root`, which the design system defines as
+        `position: relative`. Content placed directly in <body> looks perfectly
+        fine and is completely dead to the mouse.
+
+        cca-root is a custom element, so it has no default display, and its
+        `height: 100%` would cap this page at one viewport — a document that grows
+        needs auto.
+      */
+      cca-root {
+        display: block;
+        height: auto;
+      }
+
+      /* Card links: the design system styles cards, not anchors-as-cards. */
+      .proto-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 120ms ease;
+      }
+      .proto-card:hover {
+        border-color: var(--border-brand-default);
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root>
+      <div class="mx-auto flex max-w-5xl flex-col gap-6 p-6">
+        <header class="flex items-center gap-3">
+          <img class="h-8" src="design-system/dist/assets/images/ctrlchain-logo-green.svg" alt="" />
+          <div>
+            <h1 class="text-cca-label-lg text-neutral-title">CtrlChain prototypes</h1>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              Design prototypes for the CtrlChain platform, built on the platform's own CSS.
+            </p>
+          </div>
+        </header>
+
+        <!--
+          The connected experience comes first: everything below it is a
+          prototype of one epic, this is all of them joined up.
+        -->
+        <section class="flex flex-col gap-3">
+          <a class="proto-card rounded-lg border border-neutral-default surface-neutral-light p-4" href="playground/">
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col gap-1">
+                <span class="text-cca-label-md text-neutral-title">Playground — the connected prototype</span>
+                <span class="text-cca-base-sm text-neutral-subtitle">
+                  All the prototypes as one product. Start on a screen and click
+                  through; records are shared, so an order in a list is the same
+                  order everywhere else.
+                </span>
+              </div>
+              <div class="ml-auto">
+                <cca-status-badge>
+                  <div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm primary">Start here</div>
+                </cca-status-badge>
+              </div>
+            </div>
+          </a>
+        </section>
+
+        <section class="flex flex-col gap-3">
+          <h2 class="text-cca-label-md text-neutral-title">By epic</h2>
+          <a class="proto-card rounded-lg border border-neutral-default surface-neutral-light p-4" href="resource-availability/">
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col gap-1">
+                <span class="text-cca-label-md text-neutral-title">Resource Availability</span>
+                <span class="text-cca-base-sm text-neutral-subtitle">
+                  Landing page linking the prototype and its usability test cases.
+                </span>
+              </div>
+              <div class="ml-auto">
+                <cca-status-badge>
+                  <div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm primary">Usability tested</div>
+                </cca-status-badge>
+              </div>
+            </div>
+          </a>
+
+          <a class="proto-card rounded-lg border border-neutral-default surface-neutral-light p-4" href="orders-pinned-filters/">
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col gap-1">
+                <span class="text-cca-label-md text-neutral-title">Orders — pinned filters</span>
+                <span class="text-cca-base-sm text-neutral-subtitle">
+                  Showing and hiding pinned filters above the Orders table.
+                </span>
+              </div>
+              <div class="ml-auto">
+                <cca-status-badge>
+                  <div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm highlight">Concept</div>
+                </cca-status-badge>
+              </div>
+            </div>
+          </a>
+
+          <a class="proto-card rounded-lg border border-neutral-default surface-neutral-light p-4" href="taskboard-redesign/">
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col gap-1">
+                <span class="text-cca-label-md text-neutral-title">Taskboard</span>
+                <span class="text-cca-base-sm text-neutral-subtitle">Concept exploration.</span>
+              </div>
+              <div class="ml-auto">
+                <cca-status-badge>
+                  <div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm highlight">Concept</div>
+                </cca-status-badge>
+              </div>
+            </div>
+          </a>
+
+          <a class="proto-card rounded-lg border border-neutral-default surface-neutral-light p-4" href="rate-configuration/">
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col gap-1">
+                <span class="text-cca-label-md text-neutral-title">Rate Configuration</span>
+                <span class="text-cca-base-sm text-neutral-subtitle">Rate setup flow.</span>
+              </div>
+              <div class="ml-auto">
+                <cca-status-badge>
+                  <div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm highlight">Concept</div>
+                </cca-status-badge>
+              </div>
+            </div>
+          </a>
+        </section>
+
+        <section class="flex flex-col gap-3">
+          <a class="proto-card rounded-lg border border-neutral-default surface-neutral-light p-4" href="_shared/patterns.html">
+            <div class="flex items-start gap-3">
+              <div class="flex flex-col gap-1">
+                <span class="text-cca-label-md text-neutral-title">Prototype patterns</span>
+                <span class="text-cca-base-sm text-neutral-subtitle">
+                  Shared building blocks — top bar, saved-view tabs, filter chips,
+                  badges, drawer. Start here before writing new markup.
+                </span>
+              </div>
+              <div class="ml-auto">
+                <cca-status-badge>
+                  <div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm neutral">Reference</div>
+                </cca-status-badge>
+              </div>
+            </div>
+          </a>
+        </section>
+      </div>
+    </cca-root>
+  </body>
+</html>

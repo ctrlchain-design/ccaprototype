@@ -1,0 +1,69 @@
+/*
+ * cca-order-mml-detail-info
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/order-detail-info/order-mml-detail-info.component.scss
+ * :host resolves to:  cca-order-mml-detail-info
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-order-mml-detail-info .text-shadow {
+  text-shadow: 0px 0px 3px #737373;
+}
+
+cca-order-mml-detail-info .shipper .contact-cards {
+  order: 0;
+}
+cca-order-mml-detail-info .shipper cca-order-assigned-carrier {
+  order: 1;
+}
+cca-order-mml-detail-info .shipper cca-booking-detail-container {
+  order: 2;
+}
+cca-order-mml-detail-info .shipper cca-load-and-vehicle-details {
+  order: 3;
+}
+cca-order-mml-detail-info .shipper cca-multimodal-edit-references {
+  order: 0;
+}
+cca-order-mml-detail-info .shipper cca-multimodal-date-time-detail {
+  order: 1;
+}
+cca-order-mml-detail-info .shipper cca-booking-detail-comments {
+  order: 2;
+}
+cca-order-mml-detail-info .shipper cca-location-info {
+  order: 3;
+}
+cca-order-mml-detail-info .shipper cca-booking-detail-co2 {
+  order: 4;
+}
+
+cca-order-mml-detail-info .finance .contact-cards {
+  order: 0;
+}
+cca-order-mml-detail-info .finance cca-order-assigned-carrier {
+  order: 1;
+}
+cca-order-mml-detail-info .finance cca-booking-detail-container {
+  order: 3;
+}
+cca-order-mml-detail-info .finance cca-load-and-vehicle-details {
+  order: 2;
+}
+cca-order-mml-detail-info .finance cca-multimodal-edit-references {
+  order: 1;
+}
+cca-order-mml-detail-info .finance cca-multimodal-date-time-detail {
+  order: 0;
+}
+cca-order-mml-detail-info .finance cca-booking-detail-comments {
+  order: 2;
+}
+cca-order-mml-detail-info .finance cca-location-info {
+  order: 3;
+}
+cca-order-mml-detail-info .finance cca-booking-detail-co2 {
+  order: 4;
+}

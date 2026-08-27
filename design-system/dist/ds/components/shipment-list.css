@@ -1,0 +1,13 @@
+/*
+ * cca-quotes-shipment-list
+ * Source:  libs/common/shared-tender/src/lib/shipment-list/quotes-shipment-list.component.scss
+ * :host resolves to:  cca-quotes-shipment-list
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-quotes-shipment-list table {
+  border-spacing: 0 0.125rem !important;
+}

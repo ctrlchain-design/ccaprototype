@@ -1,0 +1,18 @@
+/*
+ * cca-tender-create
+ * Source:  libs/carrier-tms/feature-tender-adhoc/src/lib/tender-create/tender-create.component.scss
+ * :host resolves to:  cca-tender-create
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-tender-create {
+  margin-bottom: calc(var(--spacing, 0.25rem) * 4);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing, 0.25rem) * 5);
+  height: inherit;
+}

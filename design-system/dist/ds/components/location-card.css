@@ -1,0 +1,27 @@
+/*
+ * cca-location-card
+ * Source:  libs/common/shared-shipment-detail/src/lib/location-info/stop-card/location-card/location-card.component.scss
+ * :host resolves to:  cca-location-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-location-card .custom-grid {
+  grid-template-columns: repeat(auto-fill, 50%);
+}
+
+cca-location-card .grid-column-last {
+  grid-column: 2/2;
+}
+
+@container (min-width: 700px) {
+  cca-location-card .custom-grid {
+    grid-template-columns: repeat(auto-fill, 33.33%);
+    grid-auto-flow: dense;
+  }
+  cca-location-card .grid-column-last {
+    grid-column: 3/3;
+  }
+}

@@ -1,0 +1,17 @@
+/*
+ * cca-carrier-input
+ * Source:  libs/common/shared-tender/src/lib/carrier-input/carrier-input.component.scss
+ * :host resolves to:  cca-carrier-input
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+@reference '#tailwind-config.css';
+cca-carrier-input .mat-mdc-form-field-icon-suffix div > button[ccaButton] {
+  height: 2.5rem !important;
+  padding: 0 !important;
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}

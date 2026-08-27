@@ -1,0 +1,79 @@
+/*
+ * cca-map-marker-trackable-object
+ * Source:  libs/common/map/src/lib/components/map-marker-trackable-object/map-marker-trackable-object.component.scss
+ * :host resolves to:  cca-map-marker-trackable-object
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-map-marker-trackable-object .trackable-object {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border-width: 0.2rem;
+}
+cca-map-marker-trackable-object .trackable-object .direction-arrow {
+  position: absolute;
+  transform-origin: center;
+  pointer-events: none;
+}
+cca-map-marker-trackable-object .trackable-object.status-active {
+  border-color: var(--pin-location-outline);
+  background-color: var(--pin-location-bg-default);
+}
+cca-map-marker-trackable-object .trackable-object.status-active cca-icon {
+  color: var(--pin-location-content-default);
+}
+cca-map-marker-trackable-object .trackable-object.status-active.selected {
+  background-color: var(--pin-location-bg-selected);
+}
+cca-map-marker-trackable-object .trackable-object.status-active.selected cca-icon:not(.direction-arrow) {
+  color: var(--pin-location-content-selected);
+}
+cca-map-marker-trackable-object .trackable-object.status-assigned {
+  border-color: var(--pin-info-outline);
+  background-color: var(--pin-info-bg-default);
+}
+cca-map-marker-trackable-object .trackable-object.status-assigned cca-icon {
+  color: var(--pin-info-content-default);
+}
+cca-map-marker-trackable-object .trackable-object.status-assigned.selected {
+  background-color: var(--pin-info-bg-hover);
+}
+cca-map-marker-trackable-object .trackable-object.status-assigned.selected cca-icon:not(.direction-arrow) {
+  color: var(--pin-info-content-chosen);
+}
+cca-map-marker-trackable-object .trackable-object.status-inactive {
+  border-color: var(--pin-offline-outline);
+  background-color: var(--pin-offline-bg);
+}
+cca-map-marker-trackable-object .trackable-object.status-inactive cca-icon {
+  color: var(--pin-offline-content);
+}
+cca-map-marker-trackable-object .trackable-object.status-inactive.selected {
+  background-color: var(--pin-offline-bg-selected);
+}
+cca-map-marker-trackable-object .trackable-object.status-inactive.selected cca-icon:not(.direction-arrow) {
+  color: var(--pin-offline-content-selected);
+}
+cca-map-marker-trackable-object .trackable-object.status-idle {
+  border-color: var(--pin-idle-outline);
+  background-color: var(--pin-idle-bg-default);
+}
+cca-map-marker-trackable-object .trackable-object.status-idle cca-icon {
+  color: var(--pin-idle-content-default);
+}
+cca-map-marker-trackable-object .trackable-object.status-idle.selected {
+  background-color: var(--pin-idle-bg-selected);
+}
+cca-map-marker-trackable-object .trackable-object.status-idle.selected cca-icon:not(.direction-arrow) {
+  color: var(--pin-idle-content-selected);
+}

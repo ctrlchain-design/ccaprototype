@@ -1,0 +1,60 @@
+/*
+ * cca-price-details-overview-edit-table
+ * Source:  libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/price-details-overview-dialog/price-details-overview-edit-table/price-details-overview-edit-table.component.scss
+ * :host resolves to:  cca-price-details-overview-edit-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-price-details-overview-edit-table .mat-mdc-table .mdc-data-table__row {
+  height: calc(var(--spacing, 0.25rem) * 22);
+}
+cca-price-details-overview-edit-table .mat-mdc-table .mdc-data-table__row td {
+  padding-block: calc(var(--spacing, 0.25rem) * 5) !important;
+  vertical-align: top !important;
+}
+cca-price-details-overview-edit-table .mat-column-startDate {
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: calc(var(--spacing, 0.25rem) * 2);
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-price-details-overview-edit-table .mat-column-endDate {
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: 0px;
+  padding-left: 0px;
+}
+cca-price-details-overview-edit-table .mat-column-commitmentFrequencyType {
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: calc(var(--spacing, 0.25rem) * 2);
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-price-details-overview-edit-table .mat-column-minCommittedShipments {
+  overflow: visible !important;
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: calc(var(--spacing, 0.25rem) * 2);
+  padding-left: 0px;
+}
+cca-price-details-overview-edit-table .mat-column-maxCommittedShipments {
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: 0px;
+  padding-left: 0px;
+}
+cca-price-details-overview-edit-table .mat-column-price {
+  max-width: calc(var(--spacing, 0.25rem) * 28);
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: 0px;
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-price-details-overview-edit-table .mat-column-rateType {
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: 0px;
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-price-details-overview-edit-table .mat-column-action {
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: 0px;
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+}

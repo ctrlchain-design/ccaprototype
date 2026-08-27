@@ -1,0 +1,19 @@
+/*
+ * cca-panel-resize-divider
+ * Source:  libs/ui/src/lib/panel-resize-divider/panel-resize-divider.component.scss
+ * :host resolves to:  cca-panel-resize-divider
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-panel-resize-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 9px;
+  flex-shrink: 0;
+  cursor: col-resize;
+  z-index: 10;
+}

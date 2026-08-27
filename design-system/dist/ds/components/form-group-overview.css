@@ -1,0 +1,23 @@
+/*
+ * cca-form-group-overview
+ * Source:  libs/enterprise/feature-group-management/src/lib/components/form-group-overview/form-group-overview.component.scss
+ * :host resolves to:  cca-form-group-overview
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-form-group-overview div {
+  display: flex;
+  flex-direction: column;
+}
+
+cca-form-group-overview div.data {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.8em;
+}
+cca-form-group-overview div.data span {
+  display: flex;
+}

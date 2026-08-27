@@ -1,0 +1,15 @@
+/*
+ * cca-group-detail-members
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-details/group-detail-members/group-detail-members.component.scss
+ * :host resolves to:  cca-group-detail-members
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-group-detail-members {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}

@@ -1,0 +1,29 @@
+/*
+ * cca-route-planning-map-dialog
+ * Source:  libs/common/shared-route-planning/src/lib/components/route-planning-map-dialog/route-planning-map-dialog.component.scss
+ * :host resolves to:  cca-route-planning-map-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-route-planning-map-dialog .maps-container {
+  position: relative;
+  width: 70vw;
+  height: 65vh;
+}
+
+cca-route-planning-map-dialog .dialog-container main {
+  padding: 0;
+  margin: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+cca-route-planning-map-dialog .autocomplete {
+  position: absolute;
+  z-index: 50;
+  width: calc(100% - 1.5rem);
+  margin: 0.75rem;
+  background: transparent;
+}

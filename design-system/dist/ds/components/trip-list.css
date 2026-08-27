@@ -1,0 +1,149 @@
+/*
+ * cca-trip-list-row-skeleton
+ * Source:  libs/carrier-tms/shared-trip/src/lib/trip-list/trip-list-row-skeleton.component.scss
+ * :host resolves to:  .trip-list-row
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+.trip-list-row [data-trip-list-column=ref] {
+  --trip-list-cell-width: var(--trip-list-col-ref);
+}
+.trip-list-row [data-trip-list-column=vehicle] {
+  --trip-list-cell-width: var(--trip-list-col-vehicle);
+}
+.trip-list-row [data-trip-list-column=trailer] {
+  --trip-list-cell-width: var(--trip-list-col-trailer);
+}
+.trip-list-row [data-trip-list-column=driver] {
+  --trip-list-cell-width: var(--trip-list-col-driver);
+}
+.trip-list-row [data-trip-list-column=orders] {
+  --trip-list-cell-width: var(--trip-list-col-orders);
+}
+.trip-list-row [data-trip-list-column=distance] {
+  --trip-list-cell-width: var(--trip-list-col-distance);
+}
+.trip-list-row [data-trip-list-column=cargo] {
+  --trip-list-cell-width: var(--trip-list-col-cargo);
+}
+.trip-list-row [data-trip-list-column=originLocation] {
+  --trip-list-cell-width: var(--trip-list-col-originLocation);
+}
+.trip-list-row [data-trip-list-column=destinationLocation] {
+  --trip-list-cell-width: var(--trip-list-col-destinationLocation);
+}
+.trip-list-row [data-trip-list-column=originCity] {
+  --trip-list-cell-width: var(--trip-list-col-originCity);
+}
+.trip-list-row [data-trip-list-column=destinationCity] {
+  --trip-list-cell-width: var(--trip-list-col-destinationCity);
+}
+.trip-list-row [data-trip-list-column=startTime] {
+  --trip-list-cell-width: var(--trip-list-col-startTime);
+}
+.trip-list-row [data-trip-list-column=endTime] {
+  --trip-list-cell-width: var(--trip-list-col-endTime);
+}
+.trip-list-row [data-trip-list-column=creationDate] {
+  --trip-list-cell-width: var(--trip-list-col-creationDate);
+}
+.trip-list-row [data-trip-list-column=firstPickupReference] {
+  --trip-list-cell-width: var(--trip-list-col-firstPickupReference);
+}
+.trip-list-row [data-trip-list-column=lastDeliveryReference] {
+  --trip-list-cell-width: var(--trip-list-col-lastDeliveryReference);
+}
+.trip-list-row [data-trip-list-column=temperature] {
+  --trip-list-cell-width: var(--trip-list-col-temperature);
+}
+.trip-list-row [data-trip-list-column] {
+  width: var(--trip-list-cell-width);
+  min-width: var(--trip-list-cell-width);
+  max-width: var(--trip-list-cell-width);
+  flex: 0 0 auto;
+}
+.trip-list-row .trip-list-col-leading {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-neutral-light);
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+  transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  width: var(--trip-list-col-leading);
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+}
+.trip-list-row .trip-list-col-leading::after {
+  width: 0.5rem;
+  right: -7px;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  display: block;
+  opacity: 0.6;
+  content: "";
+  border-left-style: var(--tw-border-style);
+  border-left-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0));
+}
+.trip-list-row .trip-list-cell {
+  display: flex;
+  height: 100%;
+  min-width: 0px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: calc(var(--spacing, 0.25rem) * 0.5);
+  overflow: hidden;
+  padding-inline: calc(var(--spacing, 0.25rem) * 2);
+  font-size: var(--text-xs, 0.75rem);
+  line-height: var(--tw-leading, var(--text-xs--line-height, calc(1 / 0.75)));
+}
+.trip-list-row {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 12.5);
+  flex-shrink: 0;
+  align-items: center;
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+}
+.trip-list-row .trip-list-skeleton-bar {
+  height: calc(var(--spacing, 0.25rem) * 4);
+  width: 100%;
+  border-radius: var(--radius-xs, 0.125rem);
+  background: linear-gradient(90deg, var(--surface-neutral-default) 25%, var(--surface-neutral-dark) 50%, var(--surface-neutral-default) 75%);
+  background-size: 200% 100%;
+  animation: trip-list-skeleton-shimmer 1.5s infinite linear;
+}
+@keyframes trip-list-skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

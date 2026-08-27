@@ -1,0 +1,21 @@
+/*
+ * cca-publish-tender-dialog
+ * Source:  libs/common/shared-tender/src/lib/dialogs/publish-tender-dialog/publish-tender-dialog.component.scss
+ * :host resolves to:  cca-publish-tender-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-publish-tender-dialog .mat-horizontal-content-container {
+  padding-bottom: 0;
+}
+
+cca-publish-tender-dialog .mat-mdc-tab-group {
+  overflow: hidden;
+}
+
+cca-publish-tender-dialog .mat-stepper-horizontal:not(.mat-stepper-animating) .mat-horizontal-stepper-content.mat-horizontal-stepper-content-current {
+  height: 100% !important;
+}

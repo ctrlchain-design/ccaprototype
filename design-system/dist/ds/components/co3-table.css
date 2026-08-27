@@ -1,0 +1,16 @@
+/*
+ * cca-co3-table
+ * Source:  libs/enterprise/feature-co3-management/src/lib/co3-table/co3-table.component.scss
+ * :host resolves to:  cca-co3-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-co3-table .mat-drawer-container {
+  overflow: visible;
+}
+cca-co3-table .mat-drawer-container .mat-drawer-content {
+  overflow: visible;
+}

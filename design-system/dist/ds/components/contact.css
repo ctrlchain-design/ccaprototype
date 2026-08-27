@@ -1,0 +1,16 @@
+/*
+ * cca-contact
+ * Source:  libs/ui/src/lib/contact/contact.component.scss
+ * :host resolves to:  cca-contact
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-contact .icon-text-grid {
+  grid-template-columns: 1.5rem 1fr;
+  display: grid;
+  align-items: center;
+}

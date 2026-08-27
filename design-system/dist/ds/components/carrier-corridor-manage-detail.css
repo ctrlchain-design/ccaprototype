@@ -1,0 +1,24 @@
+/*
+ * cca-carrier-corridor-manage-detail
+ * Source:  libs/enterprise/feature-carrier-corridor-management/src/lib/carrier-corridor-manage-detail/carrier-corridor-manage-detail.component.scss
+ * :host resolves to:  cca-carrier-corridor-manage-detail
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-carrier-corridor-manage-detail .combo-box {
+  border-color: var(--mat-form-field-outlined-outline-color, var(--mat-app-outline));
+  border-width: var(--mat-form-field-outlined-outline-width);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top: none;
+}
+
+cca-carrier-corridor-manage-detail .combo-box-search .mdc-notched-outline .mat-mdc-notch-piece.mdc-notched-outline__leading {
+  border-bottom-left-radius: 0px;
+}
+cca-carrier-corridor-manage-detail .combo-box-search .mdc-notched-outline .mat-mdc-notch-piece.mdc-notched-outline__trailing {
+  border-bottom-right-radius: 0px;
+}

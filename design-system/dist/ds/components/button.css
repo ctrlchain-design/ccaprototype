@@ -1,0 +1,399 @@
+/*
+ * button[ccaButton], a[ccaButton]
+ * Source:  libs/ui/src/lib/button/button.component.scss
+ * :host resolves to:  .cca-btn
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+.cca-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  border-radius: var(--mat-shape-small, 0.5rem);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  white-space: nowrap;
+  user-select: none;
+  outline-offset: 0;
+}
+.cca-btn cca-icon,
+.cca-btn cca-icon mat-icon,
+.cca-btn cca-icon .mat-icon {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  flex-shrink: 0;
+}
+.cca-btn:disabled {
+  cursor: not-allowed;
+}
+.cca-btn:hover {
+  text-decoration: none;
+}
+
+.cca-btn.cca-btn--x-small {
+  height: 2rem;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+}
+.cca-btn.cca-btn--x-small cca-icon,
+.cca-btn.cca-btn--x-small cca-icon mat-icon,
+.cca-btn.cca-btn--x-small cca-icon .mat-icon {
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  line-height: 1rem !important;
+}
+
+.cca-btn.cca-btn--small {
+  height: 2.25rem;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+}
+.cca-btn.cca-btn--small cca-icon,
+.cca-btn.cca-btn--small cca-icon mat-icon,
+.cca-btn.cca-btn--small cca-icon .mat-icon {
+  font-size: 1.25rem !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  line-height: 1.25rem !important;
+}
+
+.cca-btn.cca-btn--large {
+  height: 3.5rem;
+  padding: 0 1rem;
+}
+
+.cca-btn.cca-btn--x-large {
+  height: 4rem;
+  padding: 0 1.25rem;
+}
+.cca-btn.cca-btn--x-large cca-icon,
+.cca-btn.cca-btn--x-large cca-icon mat-icon,
+.cca-btn.cca-btn--x-large cca-icon .mat-icon {
+  font-size: 2rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  line-height: 2rem !important;
+}
+
+.cca-btn.cca-btn--icon-only {
+  height: auto;
+  padding: 0.75rem;
+}
+.cca-btn.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 1.5rem !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  line-height: 1.5rem !important;
+}
+
+.cca-btn.cca-btn--x-small.cca-btn--icon-only {
+  height: auto;
+  padding: 0.5rem;
+}
+.cca-btn.cca-btn--x-small.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--x-small.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--x-small.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  line-height: 1rem !important;
+}
+
+.cca-btn.cca-btn--small.cca-btn--icon-only {
+  height: auto;
+  padding: 0.5rem;
+}
+.cca-btn.cca-btn--small.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--small.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--small.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 1.25rem !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  line-height: 1.25rem !important;
+}
+
+.cca-btn.cca-btn--large.cca-btn--icon-only {
+  height: auto;
+  padding: 1rem;
+}
+
+.cca-btn.cca-btn--x-large.cca-btn--icon-only {
+  height: auto;
+  padding: 1.25rem;
+}
+.cca-btn.cca-btn--x-large.cca-btn--icon-only cca-icon,
+.cca-btn.cca-btn--x-large.cca-btn--icon-only cca-icon mat-icon,
+.cca-btn.cca-btn--x-large.cca-btn--icon-only cca-icon .mat-icon {
+  font-size: 2rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  line-height: 2rem !important;
+}
+
+.cca-btn.cca-btn--tertiary.cca-btn--icon-only,
+.cca-btn.cca-btn--danger-text.cca-btn--icon-only {
+  border: none;
+}
+
+.cca-btn.cca-btn--primary {
+  background-color: var(--button-primary-bg-default);
+  color: var(--button-primary-label);
+}
+.cca-btn.cca-btn--primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-hovered);
+}
+.cca-btn.cca-btn--primary:focus-visible:not(:active) {
+  background-color: var(--button-primary-bg-default);
+  border-color: var(--button-primary-border-focused);
+  outline: 2px solid var(--button-primary-border-focused);
+}
+.cca-btn.cca-btn--primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-pressed);
+}
+.cca-btn.cca-btn--primary:disabled {
+  background-color: var(--surface-neutral-disabled);
+  color: var(--text-neutral-invert);
+}
+
+.cca-btn.cca-btn--secondary {
+  background-color: transparent;
+  color: var(--button-secondary-label);
+  border-color: var(--button-secondary-border-default);
+}
+.cca-btn.cca-btn--secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-hovered);
+}
+.cca-btn.cca-btn--secondary:focus-visible:not(:active) {
+  background-color: transparent;
+  border-color: var(--button-secondary-border-focused);
+  outline: 2px solid var(--button-secondary-border-focused);
+}
+.cca-btn.cca-btn--secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-pressed);
+  border-color: var(--button-secondary-border-pressed);
+}
+.cca-btn.cca-btn--secondary:disabled {
+  color: var(--icon-disabled);
+  border-color: var(--button-disabled);
+}
+
+.cca-btn.cca-btn--subtle {
+  background-color: transparent;
+  color: var(--button-subtle-label-default);
+  border-color: var(--button-subtle-border-default);
+}
+.cca-btn.cca-btn--subtle:hover:not(:disabled) {
+  color: var(--button-subtle-label-hovered);
+  border-color: var(--button-subtle-border-hovered);
+}
+.cca-btn.cca-btn--subtle:focus-visible:not(:active) {
+  border-color: var(--button-subtle-border-focused);
+  outline: 2px solid var(--button-subtle-border-focused);
+}
+.cca-btn.cca-btn--subtle:active:not(:disabled) {
+  background-color: var(--button-subtle-bg-pressed);
+  color: var(--button-subtle-label-pressed);
+  border-color: var(--button-subtle-border-pressed);
+}
+.cca-btn.cca-btn--subtle:disabled {
+  color: var(--icon-disabled);
+  border-color: var(--button-disabled);
+}
+
+.cca-btn.cca-btn--subtle.cca-btn--icon-only {
+  color: var(--icon-neutral);
+}
+.cca-btn.cca-btn--subtle.cca-btn--icon-only:disabled {
+  color: var(--icon-disabled);
+}
+
+.cca-btn.cca-btn--tertiary {
+  background-color: transparent;
+  color: var(--button-text-label);
+}
+.cca-btn.cca-btn--tertiary:hover:not(:disabled) {
+  color: var(--button-text-label-hover);
+  background-color: var(--button-text-bg-hover);
+}
+.cca-btn.cca-btn--tertiary:focus-visible:not(:active) {
+  outline: 2px solid var(--button-secondary-border-focused);
+}
+.cca-btn.cca-btn--tertiary:active:not(:disabled) {
+  background-color: var(--button-text-bg-pressed);
+}
+.cca-btn.cca-btn--tertiary:disabled {
+  color: var(--icon-disabled);
+}
+
+.cca-btn.cca-btn--link {
+  background-color: transparent;
+  color: var(--text-brand-default);
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.cca-btn.cca-btn--link:hover:not(:disabled) {
+  color: var(--text-brand-dark);
+}
+.cca-btn.cca-btn--link:focus-visible:not(:active) {
+  outline: 2px solid var(--border-brand-light);
+  border-radius: 2px;
+}
+.cca-btn.cca-btn--link:active:not(:disabled) {
+  color: var(--text-brand-darker);
+}
+.cca-btn.cca-btn--link:disabled {
+  color: var(--text-neutral-disabled);
+  text-decoration-color: var(--text-neutral-disabled);
+}
+
+.cca-btn.cca-btn--danger-primary {
+  background-color: var(--button-primary-bg-critical);
+  color: var(--button-primary-label);
+}
+.cca-btn.cca-btn--danger-primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-critical-hovered);
+}
+.cca-btn.cca-btn--danger-primary:focus-visible:not(:active) {
+  background-color: var(--button-primary-bg-critical);
+  outline: 2px solid var(--button-secondary-border-critical-focused);
+}
+.cca-btn.cca-btn--danger-primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-critical-pressed);
+}
+.cca-btn.cca-btn--danger-primary:disabled {
+  background-color: var(--surface-neutral-disabled);
+  color: var(--text-neutral-invert);
+}
+
+.cca-btn.cca-btn--danger-secondary {
+  background-color: transparent;
+  color: var(--button-text-label-critical);
+  border-color: var(--button-secondary-border-critical);
+}
+.cca-btn.cca-btn--danger-secondary:hover:not(:disabled) {
+  background-color: var(--critical-surface-lighter);
+  border-color: var(--button-secondary-border-critical);
+}
+.cca-btn.cca-btn--danger-secondary:focus-visible:not(:active) {
+  border-color: var(--button-secondary-border-critical-focused);
+  outline: 2px solid var(--button-secondary-border-critical-focused);
+}
+.cca-btn.cca-btn--danger-secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-critical-pressed);
+  border-color: var(--button-secondary-border-critical);
+}
+.cca-btn.cca-btn--danger-secondary:disabled {
+  color: var(--text-neutral-disabled);
+  border-color: var(--text-neutral-disabled);
+}
+
+.cca-btn.cca-btn--danger-text {
+  background-color: transparent;
+  color: var(--button-text-label-critical);
+}
+.cca-btn.cca-btn--danger-text:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-critical-hovered);
+}
+.cca-btn.cca-btn--danger-text:focus-visible:not(:active) {
+  outline: 2px solid var(--button-secondary-border-critical-focused);
+}
+.cca-btn.cca-btn--danger-text:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-critical-pressed);
+}
+.cca-btn.cca-btn--danger-text:disabled {
+  color: var(--icon-disabled);
+}
+
+.cca-btn.cca-btn--danger-text.cca-btn--icon-only {
+  color: var(--icon-danger);
+}
+
+.cca-btn.cca-btn--warning-primary {
+  background-color: var(--button-primary-bg-warning);
+  color: var(--button-primary-label);
+}
+.cca-btn.cca-btn--warning-primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-warning-hovered);
+}
+.cca-btn.cca-btn--warning-primary:focus-visible:not(:active) {
+  background-color: var(--button-primary-bg-warning);
+  outline: 2px solid var(--warning-border-light);
+}
+.cca-btn.cca-btn--warning-primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-warning-pressed);
+}
+.cca-btn.cca-btn--warning-primary:disabled {
+  background-color: var(--surface-neutral-disabled);
+  color: var(--text-neutral-invert);
+}
+
+.cca-btn.cca-btn--warning-secondary {
+  background-color: transparent;
+  color: var(--button-text-label-warning);
+  border-color: var(--button-secondary-border-warning);
+}
+.cca-btn.cca-btn--warning-secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-warning-hovered);
+}
+.cca-btn.cca-btn--warning-secondary:focus-visible:not(:active) {
+  border-color: var(--button-secondary-border-warning-focused);
+  outline: 2px solid var(--button-secondary-border-warning-focused);
+}
+.cca-btn.cca-btn--warning-secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-warning-pressed);
+}
+.cca-btn.cca-btn--warning-secondary:disabled {
+  color: var(--button-disabled);
+  border-color: var(--button-disabled);
+}
+
+.cca-btn.cca-btn--icon {
+  background-color: transparent;
+  color: var(--text-neutral-default);
+  height: auto;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--mat-shape-small, 0.5rem);
+}
+.cca-btn.cca-btn--icon:hover:not(:disabled) {
+  background-color: var(--surface-neutral-default);
+}
+.cca-btn.cca-btn--icon:focus-visible:not(:active) {
+  outline: 2px solid var(--border-brand-light);
+}
+.cca-btn.cca-btn--icon:active:not(:disabled) {
+  background-color: var(--surface-neutral-dark);
+}
+.cca-btn.cca-btn--icon:disabled {
+  color: var(--text-neutral-disabled);
+}
+
+.cca-btn.cca-btn--icon.cca-btn--small {
+  height: auto;
+  padding: 0.5rem;
+}
+
+.cca-btn.cca-btn--icon.cca-btn--x-small {
+  height: auto;
+  padding: 0.375rem;
+}

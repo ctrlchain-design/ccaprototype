@@ -1,0 +1,18 @@
+/*
+ * cca-select-sub-group
+ * Source:  libs/common/addressbook/src/lib/address-create/steps/select-address-sub-group/select-address-sub-group.component.scss
+ * :host resolves to:  cca-select-sub-group
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-select-sub-group table .mdc-data-table__cell {
+  border: none;
+  padding: 0.5rem 0;
+}
+
+cca-select-sub-group .mdc-data-table__row:last-child .mat-mdc-cell {
+  border-bottom: 0 !important;
+}

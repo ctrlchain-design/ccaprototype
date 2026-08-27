@@ -1,0 +1,39 @@
+/*
+ * cca-overview
+ * Source:  libs/admin/feature-translation-management/src/lib/overview/overview.component.scss
+ * :host resolves to:  cca-overview
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-overview table.mat-mdc-table .mdc-data-table__row.legacy {
+  color: var(--text-neutral-disabled);
+}
+cca-overview table.mat-mdc-table .mdc-data-table__row.legacy td:first-child {
+  box-shadow: inset 8px 0 var(--critical-border);
+  padding-left: 1rem;
+}
+
+cca-overview table.mat-mdc-table .mdc-data-table__row.new td:first-child {
+  box-shadow: inset 8px 0 var(--success-border);
+  padding-left: 1rem;
+}
+
+cca-overview table.mat-mdc-table .mdc-data-table__row.untranslated td:first-child {
+  box-shadow: inset 8px 0 var(--accent-blue-default);
+  padding-left: 1rem;
+}
+
+cca-overview .new-menu-item {
+  box-shadow: inset 8px 0 var(--success-border);
+}
+
+cca-overview .untranslated-menu-item {
+  box-shadow: inset 8px 0 var(--accent-blue-default);
+}
+
+cca-overview .legacy-menu-item {
+  box-shadow: inset 8px 0 var(--critical-border);
+}

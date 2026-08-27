@@ -1,0 +1,8 @@
+/*
+ * Generated — mirrors the font loading in apps/platform/src/index.html.
+ *
+ * Roboto is the only family the platform loads. IBM Plex Sans and Inter
+ * are deliberately absent: no platform surface uses them.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');

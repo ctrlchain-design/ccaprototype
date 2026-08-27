@@ -1,0 +1,90 @@
+{
+  "$comment": "Type utilities from shared/styles/tailwind/tailwind.css. Roboto is the only family.",
+  "fontFamily": "Roboto",
+  "weights": [
+    300,
+    400,
+    500,
+    700
+  ],
+  "styles": [
+    {
+      "class": "text-2xs",
+      "font-size": "0.625rem"
+    },
+    {
+      "class": "text-cca-base-sm",
+      "font-size": "0.875rem",
+      "line-height": "1.25rem",
+      "font-weight": "400"
+    },
+    {
+      "class": "text-cca-base",
+      "font-size": "1rem",
+      "line-height": "1.5rem",
+      "font-weight": "400"
+    },
+    {
+      "class": "text-cca-label-2xs",
+      "font-size": "0.5rem",
+      "line-height": "0.625rem",
+      "font-weight": "400"
+    },
+    {
+      "class": "text-cca-label-xs",
+      "font-size": "0.625rem",
+      "line-height": "0.625rem",
+      "font-weight": "400"
+    },
+    {
+      "class": "text-cca-label-sm",
+      "font-size": "0.75rem",
+      "line-height": "1rem",
+      "font-weight": "400"
+    },
+    {
+      "class": "text-cca-label-md",
+      "font-size": "0.875rem",
+      "line-height": "1.25rem",
+      "font-weight": "500"
+    },
+    {
+      "class": "text-cca-label-lg",
+      "font-size": "1rem",
+      "line-height": "1.5rem",
+      "font-weight": "500"
+    },
+    {
+      "class": "text-cca-label-lg-weak",
+      "font-size": "1rem",
+      "line-height": "1.5rem",
+      "font-weight": "400"
+    },
+    {
+      "class": "text-cca-tab",
+      "font-size": "1rem",
+      "line-height": "1.5rem",
+      "font-weight": "500",
+      "text-transform": "uppercase"
+    },
+    {
+      "class": "text-cca-link",
+      "font-size": "1rem",
+      "line-height": "1.5rem",
+      "font-weight": "500",
+      "text-decoration-line": "underline"
+    },
+    {
+      "class": "text-cca-n-badge",
+      "font-size": "0.75rem",
+      "line-height": "1rem",
+      "font-weight": "500"
+    },
+    {
+      "class": "text-cca-counter",
+      "font-size": "2rem",
+      "line-height": "2.25rem",
+      "font-weight": "700"
+    }
+  ]
+}

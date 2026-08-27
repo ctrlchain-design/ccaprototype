@@ -1,0 +1,25 @@
+/*
+ * cca-form-group-co2
+ * Source:  libs/enterprise/feature-group-management/src/lib/components/form-group-co2/form-group-co2.component.scss
+ * :host resolves to:  cca-form-group-co2
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-form-group-co2 {
+  width: 100%;
+}
+cca-form-group-co2 form {
+  width: 55%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: fit-content;
+  grid-auto-flow: row;
+}
+cca-form-group-co2 form mat-form-field {
+  margin-top: 10px;
+  margin-right: 10px;
+}

@@ -1,0 +1,17 @@
+/*
+ * cca-surcharge-alias-table
+ * Source:  libs/finance/feature-invoice-validation/src/lib/invoice-validation-settings/surcharge-harmonisation/surcharge-alias-table/surcharge-alias-table.component.scss
+ * :host resolves to:  cca-surcharge-alias-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+@reference '#tailwind-config.css';
+cca-surcharge-alias-table {
+  display: flex;
+  height: inherit;
+  flex-direction: column;
+  overflow: hidden;
+}

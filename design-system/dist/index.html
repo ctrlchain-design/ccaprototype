@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CtrlChain Design System</title>
+    <link rel="stylesheet" href="fonts/fonts.css" />
+    <link rel="stylesheet" href="ds/index.css" />
+    <style>
+      body {
+        margin: 0;
+        background: var(--surface-neutral-default);
+        color: var(--text-neutral-body);
+        font-family: Roboto, 'Helvetica Neue', sans-serif;
+      }
+      /* The platform's brand watermark lives on body::before. It belongs to the
+         app's chrome, not to this catalogue, where it sits behind the samples. */
+      body::before { display: none; }
+      .wrap { max-width: 1180px; margin: 0 auto; padding: 48px 32px 96px; }
+      h1 { margin: 0 0 8px; }
+      h2 { margin: 48px 0 8px; }
+      p.lede { color: var(--text-neutral-subtitle); margin: 0 0 24px; max-width: 720px; }
+      .cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
+      .card {
+        display: flex; flex-direction: column; gap: 4px;
+        padding: 14px 16px; border-radius: 8px; text-decoration: none;
+        border: 1px solid var(--border-neutral-default);
+        background: var(--surface-neutral-light);
+        color: var(--text-neutral-body);
+      }
+      .card:hover { border-color: var(--border-brand-default); }
+      .card span { font-size: 12px; color: var(--text-neutral-subtitle); }
+
+      /* Gallery cards: the live sample on top, the label underneath. */
+      .gallery {
+        display: grid; gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+      }
+      .gcard {
+        display: flex; flex-direction: column; overflow: hidden;
+        border: 1px solid var(--border-neutral-default); border-radius: 10px;
+        background: var(--surface-neutral-light);
+        text-decoration: none; color: var(--text-neutral-body);
+      }
+      .gcard:hover { border-color: var(--border-brand-default); }
+      .gcard-preview {
+        display: flex; align-items: center; justify-content: center;
+        flex-wrap: wrap; gap: 8px;
+        padding: 20px; min-height: 132px;
+        background: var(--surface-neutral-default);
+        /* Absorbs the row's extra height so every card's label lines up. */
+        flex: 1;
+        /* Samples are real components at real sizes; keep an oversized one from
+           stretching its card rather than scaling the whole grid to fit. */
+        overflow: hidden;
+      }
+      .gcard-meta {
+        display: flex; flex-direction: column; gap: 2px;
+        padding: 12px 14px;
+        border-top: 1px solid var(--border-neutral-default);
+        text-decoration: none; color: var(--text-neutral-body);
+      }
+      .gcard-meta:hover { background: var(--surface-neutral-default); }
+      .gcard-meta span { font-size: 12px; color: var(--text-neutral-subtitle); }
+      details {
+        border: 1px solid var(--border-neutral-default); border-radius: 8px;
+        background: var(--surface-neutral-light); margin-bottom: 10px;
+      }
+      summary { cursor: pointer; padding: 12px 16px; }
+      .count {
+        display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px;
+        font-size: 11px; background: var(--surface-neutral-default);
+        color: var(--text-neutral-subtitle);
+      }
+      .scroll { overflow-x: auto; border-top: 1px solid var(--border-neutral-default); }
+      table { width: 100%; border-collapse: collapse; font-size: 12px; }
+      th, td { text-align: left; padding: 7px 16px; }
+      thead tr { border-bottom: 1px solid var(--border-neutral-default); }
+      tbody tr + tr { border-top: 1px solid var(--border-neutral-default); }
+      td.num, th.num { text-align: right; white-space: nowrap; }
+      code { font-size: 11px; }
+      code.src { color: var(--text-neutral-caption); }
+      a { color: var(--text-brand-default); }
+      .stats { display: flex; gap: 28px; flex-wrap: wrap; margin: 24px 0 0; }
+      .stat strong { display: block; font-size: 26px; }
+      .stat span { font-size: 12px; color: var(--text-neutral-subtitle); }
+      .note {
+        margin-top: 32px; padding: 14px 16px; border-radius: 8px; font-size: 13px;
+        background: var(--info-surface-lightest); color: var(--info-text-dark);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>CtrlChain Design System</h1>
+      <p class="lede">
+        Generated from the platform source. Every stylesheet here is the CSS the app
+        actually ships, and every token value is read out of the code at build time —
+        so nothing on these pages can describe something the app does not do.
+      </p>
+
+      <div class="stats">
+        <div class="stat"><strong>492</strong><span>design tokens</span></div>
+        <div class="stat"><strong>492</strong><span>utility classes</span></div>
+        <div class="stat"><strong>13</strong><span>type styles</span></div>
+        <div class="stat"><strong>252</strong><span>icons</span></div>
+        <div class="stat"><strong>40</strong><span>shared components</span></div>
+        <div class="stat"><strong>314</strong><span>components with CSS</span></div>
+      </div>
+
+      <h2>Components</h2>
+      <p class="lede">
+        Every sample below is the real component, rendered against the real CSS —
+        not a picture of one. Click through for all states, the metrics and the
+        markup to copy.
+      </p>
+      <div class="gallery"><div class="gcard"><div class="gcard-preview"><button ccaButton class="cca-btn cca-btn--primary cca-btn--small">Create</button><button ccaButton class="cca-btn cca-btn--secondary cca-btn--small">Cancel</button><button ccaButton class="cca-btn cca-btn--icon cca-btn--small cca-btn--icon-only" aria-label="Edit"><cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pencil mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon></button></div><a class="gcard-meta" href="components/button.html"><strong>Button</strong><span>11 hierarchies · 5 sizes</span></a></div><div class="gcard"><div class="gcard-preview"><div style="width:100%"><mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary">
+  <div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--label-floating">
+    <div class="mat-mdc-form-field-flex">
+      <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+        <div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>
+        <div class="mdc-notched-outline__notch mat-mdc-notch-piece" style="width: 63px; max-width: calc(100% - 60px)">
+          <label class="mdc-floating-label mat-mdc-floating-label mdc-floating-label--float-above" for="cca-input-7">Reference</label>
+        </div>
+        <div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div>
+      </div>
+      <div class="mat-mdc-form-field-infix"><input id="cca-input-7" type="text" class="mat-mdc-input-element mdc-text-field__input" value="CCA-4281" /></div>
+    </div>
+  </div>
+  <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
+</mat-form-field></div></div><a class="gcard-meta" href="components/input.html"><strong>Input</strong><span>Outlined · 48px infix</span></a></div><div class="gcard"><div class="gcard-preview"><div style="width:100%"><cca-search-field style="display:block">
+  <mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary mat-mdc-form-field-has-icon-prefix w-full">
+    <div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+      <div class="mat-mdc-form-field-flex">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>
+          <div class="mdc-notched-outline__notch mat-mdc-notch-piece"></div>
+          <div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div>
+        </div>
+        <div class="mat-mdc-form-field-icon-prefix"><cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-search mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon></div>
+        <div class="mat-mdc-form-field-infix">
+          <input id="cca-search-8" type="text" class="mat-mdc-input-element mdc-text-field__input"
+            placeholder="Search shipments" value="" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+    <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
+  </mat-form-field>
+</cca-search-field></div></div><a class="gcard-meta" href="components/search-bar.html"><strong>Search Bar</strong><span>Placeholder-only field</span></a></div><div class="gcard"><div class="gcard-preview"><div class="page-container" style="width:100%">
+        <div class="text-cca-label-lg text-neutral-title">Shipment</div>
+        <div class="text-cca-base-sm text-neutral-subtitle">Rotterdam → Berlin</div>
+      </div></div><a class="gcard-meta" href="components/card.html"><strong>Card</strong><span>.page-container and panels</span></a></div><div class="gcard"><div class="gcard-preview"><div class="surface-neutral-default" style="position:relative;width:100%;padding:14px;display:flex;justify-content:center">
+  <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"></div>
+  <div class="mdc-dialog--open" style="width:100%;position:relative;z-index:1000">
+  <div class="mat-mdc-dialog-surface mdc-dialog__surface" style="position:relative;width:100%">
+    <div class="dialog-container" style="height:auto">
+      <header><div class="title-wrapper"><h2 style="font-size:15px">Assign carrier</h2></div></header>
+      <footer style="padding:12px">
+        <button ccaButton class="cca-btn cca-btn--subtle cca-btn--small">Cancel</button>
+        <button ccaButton class="cca-btn cca-btn--primary cca-btn--small">Assign</button>
+      </footer>
+    </div>
+  </div>
+  </div>
+</div></div><a class="gcard-meta" href="components/modal.html"><strong>Modal</strong><span>header / main / footer</span></a></div><div class="gcard"><div class="gcard-preview"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">
+  <thead>
+    <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row"><th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference</th><th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th></tr>
+  </thead>
+  <tbody class="mdc-data-table__content">
+      <tr class="mat-mdc-row mdc-data-table__row"><td class="mat-mdc-cell mdc-data-table__cell">CCA-4281</td><td class="mat-mdc-cell mdc-data-table__cell">In transit</td></tr>
+      <tr class="mat-mdc-row mdc-data-table__row"><td class="mat-mdc-cell mdc-data-table__cell">CCA-4282</td><td class="mat-mdc-cell mdc-data-table__cell">Assigned</td></tr>
+  </tbody>
+</table></div><a class="gcard-meta" href="components/table.html"><strong>Table</strong><span>14px cells</span></a></div><div class="gcard"><div class="gcard-preview"><mat-tab-group class="mat-mdc-tab-group mat-primary cca-tabs">
+  <mat-tab-header class="mat-mdc-tab-header">
+    <div class="mat-mdc-tab-label-container">
+      <div class="mat-mdc-tab-list" role="tablist">
+        <div class="mat-mdc-tab-labels">
+          <div class="mat-mdc-tab mdc-tab mat-mdc-focus-indicator mdc-tab--active" role="tab" aria-selected="true">
+        <span class="mdc-tab__ripple"></span>
+        <span class="mdc-tab__content">
+          <span class="mdc-tab__text-label">Overview</span>
+        </span>
+        <span class="mdc-tab-indicator mdc-tab-indicator--active">
+          <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+        </span>
+      </div>
+<div class="mat-mdc-tab mdc-tab mat-mdc-focus-indicator" role="tab" aria-selected="false">
+        <span class="mdc-tab__ripple"></span>
+        <span class="mdc-tab__content">
+          <span class="mdc-tab__text-label">Stops</span>
+        </span>
+        <span class="mdc-tab-indicator">
+          <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+        </span>
+      </div>
+        </div>
+      </div>
+    </div>
+  </mat-tab-header>
+</mat-tab-group></div><a class="gcard-meta" href="components/tabs.html"><strong>Tabs</strong><span>.cca-tabs · .menu-bar</span></a></div><div class="gcard"><div class="gcard-preview"><mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable cca-chip mat-primary mdc-evolution-chip--selected">
+  <span class="mat-mdc-chip-focus-overlay"></span>
+  <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
+    <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="true">
+      <span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">
+        <span class="mdc-evolution-chip__checkmark">
+          <svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">
+            <path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor"
+              d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+          </svg>
+        </span>
+      </span>
+      <span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">ADR</span>
+    </span>
+  </span>
+</mat-chip-option><mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable cca-chip mat-primary">
+  <span class="mat-mdc-chip-focus-overlay"></span>
+  <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
+    <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="false">
+      <span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">
+        <span class="mdc-evolution-chip__checkmark">
+          <svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">
+            <path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor"
+              d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+          </svg>
+        </span>
+      </span>
+      <span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">Tail lift</span>
+    </span>
+  </span>
+</mat-chip-option></div><a class="gcard-meta" href="components/chips.html"><strong>Chips</strong><span>40px · selectable</span></a></div><div class="gcard"><div class="gcard-preview"><cca-status-badge><div class="primary flex w-fit items-center justify-center rounded-full px-2.5 py-1 text-cca-base-sm font-medium whitespace-nowrap">In transit</div></cca-status-badge><cca-status-badge><div class="warning flex w-fit items-center justify-center rounded-full px-2.5 py-1 text-cca-base-sm font-medium whitespace-nowrap">Delayed</div></cca-status-badge><cca-status-badge><div class="danger flex w-fit items-center justify-center rounded-full px-2.5 py-1 text-cca-base-sm font-medium whitespace-nowrap">Failed</div></cca-status-badge></div><a class="gcard-meta" href="components/badge.html"><strong>Badge</strong><span>5 components</span></a></div><div class="gcard"><div class="gcard-preview"><div class="tippy-box cca-tippy" data-placement="top" style="position:relative;max-width:200px">
+        <div class="tippy-content" style="padding:5px 9px">Arrives 14:20</div>
+        <div class="tippy-arrow" style="position:absolute;left:calc(50% - 8px)"></div>
+      </div></div><a class="gcard-meta" href="components/tooltip.html"><strong>Tooltip</strong><span>tippy.js · 2 themes</span></a></div><div class="gcard"><div class="gcard-preview"><div style="width:100%;display:flex;justify-content:center"><cca-main style="display:block"><div class="appContent" style="display:block">
+  <cca-side-menu style="display:block">
+    <div class="menu-wrapper" style="height:auto;justify-content:flex-start">
+      <div class="side-menu" style="padding:8px 8px 4px">
+        <div class="menu-items">
+          <cca-side-menu-item style="display:block;width:100%">
+            <a class="a-menu-item active" href="#"><div class="menu-item"><cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-truck mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+              <span class="menu-item-title">Trips</span></div></a>
+          </cca-side-menu-item>
+          <cca-side-menu-item style="display:block;width:100%">
+            <a class="a-menu-item" href="#"><div class="menu-item"><cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-box mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+              <span class="menu-item-title">Orders</span></div></a>
+          </cca-side-menu-item>
+        </div>
+      </div>
+    </div>
+  </cca-side-menu>
+</div></cca-main></div></div><a class="gcard-meta" href="components/sidebar.html"><strong>Sidebar Menu</strong><span>72px rail · 216px submenu</span></a></div><div class="gcard"><div class="gcard-preview"><div style="width:100%"><div class="flex h-15 w-full items-center gap-2 border border-neutral-default surface-neutral-light px-3" style="border-radius:8px">
+  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--small cca-btn--icon-only" aria-label="Back"><cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon></button>
+  <span class="text-cca-label-lg text-neutral-title">Trip CCA-4281</span>
+  <span style="flex:1"></span>
+  <button ccaButton class="cca-btn cca-btn--icon cca-btn--small cca-btn--icon-only" aria-label="Notifications"><cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-bell mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon></button>
+</div></div></div><a class="gcard-meta" href="components/top-bar.html"><strong>Top Bar</strong><span>60px · sticky</span></a></div><div class="gcard"><div class="gcard-preview"><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#6f8f2f"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#2a628f"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#e08300"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#861414"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#3e3e3e"></span></div></div><a class="gcard-meta" href="design-system/colors.html"><strong>Colors</strong><span>Raw ramps</span></a></div><div class="gcard"><div class="gcard-preview"><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#f6fbe9"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#d5eba9"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#6f8f2f"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#638029"></span><span style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border-neutral-default);background:#4b6615"></span></div></div><a class="gcard-meta" href="design-system/tokens.html"><strong>Tokens</strong><span>492 semantic tokens</span></a></div><div class="gcard"><div class="gcard-preview"><div style="width:100%"><div class="text-cca-label-lg text-neutral-body">label-lg</div><div class="text-cca-base text-neutral-body">base</div><div class="text-cca-label-sm text-neutral-body">label-sm</div></div></div><a class="gcard-meta" href="design-system/typography.html"><strong>Typography</strong><span>Roboto only</span></a></div><div class="gcard"><div class="gcard-preview"><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;align-items:center;gap:8px">
+          <div style="width:8px;height:10px;border-radius:3px;background:var(--surface-brand-default)"></div>
+          <span class="u-mono" style="font-size:10px;color:var(--text-neutral-caption)">4</span>
+        </div><div style="display:flex;align-items:center;gap:8px">
+          <div style="width:16px;height:10px;border-radius:3px;background:var(--surface-brand-default)"></div>
+          <span class="u-mono" style="font-size:10px;color:var(--text-neutral-caption)">8</span>
+        </div><div style="display:flex;align-items:center;gap:8px">
+          <div style="width:32px;height:10px;border-radius:3px;background:var(--surface-brand-default)"></div>
+          <span class="u-mono" style="font-size:10px;color:var(--text-neutral-caption)">16</span>
+        </div><div style="display:flex;align-items:center;gap:8px">
+          <div style="width:48px;height:10px;border-radius:3px;background:var(--surface-brand-default)"></div>
+          <span class="u-mono" style="font-size:10px;color:var(--text-neutral-caption)">24</span>
+        </div></div></div><a class="gcard-meta" href="design-system/spacing.html"><strong>Spacing &amp; Radius</strong><span>4px scale · 8/12px radii</span></a></div><div class="gcard"><div class="gcard-preview"><div style="display:flex;gap:12px;flex-wrap:wrap"><span class="cca-icon cca-icon-about-us" style="font-size:22px;color:var(--text-neutral-body)"></span><span class="cca-icon cca-icon-additional-requirements" style="font-size:22px;color:var(--text-neutral-body)"></span><span class="cca-icon cca-icon-address-card" style="font-size:22px;color:var(--text-neutral-body)"></span><span class="cca-icon cca-icon-alarm-clock" style="font-size:22px;color:var(--text-neutral-body)"></span><span class="cca-icon cca-icon-alignCenter" style="font-size:22px;color:var(--text-neutral-body)"></span><span class="cca-icon cca-icon-alignJustify" style="font-size:22px;color:var(--text-neutral-body)"></span></div></div><a class="gcard-meta" href="design-system/iconography.html"><strong>Iconography</strong><span>252 glyphs</span></a></div><div class="gcard"><div class="gcard-preview"><mat-checkbox class="mat-mdc-checkbox mat-primary mat-mdc-checkbox-checked">
+  <div class="mdc-form-field mat-internal-form-field">
+    <div class="mdc-checkbox mdc-checkbox--selected">
+      <input type="checkbox" class="mdc-checkbox__native-control" id="cca-checkbox-9" checked />
+      <div class="mdc-checkbox__background">
+        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24" aria-hidden="true">
+          <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+        </svg>
+        <div class="mdc-checkbox__mixedmark"></div>
+      </div>
+    </div>
+    <label class="mdc-label" for="cca-checkbox-9">Checked</label>
+  </div>
+</mat-checkbox><mat-slide-toggle class="mat-mdc-slide-toggle mat-primary mat-mdc-slide-toggle-checked">
+  <div class="mdc-form-field mat-internal-form-field">
+    <button type="button" role="switch" aria-checked="true" id="cca-toggle-10" class="mdc-switch mdc-switch--selected">
+      <div class="mdc-switch__track"></div>
+      <div class="mdc-switch__handle-track">
+        <div class="mdc-switch__handle">
+          <div class="mdc-switch__shadow"><div class="mdc-elevation-overlay"></div></div>
+          <div class="mdc-switch__ripple"></div>
+          <div class="mdc-switch__icons">
+            <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+            </svg>
+            <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 13H4v-2h16v2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </button>
+    <label for="cca-toggle-10">On</label>
+  </div>
+</mat-slide-toggle></div><a class="gcard-meta" href="design-system/buttons-inputs.html"><strong>Buttons &amp; Inputs</strong><span>Controls align at 48px</span></a></div><div class="gcard"><div class="gcard-preview"><div style="width:100%;display:flex;flex-direction:column;gap:10px;align-items:center"><cca-info-banner style="display:block;width:100%"><div class="primary flex w-full items-center gap-2 rounded-lg px-4 py-3 alert-text-neutral">
+  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-info mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon><p class="text-cca-base alert-text-neutral" style="margin:0">Shipment confirmed</p>
+</div></cca-info-banner><span style="color:var(--text-brand-default)"><mat-progress-spinner class="mat-mdc-progress-spinner mdc-circular-progress mdc-circular-progress--indeterminate" role="progressbar" aria-label="Loading" style="width:24px;height:24px;display:inline-block"><svg viewBox="0 0 24 24" class="mdc-circular-progress__indeterminate-circle-graphic" style="width:100%;height:100%"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="47.1 62.8" transform="rotate(-90 12 12)"></circle></svg></mat-progress-spinner></span></div></div><a class="gcard-meta" href="design-system/badges-status.html"><strong>Badges &amp; Status</strong><span>Alerts and progress</span></a></div><div class="gcard"><div class="gcard-preview"><div class="menu-bar" style="width:100%"><a class="active">Trips</a><a>Orders</a></div></div><a class="gcard-meta" href="design-system/navigation.html"><strong>Navigation</strong><span>Rail, tab bar, tabs</span></a></div></div>
+
+      <h2>Tokens and data</h2>
+      <p class="lede">
+        Machine-readable exports. <code>tokens.json</code> gives every token its light
+        and dark value plus the utility class that applies it, which is what a design
+        tool needs to import the palette.
+      </p>
+      <div class="cards"><a class="card" href="tokens/tokens.json"><strong>tokens/tokens.json</strong><span>492 semantic tokens, light and dark, with their utility classes</span></a><a class="card" href="tokens/palette.json"><strong>tokens/palette.json</strong><span>102 raw colour steps</span></a><a class="card" href="tokens/typography.json"><strong>tokens/typography.json</strong><span>13 type styles — Roboto only</span></a><a class="card" href="tokens/icons.json"><strong>tokens/icons.json</strong><span>252 icon names and codepoints</span></a><a class="card" href="manifest.json"><strong>manifest.json</strong><span>Inventory of every file in this bundle</span></a></div>
+
+      <h2>Component stylesheets</h2>
+      <p class="lede">
+        One file per component, de-Angularized so it works outside the app. The shared
+        design system is open below; feature libraries are collapsed. Each file needs
+        the token layer — link <code>ds/index.css</code> first.
+      </p>
+      <details open>
+<summary><strong>libs/ui/src</strong> <span class="count">32</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-action-header</code></td><td><code>cca-action-header</code></td><td><a href="ds/components/action-header-2.css">action-header-2.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/ui/src/lib/user-card-radio/action-header/action-header.component.scss</code></td></tr>
+<tr><td><code>cca-address-text</code></td><td><code>cca-address-text</code></td><td><a href="ds/components/address-text.css">address-text.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/ui/src/lib/address-text/address-text.component.scss</code></td></tr>
+<tr><td><code>cca-attention-flag-badge</code></td><td><code>cca-attention-flag-badge</code></td><td><a href="ds/components/attention-flag.css">attention-flag.css</a></td><td class="num">0.9 KB</td><td><code class="src">libs/ui/src/lib/badges/attention-flag/attention-flag-badge.component.scss</code></td></tr>
+<tr><td><code>cca-avatar-group</code></td><td><code>cca-avatar-group</code></td><td><a href="ds/components/avatar-group.css">avatar-group.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/ui/src/lib/avatar-group/avatar-group.component.scss</code></td></tr>
+<tr><td><code>cca-booking-popover-orders-overview</code></td><td><code>cca-booking-popover-orders-overview</code></td><td><a href="ds/components/booking-popover-orders-overview.css">booking-popover-orders-overview.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/ui/src/lib/booking-popover-orders-overview/booking-popover-orders-overview.component.scss</code></td></tr>
+<tr><td><code>cca-booking-popover-stops-overview</code></td><td><code>cca-booking-popover-stops-overview</code></td><td><a href="ds/components/booking-popover-stops-overview.css">booking-popover-stops-overview.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/ui/src/lib/booking-popover-stops-overview/booking-popover-stops-overview.component.scss</code></td></tr>
+<tr><td><code>button[ccaButton], a[ccaButton]</code></td><td><code>.cca-btn</code></td><td><a href="ds/components/button.css">button.css</a></td><td class="num">11.2 KB</td><td><code class="src">libs/ui/src/lib/button/button.component.scss</code></td></tr>
+<tr><td><code>cca-carriers-per-modality-column</code></td><td><code>cca-carriers-per-modality-column</code></td><td><a href="ds/components/carriers-per-modality-column.css">carriers-per-modality-column.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/ui/src/lib/carriers-per-modality-column/carriers-per-modality-column.component.scss</code></td></tr>
+<tr><td><code>cca-contact</code></td><td><code>cca-contact</code></td><td><a href="ds/components/contact.css">contact.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/ui/src/lib/contact/contact.component.scss</code></td></tr>
+<tr><td><code>cca-date-cell</code></td><td><code>cca-date-cell</code></td><td><a href="ds/components/date-cell.css">date-cell.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/ui/src/lib/date-cell/date-cell.component.scss</code></td></tr>
+<tr><td><code>cca-dialog-image-cropper</code></td><td><code>cca-dialog-image-cropper</code></td><td><a href="ds/components/dialog-image-cropper.css">dialog-image-cropper.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/ui/src/lib/dialog-image-cropper/dialog-image-cropper.component.scss</code></td></tr>
+<tr><td><code>cca-info-banner</code></td><td><code>cca-info-banner</code></td><td><a href="ds/components/info-banner.css">info-banner.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/ui/src/lib/info-banner/info-banner.component.scss</code></td></tr>
+<tr><td><code>cca-instruction-drawer</code></td><td><code>cca-instruction-drawer</code></td><td><a href="ds/components/instruction-drawer.css">instruction-drawer.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/ui/src/lib/instruction-drawer/instruction-drawer.component.scss</code></td></tr>
+<tr><td><code>cca-label-badge</code></td><td><code>cca-label-badge</code></td><td><a href="ds/components/label-badge.css">label-badge.css</a></td><td class="num">1.7 KB</td><td><code class="src">libs/ui/src/lib/badges/label-badge/label-badge.component.scss</code></td></tr>
+<tr><td><code>cca-multi-stop-list</code></td><td><code>cca-multi-stop-list</code></td><td><a href="ds/components/multi-stop-list.css">multi-stop-list.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/ui/src/lib/multi-stop-list/multi-stop-list.component.scss</code></td></tr>
+<tr><td><code>cca-multimodal-date-time-detail</code></td><td><code>cca-multimodal-date-time-detail</code></td><td><a href="ds/components/multimodal-date-time-detail.css">multimodal-date-time-detail.css</a></td><td class="num">1.0 KB</td><td><code class="src">libs/ui/src/lib/multimodal-date-time-detail/multimodal-date-time-detail.component.scss</code></td></tr>
+<tr><td><code>cca-next-previous-scrollbar</code></td><td><code>cca-next-previous-scrollbar</code></td><td><a href="ds/components/next-previous-scrollbar.css">next-previous-scrollbar.css</a></td><td class="num">1.7 KB</td><td><code class="src">libs/ui/src/lib/next-previous-scrollbar/next-previous-scrollbar.component.scss</code></td></tr>
+<tr><td><code>cca-numerical-badge</code></td><td><code>cca-numerical-badge</code></td><td><a href="ds/components/numerical-badge.css">numerical-badge.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/ui/src/lib/badges/numerical-badge/numerical-badge.component.scss</code></td></tr>
+<tr><td><code>cca-panel-resize-divider</code></td><td><code>cca-panel-resize-divider</code></td><td><a href="ds/components/panel-resize-divider.css">panel-resize-divider.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/ui/src/lib/panel-resize-divider/panel-resize-divider.component.scss</code></td></tr>
+<tr><td><code>cca-phone-button</code></td><td><code>cca-phone-button</code></td><td><a href="ds/components/phone-button.css">phone-button.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/ui/src/lib/phone-button/phone-button.component.scss</code></td></tr>
+<tr><td><code>cca-rich-text-viewer</code></td><td><code>cca-rich-text-viewer</code></td><td><a href="ds/components/rich-text-viewer.css">rich-text-viewer.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/ui/src/lib/rich-text-viewer/rich-text-viewer.component.scss</code></td></tr>
+<tr><td><code>cca-search-field</code></td><td><code>cca-search-field</code></td><td><a href="ds/components/search-field.css">search-field.css</a></td><td class="num">1.0 KB</td><td><code class="src">libs/ui/src/lib/search-field/search-field.component.scss</code></td></tr>
+<tr><td><code>cca-section-header</code></td><td><code>cca-section-header</code></td><td><a href="ds/components/section-header.css">section-header.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/ui/src/lib/section-header/section-header.component.scss</code></td></tr>
+<tr><td><code>cca-select-sub-group</code></td><td><code>cca-select-sub-group</code></td><td><a href="ds/components/select-sub-group.css">select-sub-group.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/ui/src/lib/select-sub-group/select-sub-group.component.scss</code></td></tr>
+<tr><td><code>cca-show-more-less</code></td><td><code>cca-show-more-less</code></td><td><a href="ds/components/show-more-less.css">show-more-less.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/ui/src/lib/show-more-less/show-more-less.component.scss</code></td></tr>
+<tr><td><code>cca-spinner</code></td><td><code>cca-spinner</code></td><td><a href="ds/components/spinner.css">spinner.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/ui/src/lib/spinner/spinner.component.scss</code></td></tr>
+<tr><td><code>cca-status-badge</code></td><td><code>cca-status-badge</code></td><td><a href="ds/components/status-badge.css">status-badge.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/ui/src/lib/badges/status-badge/status-badge.component.scss</code></td></tr>
+<tr><td><code>cca-statuses-count</code></td><td><code>cca-statuses-count</code></td><td><a href="ds/components/statuses-bar.css">statuses-bar.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/ui/src/lib/info-header/statuses-bar/statuses-count.component.scss</code></td></tr>
+<tr><td><code>cca-text-badge</code></td><td><code>cca-text-badge</code></td><td><a href="ds/components/text-badge.css">text-badge.css</a></td><td class="num">2.5 KB</td><td><code class="src">libs/ui/src/lib/badges/text-badge/text-badge.component.scss</code></td></tr>
+<tr><td><code>cca-tree-view</code></td><td><code>cca-tree-view</code></td><td><a href="ds/components/tree-view.css">tree-view.css</a></td><td class="num">2.2 KB</td><td><code class="src">libs/ui/src/lib/tree-view/tree-view.component.scss</code></td></tr>
+<tr><td><code>cca-vertical-action-card</code></td><td><code>cca-vertical-action-card</code></td><td><a href="ds/components/vertical-action-card.css">vertical-action-card.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/ui/src/lib/vertical-action-card/vertical-action-card.component.scss</code></td></tr>
+<tr><td><code>cca-yes-no-radio</code></td><td><code>cca-yes-no-radio</code></td><td><a href="ds/components/yes-no-radio.css">yes-no-radio.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/ui/src/lib/yes-no-radio/yes-no-radio.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details open>
+<summary><strong>apps/platform</strong> <span class="count">8</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-root</code></td><td><code>cca-root</code></td><td><a href="ds/components/app.css">app.css</a></td><td class="num">0.1 KB</td><td><code class="src">apps/platform/src/app/app.component.scss</code></td></tr>
+<tr><td><code>cca-header</code></td><td><code>cca-header</code></td><td><a href="ds/components/header.css">header.css</a></td><td class="num">1.5 KB</td><td><code class="src">apps/platform/src/app/core/header/header.component.scss</code></td></tr>
+<tr><td><code>cca-main</code></td><td><code>cca-main</code></td><td><a href="ds/components/main.css">main.css</a></td><td class="num">0.4 KB</td><td><code class="src">apps/platform/src/app/core/main/main.component.scss</code></td></tr>
+<tr><td><code>cca-message-banner</code></td><td><code>cca-message-banner</code></td><td><a href="ds/components/message-banner.css">message-banner.css</a></td><td class="num">0.4 KB</td><td><code class="src">apps/platform/src/app/core/message-banner/message-banner.component.scss</code></td></tr>
+<tr><td><code>cca-side-menu</code></td><td><code>cca-side-menu</code></td><td><a href="ds/components/side-menu.css">side-menu.css</a></td><td class="num">1.6 KB</td><td><code class="src">apps/platform/src/app/core/side-menu/side-menu.component.scss</code></td></tr>
+<tr><td><code>cca-side-menu-item</code></td><td><code>cca-side-menu-item</code></td><td><a href="ds/components/side-menu-item.css">side-menu-item.css</a></td><td class="num">2.7 KB</td><td><code class="src">apps/platform/src/app/core/side-menu-item/side-menu-item.component.scss</code></td></tr>
+<tr><td><code>cca-side-submenu</code></td><td><code>cca-side-submenu</code></td><td><a href="ds/components/side-submenu.css">side-submenu.css</a></td><td class="num">3.1 KB</td><td><code class="src">apps/platform/src/app/core/side-submenu/side-submenu.component.scss</code></td></tr>
+<tr><td><code>cca-submenu-action-dialog</code></td><td><code>cca-submenu-action-dialog</code></td><td><a href="ds/components/submenu-action-dialog.css">submenu-action-dialog.css</a></td><td class="num">0.3 KB</td><td><code class="src">apps/platform/src/app/core/submenu-action-dialog/submenu-action-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/sequence</strong> <span class="count">17</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-additional-requirements</code></td><td><code>cca-additional-requirements</code></td><td><a href="ds/components/additional-requirements.css">additional-requirements.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/additional-requirements/additional-requirements.component.scss</code></td></tr>
+<tr><td><code>cca-additional-info-form</code></td><td><code>cca-additional-info-form</code></td><td><a href="ds/components/booking-additional-info-form.css">booking-additional-info-form.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-summary/overview-additional-information/booking-additional-info-form/booking-additional-info-form.component.scss</code></td></tr>
+<tr><td><code>cca-sequence-dev-tool</code></td><td><code>cca-sequence-dev-tool</code></td><td><a href="ds/components/dev-tool.css">dev-tool.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/core/src/lib/components/dev-tool/dev-tool.component.scss</code></td></tr>
+<tr><td><code>cca-frequency-and-volume</code></td><td><code>cca-frequency-and-volume</code></td><td><a href="ds/components/frequency-and-volume.css">frequency-and-volume.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/ui/frequency-and-volume/frequency-and-volume.component.scss</code></td></tr>
+<tr><td><code>cca-overview-additional-requirements</code></td><td><code>cca-overview-additional-requirements</code></td><td><a href="ds/components/overview-additional-requirements.css">overview-additional-requirements.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-summary/overview-additional-requirements/overview-additional-requirements.component.scss</code></td></tr>
+<tr><td><code>cca-select-cargo-data</code></td><td><code>cca-select-cargo-data</code></td><td><a href="ds/components/select-cargo-data.css">select-cargo-data.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-cargo-data/select-cargo-data.component.scss</code></td></tr>
+<tr><td><code>cca-select-fcl-container</code></td><td><code>cca-select-fcl-container</code></td><td><a href="ds/components/select-fcl-container.css">select-fcl-container.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-fcl-container/select-fcl-container.component.scss</code></td></tr>
+<tr><td><code>cca-select-frequency-and-volume</code></td><td><code>cca-select-frequency-and-volume</code></td><td><a href="ds/components/select-frequency-and-volume.css">select-frequency-and-volume.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-frequency-and-volume/select-frequency-and-volume.component.scss</code></td></tr>
+<tr><td><code>cca-booking-instructions</code></td><td><code>cca-booking-instructions</code></td><td><a href="ds/components/select-instructions.css">select-instructions.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-instructions/select-instructions.component.scss</code></td></tr>
+<tr><td><code>cca-select-lane</code></td><td><code>cca-select-lane</code></td><td><a href="ds/components/select-lane.css">select-lane.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-lane/select-lane.component.scss</code></td></tr>
+<tr><td><code>cca-select-locations</code></td><td><code>cca-select-locations</code></td><td><a href="ds/components/select-locations.css">select-locations.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-locations/select-locations.component.scss</code></td></tr>
+<tr><td><code>cca-sequence-notifications</code></td><td><code>cca-sequence-notifications</code></td><td><a href="ds/components/select-notifications.css">select-notifications.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-notifications/select-notifications.component.scss</code></td></tr>
+<tr><td><code>cca-select-shipper-enterprise</code></td><td><code>cca-select-shipper-enterprise</code></td><td><a href="ds/components/select-shipper-enterprise.css">select-shipper-enterprise.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-shipper-enterprise/select-shipper-enterprise.component.scss</code></td></tr>
+<tr><td><code>cca-select-summary</code></td><td><code>cca-select-summary</code></td><td><a href="ds/components/select-summary.css">select-summary.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-summary/select-summary.component.scss</code></td></tr>
+<tr><td><code>cca-sequence</code></td><td><code>cca-sequence</code></td><td><a href="ds/components/sequence.css">sequence.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/sequence/core/src/lib/components/sequence/sequence.component.scss</code></td></tr>
+<tr><td><code>cca-service-card</code></td><td><code>cca-service-card</code></td><td><a href="ds/components/service-card.css">service-card.css</a></td><td class="num">2.3 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-service-type/service-card/service-card.component.scss</code></td></tr>
+<tr><td><code>cca-select-transport-type</code></td><td><code>cca-select-transport-type</code></td><td><a href="ds/components/transport-type-dialog.css">transport-type-dialog.css</a></td><td class="num">1.9 KB</td><td><code class="src">libs/common/sequence/steps/src/lib/steps/select-service-type/transport-type-dialog/transport-type-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/shipper-tms/feature-booking</strong> <span class="count">15</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-adr-product-form-dialog</code></td><td><code>cca-adr-product-form-dialog</code></td><td><a href="ds/components/adr-product-form-dialog.css">adr-product-form-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-cargo-data/package-form/adr-product-form-dialog/adr-product-form-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-booking-calendar</code></td><td><code>cca-booking-calendar</code></td><td><a href="ds/components/booking-calendar.css">booking-calendar.css</a></td><td class="num">3.8 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-calendar/booking-calendar.component.scss</code></td></tr>
+<tr><td><code>cca-booking-container-fcl</code></td><td><code>cca-booking-container-fcl</code></td><td><a href="ds/components/booking-container-fcl.css">booking-container-fcl.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-container-fcl/booking-container-fcl.component.scss</code></td></tr>
+<tr><td><code>cca-booking-ltl-additional-services</code></td><td><code>cca-booking-ltl-additional-services</code></td><td><a href="ds/components/booking-ltl-additional-services.css">booking-ltl-additional-services.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-additional-services/booking-ltl-additional-services.component.scss</code></td></tr>
+<tr><td><code>cca-booking-ltl-cargo-data</code></td><td><code>cca-booking-ltl-cargo-data</code></td><td><a href="ds/components/booking-ltl-cargo-data.css">booking-ltl-cargo-data.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-cargo-data/booking-ltl-cargo-data.component.scss</code></td></tr>
+<tr><td><code>cca-booking-ltl-carriers</code></td><td><code>cca-booking-ltl-carriers</code></td><td><a href="ds/components/booking-ltl-carriers.css">booking-ltl-carriers.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-carriers/booking-ltl-carriers.component.scss</code></td></tr>
+<tr><td><code>cca-select-ltl-locations</code></td><td><code>cca-select-ltl-locations</code></td><td><a href="ds/components/booking-ltl-locations.css">booking-ltl-locations.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-locations/booking-ltl-locations.component.scss</code></td></tr>
+<tr><td><code>cca-booking-select-carrier</code></td><td><code>cca-booking-select-carrier</code></td><td><a href="ds/components/booking-select-carrier.css">booking-select-carrier.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-select-carrier/booking-select-carrier.component.scss</code></td></tr>
+<tr><td><code>cca-booking-side-summary</code></td><td><code>cca-booking-side-summary</code></td><td><a href="ds/components/booking-side-summary.css">booking-side-summary.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/booking-side-summary/booking-side-summary.component.scss</code></td></tr>
+<tr><td><code>cca-booking-terms</code></td><td><code>cca-booking-terms</code></td><td><a href="ds/components/booking-terms.css">booking-terms.css</a></td><td class="num">74.4 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-terms/booking-terms.component.scss</code></td></tr>
+<tr><td><code>cca-carrier</code></td><td><code>cca-carrier</code></td><td><a href="ds/components/carrier.css">carrier.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-carriers/carrier/carrier.component.scss</code></td></tr>
+<tr><td><code>cca-dialog-add-shipment-ftl</code></td><td><code>cca-dialog-add-shipment-ftl</code></td><td><a href="ds/components/dialog-add-shipment-ftl.css">dialog-add-shipment-ftl.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-calendar/dialog-add-shipment-ftl/dialog-add-shipment-ftl.component.scss</code></td></tr>
+<tr><td><code>cca-ltl-cargo-info-dialog</code></td><td><code>cca-ltl-cargo-info-dialog</code></td><td><a href="ds/components/info-dialog.css">info-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-cargo-data/info-dialog/ltl-cargo-info-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-product-form-dialog</code></td><td><code>cca-product-form-dialog</code></td><td><a href="ds/components/product-form-dialog.css">product-form-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-cargo-data/package-form/product-form-dialog/product-form-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-weekly-shipments</code></td><td><code>cca-weekly-shipments</code></td><td><a href="ds/components/weekly-shipments.css">weekly-shipments.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-calendar/multiple-shipments/weekly-shipments/weekly-shipments.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/enterprise/feature-group-management</strong> <span class="count">15</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-bookkeeping-dialog</code></td><td><code>cca-bookkeeping-dialog</code></td><td><a href="ds/components/bookkeeping-dialog.css">bookkeeping-dialog.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-edit-finance/bookkeeping-dialog/bookkeeping-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-form-group-co2</code></td><td><code>cca-form-group-co2</code></td><td><a href="ds/components/form-group-co2.css">form-group-co2.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/components/form-group-co2/form-group-co2.component.scss</code></td></tr>
+<tr><td><code>cca-form-group-licenses</code></td><td><code>cca-form-group-licenses</code></td><td><a href="ds/components/form-group-licenses.css">form-group-licenses.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/components/form-group-licenses/form-group-licenses.component.scss</code></td></tr>
+<tr><td><code>cca-form-group-overview</code></td><td><code>cca-form-group-overview</code></td><td><a href="ds/components/form-group-overview.css">form-group-overview.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/components/form-group-overview/form-group-overview.component.scss</code></td></tr>
+<tr><td><code>cca-form-parent-select</code></td><td><code>cca-form-parent-select</code></td><td><a href="ds/components/form-parent-select.css">form-parent-select.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/components/form-parent-select/form-parent-select.component.scss</code></td></tr>
+<tr><td><code>cca-fuel-surcharge-rates-table</code></td><td><code>cca-fuel-surcharge-rates-table</code></td><td><a href="ds/components/fuel-surcharge-rates-table.css">fuel-surcharge-rates-table.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/fuel-surcharge-rates-table/fuel-surcharge-rates-table.component.scss</code></td></tr>
+<tr><td><code>cca-group-detail-members</code></td><td><code>cca-group-detail-members</code></td><td><a href="ds/components/group-detail-members.css">group-detail-members.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-members/group-detail-members.component.scss</code></td></tr>
+<tr><td><code>cca-group-detail-relations</code></td><td><code>cca-group-detail-relations</code></td><td><a href="ds/components/group-detail-relations.css">group-detail-relations.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/group-detail-relations.component.scss</code></td></tr>
+<tr><td><code>cca-group-details</code></td><td><code>cca-group-details</code></td><td><a href="ds/components/group-details.css">group-details.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-details.component.scss</code></td></tr>
+<tr><td><code>cca-group-fuel-surcharge-rates-table</code></td><td><code>cca-group-fuel-surcharge-rates-table</code></td><td><a href="ds/components/group-fuel-surcharge-rates-table.css">group-fuel-surcharge-rates-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/fuel-surcharge-rates-table/group-fuel-surcharge-rates-table/group-fuel-surcharge-rates-table.component.scss</code></td></tr>
+<tr><td><code>cca-group-invite-dialog</code></td><td><code>cca-group-invite-dialog</code></td><td><a href="ds/components/group-invite-dialog.css">group-invite-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-invite-dialog/group-invite-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-group-relations-overview-with-tabs</code></td><td><code>cca-group-relations-overview-with-tabs</code></td><td><a href="ds/components/group-relations-overview-with-tabs.css">group-relations-overview-with-tabs.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/group-relations-overview-with-tabs/group-relations-overview-with-tabs.component.scss</code></td></tr>
+<tr><td><code>cca-user-sub-groups</code></td><td><code>cca-user-sub-groups</code></td><td><a href="ds/components/group-sub-groups.css">group-sub-groups.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-sub-groups/group-sub-groups.component.scss</code></td></tr>
+<tr><td><code>cca-possible-group-relations-selection-list</code></td><td><code>cca-possible-group-relations-selection-list</code></td><td><a href="ds/components/possible-group-relations-selection-list.css">possible-group-relations-selection-list.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/relations-table/possible-group-relations-selection-list/possible-group-relations-selection-list.component.scss</code></td></tr>
+<tr><td><code>cca-relations-table</code></td><td><code>cca-relations-table</code></td><td><a href="ds/components/relations-table.css">relations-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/relations-table/relations-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/shipper-tms/feature-order-management</strong> <span class="count">12</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-assigned-carrier-card</code></td><td><code>cca-assigned-carrier-card</code></td><td><a href="ds/components/assigned-carrier-card-2.css">assigned-carrier-card-2.css</a></td><td class="num">1.4 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/order-assigned-carrier/assigned-carrier-card/assigned-carrier-card.component.scss</code></td></tr>
+<tr><td><code>cca-order</code></td><td><code>cca-order</code></td><td><a href="ds/components/lib-3.css">lib-3.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order.component.scss</code></td></tr>
+<tr><td><code>cca-ltl-date-time-detail</code></td><td><code>cca-ltl-date-time-detail</code></td><td><a href="ds/components/ltl-date-time-detail.css">ltl-date-time-detail.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/ltl-date-time-detail/ltl-date-time-detail.component.scss</code></td></tr>
+<tr><td><code>cca-multimodal-edit-references</code></td><td><code>cca-multimodal-edit-references</code></td><td><a href="ds/components/multimodal-edit-references.css">multimodal-edit-references.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/multimodal-edit-references/multimodal-edit-references.component.scss</code></td></tr>
+<tr><td><code>cca-order-assigned-carrier</code></td><td><code>cca-order-assigned-carrier</code></td><td><a href="ds/components/order-assigned-carrier.css">order-assigned-carrier.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/order-assigned-carrier/order-assigned-carrier.component.scss</code></td></tr>
+<tr><td><code>cca-order-detail</code></td><td><code>cca-order-detail</code></td><td><a href="ds/components/order-detail.css">order-detail.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-detail/order-detail.component.scss</code></td></tr>
+<tr><td><code>cca-order-detail-info</code></td><td><code>cca-order-detail-info</code></td><td><a href="ds/components/order-detail-info.css">order-detail-info.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-detail/order-detail-info/order-detail-info.component.scss</code></td></tr>
+<tr><td><code>cca-order-mml-detail-info</code></td><td><code>cca-order-mml-detail-info</code></td><td><a href="ds/components/order-detail-info-2.css">order-detail-info-2.css</a></td><td class="num">1.4 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/order-detail-info/order-mml-detail-info.component.scss</code></td></tr>
+<tr><td><code>cca-order-detail-pricing</code></td><td><code>cca-order-detail-pricing</code></td><td><a href="ds/components/order-detail-pricing.css">order-detail-pricing.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-detail-pricing/order-detail-pricing.component.scss</code></td></tr>
+<tr><td><code>cca-order-detail-reset-2</code></td><td><code>cca-order-detail-reset-2</code></td><td><a href="ds/components/order-detail-reset.css">order-detail-reset.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-detail/dialogs/order-detail-reset/order-detail-reset.component.scss</code></td></tr>
+<tr><td><code>cca-order-detail-mml-reset</code></td><td><code>cca-order-detail-mml-reset</code></td><td><a href="ds/components/order-detail-reset-2.css">order-detail-reset-2.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-mml-detail/dialogs/order-detail-reset/order-detail-reset.component.scss</code></td></tr>
+<tr><td><code>cca-order-table</code></td><td><code>cca-order-table</code></td><td><a href="ds/components/order-table.css">order-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-order-management/src/lib/order-table/order-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/shipper-tms/feature-rfp-management</strong> <span class="count">11</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-add-lane</code></td><td><code>cca-add-lane</code></td><td><a href="ds/components/add-lane.css">add-lane.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/add-lane/add-lane.component.scss</code></td></tr>
+<tr><td><code>cca-add-lane-side-summary</code></td><td><code>cca-add-lane-side-summary</code></td><td><a href="ds/components/add-lane-side-summary.css">add-lane-side-summary.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/add-lane/add-lane-side-summary/add-lane-side-summary.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-data-level</code></td><td><code>cca-lane-request-data-level</code></td><td><a href="ds/components/lane-request-data-level.css">lane-request-data-level.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-data-level/lane-request-data-level.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-detail</code></td><td><code>cca-lane-request-detail</code></td><td><a href="ds/components/lane-request-detail.css">lane-request-detail.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-detail/lane-request-detail.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-detail-request</code></td><td><code>cca-lane-request-detail-request</code></td><td><a href="ds/components/lane-request-detail-request.css">lane-request-detail-request.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-detail-request/lane-request-detail-request.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-offers-table</code></td><td><code>cca-lane-request-offers-table</code></td><td><a href="ds/components/lane-request-offers-table.css">lane-request-offers-table.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-detail-offer/lane-request-offers-table/lane-request-offers-table.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-overview</code></td><td><code>cca-lane-request-overview</code></td><td><a href="ds/components/lane-request-overview.css">lane-request-overview.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-overview/lane-request-overview.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-quotes-carrier-lane</code></td><td><code>cca-lane-request-quotes-carrier-lane</code></td><td><a href="ds/components/lane-request-quotes-carrier-lane.css">lane-request-quotes-carrier-lane.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-quotes-carrier-lane/lane-request-quotes-carrier-lane.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-quotes-lanes-table</code></td><td><code>cca-lane-request-quotes-lanes-table</code></td><td><a href="ds/components/lane-request-quotes-lanes-table.css">lane-request-quotes-lanes-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-quotes-lanes-table/lane-request-quotes-lanes-table.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-quotes-tabs</code></td><td><code>cca-lane-request-quotes-tabs</code></td><td><a href="ds/components/lane-request-quotes-tabs.css">lane-request-quotes-tabs.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/lane-request-quotes-tabs/lane-request-quotes-tabs.component.scss</code></td></tr>
+<tr><td><code>cca-lane-request-summary-overview</code></td><td><code>cca-lane-request-summary-overview</code></td><td><a href="ds/components/lane-request-summary-overview.css">lane-request-summary-overview.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-rfp-management/src/lib/add-lane/steps/lane-request-summary-overview/lane-request-summary-overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/shipper-tms/feature-contracted-lane-management</strong> <span class="count">11</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-edit-price-details-dialog</code></td><td><code>cca-edit-price-details-dialog</code></td><td><a href="ds/components/add-price-details-dialog.css">add-price-details-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/add-price-details-dialog/add-price-details-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-assign-carrier-dialog</code></td><td><code>cca-assign-carrier-dialog</code></td><td><a href="ds/components/assign-carrier-dialog.css">assign-carrier-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/dialogs/assign-carrier-dialog/assign-carrier-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-create-personalized-action-dialog</code></td><td><code>cca-create-personalized-action-dialog</code></td><td><a href="ds/components/create-personalized-action-dialog.css">create-personalized-action-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/create-personalized-action-dialog/create-personalized-action-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-day-selector</code></td><td><code>cca-day-selector</code></td><td><a href="ds/components/forms.css">forms.css</a></td><td class="num">2.3 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/forms/day-selector.component.scss</code></td></tr>
+<tr><td><code>cca-lane-carrier-rate-table</code></td><td><code>cca-lane-carrier-rate-table</code></td><td><a href="ds/components/lane-carrier-rate-table.css">lane-carrier-rate-table.css</a></td><td class="num">3.7 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/tables/lane-carrier-rate-table/lane-carrier-rate-table.component.scss</code></td></tr>
+<tr><td><code>cca-lane-instructions-dialog</code></td><td><code>cca-lane-instructions-dialog</code></td><td><a href="ds/components/lane-instructions-dialog.css">lane-instructions-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/lane-instructions-dialog/lane-instructions-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-lane-shipper-rate-table</code></td><td><code>cca-lane-shipper-rate-table</code></td><td><a href="ds/components/lane-shipper-rate-table.css">lane-shipper-rate-table.css</a></td><td class="num">3.1 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/tables/lane-shipper-rate-table/lane-shipper-rate-table.component.scss</code></td></tr>
+<tr><td><code>cca-lane-side-summary</code></td><td><code>cca-lane-side-summary</code></td><td><a href="ds/components/lane-side-summary.css">lane-side-summary.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-create/lane-side-summary/lane-side-summary.component.scss</code></td></tr>
+<tr><td><code>cca-price-details-overview-edit-table</code></td><td><code>cca-price-details-overview-edit-table</code></td><td><a href="ds/components/price-details-overview-edit-table.css">price-details-overview-edit-table.css</a></td><td class="num">1.9 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/price-details-overview-dialog/price-details-overview-edit-table/price-details-overview-edit-table.component.scss</code></td></tr>
+<tr><td><code>cca-price-details-overview-table</code></td><td><code>cca-price-details-overview-table</code></td><td><a href="ds/components/price-details-overview-table.css">price-details-overview-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/price-details-overview-dialog/price-details-overview-table/price-details-overview-table.component.scss</code></td></tr>
+<tr><td><code>cca-rates-history-dialog</code></td><td><code>cca-rates-history-dialog</code></td><td><a href="ds/components/rates-history-dialog.css">rates-history-dialog.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/shipper-tms/feature-contracted-lane-management/src/lib/lane-detail-tabs/lane-carrier-details/dialogs/rates-history-dialog/rates-history-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/filters</strong> <span class="count">11</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-base-filters-chip</code></td><td><code>cca-base-filters-chip</code></td><td><a href="ds/components/base-filters-chip.css">base-filters-chip.css</a></td><td class="num">1.7 KB</td><td><code class="src">libs/common/filters/src/lib/components/filter-chips/base-filters-chip/base-filters-chip.component.scss</code></td></tr>
+<tr><td><code>cca-custom-calendar-overlay</code></td><td><code>cca-custom-calendar-overlay</code></td><td><a href="ds/components/custom-calendar-overlay.css">custom-calendar-overlay.css</a></td><td class="num">4.4 KB</td><td><code class="src">libs/common/filters/src/lib/components/custom-calendar-overlay/custom-calendar-overlay.component.scss</code></td></tr>
+<tr><td><code>cca-filter-preset-tabs</code></td><td><code>cca-filter-preset-tabs</code></td><td><a href="ds/components/filter-preset-tabs.css">filter-preset-tabs.css</a></td><td class="num">3.9 KB</td><td><code class="src">libs/common/filters/src/lib/components/filter-preset-tabs/filter-preset-tabs.component.scss</code></td></tr>
+<tr><td><code>cca-filter-values-chip</code></td><td><code>cca-filter-values-chip</code></td><td><a href="ds/components/filter-values-chip.css">filter-values-chip.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/filters/src/lib/components/filter-chips/filter-values-chip/filter-values-chip.component.scss</code></td></tr>
+<tr><td><code>cca-filter-values-chip-set</code></td><td><code>cca-filter-values-chip-set</code></td><td><a href="ds/components/filter-values-chip-set.css">filter-values-chip-set.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/filters/src/lib/components/filter-chips/filter-values-chip-set/filter-values-chip-set.component.scss</code></td></tr>
+<tr><td><code>cca-filters-button</code></td><td><code>cca-filters-button</code></td><td><a href="ds/components/filters-button.css">filters-button.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/filters/src/lib/components/filters-button/filters-button.component.scss</code></td></tr>
+<tr><td><code>cca-filters-drawer</code></td><td><code>cca-filters-drawer</code></td><td><a href="ds/components/filters-drawer.css">filters-drawer.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/filters/src/lib/components/filters-drawer/filters-drawer.component.scss</code></td></tr>
+<tr><td><code>cca-filters-select</code></td><td><code>cca-filters-select</code></td><td><a href="ds/components/filters-select.css">filters-select.css</a></td><td class="num">3.8 KB</td><td><code class="src">libs/common/filters/src/lib/components/filters-select/filters-select.component.scss</code></td></tr>
+<tr><td><code>cca-filters-wrapper</code></td><td><code>cca-filters-wrapper</code></td><td><a href="ds/components/filters-wrapper.css">filters-wrapper.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/filters/src/lib/components/filters-wrapper/filters-wrapper.component.scss</code></td></tr>
+<tr><td><code>cca-pinned-filters</code></td><td><code>cca-pinned-filters</code></td><td><a href="ds/components/pinned-filters.css">pinned-filters.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/filters/src/lib/components/pinned-filters/pinned-filters.component.scss</code></td></tr>
+<tr><td><code>cca-rename-view-dialog</code></td><td><code>cca-rename-view-dialog</code></td><td><a href="ds/components/rename-view-dialog.css">rename-view-dialog.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/filters/src/lib/components/dialogs/rename-view-dialog/rename-view-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-shipment-detail</strong> <span class="count">10</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-booking-detail-assignees</code></td><td><code>cca-booking-detail-assignees</code></td><td><a href="ds/components/booking-detail-assignees.css">booking-detail-assignees.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/booking-detail-assignees/booking-detail-assignees.component.scss</code></td></tr>
+<tr><td><code>cca-booking-detail-comments</code></td><td><code>cca-booking-detail-comments</code></td><td><a href="ds/components/booking-detail-comments.css">booking-detail-comments.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/booking-detail-comments/booking-detail-comments.component.scss</code></td></tr>
+<tr><td><code>cca-booking-detail-edit-instruction</code></td><td><code>cca-booking-detail-edit-instruction</code></td><td><a href="ds/components/booking-detail-edit-instruction.css">booking-detail-edit-instruction.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/booking-detail-comments/booking-detail-edit-instruction/booking-detail-edit-instruction.component.scss</code></td></tr>
+<tr><td><code>cca-container-shipment-form</code></td><td><code>cca-container-shipment-form</code></td><td><a href="ds/components/container-shipment-form.css">container-shipment-form.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/container-shipment-form/container-shipment-form.component.scss</code></td></tr>
+<tr><td><code>cca-date-time-detail</code></td><td><code>cca-date-time-detail</code></td><td><a href="ds/components/date-time-detail.css">date-time-detail.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/date-time-detail/date-time-detail.component.scss</code></td></tr>
+<tr><td><code>cca-load-details</code></td><td><code>cca-load-details</code></td><td><a href="ds/components/load-details.css">load-details.css</a></td><td class="num">1.7 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/load-and-vehicle-details/load-details/load-details.component.scss</code></td></tr>
+<tr><td><code>cca-load-details-products-sidepanel</code></td><td><code>cca-load-details-products-sidepanel</code></td><td><a href="ds/components/load-details-products-sidepanel.css">load-details-products-sidepanel.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/load-and-vehicle-details/load-details-products-sidepanel/load-details-products-sidepanel.component.scss</code></td></tr>
+<tr><td><code>cca-load-details-sidepanel</code></td><td><code>cca-load-details-sidepanel</code></td><td><a href="ds/components/load-details-sidepanel.css">load-details-sidepanel.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/load-and-vehicle-details/load-details-sidepanel/load-details-sidepanel.component.scss</code></td></tr>
+<tr><td><code>cca-location-card</code></td><td><code>cca-location-card</code></td><td><a href="ds/components/location-card.css">location-card.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/location-info/stop-card/location-card/location-card.component.scss</code></td></tr>
+<tr><td><code>cca-stop-card</code></td><td><code>cca-stop-card</code></td><td><a href="ds/components/stop-card.css">stop-card.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/shared-shipment-detail/src/lib/location-info/stop-card/stop-card.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-trip-builder</strong> <span class="count">9</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-set-stop-time-dialog</code></td><td><code>cca-set-stop-time-dialog</code></td><td><a href="ds/components/set-stop-time-dialog.css">set-stop-time-dialog.css</a></td><td class="num">3.7 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/set-stop-time-dialog/set-stop-time-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-trip-builder</code></td><td><code>cca-trip-builder</code></td><td><a href="ds/components/trip-builder.css">trip-builder.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/trip-builder/trip-builder.component.scss</code></td></tr>
+<tr><td><code>cca-trip-builder-order-item-skeleton</code></td><td><code>cca-trip-builder-order-item-skeleton</code></td><td><a href="ds/components/trip-builder-order-item-skeleton.css">trip-builder-order-item-skeleton.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-builder-order-list/trip-builder-order-item-skeleton/trip-builder-order-item-skeleton.component.scss</code></td></tr>
+<tr><td><code>cca-trip-builder-order-list</code></td><td><code>cca-trip-builder-order-list</code></td><td><a href="ds/components/trip-builder-order-list.css">trip-builder-order-list.css</a></td><td class="num">9.5 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-builder-order-list/trip-builder-order-list.component.scss</code></td></tr>
+<tr><td><code>cca-trip-details-overlay</code></td><td><code>cca-trip-details-overlay</code></td><td><a href="ds/components/trip-details-overlay.css">trip-details-overlay.css</a></td><td class="num">7.7 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-builder-trip-list-container/trip-builder-trip-list/trip-details-overlay/trip-details-overlay.component.scss</code></td></tr>
+<tr><td><code>cca-trip-optimization-settings-side-panel</code></td><td><code>cca-trip-optimization-settings-side-panel</code></td><td><a href="ds/components/trip-optimization-settings.css">trip-optimization-settings.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-optimization-settings/trip-optimization-settings-side-panel.component.scss</code></td></tr>
+<tr><td><code>cca-trip-stop-date-input</code></td><td><code>cca-trip-stop-date-input</code></td><td><a href="ds/components/trip-stop-date-input.css">trip-stop-date-input.css</a></td><td class="num">1.0 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-stop-date-input/trip-stop-date-input.component.scss</code></td></tr>
+<tr><td><code>cca-trip-stop-time-input</code></td><td><code>cca-trip-stop-time-input</code></td><td><a href="ds/components/trip-stop-time-input.css">trip-stop-time-input.css</a></td><td class="num">1.0 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-stop-time-input/trip-stop-time-input.component.scss</code></td></tr>
+<tr><td><code>cca-trip-stop-time-window</code></td><td><code>cca-trip-stop-time-window</code></td><td><a href="ds/components/trip-stop-time-window.css">trip-stop-time-window.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-stop-time-window/trip-stop-time-window.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-actions</strong> <span class="count">8</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-actions</code></td><td><code>cca-actions</code></td><td><a href="ds/components/action.css">action.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/shared-actions/src/lib/action/actions.component.scss</code></td></tr>
+<tr><td><code>cca-action-confirm-cargo-loaded</code></td><td><code>cca-action-confirm-cargo-loaded</code></td><td><a href="ds/components/action-confirm-cargo-loaded.css">action-confirm-cargo-loaded.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-confirm-cargo-loaded/action-confirm-cargo-loaded.component.scss</code></td></tr>
+<tr><td><code>cca-action-header</code></td><td><code>cca-action-header</code></td><td><a href="ds/components/action-header.css">action-header.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-header/action-header.component.scss</code></td></tr>
+<tr><td><code>cca-action-resend-transport-data</code></td><td><code>cca-action-resend-transport-data</code></td><td><a href="ds/components/action-resend-transport-data.css">action-resend-transport-data.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-resend-transport-data/action-resend-transport-data.component.scss</code></td></tr>
+<tr><td><code>cca-action-shipment-issues</code></td><td><code>cca-action-shipment-issues</code></td><td><a href="ds/components/action-shipment-issues.css">action-shipment-issues.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-shipment-issues/action-shipment-issues.component.scss</code></td></tr>
+<tr><td><code>cca-carrier-lanes-action-table</code></td><td><code>cca-carrier-lanes-action-table</code></td><td><a href="ds/components/carrier-lanes-action-table.css">carrier-lanes-action-table.css</a></td><td class="num">1.6 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-add-carrier/carrier-lanes-action-table/carrier-lanes-action-table.component.scss</code></td></tr>
+<tr><td><code>cca-dialog-review-pod</code></td><td><code>cca-dialog-review-pod</code></td><td><a href="ds/components/dialog-review-pod.css">dialog-review-pod.css</a></td><td class="num">1.0 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-pod-check/dialog-review-pod/dialog-review-pod.component.scss</code></td></tr>
+<tr><td><code>cca-shipment-issue-list</code></td><td><code>cca-shipment-issue-list</code></td><td><a href="ds/components/shipment-issue-list.css">shipment-issue-list.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-actions/src/lib/components/action-shipment-issues/shipment-issue-list/shipment-issue-list.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-trip-management</strong> <span class="count">8</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-assigned-carrier-card</code></td><td><code>cca-assigned-carrier-card</code></td><td><a href="ds/components/assigned-carrier-card.css">assigned-carrier-card.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-assigned-carrier/assigned-carrier-card/assigned-carrier-card.component.scss</code></td></tr>
+<tr><td><code>cca-planning-unit-card</code></td><td><code>cca-planning-unit-card</code></td><td><a href="ds/components/planning-unit-card.css">planning-unit-card.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-assigned-carrier/assigned-carrier-card/planning-unit-card/planning-unit-card.component.scss</code></td></tr>
+<tr><td><code>cca-resource-detail-popover</code></td><td><code>cca-resource-detail-popover</code></td><td><a href="ds/components/resource-detail-popover.css">resource-detail-popover.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-assigned-carrier/assigned-carrier-card/planning-unit-card/resource-detail-popover/resource-detail-popover.component.scss</code></td></tr>
+<tr><td><code>cca-trip-documents</code></td><td><code>cca-trip-documents</code></td><td><a href="ds/components/trip-documents.css">trip-documents.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail-documents/trip-documents/trip-documents.component.scss</code></td></tr>
+<tr><td><code>cca-trip-info</code></td><td><code>cca-trip-info</code></td><td><a href="ds/components/trip-info.css">trip-info.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-info/trip-info.component.scss</code></td></tr>
+<tr><td><code>cca-trip-location-card</code></td><td><code>cca-trip-location-card</code></td><td><a href="ds/components/trip-location-card.css">trip-location-card.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-info/trip-stops-overview/trip-stop/trip-location-card/trip-location-card.component.scss</code></td></tr>
+<tr><td><code>cca-trip-pricing</code></td><td><code>cca-trip-pricing</code></td><td><a href="ds/components/trip-pricing.css">trip-pricing.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-pricing/trip-pricing.component.scss</code></td></tr>
+<tr><td><code>cca-trip-stop-card</code></td><td><code>cca-trip-stop-card</code></td><td><a href="ds/components/trip-stop.css">trip-stop.css</a></td><td class="num">1.9 KB</td><td><code class="src">libs/carrier-tms/feature-trip-management/src/lib/trip-detail/trip-info/trip-stops-overview/trip-stop/trip-stop.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/grid</strong> <span class="count">8</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-booking-agent-widget</code></td><td><code>.flex</code></td><td><a href="ds/components/booking-agent-widget.css">booking-agent-widget.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/common/grid/src/lib/booking-agent-widget/booking-agent-widget.component.scss</code></td></tr>
+<tr><td><code>cca-grid</code></td><td><code>cca-grid</code></td><td><a href="ds/components/grid.css">grid.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/common/grid/src/lib/grid/grid.component.scss</code></td></tr>
+<tr><td><code>cca-grid-static-header</code></td><td><code>cca-grid-static-header</code></td><td><a href="ds/components/grid-static-header.css">grid-static-header.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/common/grid/src/lib/grid-static-header/grid-static-header.component.scss</code></td></tr>
+<tr><td><code>cca-grid-tabs-header</code></td><td><code>cca-grid-tabs-header</code></td><td><a href="ds/components/grid-tabs-header.css">grid-tabs-header.css</a></td><td class="num">2.6 KB</td><td><code class="src">libs/common/grid/src/lib/grid-tabs-header/grid-tabs-header.component.scss</code></td></tr>
+<tr><td><code>cca-kpi-tile-widget</code></td><td><code>cca-kpi-tile-widget</code></td><td><a href="ds/components/kpi-tile-widget.css">kpi-tile-widget.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/grid/src/lib/kpi-tile-widget/kpi-tile-widget.component.scss</code></td></tr>
+<tr><td><code>cca-kpi-widget</code></td><td><code>cca-kpi-widget</code></td><td><a href="ds/components/kpi-widget.css">kpi-widget.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/common/grid/src/lib/kpi-widget/kpi-widget.component.scss</code></td></tr>
+<tr><td><code>cca-kpi-widget-config-drawer</code></td><td><code>cca-kpi-widget-config-drawer</code></td><td><a href="ds/components/kpi-widget-config-drawer.css">kpi-widget-config-drawer.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/grid/src/lib/kpi-widget-config-drawer/kpi-widget-config-drawer.component.scss</code></td></tr>
+<tr><td><code>cca-tile-template</code></td><td><code>cca-tile-template</code></td><td><a href="ds/components/tile-template.css">tile-template.css</a></td><td class="num">2.2 KB</td><td><code class="src">libs/common/grid/src/lib/kpi-tile-widget/tile-template/tile-template.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/map</strong> <span class="count">8</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-map</code></td><td><code>cca-map</code></td><td><a href="ds/components/lib-2.css">lib-2.css</a></td><td class="num">3.0 KB</td><td><code class="src">libs/common/map/src/lib/map.component.scss</code></td></tr>
+<tr><td><code>cca-map-legend</code></td><td><code>cca-map-legend</code></td><td><a href="ds/components/map-legend.css">map-legend.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/map/src/lib/components/map-legend/map-legend.component.scss</code></td></tr>
+<tr><td><code>cca-map-location-overview-card</code></td><td><code>cca-map-location-overview-card</code></td><td><a href="ds/components/map-location-overview-card.css">map-location-overview-card.css</a></td><td class="num">2.1 KB</td><td><code class="src">libs/common/map/src/lib/components/map-location-overview-card/map-location-overview-card.component.scss</code></td></tr>
+<tr><td><code>cca-map-marker-trackable-object</code></td><td><code>cca-map-marker-trackable-object</code></td><td><a href="ds/components/map-marker-trackable-object.css">map-marker-trackable-object.css</a></td><td class="num">2.6 KB</td><td><code class="src">libs/common/map/src/lib/components/map-marker-trackable-object/map-marker-trackable-object.component.scss</code></td></tr>
+<tr><td><code>cca-map-overview</code></td><td><code>cca-map-overview</code></td><td><a href="ds/components/map-overview.css">map-overview.css</a></td><td class="num">2.5 KB</td><td><code class="src">libs/common/map/src/lib/components/map-overview/map-overview.component.scss</code></td></tr>
+<tr><td><code>cca-map-overview-card</code></td><td><code>cca-map-overview-card</code></td><td><a href="ds/components/map-overview-card.css">map-overview-card.css</a></td><td class="num">2.0 KB</td><td><code class="src">libs/common/map/src/lib/components/map-overview-card/map-overview-card.component.scss</code></td></tr>
+<tr><td><code>cca-map-secure-parking-details</code></td><td><code>cca-map-secure-parking-details</code></td><td><a href="ds/components/map-secure-parking-details.css">map-secure-parking-details.css</a></td><td class="num">1.0 KB</td><td><code class="src">libs/common/map/src/lib/components/map-secure-parking-details/map-secure-parking-details.component.scss</code></td></tr>
+<tr><td><code>cca-marker-pin</code></td><td><code>cca-marker-pin</code></td><td><a href="ds/components/marker-pin.css">marker-pin.css</a></td><td class="num">6.7 KB</td><td><code class="src">libs/common/map/src/lib/components/marker-pin/marker-pin.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-tender</strong> <span class="count">7</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-carrier-input</code></td><td><code>cca-carrier-input</code></td><td><a href="ds/components/carrier-input.css">carrier-input.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-tender/src/lib/carrier-input/carrier-input.component.scss</code></td></tr>
+<tr><td><code>cca-carrier-selection</code></td><td><code>cca-carrier-selection</code></td><td><a href="ds/components/carrier-selection.css">carrier-selection.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-tender/src/lib/carrier-selection/carrier-selection.component.scss</code></td></tr>
+<tr><td><code>cca-price-prediction-feedback-dialog</code></td><td><code>cca-price-prediction-feedback-dialog</code></td><td><a href="ds/components/price-prediction-feedback-dialog.css">price-prediction-feedback-dialog.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/shared-tender/src/lib/dialogs/price-prediction-feedback-dialog/price-prediction-feedback-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-publish-tender-dialog</code></td><td><code>cca-publish-tender-dialog</code></td><td><a href="ds/components/publish-tender-dialog.css">publish-tender-dialog.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/shared-tender/src/lib/dialogs/publish-tender-dialog/publish-tender-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-quotes-shipment-list</code></td><td><code>cca-quotes-shipment-list</code></td><td><a href="ds/components/shipment-list.css">shipment-list.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-tender/src/lib/shipment-list/quotes-shipment-list.component.scss</code></td></tr>
+<tr><td><code>cca-tender-add-carriers-dialog</code></td><td><code>cca-tender-add-carriers-dialog</code></td><td><a href="ds/components/tender-add-carriers-dialog.css">tender-add-carriers-dialog.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-tender/src/lib/dialogs/tender-add-carriers-dialog/tender-add-carriers-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-tender-shipment-bids</code></td><td><code>cca-tender-shipment-bids</code></td><td><a href="ds/components/tender-shipment-bids.css">tender-shipment-bids.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-tender/src/lib/tender-shipment-bids/tender-shipment-bids.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-trip-planner</strong> <span class="count">7</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-enterprise-table</code></td><td><code>cca-enterprise-table</code></td><td><a href="ds/components/enterprise-table.css">enterprise-table.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-overview/enterprise-table/enterprise-table.component.scss</code></td></tr>
+<tr><td><code>cca-trip-create-drawer</code></td><td><code>cca-trip-create-drawer</code></td><td><a href="ds/components/trip-create-drawer.css">trip-create-drawer.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-details-drawer/trip-create-drawer/trip-create-drawer.component.scss</code></td></tr>
+<tr><td><code>cca-trip-details-drawer-stops</code></td><td><code>cca-trip-details-drawer-stops</code></td><td><a href="ds/components/trip-details-drawer-stops.css">trip-details-drawer-stops.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-details-drawer/components/trip-details-drawer-stops/trip-details-drawer-stops.component.scss</code></td></tr>
+<tr><td><code>cca-trip-edit-drawer</code></td><td><code>cca-trip-edit-drawer</code></td><td><a href="ds/components/trip-edit-drawer.css">trip-edit-drawer.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-details-drawer/trip-edit-drawer/trip-edit-drawer.component.scss</code></td></tr>
+<tr><td><code>cca-trip-planner</code></td><td><code>cca-trip-planner</code></td><td><a href="ds/components/trip-planner.css">trip-planner.css</a></td><td class="num">11.9 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/trip-planner.component.scss</code></td></tr>
+<tr><td><code>cca-trip-planner-stop</code></td><td><code>cca-trip-planner-stop</code></td><td><a href="ds/components/trip-planner-stop.css">trip-planner-stop.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-planner-trip-card/trip-planner-trip-card-content/trip-planner-stop/trip-planner-stop.component.scss</code></td></tr>
+<tr><td><code>cca-trip-planner-trip-context-menu</code></td><td><code>cca-trip-planner-trip-context-menu</code></td><td><a href="ds/components/trip-planner-trip-context-menu.css">trip-planner-trip-context-menu.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-planner-trip-card/trip-planner-trip-context-menu/trip-planner-trip-context-menu.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/finance/feature-invoice-validation</strong> <span class="count">6</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-allowed-tolerance</code></td><td><code>cca-allowed-tolerance</code></td><td><a href="ds/components/allowed-tolerance.css">allowed-tolerance.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/finance/feature-invoice-validation/src/lib/invoice-validation-settings/allowed-tolerance/allowed-tolerance.component.scss</code></td></tr>
+<tr><td><code>cca-invoice-details-item</code></td><td><code>cca-invoice-details-item</code></td><td><a href="ds/components/invoice-details-item.css">invoice-details-item.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/finance/feature-invoice-validation/src/lib/invoice-validation-details/shared/invoice-details-item/invoice-details-item.component.scss</code></td></tr>
+<tr><td><code>cca-invoice-validation-actions</code></td><td><code>cca-invoice-validation-actions</code></td><td><a href="ds/components/invoice-validation-actions.css">invoice-validation-actions.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/finance/feature-invoice-validation/src/lib/shared/invoice-validation-actions/invoice-validation-actions.component.scss</code></td></tr>
+<tr><td><code>cca-invoice-validation-table</code></td><td><code>cca-invoice-validation-table</code></td><td><a href="ds/components/invoice-validation-table.css">invoice-validation-table.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/finance/feature-invoice-validation/src/lib/invoice-validation-table/invoice-validation-table.component.scss</code></td></tr>
+<tr><td><code>cca-surcharge-alias-table</code></td><td><code>cca-surcharge-alias-table</code></td><td><a href="ds/components/surcharge-alias-table.css">surcharge-alias-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/finance/feature-invoice-validation/src/lib/invoice-validation-settings/surcharge-harmonisation/surcharge-alias-table/surcharge-alias-table.component.scss</code></td></tr>
+<tr><td><code>cca-surcharge-key-list</code></td><td><code>cca-surcharge-key-list</code></td><td><a href="ds/components/surcharge-key-list.css">surcharge-key-list.css</a></td><td class="num">1.4 KB</td><td><code class="src">libs/finance/feature-invoice-validation/src/lib/invoice-validation-settings/surcharge-harmonisation/surcharge-key-list/surcharge-key-list.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/core</strong> <span class="count">6</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-language-switch</code></td><td><code>cca-language-switch</code></td><td><a href="ds/components/language-switch.css">language-switch.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/core/src/lib/essentials/translations/language-switch/language-switch.component.scss</code></td></tr>
+<tr><td><code>cca-privacy-policy</code></td><td><code>cca-privacy-policy</code></td><td><a href="ds/components/privacy-policy.css">privacy-policy.css</a></td><td class="num">76.2 KB</td><td><code class="src">libs/common/core/src/lib/essentials/legal/privacy-policy/privacy-policy.component.scss</code></td></tr>
+<tr><td><code>cca-public-page-layout</code></td><td><code>cca-public-page-layout</code></td><td><a href="ds/components/public-page-layout.css">public-page-layout.css</a></td><td class="num">1.6 KB</td><td><code class="src">libs/common/core/src/lib/ui/public-page-layout/public-page-layout.component.scss</code></td></tr>
+<tr><td><code>cca-terms</code></td><td><code>cca-terms</code></td><td><a href="ds/components/terms.css">terms.css</a></td><td class="num">63.5 KB</td><td><code class="src">libs/common/core/src/lib/essentials/legal/terms/terms.component.scss</code></td></tr>
+<tr><td><code>cca-terms-and-conditions</code></td><td><code>cca-terms-and-conditions</code></td><td><a href="ds/components/terms-and-conditions.css">terms-and-conditions.css</a></td><td class="num">84.7 KB</td><td><code class="src">libs/common/core/src/lib/essentials/legal/terms-and-conditions/terms-and-conditions.component.scss</code></td></tr>
+<tr><td><code>cca-terms-dialog</code></td><td><code>cca-terms-dialog</code></td><td><a href="ds/components/terms-dialog.css">terms-dialog.css</a></td><td class="num">96.0 KB</td><td><code class="src">libs/common/core/src/lib/essentials/legal/terms-dialog/terms-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/address-field</strong> <span class="count">5</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-address-autocomplete</code></td><td><code>cca-address-autocomplete</code></td><td><a href="ds/components/address-autocomplete.css">address-autocomplete.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/address-field/src/lib/address-autocomplete/address-autocomplete.component.scss</code></td></tr>
+<tr><td><code>cca-address-field</code></td><td><code>cca-address-field</code></td><td><a href="ds/components/address-field.css">address-field.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/address-field/src/lib/address-field/address-field.component.scss</code></td></tr>
+<tr><td><code>cca-address-map-dialog</code></td><td><code>cca-address-map-dialog</code></td><td><a href="ds/components/address-map-dialog.css">address-map-dialog.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/address-field/src/lib/address-map-dialog/address-map-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-google-predictions-panel</code></td><td><code>.block</code></td><td><a href="ds/components/google-predictions-panel.css">google-predictions-panel.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/common/address-field/src/lib/google-predictions-panel/google-predictions-panel.component.scss</code></td></tr>
+<tr><td><code>cca-suggested-location</code></td><td><code>cca-suggested-location</code></td><td><a href="ds/components/suggested-location.css">suggested-location.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/address-field/src/lib/suggested-location/suggested-location.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/addressbook</strong> <span class="count">5</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-address</code></td><td><code>cca-address</code></td><td><a href="ds/components/address-create.css">address-create.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/common/addressbook/src/lib/address-create/address.component.scss</code></td></tr>
+<tr><td><code>cca-select-address-enterprise</code></td><td><code>cca-select-address-enterprise</code></td><td><a href="ds/components/select-address-enterprise.css">select-address-enterprise.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/addressbook/src/lib/address-create/steps/select-address-enterprise/select-address-enterprise.component.scss</code></td></tr>
+<tr><td><code>cca-select-sub-group</code></td><td><code>cca-select-sub-group</code></td><td><a href="ds/components/select-address-sub-group.css">select-address-sub-group.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/addressbook/src/lib/address-create/steps/select-address-sub-group/select-address-sub-group.component.scss</code></td></tr>
+<tr><td><code>cca-select-address-type-dialog</code></td><td><code>cca-select-address-type-dialog</code></td><td><a href="ds/components/select-address-type-dialog.css">select-address-type-dialog.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/common/addressbook/src/lib/select-address-type-dialog/select-address-type-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-select-location</code></td><td><code>cca-select-location</code></td><td><a href="ds/components/select-location.css">select-location.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/addressbook/src/lib/address-create/steps/select-location/select-location.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/marketing/feature-pallet-landing</strong> <span class="count">5</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-calculate-rate-step</code></td><td><code>cca-calculate-rate-step</code></td><td><a href="ds/components/calculate-rate-step.css">calculate-rate-step.css</a></td><td class="num">2.3 KB</td><td><code class="src">libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/calculate-rate-step/calculate-rate-step.component.scss</code></td></tr>
+<tr><td><code>cca-confirmation-step</code></td><td><code>cca-confirmation-step</code></td><td><a href="ds/components/confirmation-step.css">confirmation-step.css</a></td><td class="num">2.5 KB</td><td><code class="src">libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/confirmation-step/confirmation-step.component.scss</code></td></tr>
+<tr><td><code>cca-finalize-details-step</code></td><td><code>cca-finalize-details-step</code></td><td><a href="ds/components/finalize-details-step.css">finalize-details-step.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/finalize-details-step/finalize-details-step.component.scss</code></td></tr>
+<tr><td><code>cca-public-pallet-landing</code></td><td><code>cca-public-pallet-landing</code></td><td><a href="ds/components/pallet-landing-page.css">pallet-landing-page.css</a></td><td class="num">14.2 KB</td><td><code class="src">libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/pallet-landing-page.component.scss</code></td></tr>
+<tr><td><code>cca-review-quote-step</code></td><td><code>cca-review-quote-step</code></td><td><a href="ds/components/review-quote-step.css">review-quote-step.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/review-quote-step/review-quote-step.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/enterprise/feature-carrier-corridor-management</strong> <span class="count">4</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-carrier-corridor-manage-detail</code></td><td><code>cca-carrier-corridor-manage-detail</code></td><td><a href="ds/components/carrier-corridor-manage-detail.css">carrier-corridor-manage-detail.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/enterprise/feature-carrier-corridor-management/src/lib/carrier-corridor-manage-detail/carrier-corridor-manage-detail.component.scss</code></td></tr>
+<tr><td><code>cca-carrier-corridor-search</code></td><td><code>cca-carrier-corridor-search</code></td><td><a href="ds/components/carrier-corridor-search.css">carrier-corridor-search.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-carrier-corridor-management/src/lib/carrier-corridor-search/carrier-corridor-search.component.scss</code></td></tr>
+<tr><td><code>cca-carrier-corridor-search-table</code></td><td><code>cca-carrier-corridor-search-table</code></td><td><a href="ds/components/carrier-corridor-search-table.css">carrier-corridor-search-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-carrier-corridor-management/src/lib/carrier-corridor-search-table/carrier-corridor-search-table.component.scss</code></td></tr>
+<tr><td><code>cca-list-box</code></td><td><code>cca-list-box</code></td><td><a href="ds/components/list-box.css">list-box.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/enterprise/feature-carrier-corridor-management/src/lib/list-box/list-box.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-communication-detail</strong> <span class="count">4</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-conversation</code></td><td><code>cca-conversation</code></td><td><a href="ds/components/communication-conversation.css">communication-conversation.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/shared-communication-detail/src/lib/communication-detail/communication-conversation/conversation.component.scss</code></td></tr>
+<tr><td><code>cca-conversation-item</code></td><td><code>cca-conversation-item</code></td><td><a href="ds/components/conversation-item.css">conversation-item.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-communication-detail/src/lib/communication-detail/communication-conversation/conversation-thread/conversation-item/conversation-item.component.scss</code></td></tr>
+<tr><td><code>cca-conversation-thread</code></td><td><code>cca-conversation-thread</code></td><td><a href="ds/components/conversation-thread.css">conversation-thread.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/shared-communication-detail/src/lib/communication-detail/communication-conversation/conversation-thread/conversation-thread.component.scss</code></td></tr>
+<tr><td><code>cca-legacy-conversation</code></td><td><code>cca-legacy-conversation</code></td><td><a href="ds/components/legacy-conversation.css">legacy-conversation.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/common/shared-communication-detail/src/lib/communication-detail/communication-conversation/legacy-conversation/legacy-conversation.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/shipper-tms/feature-spot-quote-management</strong> <span class="count">4</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-container-detail</code></td><td><code>cca-container-detail</code></td><td><a href="ds/components/container-detail.css">container-detail.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/shipper-tms/feature-spot-quote-management/src/lib/transport-request-detail/container-detail/container-detail.component.scss</code></td></tr>
+<tr><td><code>cca-orders-multistop</code></td><td><code>cca-orders-multistop</code></td><td><a href="ds/components/orders-multistop.css">orders-multistop.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-spot-quote-management/src/lib/transport-request-detail/orders-multistop/orders-multistop.component.scss</code></td></tr>
+<tr><td><code>cca-request-detail-info</code></td><td><code>cca-request-detail-info</code></td><td><a href="ds/components/request-detail-info.css">request-detail-info.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-spot-quote-management/src/lib/transport-request-detail/request-detail-info/request-detail-info.component.scss</code></td></tr>
+<tr><td><code>cca-transport-request-detail</code></td><td><code>cca-transport-request-detail</code></td><td><a href="ds/components/transport-request-detail.css">transport-request-detail.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/shipper-tms/feature-spot-quote-management/src/lib/transport-request-detail/transport-request-detail.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/shared-trip</strong> <span class="count">4</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-enterprise-table</code></td><td><code>cca-enterprise-table</code></td><td><a href="ds/components/enterprise-table-2.css">enterprise-table-2.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/carrier-tms/shared-trip/src/lib/enterprise-table/enterprise-table.component.scss</code></td></tr>
+<tr><td><code>cca-trip-list-row-skeleton</code></td><td><code>.trip-list-row</code></td><td><a href="ds/components/trip-list.css">trip-list.css</a></td><td class="num">4.7 KB</td><td><code class="src">libs/carrier-tms/shared-trip/src/lib/trip-list/trip-list-row-skeleton.component.scss</code></td></tr>
+<tr><td><code>cca-trip-list-row</code></td><td><code>.trip-list-row</code></td><td><a href="ds/components/trip-list-2.css">trip-list-2.css</a></td><td class="num">5.7 KB</td><td><code class="src">libs/carrier-tms/shared-trip/src/lib/trip-list/trip-list-row.component.scss</code></td></tr>
+<tr><td><code>cca-trip-list-table</code></td><td><code>cca-trip-list-table</code></td><td><a href="ds/components/trip-list-3.css">trip-list-3.css</a></td><td class="num">7.2 KB</td><td><code class="src">libs/carrier-tms/shared-trip/src/lib/trip-list/trip-list-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-rfp-bid-management</strong> <span class="count">4</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-lane-tender-carriers</code></td><td><code>cca-lane-tender-carriers</code></td><td><a href="ds/components/lane-tender-carriers.css">lane-tender-carriers.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-rfp-bid-management/src/lib/tender-lane-create/lane-tender-carriers/lane-tender-carriers.component.scss</code></td></tr>
+<tr><td><code>cca-tender-lane-create</code></td><td><code>cca-tender-lane-create</code></td><td><a href="ds/components/tender-lane-create.css">tender-lane-create.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-rfp-bid-management/src/lib/tender-lane-create/tender-lane-create.component.scss</code></td></tr>
+<tr><td><code>cca-tender-lane-detail-request-info</code></td><td><code>cca-tender-lane-detail-request-info</code></td><td><a href="ds/components/tender-lane-detail-request-info.css">tender-lane-detail-request-info.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/carrier-tms/feature-rfp-bid-management/src/lib/tender-lane-detail-tender/tender-lane-detail-request-info/tender-lane-detail-request-info.component.scss</code></td></tr>
+<tr><td><code>cca-tender-lane-overview</code></td><td><code>cca-tender-lane-overview</code></td><td><a href="ds/components/tender-lane-overview.css">tender-lane-overview.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/carrier-tms/feature-rfp-bid-management/src/lib/tender-lane-overview/tender-lane-overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-pricing</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-add-article-dialog</code></td><td><code>cca-add-article-dialog</code></td><td><a href="ds/components/add-article-dialog.css">add-article-dialog.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-pricing/src/lib/dialogs/add-article-dialog/add-article-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-article-overview</code></td><td><code>cca-article-overview</code></td><td><a href="ds/components/article-overview.css">article-overview.css</a></td><td class="num">2.3 KB</td><td><code class="src">libs/common/shared-pricing/src/lib/article-overview/article-overview.component.scss</code></td></tr>
+<tr><td><code>cca-pricing-detail</code></td><td><code>cca-pricing-detail</code></td><td><a href="ds/components/pricing-detail.css">pricing-detail.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/common/shared-pricing/src/lib/pricing-detail/pricing-detail.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-expendable-table</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-booking-references-detail-edit</code></td><td><code>cca-booking-references-detail-edit</code></td><td><a href="ds/components/booking-references-detail-edit.css">booking-references-detail-edit.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-expendable-table/src/lib/expandable-table-contents/booking-references-detail-edit/booking-references-detail-edit.component.scss</code></td></tr>
+<tr><td><code>cca-container-transport-table</code></td><td><code>cca-container-transport-table</code></td><td><a href="ds/components/container-transport-table.css">container-transport-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-expendable-table/src/lib/container-transport-table/container-transport-table.component.scss</code></td></tr>
+<tr><td><code>cca-expandable-multistop-table</code></td><td><code>cca-expandable-multistop-table</code></td><td><a href="ds/components/expandable-multistop-table.css">expandable-multistop-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-expendable-table/src/lib/expandable-multistop-table/expandable-multistop-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-conversation</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-conversation-inbox</code></td><td><code>cca-conversation-inbox</code></td><td><a href="ds/components/conversation-inbox.css">conversation-inbox.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-conversation/src/lib/conversation-inbox/conversation-inbox.component.scss</code></td></tr>
+<tr><td><code>cca-conversation-thread-pane</code></td><td><code>cca-conversation-thread-pane</code></td><td><a href="ds/components/conversation-thread-2.css">conversation-thread-2.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-conversation/src/lib/conversation-thread/conversation-thread-pane.component.scss</code></td></tr>
+<tr><td><code>cca-entity-conversation</code></td><td><code>cca-entity-conversation</code></td><td><a href="ds/components/entity-conversation.css">entity-conversation.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-conversation/src/lib/entity-conversation/entity-conversation.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/enterprise/feature-tracking</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-fleet-tracking-sidepanel</code></td><td><code>cca-fleet-tracking-sidepanel</code></td><td><a href="ds/components/fleet-tracking-sidepanel.css">fleet-tracking-sidepanel.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-tracking/src/lib/fleet-tracking/fleet-tracking-sidepanel/fleet-tracking-sidepanel.component.scss</code></td></tr>
+<tr><td><code>cca-tracking-overview</code></td><td><code>cca-tracking-overview</code></td><td><a href="ds/components/tracking-overview.css">tracking-overview.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/enterprise/feature-tracking/src/lib/tracking-overview/tracking-overview.component.scss</code></td></tr>
+<tr><td><code>cca-tracking-simulation</code></td><td><code>cca-tracking-simulation</code></td><td><a href="ds/components/tracking-simulation.css">tracking-simulation.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/enterprise/feature-tracking/src/lib/tracking-simulation/tracking-simulation.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/notifications</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-notification</code></td><td><code>.block</code></td><td><a href="ds/components/notification.css">notification.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/common/notifications/src/lib/notification-overlay/notification/notification.component.scss</code></td></tr>
+<tr><td><code>cca-notification-tile</code></td><td><code>cca-notification-tile</code></td><td><a href="ds/components/notification-tile.css">notification-tile.css</a></td><td class="num">1.9 KB</td><td><code class="src">libs/common/notifications/src/lib/notifications-panel/notification-tile/notification-tile.component.scss</code></td></tr>
+<tr><td><code>cca-notifications-panel</code></td><td><code>cca-notifications-panel</code></td><td><a href="ds/components/notifications-panel.css">notifications-panel.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/common/notifications/src/lib/notifications-panel/notifications-panel.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/shared-tender-detail</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-tender-card</code></td><td><code>cca-tender-card</code></td><td><a href="ds/components/tender-card.css">tender-card.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/carrier-tms/shared-tender-detail/src/lib/tender-card/tender-card.component.scss</code></td></tr>
+<tr><td><code>cca-tender-detail-info</code></td><td><code>cca-tender-detail-info</code></td><td><a href="ds/components/tender-detail-info.css">tender-detail-info.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/shared-tender-detail/src/lib/tender-detail-info/tender-detail-info.component.scss</code></td></tr>
+<tr><td><code>cca-tender-table</code></td><td><code>cca-tender-table</code></td><td><a href="ds/components/tender-table.css">tender-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/shared-tender-detail/src/lib/tender-table/tender-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-tender-adhoc</strong> <span class="count">3</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-tender-carriers</code></td><td><code>cca-tender-carriers</code></td><td><a href="ds/components/tender-carriers.css">tender-carriers.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-tender-adhoc/src/lib/tender-carriers/tender-carriers.component.scss</code></td></tr>
+<tr><td><code>cca-tender-create</code></td><td><code>cca-tender-create</code></td><td><a href="ds/components/tender-create.css">tender-create.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/carrier-tms/feature-tender-adhoc/src/lib/tender-create/tender-create.component.scss</code></td></tr>
+<tr><td><code>cca-tender-overview</code></td><td><code>cca-tender-overview</code></td><td><a href="ds/components/tender-overview.css">tender-overview.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/carrier-tms/feature-tender-adhoc/src/lib/tender-overview/tender-overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-contacts</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-add-new-contact-dialog</code></td><td><code>cca-add-new-contact-dialog</code></td><td><a href="ds/components/add-edit-contact-dialog.css">add-edit-contact-dialog.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/shared-contacts/src/lib/add-edit-contact-dialog/add-edit-contact-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-contacts-notifications-table</code></td><td><code>cca-contacts-notifications-table</code></td><td><a href="ds/components/contacts-notifications-table.css">contacts-notifications-table.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/shared-contacts/src/lib/contacts-notifications-table/contacts-notifications-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/finance/feature-invoicing-management</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-article-import-dialog</code></td><td><code>cca-article-import-dialog</code></td><td><a href="ds/components/article-import-dialog.css">article-import-dialog.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/finance/feature-invoicing-management/src/lib/article-import-dialog/article-import-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-invoicing-group-table</code></td><td><code>cca-invoicing-group-table</code></td><td><a href="ds/components/invoicing-group-table.css">invoicing-group-table.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/finance/feature-invoicing-management/src/lib/invoicing-create/invoicing-group-table/group-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/forms</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-auto-complete-field</code></td><td><code>cca-auto-complete-field</code></td><td><a href="ds/components/auto-complete-field.css">auto-complete-field.css</a></td><td class="num">1.3 KB</td><td><code class="src">libs/common/forms/autocomplete-field/src/lib/auto-complete-field/auto-complete-field.component.scss</code></td></tr>
+<tr><td><code>cca-phonenumber-field</code></td><td><code>cca-phonenumber-field</code></td><td><a href="ds/components/phonenumber-field.css">phonenumber-field.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/common/forms/phonenumber-field/src/lib/phonenumber-field/phonenumber-field.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/admin/feature-legal-management</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-document-editor</code></td><td><code>cca-document-editor</code></td><td><a href="ds/components/document-editor.css">document-editor.css</a></td><td class="num">96.8 KB</td><td><code class="src">libs/admin/feature-legal-management/src/lib/document-editor/document-editor.component.scss</code></td></tr>
+<tr><td><code>cca-platform-overview</code></td><td><code>cca-platform-overview</code></td><td><a href="ds/components/platform-overview.css">platform-overview.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/admin/feature-legal-management/src/lib/terms-management/platform-overview/platform-overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/documents</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-documents-list</code></td><td><code>cca-documents-list</code></td><td><a href="ds/components/documents-list.css">documents-list.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/common/documents/src/lib/documents-list/documents-list.component.scss</code></td></tr>
+<tr><td><code>cca-documents-upload</code></td><td><code>cca-documents-upload</code></td><td><a href="ds/components/documents-upload.css">documents-upload.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/common/documents/src/lib/documents-upload/documents-upload.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-finance</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-finance-summary</code></td><td><code>cca-finance-summary</code></td><td><a href="ds/components/finance-summary.css">finance-summary.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/common/shared-finance/src/lib/finance-summary/finance-summary.component.scss</code></td></tr>
+<tr><td><code>cca-set-overview-table</code></td><td><code>cca-set-overview-table</code></td><td><a href="ds/components/set-overview-table.css">set-overview-table.css</a></td><td class="num">1.1 KB</td><td><code class="src">libs/common/shared-finance/src/lib/set-overview-table/set-overview-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-group-table</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-group-select</code></td><td><code>cca-group-select</code></td><td><a href="ds/components/group-select.css">group-select.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-group-table/src/lib/group-select/group-select.component.scss</code></td></tr>
+<tr><td><code>cca-group-table</code></td><td><code>cca-group-table</code></td><td><a href="ds/components/group-table.css">group-table.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-group-table/src/lib/group-table/group-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/dashboard/feature-home</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-home</code></td><td><code>cca-home</code></td><td><a href="ds/components/home.css">home.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/dashboard/feature-home/src/lib/home/home.component.scss</code></td></tr>
+<tr><td><code>cca-latest-features</code></td><td><code>cca-latest-features</code></td><td><a href="ds/components/latest-features.css">latest-features.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/dashboard/feature-home/src/lib/rss-feeds/latest-features/latest-features.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/finance/invoicing-form</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-invoicing-create-form</code></td><td><code>cca-invoicing-create-form</code></td><td><a href="ds/components/invoicing-create-form.css">invoicing-create-form.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/finance/invoicing-form/src/lib/invoicing-create-form/invoicing-create-form.component.scss</code></td></tr>
+<tr><td><code>cca-invoicing-sets-table</code></td><td><code>cca-invoicing-sets-table</code></td><td><a href="ds/components/invoicing-sets-table.css">invoicing-sets-table.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/finance/invoicing-form/src/lib/invoicing-create-form/invoicing-sets-table/invoicing-sets-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/admin/feature-migrations</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-migrations-page</code></td><td><code>cca-migrations-page</code></td><td><a href="ds/components/migrations-page.css">migrations-page.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/admin/feature-migrations/src/lib/migrations-page/migrations-page.component.scss</code></td></tr>
+<tr><td><code>cca-run-migration-dialog</code></td><td><code>cca-run-migration-dialog</code></td><td><a href="ds/components/run-migration-dialog.css">run-migration-dialog.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/admin/feature-migrations/src/lib/run-migration-dialog/run-migration-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/finance/feature-group-rate-management</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-rate-overview-table</code></td><td><code>cca-rate-overview-table</code></td><td><a href="ds/components/rate-overview-table.css">rate-overview-table.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/finance/feature-group-rate-management/src/lib/rate-overview/rate-overview-table/rate-overview-table.component.scss</code></td></tr>
+<tr><td><code>cca-rate-reset-dialog</code></td><td><code>cca-rate-reset-dialog</code></td><td><a href="ds/components/rate-reset-dialog.css">rate-reset-dialog.css</a></td><td class="num">0.7 KB</td><td><code class="src">libs/finance/feature-group-rate-management/src/lib/dialogs/rate-reset-dialog/rate-reset-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-route-planning</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-route-planning-map-dialog</code></td><td><code>cca-route-planning-map-dialog</code></td><td><a href="ds/components/route-planning-map-dialog.css">route-planning-map-dialog.css</a></td><td class="num">0.4 KB</td><td><code class="src">libs/common/shared-route-planning/src/lib/components/route-planning-map-dialog/route-planning-map-dialog.component.scss</code></td></tr>
+<tr><td><code>cca-route-planning-stops</code></td><td><code>cca-route-planning-stops</code></td><td><a href="ds/components/route-planning-stops.css">route-planning-stops.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/common/shared-route-planning/src/lib/components/route-planning-stops/route-planning-stops.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/dashboard/feature-taskboard</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-task-details</code></td><td><code>cca-task-details</code></td><td><a href="ds/components/task-details.css">task-details.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/dashboard/feature-taskboard/src/lib/task-details/task-details.component.scss</code></td></tr>
+<tr><td><code>cca-taskboard</code></td><td><code>cca-taskboard</code></td><td><a href="ds/components/taskboard.css">taskboard.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/dashboard/feature-taskboard/src/lib/taskboard/taskboard.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/enterprise/feature-user-management</strong> <span class="count">2</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-user-details</code></td><td><code>cca-user-details</code></td><td><a href="ds/components/user-details.css">user-details.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-user-management/src/lib/user-details/user-details.component.scss</code></td></tr>
+<tr><td><code>cca-user-detail-overview</code></td><td><code>cca-user-detail-overview</code></td><td><a href="ds/components/user-overview.css">user-overview.css</a></td><td class="num">0.0 KB</td><td><code class="src">libs/enterprise/feature-user-management/src/lib/user-overview/user-overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/authentication/feature-activation</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-activation</code></td><td><code>cca-activation</code></td><td><a href="ds/components/activation.css">activation.css</a></td><td class="num">0.9 KB</td><td><code class="src">libs/authentication/feature-activation/src/lib/activation/activation.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/ui/calendar</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-calendar</code></td><td><code>cca-calendar</code></td><td><a href="ds/components/calendar.css">calendar.css</a></td><td class="num">9.3 KB</td><td><code class="src">libs/ui/calendar/src/lib/calendar/calendar.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/enterprise/feature-co3-management</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-co3-table</code></td><td><code>cca-co3-table</code></td><td><a href="ds/components/co3-table.css">co3-table.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/enterprise/feature-co3-management/src/lib/co3-table/co3-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/pagination</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-data-table</code></td><td><code>cca-data-table</code></td><td><a href="ds/components/data-table.css">data-table.css</a></td><td class="num">3.3 KB</td><td><code class="src">libs/common/pagination/src/lib/data-table/data-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/ui/expanded-tooltip-view</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-expanded-tooltip-view</code></td><td><code>cca-expanded-tooltip-view</code></td><td><a href="ds/components/expanded-tooltip-view.css">expanded-tooltip-view.css</a></td><td class="num">0.6 KB</td><td><code class="src">libs/ui/expanded-tooltip-view/src/lib/expanded-tooltip-view/expanded-tooltip-view.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/enterprise/feature-fleet-management</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-fleet-overview</code></td><td><code>cca-fleet-overview</code></td><td><a href="ds/components/fleet-overview.css">fleet-overview.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/enterprise/feature-fleet-management/src/lib/fleet-overview/fleet-overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-user</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-form-prospective-user-details</code></td><td><code>cca-form-prospective-user-details</code></td><td><a href="ds/components/form-prospective-user-details.css">form-prospective-user-details.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-user/src/lib/components/form-prospective-user-details/form-prospective-user-details.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/authentication/feature-login</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-authenticate</code></td><td><code>cca-authenticate</code></td><td><a href="ds/components/lib.css">lib.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/authentication/feature-login/src/lib/authenticate.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/admin/feature-logging</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-logging-table</code></td><td><code>cca-logging-table</code></td><td><a href="ds/components/logging-table.css">logging-table.css</a></td><td class="num">0.3 KB</td><td><code class="src">libs/admin/feature-logging/src/lib/logging-table/logging-table.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/admin/feature-translation-management</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-overview</code></td><td><code>cca-overview</code></td><td><a href="ds/components/overview.css">overview.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/admin/feature-translation-management/src/lib/overview/overview.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-lane-request</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-overview-vehicle-and-volume</code></td><td><code>cca-overview-vehicle-and-volume</code></td><td><a href="ds/components/overview-vehicle-and-volume.css">overview-vehicle-and-volume.css</a></td><td class="num">0.8 KB</td><td><code class="src">libs/common/shared-lane-request/src/lib/overview-vehicle-and-volume/overview-vehicle-and-volume.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-details-secure-parking</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-parking-requirements</code></td><td><code>cca-parking-requirements</code></td><td><a href="ds/components/parking-requirements.css">parking-requirements.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/shared-details-secure-parking/src/lib/parking-requirements/parking-requirements.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-public-accept-trip</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-tender-unauthorized</code></td><td><code>cca-tender-unauthorized</code></td><td><a href="ds/components/public-accept-trip.css">public-accept-trip.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-public-accept-trip/src/lib/public-accept-trip/public-accept-trip.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/ui/rich-text-editor</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-rich-text-editor</code></td><td><code>cca-rich-text-editor</code></td><td><a href="ds/components/rich-text-editor.css">rich-text-editor.css</a></td><td class="num">11.6 KB</td><td><code class="src">libs/ui/rich-text-editor/src/lib/rich-text-editor/rich-text-editor.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-operator</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-select-operator</code></td><td><code>cca-select-operator</code></td><td><a href="ds/components/select-operator.css">select-operator.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/common/shared-operator/src/lib/select-operator/select-operator.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/shared-stops</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-stops-modalities-column</code></td><td><code>cca-stops-modalities-column</code></td><td><a href="ds/components/stops-modalities-column.css">stops-modalities-column.css</a></td><td class="num">1.2 KB</td><td><code class="src">libs/common/shared-stops/src/lib/stops-modalities-column/stops-modalities-column.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-tender-general</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-tender-general</code></td><td><code>cca-tender-general</code></td><td><a href="ds/components/tender-general.css">tender-general.css</a></td><td class="num">0.5 KB</td><td><code class="src">libs/carrier-tms/feature-tender-general/src/lib/tender-general/tender-general.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/carrier-tms/feature-public-tender</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-tender-lane-row-carrier-unauthorized</code></td><td><code>cca-tender-lane-row-carrier-unauthorized</code></td><td><a href="ds/components/tender-lane-row-carrier-unauthorized.css">tender-lane-row-carrier-unauthorized.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/carrier-tms/feature-public-tender/src/lib/tender-lane-row-carrier-unauthorized/tender-lane-row-carrier-unauthorized.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/shipper-tms/feature-tracktrace</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-track-trace</code></td><td><code>cca-track-trace</code></td><td><a href="ds/components/track-trace.css">track-trace.css</a></td><td class="num">0.1 KB</td><td><code class="src">libs/shipper-tms/feature-tracktrace/src/lib/track-trace/track-trace.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/tree-view</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-tree-view-body</code></td><td><code>cca-tree-view-body</code></td><td><a href="ds/components/tree-view-body.css">tree-view-body.css</a></td><td class="num">0.2 KB</td><td><code class="src">libs/common/tree-view/src/lib/tree-view-body/tree-view-body.component.scss</code></td></tr></tbody></table></div>
+</details>
+<details>
+<summary><strong>libs/common/dialogs</strong> <span class="count">1</span></summary>
+<div class="scroll"><table>
+<thead><tr><th>Selector</th><th>Root</th><th>Stylesheet</th><th class="num">Size</th><th>Source</th></tr></thead>
+<tbody><tr><td><code>cca-view-terms-dialog</code></td><td><code>cca-view-terms-dialog</code></td><td><a href="ds/components/view-terms-dialog.css">view-terms-dialog.css</a></td><td class="num">80.0 KB</td><td><code class="src">libs/common/dialogs/src/lib/view-terms-dialog/view-terms-dialog.component.scss</code></td></tr></tbody></table></div>
+</details>
+
+      <div class="note">
+        <strong>478</strong> further component stylesheets exist but hold no
+        rules — they only <code>@reference</code> the Tailwind theme so the component can use
+        <code>@apply</code> in its template classes. There is nothing to export for those;
+        they are listed in <code>manifest.json</code>.
+      </div>
+    </div>
+  </body>
+</html>

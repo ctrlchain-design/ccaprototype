@@ -1,0 +1,25 @@
+/*
+ * cca-sequence
+ * Source:  libs/common/sequence/core/src/lib/components/sequence/sequence.component.scss
+ * :host resolves to:  cca-sequence
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-sequence .custom-grid {
+  position: relative;
+  grid-template-rows: auto 1fr;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+cca-sequence .hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+cca-sequence .hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

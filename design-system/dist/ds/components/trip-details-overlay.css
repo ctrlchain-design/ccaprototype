@@ -1,0 +1,267 @@
+/*
+ * cca-trip-details-overlay
+ * Source:  libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-builder-trip-list-container/trip-builder-trip-list/trip-details-overlay/trip-details-overlay.component.scss
+ * :host resolves to:  cca-trip-details-overlay
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-trip-details-overlay .trip-details-container {
+  display: flex;
+  height: 40vh;
+  max-height: 40vh;
+  min-height: calc(var(--spacing, 0.25rem) * 50);
+  width: 100%;
+  min-width: 470px;
+  flex-direction: column;
+  border-top-style: var(--tw-border-style);
+  border-top-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+}
+cca-trip-details-overlay .trip-details-container.is-resizing, cca-trip-details-overlay .trip-details-container.is-resize-hover {
+  border-color: var(--border-brand-default);
+}
+cca-trip-details-overlay .header {
+  z-index: 10;
+  display: flex;
+  height: fit-content;
+  max-height: calc(var(--spacing, 0.25rem) * 12);
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing, 0.25rem) * 4);
+  border-bottom-style: var(--tw-border-style);
+  border-bottom-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-default);
+  padding-block: calc(var(--spacing, 0.25rem) * 3);
+  padding-left: calc(var(--spacing, 0.25rem) * 4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+cca-trip-details-overlay .header .right-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--spacing, 0.25rem);
+}
+cca-trip-details-overlay .header .right-side .stops-distance {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing, 0.25rem);
+}
+cca-trip-details-overlay .cdk-drag-preview {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 10) !important;
+  align-items: center;
+  border-radius: 0 !important;
+  border-color: var(--border-brand-default) !important;
+  background-color: var(--surface-brand-lightest) !important;
+  box-shadow: none !important;
+}
+cca-trip-details-overlay .cdk-drag-preview .mat-expansion-panel-header {
+  height: auto !important;
+  padding-inline: calc(var(--spacing, 0.25rem) * 4) !important;
+  padding-block: calc(var(--spacing, 0.25rem) * 2) !important;
+}
+cca-trip-details-overlay .cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+cca-trip-details-overlay .cdk-drop-list.cdk-drop-list-dragging mat-expansion-panel:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+cca-trip-details-overlay .cdk-drag-placeholder {
+  box-shadow: none !important;
+  height: calc(var(--spacing, 0.25rem) * 10) !important;
+  border-radius: 0 !important;
+  border-style: var(--tw-border-style) !important;
+  border-width: 1px !important;
+  --tw-border-style: dashed;
+  border-style: dashed;
+  border-color: var(--border-brand-default) !important;
+  background-color: var(--surface-brand-lightest) !important;
+  overflow: hidden;
+}
+cca-trip-details-overlay .cdk-drag-placeholder .mat-expansion-panel-header,
+cca-trip-details-overlay .cdk-drag-placeholder .mat-expansion-panel-content {
+  visibility: hidden;
+}
+cca-trip-details-overlay .custom-grid {
+  grid-template-columns: auto auto auto auto 1fr;
+}
+cca-trip-details-overlay .custom-grid:has(.unassignButton) {
+  grid-template-columns: auto auto auto auto 1fr 4rem;
+}
+cca-trip-details-overlay .custom-grid .row {
+  display: contents;
+}
+cca-trip-details-overlay .custom-grid .row .unassignButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  background-color: var(--surface-neutral-light);
+  padding-top: calc(var(--spacing, 0.25rem) * 3);
+  padding-right: var(--spacing, 0.25rem);
+  position: sticky;
+  right: 0;
+  z-index: 2;
+}
+cca-trip-details-overlay .custom-grid .row .unassignButton.smallScreen {
+  display: none;
+  position: static;
+}
+@container (max-width: 700px) {
+  cca-trip-details-overlay .custom-grid {
+    grid-template-columns: auto auto auto;
+  }
+  cca-trip-details-overlay .custom-grid:has(.unassignButton) {
+    grid-template-columns: auto auto auto 1rem;
+  }
+  cca-trip-details-overlay .custom-grid .unassignButton {
+    display: none !important;
+  }
+  cca-trip-details-overlay .custom-grid .unassignButton.smallScreen {
+    grid-row: span 2 / span 2;
+    display: flex !important;
+  }
+}
+cca-trip-details-overlay .mat-expansion-panel:last-of-type {
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+cca-trip-details-overlay .mat-expansion-panel-header-title {
+  margin-right: 0px;
+}
+cca-trip-details-overlay .mat-content.mat-content-hide-toggle {
+  margin-right: 0px;
+}
+cca-trip-details-overlay .mat-expansion-panel {
+  background-color: var(--surface-neutral-light) !important;
+  border-radius: 0 !important;
+  border-bottom-style: var(--tw-border-style) !important;
+  border-bottom-width: 1px !important;
+  --tw-shadow: 0 0 #0000 !important;
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow) !important;
+}
+cca-trip-details-overlay .mat-expansion-panel:hover {
+  background-color: var(--surface-neutral-default) !important;
+}
+cca-trip-details-overlay .mat-expansion-panel:hover .unassignButton {
+  background-color: var(--surface-neutral-default) !important;
+}
+cca-trip-details-overlay .mat-expansion-panel .mat-expansion-panel-header {
+  height: auto;
+  min-height: calc(var(--spacing, 0.25rem) * 8);
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-trip-details-overlay .mat-expansion-panel {
+  border-style: var(--tw-border-style);
+  border-width: 0px;
+}
+cca-trip-details-overlay .mat-expansion-panel.stop-out-of-order {
+  border-left: 4px solid var(--critical-border) !important;
+}
+cca-trip-details-overlay .mat-expansion-panel-spacing {
+  margin-block: 0px;
+}
+cca-trip-details-overlay .mat-content.mat-content-hide-toggle {
+  align-items: center;
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-shadow: 0 0 #0000;
+      --tw-shadow-color: initial;
+      --tw-shadow-alpha: 100%;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-inset-shadow-color: initial;
+      --tw-inset-shadow-alpha: 100%;
+      --tw-ring-color: initial;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-color: initial;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-inset: initial;
+      --tw-ring-offset-width: 0px;
+      --tw-ring-offset-color: #fff;
+      --tw-ring-offset-shadow: 0 0 #0000;
+    }
+  }
+}

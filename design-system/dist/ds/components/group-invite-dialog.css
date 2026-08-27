@@ -1,0 +1,13 @@
+/*
+ * cca-group-invite-dialog
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-invite-dialog/group-invite-dialog.component.scss
+ * :host resolves to:  cca-group-invite-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-group-invite-dialog mat-drawer-container {
+  min-height: 14rem !important;
+}

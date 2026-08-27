@@ -1,0 +1,47 @@
+/*
+ * cca-trip-stop-date-input
+ * Source:  libs/carrier-tms/feature-trip-builder/src/lib/_components/trip-stop-date-input/trip-stop-date-input.component.scss
+ * :host resolves to:  cca-trip-stop-date-input
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-trip-stop-date-input {
+  display: inline-flex;
+}
+
+cca-trip-stop-date-input .date-input {
+  height: 2rem;
+  padding-inline: 0.75rem;
+  border: 1px solid var(--form-border);
+  border-radius: 0.5rem;
+  background-color: var(--surface-neutral-light);
+  color: var(--form-label);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+cca-trip-stop-date-input .date-input:hover:not(:focus):not(.is-invalid) {
+  border-color: var(--form-border-hover);
+}
+cca-trip-stop-date-input .date-input:focus {
+  outline: none;
+  border-color: var(--border-brand-default);
+  box-shadow: inset 0 0 0 1px var(--border-brand-default);
+}
+cca-trip-stop-date-input .date-input.is-invalid {
+  border-color: var(--critical-text-light);
+}
+cca-trip-stop-date-input .date-input.is-invalid:focus {
+  box-shadow: inset 0 0 0 1px var(--critical-text-light);
+}
+cca-trip-stop-date-input .date-input:disabled {
+  pointer-events: none;
+  border-color: var(--form-disabled);
+}
+cca-trip-stop-date-input .date-input {
+  width: 6.75rem;
+}

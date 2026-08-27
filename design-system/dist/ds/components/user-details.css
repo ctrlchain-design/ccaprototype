@@ -1,0 +1,13 @@
+/*
+ * cca-user-details
+ * Source:  libs/enterprise/feature-user-management/src/lib/user-details/user-details.component.scss
+ * :host resolves to:  cca-user-details
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-user-details cca-form-roles {
+  font-size: 0.8em;
+}

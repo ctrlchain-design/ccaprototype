@@ -1,0 +1,35 @@
+/*
+ * CtrlChain design system — generated from the platform source.
+ *
+ * Do not edit by hand. Regenerate with:
+ *   pnpm design-system:export
+ *
+ * Import order mirrors the running app: Angular Material structural CSS,
+ * then the platform globals, then the CtrlChain component styles.
+ *
+ * Deliberately NOT wrapped in @layer. A cascade layer outranks specificity,
+ * and the platform CSS carries Tailwind preflight — which resets
+ * `border-width: 0` on `*`. Layered, that universal reset beat every
+ * Material border and form-field outlines vanished. Unlayered, `*` loses to
+ * `.mat-mdc-notch-piece` on specificity, exactly as it does in production.
+ */
+
+@import url('./material-core.css');
+@import url('./material-forms.css');
+@import url('./material-data.css');
+@import url('./material-nav.css');
+@import url('./material-overlay.css');
+@import url('./material-vendor.css');
+@import url('./platform-01.css');
+@import url('./platform-02.css');
+@import url('./cca-components.css');
+
+/*
+ * Unlayered on purpose: shell/shell.css consumes these, and nothing else
+ * defines them. The platform ships one family, so all three resolve to it.
+ */
+:root {
+  --font-ui: Roboto, 'Helvetica Neue', sans-serif;
+  --font-display: Roboto, 'Helvetica Neue', sans-serif;
+  --font-large: Roboto, 'Helvetica Neue', sans-serif;
+}

@@ -1,0 +1,224 @@
+/*
+ * cca-marker-pin
+ * Source:  libs/common/map/src/lib/components/marker-pin/marker-pin.component.scss
+ * :host resolves to:  cca-marker-pin
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-marker-pin .pin-container {
+  transition: transform 0.15s ease;
+}
+cca-marker-pin .pin-container.same-location {
+  transform: translateY(-1.063rem) translateX(0rem);
+}
+cca-marker-pin .tail {
+  height: calc(var(--spacing, 0.25rem) * 2.5);
+  border-bottom-right-radius: var(--radius-2xl, 1rem);
+  border-bottom-left-radius: var(--radius-2xl, 1rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+}
+cca-marker-pin .tail.square {
+  border-radius: 0;
+}
+cca-marker-pin .tail.location {
+  border-color: var(--pin-stop-pinline);
+}
+cca-marker-pin .tail.via-point {
+  border-color: var(--pin-waypoint-outline);
+  background-color: var(--pin-waypoint-bg-default);
+}
+cca-marker-pin .tail.info {
+  border-color: var(--pin-info-outline);
+  background-color: var(--pin-info-bg-default);
+}
+cca-marker-pin .tail.alert {
+  border-color: var(--pin-alert-outline);
+  background-color: var(--pin-alert-bg-default);
+}
+cca-marker-pin .pin-content {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 6);
+  width: calc(var(--spacing, 0.25rem) * 6);
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(infinity * 1px);
+  border-style: var(--tw-border-style);
+  border-width: 2px;
+}
+cca-marker-pin .pin-content.square {
+  border-radius: 0.25rem;
+}
+cca-marker-pin .pin-content.location {
+  border-color: var(--pin-stop-outline);
+  background-color: var(--pin-stop-bg-default);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+cca-marker-pin .pin-content.location .pin-label {
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  font-weight: 400;
+  color: var(--pin-stop-content-default);
+}
+cca-marker-pin .pin-content.via-point {
+  border-color: var(--pin-waypoint-outline);
+  background-color: var(--pin-waypoint-bg-default);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+cca-marker-pin .pin-content.via-point .pin-label {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  color: var(--pin-waypoint-content-default);
+}
+cca-marker-pin .pin-content.via-point.selected:hover {
+  background-color: var(--pin-waypoint-bg-selected);
+}
+cca-marker-pin .pin-content.via-point.selected:hover .pin-label {
+  color: var(--pin-waypoint-content-selected);
+}
+cca-marker-pin .pin-content.info {
+  border-color: var(--pin-info-outline);
+  background-color: var(--pin-info-bg-default);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+cca-marker-pin .pin-content.info .pin-label {
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  font-weight: 400;
+  color: var(--pin-info-content-default);
+}
+cca-marker-pin .pin-content.info:hover, cca-marker-pin .pin-content.info.selected {
+  background-color: var(--pin-info-bg-hover);
+}
+cca-marker-pin .pin-content.info:hover .pin-label, cca-marker-pin .pin-content.info.selected .pin-label {
+  color: var(--pin-info-content-selected);
+}
+cca-marker-pin .pin-content.info.chosen {
+  background-color: var(--pin-info-bg-chosen);
+}
+cca-marker-pin .pin-content.info.chosen .pin-label {
+  color: var(--pin-info-content-chosen);
+}
+cca-marker-pin .pin-content.parking {
+  border-color: var(--pin-parking-outline);
+  background-color: var(--pin-parking-bg-default);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+cca-marker-pin .pin-content.parking .pin-label {
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  font-weight: 400;
+  color: var(--pin-parking-content-default);
+}
+cca-marker-pin .pin-content.parking:hover, cca-marker-pin .pin-content.parking.selected {
+  background-color: var(--pin-parking-bg-selected);
+}
+cca-marker-pin .pin-content.parking:hover .pin-label, cca-marker-pin .pin-content.parking.selected .pin-label {
+  color: var(--pin-parking-content-selected);
+}
+cca-marker-pin .pin-content.parking.chosen {
+  background-color: var(--pin-parking-bg-chosen);
+}
+cca-marker-pin .pin-content.parking.chosen .pin-label {
+  color: var(--pin-parking-content-chosen);
+}
+cca-marker-pin .pin-content.alert {
+  border-color: var(--pin-alert-outline);
+  background-color: var(--pin-alert-bg-default);
+}
+cca-marker-pin .pin-content.alert .pin-label {
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  font-weight: 400;
+  color: var(--pin-alert-content-default);
+}
+cca-marker-pin .svg-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+cca-marker-pin .svg-content .svg-wrap {
+  position: absolute;
+  inset: 0;
+}
+cca-marker-pin .svg-content .svg-wrap.alert svg * {
+  fill: var(--pin-alert-bg-default) !important;
+}
+cca-marker-pin .svg-content .svg-wrap.info svg * {
+  fill: var(--pin-info-bg-default) !important;
+}
+cca-marker-pin .svg-content .pin-icon.alert,
+cca-marker-pin .svg-content .pin-label.alert {
+  color: var(--pin-alert-content-default);
+}
+cca-marker-pin .svg-content .pin-label.alert {
+  z-index: 0;
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  font-weight: 400;
+}
+cca-marker-pin .svg-content .pin-icon.custom,
+cca-marker-pin .svg-content .pin-label.custom {
+  color: var(--pin-text-active);
+}
+cca-marker-pin .svg-content .pin-label.custom {
+  z-index: 0;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+cca-marker-pin .svg-content .pin-icon.info,
+cca-marker-pin .svg-content .pin-label.info {
+  color: var(--pin-info-content-default);
+}
+cca-marker-pin .svg-content .pin-label.info {
+  z-index: 0;
+  font-size: 0.625rem;
+  line-height: 0.625rem;
+  font-weight: 400;
+}
+cca-marker-pin .svg-content:hover .svg-wrap.alert svg *, cca-marker-pin .svg-content.selected .svg-wrap.alert svg * {
+  fill: var(--pin-alert-bg-hover) !important;
+}
+cca-marker-pin .svg-content:hover .svg-wrap.info svg *, cca-marker-pin .svg-content.selected .svg-wrap.info svg * {
+  fill: var(--pin-info-bg-hover) !important;
+}
+cca-marker-pin .svg-content:hover .pin-icon.alert,
+cca-marker-pin .svg-content:hover .pin-label.alert,
+cca-marker-pin .svg-content.selected .pin-icon.alert,
+cca-marker-pin .svg-content.selected .pin-label.alert {
+  color: var(--pin-alert-content-selected);
+}
+cca-marker-pin .svg-content:hover .pin-icon.info,
+cca-marker-pin .svg-content:hover .pin-label.info,
+cca-marker-pin .svg-content.selected .pin-icon.info,
+cca-marker-pin .svg-content.selected .pin-label.info {
+  color: var(--pin-info-content-selected);
+}
+cca-marker-pin .svg-content.chosen .svg-wrap.info svg * {
+  fill: var(--pin-info-bg-chosen) !important;
+}
+cca-marker-pin .svg-content.chosen .pin-icon.info,
+cca-marker-pin .svg-content.chosen .pin-label.info {
+  color: var(--pin-info-content-chosen);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

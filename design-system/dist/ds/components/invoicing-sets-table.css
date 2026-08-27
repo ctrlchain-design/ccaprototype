@@ -1,0 +1,36 @@
+/*
+ * cca-invoicing-sets-table
+ * Source:  libs/finance/invoicing-form/src/lib/invoicing-create-form/invoicing-sets-table/invoicing-sets-table.component.scss
+ * :host resolves to:  cca-invoicing-sets-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-invoicing-sets-table table {
+  min-width: 40%;
+}
+cca-invoicing-sets-table table tr.example-detail-row {
+  height: 0;
+}
+cca-invoicing-sets-table table tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+cca-invoicing-sets-table table tr.example-element-row:not(.example-expanded-row):active {
+  background-color: var(--surface-neutral-default);
+}
+cca-invoicing-sets-table table .example-element-row td {
+  border-bottom-width: 0;
+}
+cca-invoicing-sets-table table .example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+cca-invoicing-sets-table table .example-element-description {
+  padding: 16px;
+}
+cca-invoicing-sets-table table .example-element-description-attribution {
+  opacity: 0.5;
+}

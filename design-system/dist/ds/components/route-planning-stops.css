@@ -1,0 +1,26 @@
+/*
+ * cca-route-planning-stops
+ * Source:  libs/common/shared-route-planning/src/lib/components/route-planning-stops/route-planning-stops.component.scss
+ * :host resolves to:  cca-route-planning-stops
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-route-planning-stops .cdk-drag-preview {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: calc(var(--spacing, 0.25rem) * 16) !important;
+}
+cca-route-planning-stops .cdk-drag-placeholder {
+  opacity: 0;
+}
+cca-route-planning-stops .cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+cca-route-planning-stops .via-point-list.cdk-drop-list-dragging .via-point:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

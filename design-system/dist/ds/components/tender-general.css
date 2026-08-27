@@ -1,0 +1,26 @@
+/*
+ * cca-tender-general
+ * Source:  libs/carrier-tms/feature-tender-general/src/lib/tender-general/tender-general.component.scss
+ * :host resolves to:  cca-tender-general
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-tender-general nav a {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 12);
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-neutral-light);
+  padding-top: 1px;
+  color: var(--text-brand-default);
+}
+cca-tender-general nav a.active {
+  background-color: var(--surface-brand-default);
+  color: var(--text-neutral-invert);
+}

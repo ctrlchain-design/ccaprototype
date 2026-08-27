@@ -1,0 +1,13 @@
+/*
+ * cca-article-import-dialog
+ * Source:  libs/finance/feature-invoicing-management/src/lib/article-import-dialog/article-import-dialog.component.scss
+ * :host resolves to:  cca-article-import-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-article-import-dialog {
+  display: block;
+}

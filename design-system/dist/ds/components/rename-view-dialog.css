@@ -1,0 +1,21 @@
+/*
+ * cca-rename-view-dialog
+ * Source:  libs/common/filters/src/lib/components/dialogs/rename-view-dialog/rename-view-dialog.component.scss
+ * :host resolves to:  cca-rename-view-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-rename-view-dialog .rename-view-dialog .mat-mdc-form-field-subscript-wrapper,
+cca-rename-view-dialog .rename-view-dialog .mat-mdc-form-field-hint-wrapper,
+cca-rename-view-dialog .rename-view-dialog .mat-mdc-form-field-error-wrapper {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+cca-rename-view-dialog .rename-view-dialog .mat-mdc-form-field-hint-wrapper,
+cca-rename-view-dialog .rename-view-dialog .mat-mdc-form-field-error-wrapper {
+  padding-top: 4px !important;
+}

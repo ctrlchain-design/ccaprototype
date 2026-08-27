@@ -1,0 +1,18 @@
+/*
+ * cca-carrier
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-ltl-carriers/carrier/carrier.component.scss
+ * :host resolves to:  cca-carrier
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-carrier .custom-grid {
+  display: grid;
+  gap: calc(var(--spacing, 0.25rem) * 6);
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  padding-block: calc(var(--spacing, 0.25rem) * 2.5);
+  grid-template-columns: 2.5fr 3fr 1rem 1fr;
+}

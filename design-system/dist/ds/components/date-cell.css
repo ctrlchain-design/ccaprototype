@@ -1,0 +1,13 @@
+/*
+ * cca-date-cell
+ * Source:  libs/ui/src/lib/date-cell/date-cell.component.scss
+ * :host resolves to:  cca-date-cell
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-date-cell {
+  display: flex;
+}

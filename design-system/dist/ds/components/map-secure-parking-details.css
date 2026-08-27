@@ -1,0 +1,42 @@
+/*
+ * cca-map-secure-parking-details
+ * Source:  libs/common/map/src/lib/components/map-secure-parking-details/map-secure-parking-details.component.scss
+ * :host resolves to:  cca-map-secure-parking-details
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-map-secure-parking-details button {
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+  min-width: 1.25rem !important;
+}
+cca-map-secure-parking-details button cca-icon {
+  font-size: 1.25rem !important;
+  line-height: 1.25rem !important;
+}
+cca-map-secure-parking-details button .mat-mdc-button-touch-target {
+  height: 1.25rem !important;
+  width: 1.25rem !important;
+}
+cca-map-secure-parking-details .mat-mdc-checkbox .mdc-form-field {
+  top: 50% !important;
+  height: calc(var(--spacing, 0.25rem) * 7.5) !important;
+  --tw-font-weight: var(--font-weight-medium, 500) !important;
+  font-weight: var(--font-weight-medium, 500) !important;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-font-weight: initial;
+    }
+  }
+}

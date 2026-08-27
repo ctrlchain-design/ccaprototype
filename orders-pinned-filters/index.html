@@ -1,0 +1,898 @@
+<!doctype html>
+<!--
+  Orders — pinned filters above the table
+
+  From Figma: "FLOW - Toggle pinned filters above the table"
+  Project-Support-2026, node 1601:31096
+
+  The Figma section documents three flows that are really one interaction, so
+  this is one prototype rather than three static screens:
+
+    1. Toggle pinned filters above the table  — turn it on, chips appear
+    2. Toggle off with pinned filters         — turn it off, chips go away
+    3. No pinned filters                      — nothing pinned, toggle disabled
+
+  Rules taken from the designer's notes on the board, verbatim:
+    · "When users turn this on, it will show the pinned filters on the table
+       without needing to click apply filters. Same as turning this off"
+       → the toggle acts immediately; Apply Filters is not part of this path.
+    · "If there's no pinned filters, disable toggle"
+    · "Both 'All' and custom view with pinned filters can be turned off,
+       showing no pinned filters above the table"
+
+  Everything visual comes from design-system/dist. Where the design asked for
+  something the design system does not carry, it is listed at the bottom of this
+  file rather than invented quietly.
+-->
+<html lang="en" class="light" data-screen="orders.list">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orders · Pinned filters · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it.
+         Everything else this page needs is in ../_shared/prototype.css. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!--
+            Rail — switches domain. Shipper is the active domain, and Orders sits
+            under it in the submenu to the right.
+          -->
+          <cca-side-menu>
+            <div class="menu-wrapper">
+              <div class="logo-wrapper cursor-pointer">
+                <img class="w-8" src="../design-system/dist/assets/images/ctrlchain-logo-white.svg" alt="CtrlChain" />
+              </div>
+              <div class="side-menu">
+                <div class="menu-items">
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-booking mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Booking</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-home mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Home</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-dashboardkpi mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Dashboard</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-taskboard mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Taskboard</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item active" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-boxes mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Shipper TMS</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-truck mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Carrier TMS</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-group mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Enterprise</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-invoice-euro mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Finance</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-swap mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Integrations</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-no-more-task mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Release Notes</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-phonebook mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Addressbook</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <cca-side-menu-item style="display: block; width: 100%">
+                    <a class="a-menu-item" href="#"><div class="menu-item">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-Gear-Settings mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Admin</span>
+                    </div></a>
+                  </cca-side-menu-item>
+                  <div class="mt-auto flex flex-col gap-2">
+                    <hr class="my-2 w-full border-NC-blue-lighter opacity-30" />
+                    <div class="menu-item" role="button" tabindex="0" data-theme-toggle>
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-moon mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Dark</span>
+                    </div>
+                    <div class="menu-item submenu-toggle" role="button" tabindex="0" data-submenu-toggle>
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <span class="menu-item-title">Collapse</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </cca-side-menu>
+
+          <!--
+            Shipper TMS submenu. The Figma frames for this flow are rail-only, so
+            the submenu is not in the design — it is here because Orders lives
+            under Shipper TMS in the product. Items, labels, order and the
+            "New Request" action are taken from staging.ctrlchain.com/shipper-tms,
+            not invented.
+          -->
+          <cca-side-submenu>
+            <div class="submenu-container">
+              <div class="min-h-15 w-full content-center border-b border-neutral-default">
+                <img class="mr-auto max-w-32 px-4 py-3" src="../design-system/dist/assets/images/ctrlchain-text-green.svg" alt="CtrlChain" />
+              </div>
+              <div class="flex w-full flex-col gap-4 border-b border-neutral-default p-4">
+                <button ccaButton class="cca-btn cca-btn--primary icon-button-rounded w-full shadow">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-plus mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>New Request
+                </button>
+              </div>
+              <div class="flex w-full flex-col gap-4">
+                <span class="mt-4 pl-4 font-medium text-neutral-caption">Shipper TMS</span>
+                <a class="sub-item" href="#">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-request mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-base font-normal wrap-break-word">Spot Quotes</span>
+                </a>
+                <a class="sub-item active" href="#">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-list mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-base font-normal wrap-break-word">Orders</span>
+                </a>
+                <a class="sub-item" href="#">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-messages-euro mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-base font-normal wrap-break-word">RFP</span>
+                </a>
+                <a class="sub-item" href="#">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-route mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-base font-normal wrap-break-word">Contracted Lanes</span>
+                </a>
+              </div>
+            </div>
+          </cca-side-submenu>
+
+          <!-- Top bar -->
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <div class="pl-6">
+                <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Back">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <div class="flex flex-row items-center gap-2 pl-1">
+                <h1 class="text-cca-label-lg text-neutral-title">Orders</h1>
+              </div>
+              <!--
+                Trailing cluster: Contact Support, notifications, language switch
+                with its flag, then the user menu. Structure, classes and both
+                dividers come from cca-header in the app. Contact Support and the
+                flag are in production; staging does not show Contact Support, so
+                staging alone is not a reliable reference for this bar.
+              -->
+              <div class="mr-5 ml-auto flex h-full items-center">
+                <a class="proto-header-link text-cca-base mr-4" href="#">Contact Support</a>
+
+                <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only" aria-label="Notifications">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-bell mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+
+                <span class="mr-4 ml-2 block h-6 border-l border-neutral-default"></span>
+
+                <cca-language-switch style="display: block">
+                  <span class="flex items-center gap-2">
+                    <!--
+                      The platform's own flag. The export ships no flags folder,
+                      so it lives in _shared/assets/flags/ for every prototype to
+                      use. Ask FE to include assets/flags in the export.
+                    -->
+                    <img class="h-6 w-6" src="../_shared/assets/flags/en.svg" alt="" />
+                    <span class="text-cca-base text-neutral-body">English</span>
+                  </span>
+                </cca-language-switch>
+
+                <span class="mx-4 block h-6 border-l border-neutral-default"></span>
+
+                <!--
+                  The build shows the signed-in user's uploaded photo here. A
+                  prototype should not carry a real person's picture, so this is
+                  the initials form, coloured with the design system's avatar
+                  tokens. avatar-initials-white is not literally white — it
+                  inverts to dark navy in dark mode, which text-neutral-invert
+                  would not.
+                -->
+                <cca-header-menu class="header-menu" style="display: block">
+                  <cca-avatar-group style="display: block">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full avatar-bg-color text-cca-label-md avatar-initials-white">DS</span>
+                  </cca-avatar-group>
+                </cca-header-menu>
+              </div>
+            </div>
+          </cca-header>
+
+          <!-- .page takes exactly one child; `.page > *` inherits full height. -->
+          <div class="page">
+            <!--
+              `.page > *` is `height: inherit` in the platform, which is right for
+              a page whose content fills the viewport. This table is short, so the
+              container is released to hug its content instead of leaving a tall
+              empty panel below the pagination.
+            -->
+            <div class="page-container proto-hug flex flex-col">
+              <!--
+                Saved-view tabs. "All" is the only view that always exists —
+                every other tab is a view the user saved from applied filters, so
+                the row is rendered from state rather than hard-coded. A fresh
+                account sees "All" alone.
+
+                Composed from utilities, as the Figma does. Deliberately NOT
+                mat-tab-group: Material sizes its tab indicator with JavaScript at
+                runtime, so in a static page every indicator collapses to the full
+                width of the row and draws one green line across under the tabs.
+              -->
+              <div class="flex items-center" id="view-tabs"></div>
+
+              <!-- Toolbar -->
+              <div class="mt-4 flex items-center gap-4">
+                <div class="max-w-140 min-w-60 flex-1">
+                  <cca-search-field class="proto-no-subscript" style="display: block">
+                    <mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary mat-mdc-form-field-has-icon-prefix w-full">
+                      <div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+                        <div class="mat-mdc-form-field-flex">
+                          <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>
+                            <div class="mdc-notched-outline__notch mat-mdc-notch-piece"></div>
+                            <div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div>
+                          </div>
+                          <div class="mat-mdc-form-field-icon-prefix">
+                            <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-search mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                          </div>
+                          <div class="mat-mdc-form-field-infix">
+                            <input id="orders-search" type="text" class="mat-mdc-input-element mdc-text-field__input" placeholder="Search by any reference" value="" autocomplete="off" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
+                    </mat-form-field>
+                  </cca-search-field>
+                </div>
+
+                <button ccaButton class="cca-btn cca-btn--subtle" id="filters-button" aria-haspopup="dialog" aria-expanded="false">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-filter mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  Filters
+                  <cca-numerical-badge data-filter-count hidden>
+                    <span class="rounded-full font-medium success inline-flex items-center justify-center align-middle min-w-3.75">
+                      <span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">2</span>
+                    </span>
+                  </cca-numerical-badge>
+                </button>
+
+                <div class="ml-auto flex items-center gap-4">
+                  <button ccaButton class="cca-btn cca-btn--secondary cca-btn--icon-only" aria-label="Export">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-export mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--secondary cca-btn--icon-only" aria-label="More actions">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-ellipsis-vertical mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!--
+                Pinned filters above the table. This row is the whole point of the
+                flow: the drawer toggle shows and hides it, with no Apply step.
+              -->
+              <div class="mt-3 flex flex-wrap items-center gap-3" id="pinned-filters-row" hidden></div>
+
+              <!-- Orders table -->
+              <div class="mt-4">
+                <table class="mat-mdc-table mdc-data-table__table" style="width: 100%">
+                  <thead>
+                    <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Actions</th>
+                      <!-- The order-type badge is its own column in the design, with no header. -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell w-22" role="columnheader"></th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Group</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Sales Organisation</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Reference</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Transit Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="mdc-data-table__content" id="orders-rows"></tbody>
+                </table>
+
+                <!--
+                  Pagination. The app uses mat-paginator; the exported bundle has
+                  no static markup for it, so this is composed from utilities and
+                  design-system buttons.
+                -->
+                <div class="flex items-center justify-end gap-4 py-4">
+                  <span class="text-cca-label-sm text-neutral-caption">Rows per page</span>
+                  <span class="flex items-center gap-2 rounded-lg border border-neutral-default px-3 py-1 text-cca-base-sm text-neutral-body">
+                    10
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevron-down mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </span>
+                  <span class="text-cca-label-sm text-neutral-caption" id="row-count"></span>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="First page" disabled>
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Previous page" disabled>
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevron-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Next page">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevron-right mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Last page">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-right mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </cca-main>
+
+      <!-- Filters drawer -->
+      <div class="cdk-overlay-container" id="overlay-container" hidden>
+        <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="drawer-scrim"></div>
+        <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default" id="filters-drawer" role="dialog" aria-modal="true" aria-label="Filters">
+        <!-- Header -->
+        <div class="flex h-16 shrink-0 items-center gap-2 border-b border-neutral-default px-6">
+          <span class="text-cca-label-lg text-neutral-title">Filters</span>
+          <cca-numerical-badge data-filter-count hidden>
+            <span class="rounded-full font-medium success inline-flex items-center justify-center align-middle min-w-3.75">
+              <span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">2</span>
+            </span>
+          </cca-numerical-badge>
+        </div>
+
+        <!-- Search -->
+        <div class="shrink-0 px-6 py-4">
+          <cca-search-field class="proto-no-subscript" style="display: block">
+            <mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary mat-mdc-form-field-has-icon-prefix w-full">
+              <div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+                <div class="mat-mdc-form-field-flex">
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>
+                    <div class="mdc-notched-outline__notch mat-mdc-notch-piece"></div>
+                    <div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div>
+                  </div>
+                  <div class="mat-mdc-form-field-icon-prefix">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-search mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </div>
+                  <div class="mat-mdc-form-field-infix">
+                    <input id="filter-search" type="text" class="mat-mdc-input-element mdc-text-field__input" placeholder="Search by filter name" value="" autocomplete="off" />
+                  </div>
+                </div>
+              </div>
+              <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
+            </mat-form-field>
+          </cca-search-field>
+        </div>
+
+        <!-- Filter list -->
+        <div class="proto-drawer-body px-6">
+          <!--
+            The switch. Disabled when nothing is pinned, per the board note
+            "If there's no pinned filters, disable toggle".
+          -->
+          <div class="proto-switch-row flex items-center rounded-lg surface-neutral-default px-4 py-2" id="pin-toggle-row">
+            <mat-slide-toggle class="mat-mdc-slide-toggle mat-primary" id="pin-toggle-host">
+              <div class="mdc-form-field mat-internal-form-field">
+                <button type="button" role="switch" aria-checked="false" id="pin-toggle" class="mdc-switch mdc-switch--unselected">
+                  <div class="mdc-switch__track"></div>
+                  <div class="mdc-switch__handle-track">
+                    <div class="mdc-switch__handle">
+                      <div class="mdc-switch__shadow"><div class="mdc-elevation-overlay"></div></div>
+                      <div class="mdc-switch__ripple"></div>
+                      <div class="mdc-switch__icons">
+                        <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+                        </svg>
+                        <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M20 13H4v-2h16v2z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                <label for="pin-toggle">Show pinned filters above the table</label>
+              </div>
+            </mat-slide-toggle>
+          </div>
+
+          <!-- Pinned -->
+          <div class="mt-5 flex flex-col gap-5" id="pinned-list"></div>
+
+          <hr class="my-4 border-neutral-default" id="pinned-divider" />
+
+          <!-- Unpinned -->
+          <div class="flex flex-col gap-4 pb-4" id="unpinned-list"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex shrink-0 items-center justify-between border-t border-neutral-default px-6 py-4">
+          <button ccaButton class="cca-btn cca-btn--subtle" id="clear-filters">Clear Filters</button>
+          <button ccaButton class="cca-btn cca-btn--primary" id="apply-filters">Apply Filters</button>
+        </div>
+        </div>
+      </div>
+    </cca-root>
+
+    <script src="../_shared/data.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/shell.js"></script>
+
+    <script>
+      // ---------------------------------------------------------------- data
+      // The drawer's filter list, and which of them start pinned. Reference
+      // numbers repeat in the Figma frames, so they repeat here.
+      // `applied` is how many VALUES are selected in that filter. It is what every
+      // counter shows, and it is independent of `pinned` — pinning only decides
+      // whether a filter can appear above the table.
+      //
+      // The numbers differ deliberately: with a badge of 2 next to 2 pinned
+      // filters it was impossible to tell which one the badge was counting.
+      const FILTERS = [
+        { name: 'Account Manager', applied: 3, pinned: true },
+        { name: 'Assigned Operator', applied: 0, pinned: true },
+        { name: 'Addresses', applied: 0, pinned: false },
+        { name: 'Booked with Contracted Lane', applied: 0, pinned: false },
+        { name: 'Carrier Assignment Status', applied: 2, pinned: false },
+        { name: 'Carrier Enterprise', applied: 0, pinned: false },
+        { name: 'Carrier Invoice Status', applied: 0, pinned: false },
+        { name: 'Customer Invoice Status', applied: 5, pinned: false },
+      ];
+
+      // Orders come from _shared/data.js so the row you click in this list is the
+      // same record the detail prototype will open. Do not inline rows here.
+      const ORDERS = window.CCA_DATA.orders;
+
+      let showPinned = false;
+
+      /*
+       * Saved views. "All" is a system view and is always present; it cannot be
+       * renamed or removed. Everything else in this list is something a user
+       * saved from the filters they had applied — which is why a new account has
+       * one tab, not five.
+       *
+       * Each saved view remembers the filter values that were applied when it was
+       * saved, so selecting it re-applies them.
+       */
+      const VIEWS = [{ name: 'All', system: true, filters: {} }];
+      let activeView = 'All';
+
+      // ------------------------------------------------------------- helpers
+      const icon = (name) =>
+        `<cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-${name} mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>`;
+
+      // Per-filter counters in the drawer are white-on-green in Figma
+      // (badge.background.white + badge.text.green) = the `inverted` flavour.
+      // `.primary` on a numerical badge is RED — the green one is `.success`.
+      // No badge at all when a filter has no values applied.
+      const counterBadge = (n) =>
+        !n
+          ? ''
+          : `<cca-numerical-badge><span class="rounded-full font-medium inverted inline-flex items-center justify-center align-middle min-w-3.75"><span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">${n}</span></span></cca-numerical-badge>`;
+
+      const labelBadge = (text, flavor) =>
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-1 text-cca-base-sm leading-5 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
+
+      // Smaller than the documented label badge: the design system has no size
+      // modifier for it, so the size is the type utility one step down the scale
+      // (text-cca-label-sm, 12/16) with tighter vertical padding.
+      const smallLabelBadge = (text, flavor) =>
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
+
+      const statusBadge = (text, flavor) =>
+        `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
+
+      // ------------------------------------------------------ saved views
+      function renderViews() {
+        const tab = (v) => {
+          const active = v.name === activeView;
+          return `
+            <div class="flex h-12 w-40 shrink-0 items-center justify-center gap-1.5 overflow-clip surface-neutral-light px-3 py-2 ${
+              active ? 'border-b-2 border-brand-default' : 'border-b border-neutral-default'
+            }" role="tab" aria-selected="${active}" data-view="${v.name}">
+              ${v.system ? icon('home') : ''}
+              <span class="truncate text-cca-label-lg ${active ? 'text-brand-default' : 'text-neutral-caption'}">${v.name}</span>
+              ${
+                active
+                  ? `<button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="View options" data-view-menu>
+                       ${icon('ellipsis-vertical')}
+                     </button>`
+                  : ''
+              }
+            </div>`;
+        };
+
+        document.getElementById('view-tabs').innerHTML =
+          VIEWS.map(tab).join('') +
+          // Filler keeps the bottom border running to the edge of the row.
+          '<div class="h-12 flex-1 border-b border-neutral-default surface-neutral-light"></div>';
+      }
+
+      // ---------------------------------------------------------- the table
+      function renderRows() {
+        document.getElementById('orders-rows').innerHTML = ORDERS.map(
+          (o) => `
+          <tr class="mat-mdc-row mdc-data-table__row">
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Row actions">${icon('ellipsis-vertical')}</button>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${smallLabelBadge(o.type, 'neutral')}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <!--
+                Links by SCREEN NAME, not folder. _shared/routes.js turns this into
+                a real href once the detail prototype exists, and until then the
+                click explains itself instead of 404ing.
+              -->
+              <a class="cca-btn cca-btn--link" href="#"
+                 data-screen="orders.detail"
+                 data-params='{"id":"${o.id}"}'>${o.id}</a>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <div class="flex flex-col gap-1 text-cca-base-sm text-neutral-body">
+                <span class="flex items-center gap-1">${icon('building')}${o.shipperGroup}</span>
+                <span class="flex items-center gap-1">${icon('users')}${o.shipperSubGroup}</span>
+              </div>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <span class="text-cca-base-sm text-neutral-body">${o.salesOrganisation}</span>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <span class="text-cca-base-sm text-neutral-body">${o.shipperReference}</span>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${statusBadge(o.status, o.statusFlavor)}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${labelBadge(o.transitStatus, o.transitFlavor)}</td>
+          </tr>`
+        ).join('');
+      }
+
+      // -------------------------------------------------- pinned chips row
+      // A pinned filter chip: a pin glyph plus the filter name. Figma draws it
+      // at a 10px radius, which the design system has no utility for —
+      // rounded-lg (8px) is the nearest sanctioned value.
+      function renderPinnedRow() {
+        const row = document.getElementById('pinned-filters-row');
+        const pinned = FILTERS.filter((f) => f.pinned);
+        row.hidden = !showPinned || pinned.length === 0;
+        row.innerHTML = pinned
+          .map(
+            (f) => `
+          <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
+            ${icon('pinned')}
+            <span class="truncate">${f.name}</span>
+          </span>`
+          )
+          .join('');
+      }
+
+      // -------------------------------------------------------- the drawer
+      function accordion(f, index) {
+        return `
+          <div class="flex w-full items-center gap-3">
+            <button class="proto-pin" type="button" aria-pressed="${f.pinned}"
+                    data-pin="${index}"
+                    aria-label="${f.pinned ? 'Unpin' : 'Pin'} ${f.name}">
+              ${icon(f.pinned ? 'pinned-yes' : 'pinned')}
+            </button>
+            <button class="proto-accordion" type="button">
+              <span class="flex-1 text-cca-label-md text-neutral-body">${f.name}</span>
+              ${counterBadge(f.applied)}
+              ${icon('chevron-down')}
+            </button>
+          </div>`;
+      }
+
+      function renderDrawerLists() {
+        const pinned = [];
+        const unpinned = [];
+        FILTERS.forEach((f, i) => (f.pinned ? pinned : unpinned).push(accordion(f, i)));
+
+        document.getElementById('pinned-list').innerHTML = pinned.join('');
+        document.getElementById('unpinned-list').innerHTML = unpinned.join('');
+        // The divider only makes sense between two populated lists.
+        document.getElementById('pinned-divider').hidden = pinned.length === 0;
+      }
+
+      // ------------------------------------------------------- the switch
+      function renderToggle() {
+        const anyPinned = FILTERS.some((f) => f.pinned);
+        const host = document.getElementById('pin-toggle-host');
+        const button = document.getElementById('pin-toggle');
+        const row = document.getElementById('pin-toggle-row');
+        const label = row.querySelector('label');
+
+        // "If there's no pinned filters, disable toggle"
+        row.dataset.disabled = String(!anyPinned);
+        button.disabled = !anyPinned;
+
+        const on = showPinned && anyPinned;
+        host.classList.toggle('mat-mdc-slide-toggle-checked', on);
+        button.classList.toggle('mdc-switch--selected', on);
+        button.classList.toggle('mdc-switch--unselected', !on);
+        button.setAttribute('aria-checked', String(on));
+        label.textContent = 'Show pinned filters above the table';
+      }
+
+      // Counts filters that HAVE VALUES APPLIED. Pinning must never move this
+      // number — a pinned filter with nothing selected is not an active filter.
+      function renderFilterCount() {
+        const n = FILTERS.filter((f) => f.applied > 0).length;
+        document.querySelectorAll('[data-filter-count]').forEach((el) => {
+          el.hidden = n === 0;
+          const slot = el.querySelector('span span');
+          if (slot) slot.textContent = String(n);
+        });
+      }
+
+      function render() {
+        renderViews();
+        renderRows();
+        document.getElementById('row-count').textContent = `1 - ${ORDERS.length} of ${ORDERS.length}`;
+        renderDrawerLists();
+        renderPinnedRow();
+        renderToggle();
+        renderFilterCount();
+      }
+
+      // --------------------------------------------------------- behaviour
+      // The container holds both the backdrop and the pane, exactly as the CDK
+      // builds it.
+      //
+      // cdk-overlay-backdrop starts at opacity 0 and transitions over 400ms, so
+      // `cdk-overlay-backdrop-showing` has to be added AFTER the browser has
+      // committed that starting state — add it in the same paint and there is
+      // nothing to animate from.
+      //
+      // Reading offsetWidth forces a style/layout flush, which commits opacity 0
+      // synchronously. Do NOT use requestAnimationFrame for this: rAF does not
+      // fire in a background or non-rendering tab, so the class would never be
+      // added and the scrim would sit at opacity 0 — invisible, with the drawer
+      // floating over an unshaded page.
+      //
+      // cdk-global-scrollblock on <html> freezes the page behind the drawer,
+      // which is what the real overlay does.
+      function setDrawer(open) {
+        const container = document.getElementById('overlay-container');
+        const backdrop = document.getElementById('drawer-scrim');
+
+        if (open) {
+          container.hidden = false;
+          void backdrop.offsetWidth;
+          backdrop.classList.add('cdk-overlay-backdrop-showing');
+        } else {
+          backdrop.classList.remove('cdk-overlay-backdrop-showing');
+          container.hidden = true;
+        }
+
+        document.documentElement.classList.toggle('cdk-global-scrollblock', open);
+        document.getElementById('filters-button').setAttribute('aria-expanded', String(open));
+      }
+
+      document.getElementById('filters-button').addEventListener('click', () => setDrawer(true));
+      document.getElementById('drawer-scrim').addEventListener('click', () => setDrawer(false));
+      document.getElementById('clear-filters').addEventListener('click', () => {
+        // Clears applied VALUES. Pins survive: what you pinned is a layout
+        // preference, not a filter.
+        FILTERS.forEach((f) => (f.applied = 0));
+        render();
+        setDrawer(false);
+      });
+      document.getElementById('apply-filters').addEventListener('click', () => setDrawer(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setDrawer(false);
+      });
+
+      // The switch takes effect straight away — no Apply, per the board note.
+      document.getElementById('pin-toggle').addEventListener('click', () => {
+        if (!FILTERS.some((f) => f.pinned)) return;
+        showPinned = !showPinned;
+        renderToggle();
+        renderPinnedRow();
+      });
+
+      // Pinning is delegated: the lists are re-rendered on every change.
+      document.querySelector('.proto-drawer-body').addEventListener('click', (e) => {
+        const pin = e.target.closest('[data-pin]');
+        if (!pin) return;
+        const f = FILTERS[Number(pin.dataset.pin)];
+        f.pinned = !f.pinned;
+        // Nothing left pinned means nothing to show above the table.
+        if (!FILTERS.some((x) => x.pinned)) showPinned = false;
+        render();
+      });
+
+      // Selecting a view re-applies the filter values it was saved with.
+      document.getElementById('view-tabs').addEventListener('click', (e) => {
+        if (e.target.closest('[data-view-menu]')) {
+          const applied = FILTERS.filter((f) => f.applied > 0).length;
+          if (!applied) {
+            window.CCA_ROUTES.notice('Apply some filters first — a view is saved from them.');
+            return;
+          }
+          saveView();
+          return;
+        }
+        const tab = e.target.closest('[data-view]');
+        if (!tab) return;
+        const view = VIEWS.filter((v) => v.name === tab.dataset.view)[0];
+        if (!view) return;
+        activeView = view.name;
+        if (!view.system) FILTERS.forEach((f) => (f.applied = view.filters[f.name] || 0));
+        render();
+      });
+
+      // A view is created FROM applied filters — that is the whole rule behind
+      // the tab row. Nothing applied means nothing to save.
+      function saveView() {
+        const snapshot = {};
+        FILTERS.forEach((f) => {
+          if (f.applied > 0) snapshot[f.name] = f.applied;
+        });
+        const name = 'View ' + VIEWS.length;
+        VIEWS.push({ name, system: false, filters: snapshot });
+        activeView = name;
+        render();
+        window.CCA_ROUTES.notice('Saved “' + name + '” from ' + Object.keys(snapshot).length + ' applied filter(s).');
+      }
+
+      render();
+    </script>
+  </body>
+</html>
+
+<!--
+  WHERE THIS DEPARTS FROM THE FIGMA, AND WHY
+  Each of these is a value the design asked for that the exported design system
+  does not carry. Nothing here was guessed — worth a word with FE or the designer.
+
+  1. Pinned-chip radius. Figma draws the chip at radius-10 (10px). The bundle's
+     radius scale is sm 4 / md 6 / lg 8 / xl 12 / 2xl 16 — there is no 10px
+     utility, so the chip uses rounded-lg (8px), the same radius as cards.
+
+  2. Chip background. Figma uses a raw #ebebeb. The token that equals it in light
+     mode is surface-neutral-dark — counter-intuitively named, but it is the
+     right one: it inverts to #565656 in dark, which a raw hex would not.
+
+  3. Drawer width — RESOLVED, and the frame is the thing that is wrong. The
+     platform sizes drawers fluidly: --drawer-panel-min-width 40% and
+     --drawer-panel-max-width 50% of the viewport, applied by
+     .mat-drawer:not(:has(cca-notifications-panel)). The Figma frame draws a fixed
+     512px, which is ~40% of its own 1280px canvas — that is where the number came
+     from. Hard-coding it makes the drawer too narrow on a real screen, so this
+     uses the platform variables and the pane measures ~747px at 1878px wide.
+
+     The notifications panel is the one fixed-width drawer, at
+     --drawer-panel-notifications-width (26.5rem).
+
+     Everything else about the drawer comes from the platform too: container,
+     backdrop, 400ms fade, pane and page-scroll lock are all real CDK classes.
+
+  4. Pagination. The app uses mat-paginator; the bundle documents its behaviour
+     but ships no static markup for it, so the row is composed from utilities and
+     design-system icon buttons.
+
+  5. Country flags. The app serves these from assets/flags/*.svg at 24px, but the
+     export ships no flags folder and there is no flag glyph in the icon font.
+     The top-bar flag is the platform's real en.svg, committed to this
+     prototype's own assets/flags/ — it is 179KB, because the platform's SVG wraps
+     a raster image. The table rows still have no flag beside "CtrlChain B.V.".
+     Ask FE to include assets/flags in the export so prototypes stop carrying
+     their own copies.
+
+  11. Top bar. Contact Support, notifications, language switch with flag, then the
+      user menu. Note that STAGING IS NOT A RELIABLE REFERENCE for this bar:
+      staging shows no Contact Support link and no flag, but production has both.
+      Check production, or ask, before "correcting" this cluster against staging.
+
+      Two deliberate differences from the app inside that cluster:
+        · The bell's mat-badge is present in the app but carries mat-badge-hidden
+          while the count is 0, so nothing is drawn. No badge here either.
+        · The app renders the signed-in user's uploaded photo. A prototype should
+          not carry a real person's picture, so this is the initials form using
+          the avatar tokens.
+
+  6. Tabs are composed from utilities, not mat-tab-group — which is how the Figma
+     builds them too: 160×48 per tab, 1px neutral bottom border, 2px brand border
+     on the active one. Material's tab DOM sizes its indicator with JavaScript at
+     runtime, so in a static page every indicator collapsed to the full width of
+     the row and drew a green line straight across under the tabs. Do not
+     reintroduce mat-tab-group here without its runtime.
+
+  7. Order-type badge size. The design draws it smaller than the documented label
+     badge, but cca-label-badge has no size modifier — size comes from the
+     utilities on its inner div. This uses text-cca-label-sm / leading-4 with
+     py-0.5, one step down the type scale. A real size variant would be better.
+
+  8. Form-field subscript. Material reserves 24px under every field for hints and
+     errors, which floats the search box 12px above the buttons next to it. The
+     app suppresses this with subscriptSizing="dynamic"; the doc pages only show
+     the reserved form, so the prototype collapses it in its own stylesheet.
+
+  10. Scrim colour — RESOLVED, and the Figma value cannot be built. The frame
+      specifies the scrim as surface-neutral-darkest at 50%. FE documented why
+      that does not work (components/modal.html, "Scrims"): in dark mode that
+      token resolves to Neutrals.200, so the overlay would come out LIGHTER than
+      the page behind it. A scrim needs a literal colour, or its own token that
+      stays dark in both themes.
+
+      The platform has three overlay treatments and they are not interchangeable:
+
+        Dialog          rgba(0, 0, 0, 0.32)  CDK default, never overridden
+        Drawer/sidenav  rgba(0, 0, 0, 0.6)   --mat-sidenav-scrim-color
+        Side panel      transparent          no scrim at all
+
+      FE has since added purpose-built tokens: --scrim-dialog (0.32) and
+      --scrim-drawer (0.6), both declared with identical values in light and dark
+      precisely so a scrim never follows the theme. This drawer uses
+      --scrim-drawer. An earlier version used the dialog value, which was too
+      light.
+
+      One asymmetry: --scrim-drawer is what --mat-sidenav-scrim-color reads, so
+      changing the token changes the drawer. --scrim-dialog only records the
+      number — the CDK hard-codes 0.32 on .cdk-overlay-dark-backdrop.
+
+      Still worth doing on the design side: put the real scrim on the Figma
+      drawer component so the frame and the build agree.
+
+  BADGE FLAVOURS — READ BEFORE COPYING ONE
+  On cca-numerical-badge, `.primary` is --badge-bg-red, not green. The green the
+  design asks for (badge.background.green) is `.success`, and the white-on-green
+  per-filter counter is `.inverted`. The flavour names do not line up with the
+  Figma layer names, so check ds/components/numerical-badge.css rather than
+  guessing from the name.
+
+  NAVIGATION
+  The Figma frames for this flow are rail-only, so the rail items and the whole
+  Shipper TMS submenu are not from the design. They are read off
+  staging.ctrlchain.com (rail order and labels; submenu = New Request, Spot
+  Quotes, Orders, RFP, Contracted Lanes) so the page is framed the way a reviewer
+  meets it in the product. Orders lives at /shipper-tms/order.
+
+  Also: the Figma board's three flows are three states of one interaction, so
+  this is one prototype. Open Filters, toggle the switch, and pin or unpin
+  filters to reach all three.
+-->

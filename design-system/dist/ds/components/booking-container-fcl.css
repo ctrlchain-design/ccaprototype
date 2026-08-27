@@ -1,0 +1,16 @@
+/*
+ * cca-booking-container-fcl
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/steps/booking-container-fcl/booking-container-fcl.component.scss
+ * :host resolves to:  cca-booking-container-fcl
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-booking-container-fcl .BookingFCLContainer {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}

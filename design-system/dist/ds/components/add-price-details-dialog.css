@@ -1,0 +1,14 @@
+/*
+ * cca-edit-price-details-dialog
+ * Source:  libs/shipper-tms/feature-contracted-lane-management/src/lib/dialogs/add-price-details-dialog/add-price-details-dialog.component.scss
+ * :host resolves to:  cca-edit-price-details-dialog
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-edit-price-details-dialog {
+  display: block;
+  width: 50.25rem;
+}

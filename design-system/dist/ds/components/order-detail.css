@@ -1,0 +1,15 @@
+/*
+ * cca-order-detail
+ * Source:  libs/shipper-tms/feature-order-management/src/lib/order-detail/order-detail.component.scss
+ * :host resolves to:  cca-order-detail
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-order-detail .active > cca-numerical-badge > span {
+  background-color: var(--badge-bg-white);
+  color: var(--badge-text-green);
+}

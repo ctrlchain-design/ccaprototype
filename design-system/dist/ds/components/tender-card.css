@@ -1,0 +1,55 @@
+/*
+ * cca-tender-card
+ * Source:  libs/carrier-tms/shared-tender-detail/src/lib/tender-card/tender-card.component.scss
+ * :host resolves to:  cca-tender-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-tender-card .dates {
+  display: grid;
+  justify-self: center;
+  grid-template-columns: repeat(2, 1fr);
+}
+cca-tender-card .dates .pickup {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-neutral-body);
+}
+cca-tender-card .dates .pickup :first-child {
+  margin-right: 12px;
+}
+cca-tender-card .dates .center {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-brand-light);
+  justify-content: center;
+  align-items: center;
+}
+cca-tender-card .dates .map-marker {
+  color: var(--color-sky-700, oklch(50% 0.134 242.749));
+}
+cca-tender-card .link:active {
+  color: var(--text-brand-default);
+}
+cca-tender-card .disabledText {
+  color: var(--text-neutral-disabled);
+}
+cca-tender-card .tender_card_container {
+  padding: 1.5rem;
+}
+cca-tender-card .tender_card_container .expansion_header {
+  margin-right: 0px;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+}
+cca-tender-card .tender_card_container .mat-expansion-indicator {
+  margin-right: 5px;
+}

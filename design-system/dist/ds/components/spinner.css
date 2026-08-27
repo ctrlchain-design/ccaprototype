@@ -1,0 +1,30 @@
+/*
+ * cca-spinner
+ * Source:  libs/ui/src/lib/spinner/spinner.component.scss
+ * :host resolves to:  cca-spinner
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-spinner cca-logo.spinner {
+  animation: spin 1s cubic-bezier(0.68, -1, 0.68, 0.55) infinite;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

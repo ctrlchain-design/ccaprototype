@@ -1,0 +1,86 @@
+/*
+ * cca-base-filters-chip
+ * Source:  libs/common/filters/src/lib/components/filter-chips/base-filters-chip/base-filters-chip.component.scss
+ * :host resolves to:  cca-base-filters-chip
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-base-filters-chip .chip-tooltip {
+  --lines: 7;
+  --lh: 1.25rem;
+  --border: 1px;
+  --pt: 0.5rem;
+  --pr: 0.5rem;
+  --pb: 0.5rem;
+  --pl: 0.5rem;
+  width: 12.5rem;
+  height: auto;
+  max-height: calc(var(--lines) * var(--lh) + var(--pt) + var(--pb));
+  padding: var(--pt) var(--pr) var(--pb) var(--pl);
+  border-radius: 0.5rem;
+  background: var(--surface-neutral-darkest);
+  border: var(--border) solid var(--border-brand-light);
+  color: var(--text-neutral-invert);
+  pointer-events: none;
+  overflow: visible;
+  position: relative;
+}
+
+cca-base-filters-chip .chip-tooltip-content {
+  line-height: var(--lh);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines);
+  overflow: hidden;
+}
+
+cca-base-filters-chip .chip-tooltip-line {
+  display: inline;
+}
+
+cca-base-filters-chip .chip-tooltip-line::after {
+  content: "\a";
+  white-space: pre;
+}
+
+cca-base-filters-chip .chip-tooltip--more {
+  --pt: 0.5rem;
+  --pr: 0.5rem;
+  --pb: 0.5rem;
+  --pl: 0.75rem;
+}
+
+cca-base-filters-chip .chip-tooltip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -100%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid var(--border-brand-light);
+  z-index: 2;
+}
+
+cca-base-filters-chip .chip-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, calc(-100% + 1px));
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--surface-neutral-darkest);
+  z-index: 3;
+}
+
+cca-base-filters-chip .cdk-overlay-pane {
+  overflow: visible !important;
+}

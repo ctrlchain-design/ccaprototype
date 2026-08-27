@@ -1,0 +1,25 @@
+/*
+ * cca-actions
+ * Source:  libs/common/shared-actions/src/lib/action/actions.component.scss
+ * :host resolves to:  cca-actions
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-actions ul.active li:hover {
+  background-color: var(--surface-brand-lighter);
+}
+cca-actions ul.active li.active {
+  background-color: var(--surface-brand-default);
+  color: var(--text-neutral-invert);
+}
+cca-actions ul.active li.active .subtitle {
+  color: var(--text-neutral-invert);
+}
+cca-actions .actionGrid {
+  grid-template-columns: minmax(20rem, 25rem) 1fr;
+  display: grid;
+}

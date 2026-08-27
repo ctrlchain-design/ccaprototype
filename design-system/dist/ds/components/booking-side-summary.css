@@ -1,0 +1,14 @@
+/*
+ * cca-booking-side-summary
+ * Source:  libs/shipper-tms/feature-booking/src/lib/booking/booking-side-summary/booking-side-summary.component.scss
+ * :host resolves to:  cca-booking-side-summary
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-booking-side-summary {
+  height: 100%;
+}

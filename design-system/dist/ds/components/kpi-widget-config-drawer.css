@@ -1,0 +1,13 @@
+/*
+ * cca-kpi-widget-config-drawer
+ * Source:  libs/common/grid/src/lib/kpi-widget-config-drawer/kpi-widget-config-drawer.component.scss
+ * :host resolves to:  cca-kpi-widget-config-drawer
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-kpi-widget-config-drawer cca-date-filter > mat-form-field {
+  margin-bottom: 0px !important;
+}

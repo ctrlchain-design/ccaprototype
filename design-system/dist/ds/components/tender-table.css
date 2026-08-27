@@ -1,0 +1,13 @@
+/*
+ * cca-tender-table
+ * Source:  libs/carrier-tms/shared-tender-detail/src/lib/tender-table/tender-table.component.scss
+ * :host resolves to:  cca-tender-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-tender-table .mat-mdc-tab-body-wrapper {
+  height: inherit;
+}

@@ -1,0 +1,20 @@
+/*
+ * cca-parking-requirements
+ * Source:  libs/common/shared-details-secure-parking/src/lib/parking-requirements/parking-requirements.component.scss
+ * :host resolves to:  cca-parking-requirements
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/* Make the checkbox label fill the entire card */
+cca-parking-requirements mat-checkbox .mdc-form-field {
+  width: 100%;
+  height: 100%;
+}
+
+cca-parking-requirements mat-checkbox .mdc-label {
+  width: 100%;
+  height: 100%;
+}

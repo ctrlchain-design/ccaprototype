@@ -1,0 +1,18 @@
+/*
+ * cca-address-field
+ * Source:  libs/common/address-field/src/lib/address-field/address-field.component.scss
+ * :host resolves to:  cca-address-field
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-address-field button.map-btn:focus,
+cca-address-field button.map-btn:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--button-primary-border-focused);
+  border-radius: var(--radius-lg, 0.5rem);
+  --tw-outline-style: none;
+  outline-style: none;
+}

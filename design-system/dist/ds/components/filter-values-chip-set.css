@@ -1,0 +1,13 @@
+/*
+ * cca-filter-values-chip-set
+ * Source:  libs/common/filters/src/lib/components/filter-chips/filter-values-chip-set/filter-values-chip-set.component.scss
+ * :host resolves to:  cca-filter-values-chip-set
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-filter-values-chip-set .mat-mdc-tooltip .mdc-tooltip__surface {
+  white-space: pre-line;
+}

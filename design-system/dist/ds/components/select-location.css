@@ -1,0 +1,13 @@
+/*
+ * cca-select-location
+ * Source:  libs/common/addressbook/src/lib/address-create/steps/select-location/select-location.component.scss
+ * :host resolves to:  cca-select-location
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-select-location cca-map google-map .gm-style div {
+  cursor: pointer;
+}

@@ -1,0 +1,116 @@
+<!doctype html>
+<!--
+  The playground — the prototypes as one product
+  ----------------------------------------------
+  Every other folder in this repo is a prototype of one epic. This is the way in
+  to all of them joined together: start on a screen, click through, and where a
+  destination exists you land on it.
+
+  The list below is not maintained by hand. It is built at load time from
+  _shared/screens.js, which a generator writes by walking the repo — so a new
+  prototype appears here the moment it is generated, and a screen that is linked
+  to but not yet built shows as exactly that.
+-->
+<html lang="en" class="light" data-screen="playground">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playground · CtrlChain prototypes</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        font-family: var(--font-ui);
+        background: var(--surface-neutral-default);
+      }
+      /* A screen that is linked to but not built yet reads as unavailable. */
+      .pg-card[data-unbuilt] {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .pg-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 120ms ease;
+      }
+      .pg-card:not([data-unbuilt]):hover {
+        border-color: var(--border-brand-default);
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root class="proto-root-auto">
+      <div class="mx-auto flex max-w-5xl flex-col gap-6 p-6">
+        <header class="flex items-center gap-3">
+          <img class="h-8" src="../design-system/dist/assets/images/ctrlchain-logo-green.svg" alt="" />
+          <div>
+            <h1 class="text-cca-label-lg text-neutral-title">Playground</h1>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              The prototypes as one product. Start anywhere and click through —
+              the records are shared, so an order in a list is the same order
+              everywhere else.
+            </p>
+          </div>
+        </header>
+
+        <section class="flex flex-col gap-3">
+          <h2 class="text-cca-label-md text-neutral-title">Screens</h2>
+          <div class="flex flex-col gap-3" id="screens"></div>
+        </section>
+
+        <p class="text-cca-label-sm text-neutral-caption" id="summary"></p>
+      </div>
+    </cca-root>
+
+    <script src="../_shared/data.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/routes.js"></script>
+
+    <script>
+      // Rendered from the generated registry — never a hand-kept list.
+      (function () {
+        const screens = window.CCA_SCREENS || {};
+        const names = Object.keys(screens).sort();
+
+        const badge = (text, flavor) =>
+          `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
+
+        document.getElementById('screens').innerHTML = names
+          .map((name) => {
+            const entry = screens[name];
+            const built = !!entry;
+            const title = built ? entry.title || name : 'Designed, not prototyped yet';
+            return `
+            <a class="pg-card rounded-lg border border-neutral-default surface-neutral-light p-4"
+               data-screen="${name}" ${built ? '' : 'data-unbuilt'} href="#">
+              <div class="flex items-start gap-3">
+                <div class="flex flex-col gap-1">
+                  <span class="text-cca-label-md text-neutral-title">${name}</span>
+                  <span class="text-cca-base-sm text-neutral-subtitle">${title}</span>
+                </div>
+                <div class="ml-auto">
+                  ${built ? badge('Built', 'primary') : badge('Not built yet', 'neutral')}
+                </div>
+              </div>
+            </a>`;
+          })
+          .join('');
+
+        const built = names.filter((n) => screens[n]).length;
+        document.getElementById('summary').textContent =
+          `${built} of ${names.length} screens built. This list is generated — run ` +
+          `build-screens.py after adding a prototype.`;
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+/*
+ * cca-address-autocomplete
+ * Source:  libs/common/address-field/src/lib/address-autocomplete/address-autocomplete.component.scss
+ * :host resolves to:  cca-address-autocomplete
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-address-autocomplete .mat-mdc-menu-panel {
+  max-width: none !important;
+  margin-top: 0.75rem;
+}

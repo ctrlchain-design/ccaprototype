@@ -1,0 +1,13 @@
+/*
+ * cca-google-predictions-panel
+ * Source:  libs/common/address-field/src/lib/google-predictions-panel/google-predictions-panel.component.scss
+ * :host resolves to:  .block
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+.block {
+  display: block;
+}

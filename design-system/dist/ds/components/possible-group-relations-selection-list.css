@@ -1,0 +1,17 @@
+/*
+ * cca-possible-group-relations-selection-list
+ * Source:  libs/enterprise/feature-group-management/src/lib/group-details/group-detail-relations/relations-table/possible-group-relations-selection-list/possible-group-relations-selection-list.component.scss
+ * :host resolves to:  cca-possible-group-relations-selection-list
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-possible-group-relations-selection-list .mat-mdc-list-option .mat-mdc-list-option-checkbox-before {
+  margin-right: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-possible-group-relations-selection-list .divided.mat-mdc-selection-list {
+  --mdc-list-list-item-one-line-container-height: 5rem;
+}

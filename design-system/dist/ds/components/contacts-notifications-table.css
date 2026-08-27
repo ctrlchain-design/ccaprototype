@@ -1,0 +1,21 @@
+/*
+ * cca-contacts-notifications-table
+ * Source:  libs/common/shared-contacts/src/lib/contacts-notifications-table/contacts-notifications-table.component.scss
+ * :host resolves to:  cca-contacts-notifications-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-contacts-notifications-table .mat-expansion-panel .mat-expansion-panel-header {
+  height: auto;
+  padding: calc(var(--spacing, 0.25rem) * 4);
+}
+cca-contacts-notifications-table .mat-expansion-panel .mat-expansion-panel-header .mat-content.mat-content-hide-toggle {
+  margin-right: 0;
+}
+cca-contacts-notifications-table .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-panel-header-title {
+  margin-right: 0;
+}

@@ -1,0 +1,115 @@
+/*
+ * cca-filters-select
+ * Source:  libs/common/filters/src/lib/components/filters-select/filters-select.component.scss
+ * :host resolves to:  cca-filters-select
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-filters-select .ng-dropdown-panel {
+  max-height: calc(var(--spacing, 0.25rem) * 74) !important;
+  max-width: calc(var(--spacing, 0.25rem) * 79) !important;
+  min-width: 100%;
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-filters-select .ng-select.ng-select-custom .ng-select-container.ng-appearance-outline::after {
+  border-color: var(--border-neutral-default) !important;
+}
+cca-filters-select .filter-select-opened .ng-select.ng-select-custom .ng-select-container.ng-appearance-outline::after {
+  border-style: var(--tw-border-style);
+  border-width: 0.094rem;
+  border-color: var(--border-brand-default) !important;
+}
+cca-filters-select:hover {
+  --tw-outline-style: none !important;
+  outline-style: none !important;
+}
+cca-filters-select:hover .ng-select.ng-select-custom .ng-select-container.ng-appearance-outline::after {
+  border-color: var(--border-neutral-darker) !important;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items .ng-option {
+  min-height: calc(var(--spacing, 0.25rem) * 7.5);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal, 400);
+  color: var(--text-neutral-body);
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  background-color: var(--surface-neutral-default);
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items .ng-option:hover {
+  background-color: var(--surface-brand-lighter);
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items .ng-optgroup {
+  height: 100%;
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  padding-block: var(--spacing, 0.25rem);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  color: var(--text-neutral-subtitle);
+  text-transform: none;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items .ng-option.loading-notfound-text {
+  display: flex;
+  min-height: calc(var(--spacing, 0.25rem) * 12);
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  --tw-font-weight: var(--font-weight-normal, 400);
+  font-weight: var(--font-weight-normal, 400);
+  color: var(--text-neutral-subtitle);
+  text-transform: capitalize;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-header {
+  min-height: 0px;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-header .mat-mdc-checkbox {
+  display: flex;
+  height: calc(var(--spacing, 0.25rem) * 7.5);
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-header .mat-mdc-form-field {
+  height: calc(var(--spacing, 0.25rem) * 9);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-header .mat-mdc-form-field div {
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+  align-items: center;
+  padding: 0px;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-header .mat-mdc-form-field div cca-icon {
+  padding: 0px;
+  font-size: 0.938rem;
+}
+cca-filters-select .ng-dropdown-panel.ng-select-custom .ng-dropdown-header .mat-mdc-form-field > div {
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-font-weight: initial;
+    }
+  }
+}

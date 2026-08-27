@@ -1,0 +1,16 @@
+/*
+ * cca-authenticate
+ * Source:  libs/authentication/feature-login/src/lib/authenticate.component.scss
+ * :host resolves to:  cca-authenticate
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-authenticate {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+}

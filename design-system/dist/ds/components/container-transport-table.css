@@ -1,0 +1,13 @@
+/*
+ * cca-container-transport-table
+ * Source:  libs/common/shared-expendable-table/src/lib/container-transport-table/container-transport-table.component.scss
+ * :host resolves to:  cca-container-transport-table
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+cca-container-transport-table .expanded-row td {
+  border-bottom-width: 0;
+}

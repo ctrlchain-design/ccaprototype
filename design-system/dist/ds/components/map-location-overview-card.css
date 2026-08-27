@@ -1,0 +1,82 @@
+/*
+ * cca-map-location-overview-card
+ * Source:  libs/common/map/src/lib/components/map-location-overview-card/map-location-overview-card.component.scss
+ * :host resolves to:  cca-map-location-overview-card
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-map-location-overview-card .event-card {
+  display: flex;
+  min-height: calc(var(--spacing, 0.25rem) * 23);
+  cursor: pointer;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: calc(var(--spacing, 0.25rem) * 2);
+  border-radius: var(--radius-lg, 0.5rem);
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--border-neutral-default);
+  background-color: var(--surface-neutral-light);
+  padding-inline: calc(var(--spacing, 0.25rem) * 3);
+  padding-block: calc(var(--spacing, 0.25rem) * 2);
+}
+cca-map-location-overview-card .event-card:hover {
+  outline-style: var(--tw-outline-style);
+  outline-width: 2px;
+  outline-color: var(--outline-brand-default);
+  --tw-outline-style: solid;
+  outline-style: solid;
+}
+cca-map-location-overview-card .event-card.selected {
+  border-color: var(--border-brand-default);
+}
+cca-map-location-overview-card .active {
+  position: relative;
+  display: block;
+  height: calc(var(--spacing, 0.25rem) * 2.5);
+  width: calc(var(--spacing, 0.25rem) * 2.5);
+  border-radius: calc(infinity * 1px);
+  background-color: var(--surface-brand-default);
+}
+cca-map-location-overview-card .active::before, cca-map-location-overview-card .active::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: calc(var(--spacing, 0.25rem) * 2.5);
+  width: calc(var(--spacing, 0.25rem) * 2.5);
+  border-radius: calc(infinity * 1px);
+  background-color: inherit;
+}
+cca-map-location-overview-card .active:before {
+  animation: blip 2s infinite;
+}
+@keyframes blip {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-outline-style: solid;
+    }
+  }
+}

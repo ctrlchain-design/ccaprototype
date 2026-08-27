@@ -1,0 +1,16 @@
+/*
+ * cca-carrier-selection
+ * Source:  libs/common/shared-tender/src/lib/carrier-selection/carrier-selection.component.scss
+ * :host resolves to:  cca-carrier-selection
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-carrier-selection .mat-mdc-tab-body-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

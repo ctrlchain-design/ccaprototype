@@ -1,0 +1,39 @@
+/*
+ * cca-review-quote-step
+ * Source:  libs/marketing/feature-pallet-landing/src/lib/pallet-landing-page/review-quote-step/review-quote-step.component.scss
+ * :host resolves to:  cca-review-quote-step
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-review-quote-step .mat-horizontal-stepper-header-container {
+  --tw-border-style: none;
+  border-style: none;
+  background-color: var(--surface-neutral-light) !important;
+}
+cca-review-quote-step cca-main .appContent .page {
+  padding: 0px;
+}
+cca-review-quote-step .gradient-footer {
+  background: linear-gradient(320.3deg, #6f8f2f 35.46%, #30430a 127.84%);
+}
+cca-review-quote-step .rate-container {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--spacing, 0.25rem) * 6);
+}
+@media only screen and (max-width: 768px) {
+  cca-review-quote-step .back-button {
+    width: 100%;
+  }
+  cca-review-quote-step .rate-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  cca-review-quote-step .rate-container .rate-card {
+    width: 100%;
+  }
+}

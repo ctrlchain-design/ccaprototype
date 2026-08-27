@@ -1,0 +1,16 @@
+/*
+ * cca-language-switch
+ * Source:  libs/common/core/src/lib/essentials/translations/language-switch/language-switch.component.scss
+ * :host resolves to:  cca-language-switch
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+cca-language-switch .mat-mdc-menu-trigger {
+  height: calc(var(--spacing, 0.25rem) * 11);
+  padding-right: calc(var(--spacing, 0.25rem) * 4);
+  padding-left: calc(var(--spacing, 0.25rem) * 3);
+}

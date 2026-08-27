@@ -1,0 +1,49 @@
+/*
+ * cca-trip-planner-trip-context-menu
+ * Source:  libs/carrier-tms/feature-trip-planner/src/lib/trip-planner/components/trip-planner-trip-card/trip-planner-trip-context-menu/trip-planner-trip-context-menu.component.scss
+ * :host resolves to:  cca-trip-planner-trip-context-menu
+ *
+ * Generated — de-Angularized from the component stylesheet. Needs the
+ * token layer to resolve its var() references: link ds/index.css, or at
+ * minimum the ds/platform-*.css files, before this file.
+ */
+
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+cca-trip-planner-trip-context-menu .trip-menu-item {
+  cursor: pointer;
+  border-left-style: var(--tw-border-style);
+  border-left-width: 2px;
+  border-color: transparent;
+  padding-inline: calc(var(--spacing, 0.25rem) * 4);
+  padding-block: calc(var(--spacing, 0.25rem) * 2.5);
+  text-align: start;
+  color: var(--text-neutral-body);
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--surface-brand-default);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      color: var(--text-neutral-invert);
+    }
+  }
+}
+cca-trip-planner-trip-context-menu .trip-menu-item.selected {
+  border-color: var(--border-brand-default);
+  background-color: var(--surface-neutral-default);
+  color: var(--text-neutral-body);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+    }
+  }
+}

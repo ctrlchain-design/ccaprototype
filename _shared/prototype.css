@@ -1,0 +1,223 @@
+/*
+ * Shared prototype stylesheet
+ * ---------------------------
+ * Link this AFTER design-system/dist/ds/index.css and before any page-specific
+ * <style> block:
+ *
+ *   <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+ *   <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+ *   <link rel="stylesheet" href="../_shared/prototype.css" />
+ *
+ * Everything in here exists because a static prototype has no Angular runtime.
+ * Each rule was found the hard way — the comments say what breaks without it, so
+ * nobody has to rediscover it. None of these set a colour, size or radius of
+ * their own; every value is a design-system token.
+ *
+ * This is NOT part of the design system. If a rule here ever becomes a token or
+ * a component in design-system/dist, delete it from here and use the real thing.
+ */
+
+/* ---------------------------------------------------------------- page shell */
+
+/*
+ * WITHOUT THIS, NOTHING ON THE PAGE IS CLICKABLE.
+ *
+ * The platform ships a full-page `body::before` overlay (a faint background
+ * graphic). It is `position: absolute`, so it paints above every static in-flow
+ * box and swallows their clicks. The running app never notices because app
+ * content lives inside `cca-root`, which the design system defines as
+ * `position: relative`.
+ *
+ * A prototype that puts content straight in <body> looks perfect and responds to
+ * nothing — or worse, responds in some places and not others, depending on which
+ * elements happen to have a positioned ancestor.
+ *
+ * cca-root is a custom element, so it has no default display of its own.
+ * Use height: 100% for an app shell, height: auto for a document-flow page.
+ */
+cca-root {
+  display: block;
+  height: 100%;
+}
+
+.proto-root-auto {
+  height: auto;
+}
+
+/*
+ * Let a short page's container hug its content.
+ *
+ * The platform sets `height: inherit` on the page's direct child via
+ * `cca-main .appContent .page > *:not(router-outlet)`, which is right for a view
+ * that fills the viewport. A short table would otherwise leave a tall empty
+ * panel below its pagination.
+ *
+ * The selector has to mirror the platform's specificity — a plain
+ * `.page > .proto-hug` loses to it and the override silently does nothing.
+ */
+cca-main .appContent .page > .proto-hug {
+  height: auto;
+}
+
+/* --------------------------------------------------------------- form fields */
+
+/*
+ * Collapse Material's hint/error strip.
+ *
+ * Material reserves 24px under every form field for hints and errors, making a
+ * 48px input 72px tall — which floats it 12px above any 48px button beside it in
+ * a toolbar. The app avoids this with Angular's subscriptSizing="dynamic", which
+ * only renders the strip when there is something to put in it. The exported doc
+ * pages always show the reserved form, so a static prototype has to collapse it.
+ *
+ * Put this on the cca-search-field / mat-form-field wrapper. Do not use it on a
+ * field that actually shows a hint or a validation error.
+ */
+.proto-no-subscript .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* -------------------------------------------------------------------- header */
+
+/*
+ * A plain text link in the top bar — "Contact Support" and friends.
+ *
+ * Deliberately NOT cca-btn--link: that component hard-codes
+ * `text-decoration: underline`, which is correct for an inline link in prose and
+ * wrong for a header action.
+ */
+.proto-header-link {
+  color: var(--text-brand-default);
+  text-decoration: none;
+}
+.proto-header-link:hover {
+  color: var(--text-brand-dark);
+}
+
+/* ----------------------------------------------------- overlays and drawers */
+
+/*
+ * Drawer / side-panel pane position.
+ *
+ * The overlay itself is all real platform CSS from ds/material-vendor.css —
+ * .cdk-overlay-container, .cdk-overlay-backdrop, .cdk-overlay-pane,
+ * .cdk-global-scrollblock. All the CDK leaves to a static page is WHERE the pane
+ * lands, because the app computes that from a position strategy at runtime.
+ *
+ * Width comes from the platform, which sizes drawers FLUIDLY rather than at a
+ * fixed width:
+ *
+ *   :root { --drawer-panel-min-width: 40%; --drawer-panel-max-width: 50%; }
+ *   .mat-drawer:not(:has(cca-notifications-panel)) { min-width: …; max-width: …; }
+ *
+ * So a drawer is 40–50% of the viewport, not the 512px a Figma frame draws it at.
+ * 512px is roughly 40% of a 1280px frame, which is where that number comes from —
+ * do not hard-code it, or the drawer will be too narrow on a real screen.
+ *
+ * The notifications panel is the exception, at a fixed
+ * var(--drawer-panel-notifications-width) of 26.5rem.
+ */
+.proto-drawer-pane {
+  top: 0;
+  right: 0;
+  height: 100%;
+  min-width: var(--drawer-panel-min-width);
+  max-width: var(--drawer-panel-max-width);
+  flex-direction: column;
+}
+
+/* The container is normally added and removed from the DOM by the CDK; a
+   prototype toggles the [hidden] attribute instead. */
+.cdk-overlay-container[hidden] {
+  display: none;
+}
+
+/*
+ * Pick the scrim that matches the overlay — they are not interchangeable.
+ * See the Scrims table on design-system/dist/components/modal.html.
+ *
+ *   Dialog          --scrim-dialog   0.32   .cdk-overlay-dark-backdrop
+ *   Drawer/sidenav  --scrim-drawer   0.6    this rule
+ *   Side panel      none, transparent       .cdk-overlay-transparent-backdrop
+ *
+ * A drawer wearing the dialog class is visibly too light.
+ *
+ * Both scrim tokens hold the SAME value in light and dark, deliberately: a scrim
+ * darkens whatever is behind it, so it is the one colour that must not follow the
+ * theme. Never build one out of a surface token — `surface-neutral-darkest` at
+ * 50% reads fine in light mode but resolves to Neutrals.200 in dark, so the
+ * overlay would come out lighter than the page behind it.
+ *
+ * One asymmetry worth knowing: --scrim-drawer is what --mat-sidenav-scrim-color
+ * reads, so changing the token changes the drawer. --scrim-dialog only records
+ * the number — the CDK hard-codes 0.32 on .cdk-overlay-dark-backdrop and does not
+ * read the token.
+ */
+.proto-drawer-backdrop {
+  background: var(--scrim-drawer);
+}
+
+/* Header and footer stay put; only the body scrolls. */
+.proto-drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* ---------------------------------------------------------------- snackbar */
+
+/*
+ * Position for the design system's snackbar.
+ *
+ * The markup is the platform's own (mat-mdc-snack-bar-container +
+ * mat-mdc-snackbar-surface); only its placement is missing, because the app
+ * positions snackbars through the CDK overlay and a static page has no overlay
+ * runtime. Used by _shared/routes.js for the "not prototyped yet" notice.
+ */
+.proto-snackbar {
+  position: fixed;
+  bottom: calc(var(--spacing) * 6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+}
+
+/* ------------------------------------------------------------------ controls */
+
+/* A pin toggle is a button, not an icon sitting in a box. */
+.proto-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  padding: var(--spacing);
+  cursor: pointer;
+  color: var(--text-neutral-caption);
+}
+.proto-pin[aria-pressed="true"] {
+  color: var(--text-brand-default);
+}
+
+/* A full-width disclosure row inside a drawer. */
+.proto-accordion {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+  border: 0;
+  background: none;
+  padding: calc(var(--spacing) * 2) 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+/* A disabled switch has to read as disabled — set data-disabled on the row. */
+.proto-switch-row[data-disabled="true"] {
+  opacity: 0.4;
+}
+.proto-switch-row[data-disabled="true"] * {
+  cursor: not-allowed;
+}
