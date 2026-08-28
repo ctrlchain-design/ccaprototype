@@ -95,6 +95,11 @@ carries a comment explaining what breaks without it.
 - **`_shared/patterns.html`** — open it in a browser. Composed patterns the bundle
   does not document: the real top-bar trailing cluster, saved-view tabs, pinned
   filter chips, badge flavours, a working drawer. View source and copy.
+- **`_shared/shell-markup.js`** — the shell itself, defined once: the rail, one
+  submenu per domain, and the top bar's trailing cluster. A page declares
+  `data-rail`, `data-submenu` / `data-submenu-active` and `data-top-bar-trailing`
+  and this fills them in. Load it before `routes.js` and `nav.js`, which wire what
+  it renders. Change a rail item here and every prototype gets it.
 - **`_shared/shell.js`** — include once at the end of `<body>`. Wires the rail's
   Dark and Collapse items from `data-theme-toggle` / `data-submenu-toggle`, using
   the platform's own mechanisms: a `dark` class on the root element for theming,
@@ -257,6 +262,12 @@ Open the page for the component you need and copy its rendered static markup.
 
 Two things about that markup are easy to get wrong:
 
+- **A bare tag can already be the style.** The platform styles `h1` (20px bold),
+  `h2` (20px medium) and `h3` (18px) globally, and the app's own markup relies on
+  it — its document title is a classless `<h2>`. Adding a `text-cca-*` utility
+  there does not "make it right", it silently shrinks the heading: `text-cca-label-lg`
+  is 16px, four pixels under the `h2` it overrode. Check the element's computed
+  size against the app before reaching for a type utility.
 - **Element tags are load-bearing.** Much of the CSS targets `cca-side-menu`,
   `cca-status-badge`, `cca-main .appContent` and friends. A badge is a
   `<cca-status-badge>` wrapping a utility-classed `<div>` — copying only the div
@@ -268,17 +279,35 @@ Two things about that markup are easy to get wrong:
 
 ### 3. Scaffold or edit
 
-New prototype — one folder per prototype at the repo root, `index.html` inside:
+New prototype — one folder per prototype at the repo root, `index.html` inside.
+There are two starters; pick by what the screen is:
 
 ```bash
-mkdir -p my-prototype
+# a list, a dashboard, anything showing many records
 cp .claude/skills/prototype/templates/index.html my-prototype/index.html
+
+# ONE record, opened by ?id= from somewhere else
+cp .claude/skills/prototype/templates/detail.html my-prototype/index.html
 ```
 
-The template is the platform shell: rail, submenu, top bar, scrolling page area.
-Replace the page content and the nav labels; leave the shell structure and the
-two stylesheet links alone. Its comments explain why each part is shaped the way
-it is.
+`detail.html` already reads `?id=`, looks the record up in `_shared/data.js`,
+handles an unknown id, and points its back button at a screen name — the four
+things a detail page gets wrong when written from scratch.
+
+Neither template contains rail or submenu markup. **Never paste shell markup into
+a prototype**: the rail, the per-domain submenus and the top bar's trailing
+cluster are defined once in `_shared/shell-markup.js`, and a page declares what it
+wants:
+
+```html
+<cca-side-menu data-rail="Admin"></cca-side-menu>
+<cca-side-submenu data-submenu="admin" data-submenu-active="Legal"></cca-side-submenu>
+<div data-top-bar-trailing data-initials="DS"></div>
+```
+
+Add a rail item or a submenu entry there and every prototype has it on next load.
+Replace the page content; leave the shell structure and the two stylesheet links
+alone. The comments explain why each part is shaped the way it is.
 
 Editing an existing prototype — match what is already there. Some older
 prototypes predate this bundle and use inline styles against a partial token

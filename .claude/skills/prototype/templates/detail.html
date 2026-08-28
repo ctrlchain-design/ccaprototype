@@ -1,0 +1,193 @@
+<!doctype html>
+<!--
+  CtrlChain DETAIL-page starter.
+
+  Copy this when a screen shows ONE record that another prototype links to — an
+  order, a legal document, a lane. For a list or a dashboard, start from
+  index.html in this folder instead.
+
+  What a detail page has to get right, and what this template already does:
+
+    · It reads which record to show from ?id=, put there by the link that opened
+      it, and looks that record up in _shared/data.js. The row someone clicked
+      and the page they land on are then the same object, which is the whole
+      point of the shared fixture.
+    · It handles a missing or unknown id. People share stale links; a blank page
+      reads as a bug.
+    · Its back button goes somewhere real, by screen name.
+    · Its shell is not written here at all. Rail, submenu and the top bar's
+      trailing cluster come from _shared/shell-markup.js, so a change to any of
+      them reaches every prototype at once.
+
+  Replace: data-screen, the title, data-rail / data-submenu, the header title,
+  and everything inside renderRecord(). Leave the shell structure and the two
+  stylesheet links alone.
+
+  class="light" on the root element is not decoration: the platform tokens flip
+  to dark under prefers-color-scheme, so without it the prototype renders dark
+  for any reviewer whose OS is in dark mode.
+
+  Never write a literal opening html tag in this comment. build-screens.py takes
+  the FIRST thing in the file that looks like one and reads data-screen off it,
+  so a mention up here steals the page's name.
+-->
+<html lang="en" class="light" data-screen="CHANGE.ME">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PAGE NAME · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <!--
+      ds/index.css covers the 40 design-system components. Anything under
+      ds/components/ is product-specific and is NOT imported — link it here,
+      after index.css, and say why. message-banner.css is the common one: without
+      it the environment banner has no background at all.
+    -->
+    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--
+      cca-main > .appContent is the platform's shell grid:
+        "sidenav submenu header" / "sidenav submenu topbar" / "sidenav submenu page"
+      That ancestry is load-bearing — flatten it and the rail loses its sizing
+      and active states.
+    -->
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!--
+            Shared shell. data-rail names the active domain; data-submenu names
+            the domain's item list and data-submenu-active the current item.
+            Both are defined once in _shared/shell-markup.js — never paste rail
+            or submenu markup into a prototype.
+          -->
+          <cca-side-menu data-rail="Shipper TMS"></cca-side-menu>
+          <cca-side-submenu data-submenu="shipper-tms" data-submenu-active="Orders"></cca-side-submenu>
+
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <!--
+                On a detail page the back arrow is the way out, so it navigates —
+                by screen name, not a folder path. Point it at the list.
+              -->
+              <div class="pl-6">
+                <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Back" data-screen="CHANGE.ME.list">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <div class="flex flex-row items-center gap-2 pl-1">
+                <!--
+                  The app titles this bar with the SECTION, not the record — the
+                  record names itself in the card below. Check the real screen
+                  before changing that.
+                -->
+                <h1 class="text-NC-blue-default">Page title</h1>
+              </div>
+              <div data-top-bar-trailing data-initials="DS"></div>
+            </div>
+          </cca-header>
+
+          <cca-message-banner style="display: block">
+            <div class="grid h-12 w-full grid-cols-7 content-center grayscale-mode-neutral highlight">
+              <div class="col-span-5 self-center justify-self-center">
+                <span class="text-neutral-title">Development environment — do not use real customer data (ISO 27001).</span>
+              </div>
+            </div>
+          </cca-message-banner>
+
+          <!--
+            .page owns the scroll and the gutter, and `.page > *` is
+            height: inherit — so exactly one child, with the content inside it.
+            .page-container is the app's own card for a detail body.
+          -->
+          <div class="page">
+            <div class="page-container min-h-full surface-neutral-light" id="record"></div>
+          </div>
+        </div>
+      </cca-main>
+    </cca-root>
+
+    <script src="../_shared/data.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+    <script src="../_shared/shell.js"></script>
+
+    <!--
+      A page that builds markup from template literals should keep its script in
+      its OWN FILE — see admin-legal-document/document.js. Then index.html holds
+      exactly one closing body tag, and a search-and-replace across the page
+      cannot silently edit generated HTML. This inline block is the small-page
+      shortcut; move it out the moment it grows.
+    -->
+    <script>
+      (function () {
+        'use strict';
+
+        var D = window.CCA_DATA;
+
+        // The id the link carried. routes.js turns data-params into ?id=…
+        var id = window.CCA_ROUTES.param('id');
+        var record = id ? D.order(id) : null; // ← swap for the right lookup
+
+        var host = document.getElementById('record');
+
+        function esc(s) {
+          return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+          });
+        }
+
+        /*
+         * The not-found state. Not optional: links get shared after the fixture
+         * changes, and a page that renders nothing looks broken rather than
+         * empty. Give it a way back.
+         */
+        function renderMissing() {
+          host.innerHTML =
+            '<div class="grid h-full place-items-center"><div class="flex flex-col gap-4 text-center">' +
+            '<h3>No such record</h3>' +
+            '<p class="text-cca-base text-neutral-subtitle">' +
+            (id ? 'Nothing here has the id “' + esc(id) + '”.' : 'This page needs an id — open it from the list.') +
+            '</p><div><button ccaButton type="button" class="cca-btn cca-btn--primary" data-screen="CHANGE.ME.list">' +
+            'Back to the list</button></div></div></div>';
+        }
+
+        function renderRecord() {
+          // REPLACE THIS. Compose from design-system/dist/components/*.html and
+          // read the real screen before inventing a layout.
+          host.innerHTML =
+            '<h2>' + esc(record.id) + '</h2>' +
+            '<div class="mt-8 flex gap-8">' +
+            '<div><span class="pr-2 text-neutral-caption">Status:</span><span>' + esc(record.status) + '</span></div>' +
+            '</div><hr class="my-8" />' +
+            '<p class="text-cca-base text-neutral-body">Detail content goes here.</p>';
+        }
+
+        if (record) {
+          document.title = record.id + ' · CtrlChain';
+          renderRecord();
+        } else {
+          renderMissing();
+        }
+
+        // Anything rendered after load needs its data-screen links resolved.
+        window.CCA_ROUTES.resolve();
+      })();
+    </script>
+  </body>
+</html>

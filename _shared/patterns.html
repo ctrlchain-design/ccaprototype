@@ -65,13 +65,18 @@
             <h2 class="text-cca-label-md text-neutral-title">Top bar — trailing cluster</h2>
             <p class="text-cca-base-sm text-neutral-subtitle">
               Contact Support, notifications, language switch with flag, user menu.
+              <strong>Do not copy this markup.</strong> It is shared, in
+              <code>_shared/shell-markup.js</code>, and a prototype gets it by
+              putting <code>&lt;div data-top-bar-trailing&gt;</code> in its header —
+              the demo to the right is that module rendering itself. One definition
+              is the point: a copy per prototype is how two of them end up
+              disagreeing about what the product&rsquo;s chrome looks like.
               <strong>Staging is not a reliable reference for this bar</strong> — it
               shows no Contact Support link and no flag, but production has both.
-              The link is <code>.proto-header-link</code>, not
-              <code>cca-btn--link</code>, which hard-codes an underline. The bell's
-              badge is hidden in the app while the count is zero, so there is none
-              here. The avatar is initials using the avatar tokens — the app shows
-              the signed-in user's photo, which a shared prototype should not carry.
+              Contact Support is <code>cca-btn--tertiary</code>, the app&rsquo;s own
+              class, not <code>cca-btn--link</code>, which hard-codes an underline.
+              The avatar is initials using the avatar tokens — the app shows the
+              signed-in user&rsquo;s photo, which a shared prototype should not carry.
             </p>
           </div>
           <div class="pat-demo" style="padding: 0">
@@ -79,25 +84,7 @@
               <div class="flex flex-row items-center gap-2 pl-6">
                 <h1 class="text-cca-label-lg text-neutral-title">Page title</h1>
               </div>
-              <div class="mr-5 ml-auto flex h-full items-center">
-                <a class="proto-header-link text-cca-base mr-4" href="#">Contact Support</a>
-                <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only" aria-label="Notifications">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-bell mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                </button>
-                <span class="mr-4 ml-2 block h-6 border-l border-neutral-default"></span>
-                <cca-language-switch style="display: block">
-                  <span class="flex items-center gap-2">
-                    <img class="h-6 w-6" src="assets/flags/en.svg" alt="" />
-                    <span class="text-cca-base text-neutral-body">English</span>
-                  </span>
-                </cca-language-switch>
-                <span class="mx-4 block h-6 border-l border-neutral-default"></span>
-                <cca-header-menu class="header-menu" style="display: block">
-                  <cca-avatar-group style="display: block">
-                    <span class="flex h-10 w-10 items-center justify-center rounded-full avatar-bg-color text-cca-label-md avatar-initials-white">DS</span>
-                  </cca-avatar-group>
-                </cca-header-menu>
-              </div>
+              <div data-top-bar-trailing data-initials="DS"></div>
             </div>
           </div>
         </section>
@@ -109,10 +96,31 @@
             <p class="text-cca-base-sm text-neutral-subtitle">
               160×48 per tab, 1px neutral bottom border, 2px brand border on the
               active one, plus a flexing filler so the border reaches the edge.
-              <strong>Do not use <code>mat-tab-group</code> here.</strong> Material
-              sizes its tab indicator with JavaScript at runtime; with no Angular,
-              every indicator collapses to the full width of the row and draws one
-              green line straight across under the tabs.
+              <strong>These are not Material tabs</strong> — a saved view carries an
+              icon and a kebab menu, so it is its own component. Use
+              <code>mat-tab-group</code> for a plain tab strip, not for these.
+              <br /><br />
+              <strong>Do not render the row when "All" is the only view.</strong> One
+              tab is not a choice, and the app agrees: Contracted Lanes has no saved
+              views and shows the toolbar straight away with no tab row, even though
+              its URL still carries <code>viewId=all</code>. Orders, which has views,
+              shows "All" plus them. Drop the filler too, or an empty rule hangs
+              under the toolbar with nothing above it.
+              <br /><br />
+              The kebab on the active tab is <em>Set as Default / Rename / Delete</em>
+              — it manages the view you are on and does <strong>not</strong> create
+              one. Rename and Delete are disabled on "All", which is a system view.
+              <br /><br />
+              This note used to say Material tabs were unusable in a static page
+              because the indicator needs Angular to size it. That was the wrong
+              diagnosis. The indicator is sized in CSS — it is
+              <code>position: absolute</code> inside the tab — and the export is
+              simply missing <code>.mdc-tab { position: relative }</code>, so it
+              resolved against the whole strip and drew one green line across every
+              tab. <code>prototype.css</code> restores the rule, and
+              <code>admin-legal</code> uses a real <code>mat-tab-group</code> with no
+              Angular at all. The design system's own components/tabs.html still
+              shows the broken version — worth reporting to FE.
             </p>
           </div>
           <div class="pat-demo" style="padding: 0">
@@ -209,6 +217,184 @@
           </div>
         </section>
 
+        <!-- ================================================ file upload -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">File upload dropzone</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              The platform's <code>cca-file-upload</code>, read off an order's
+              Documents tab. Composed from utilities — there is no dropzone
+              stylesheet in the export, so the classes on the box are the
+              component.
+              <br /><br />
+              <strong>The dashed border has no colour class.</strong> The app writes
+              <code>border-neutral-dark-700</code>, which is not in the design
+              system and resolves to nothing; the colour comes from
+              <code>currentColor</code> via <code>text-neutral-title</code>, which
+              is why it computes to #3e3e3e and still inverts in dark mode. The
+              dead class is left out here. If you want it stated,
+              <code>border-neutral-darker</code> is the token that equals it.
+              <br /><br />
+              Make the box a <code>&lt;label&gt;</code> around a hidden
+              <code>&lt;input type="file"&gt;</code>: "browse" then opens the real
+              picker with no JavaScript. Drag-and-drop needs
+              <code>dragover</code> cancelled or the browser opens the file
+              instead of handing it over — and a dropped file <strong>never lands
+              in <code>input.files</code></strong>, so hold it in a variable
+              rather than reading the input back.
+              <br /><br />
+              <strong>One file only?</strong> Leaving <code>multiple</code> off the
+              input covers the picker, but not a drop — that is the one route more
+              than one file can arrive by. Taking <code>files[0]</code> and
+              discarding the rest silently is the wrong answer: the person sees
+              their other files vanish unexplained. Check
+              <code>files.length</code>, say so, and take none.
+              <br /><br />
+              <strong>One format only?</strong> Same shape of problem.
+              <code>accept</code> greys out other types in the picker but is only a
+              filter — the picker's own "All files" option switches it off — and a
+              drop goes through neither <code>accept</code> nor
+              <code>multiple</code>. Validate in the change handler AND the drop
+              handler.
+              <br /><br />
+              On <code>dragover</code> the browser exposes each item's
+              <code>type</code> but <strong>not its name</strong>, so decide with
+              the type alone, set
+              <code>e.dataTransfer.dropEffect = 'none'</code> to turn the cursor
+              into "no drop", and paint the zone as refusing —
+              <code>critical-border</code> + <code>critical-surface-lighter</code>.
+              Then check again on drop, where the filename finally exists. Show the
+              refusal <em>where the file would have appeared</em>, not in a
+              snackbar that slides away before they try again.
+              <br /><br />
+              The glyph is the platform's own and the export omits it, so it lives
+              in <code>_shared/assets/images/</code> beside the flags.
+            </p>
+          </div>
+          <div class="pat-demo">
+            <cca-file-upload class="w-full" style="display: block">
+              <div class="grid cursor-pointer items-center justify-items-center rounded-xl border border-dashed px-3 py-8 text-neutral-title transition-colors surface-neutral-default hover:surface-neutral-light">
+                <img class="inline text-3xl text-neutral-disabled" src="assets/images/file-upload.svg" alt="" width="63" height="72" />
+                <p class="mt-6 w-full overflow-hidden text-center text-cca-base font-normal whitespace-normal">
+                  <span>Drag and drop or</span>
+                  <span class="mr-0.5 text-brand-default underline">browse</span>
+                  <span>your files</span>
+                </p>
+              </div>
+            </cca-file-upload>
+            <p class="mt-3 text-cca-label-sm text-neutral-caption">
+              Working example: <code>admin-legal-document</code> &rsaquo; Create new
+              version &rsaquo; Upload a document.
+            </p>
+          </div>
+        </section>
+
+        <!-- ====================================== reader legal pages -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Reader-facing legal pages</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              Recorded so it is not rediscovered, and corrected after checking
+              development: these are <strong>pages, not modals</strong>. The account
+              menu links to <code>/privacy-policy/&lt;id&gt;</code> (tabs across the
+              top, one per region — EU, USA) and <code>/terms-of-service</code> (no
+              tabs, there is only one document). Both show an "Updated at" line and
+              then the document.
+              <br /><br />
+              <strong>Neither has a submenu.</strong> The shell is rail + header +
+              banner + page, and the content runs the full width — worth knowing,
+              because every prototype in this repo so far has a submenu and the
+              starter template ships one.
+              <br /><br />
+              A reader sees the <strong>live version only</strong> — no version
+              dropdown, no Edit, no Publish. What the body holds depends on how that
+              version was made: rich text if written, the PDF if uploaded. That fork
+              already exists in <code>versionBodyHtml()</code> in
+              <code>admin-legal-document/document.js</code>; a reader page is those
+              two branches with the admin controls stripped off.
+              <br /><br />
+              <strong>Built now</strong> — <code>legal-privacy</code> and
+              <code>legal-terms</code>. Uploads made on the admin screen are kept
+              in <code>localStorage</code> by <code>_shared/legal-store.js</code>
+              so they survive the navigation to these pages, which a blob URL
+              would not. That storage is per browser: one person can walk the
+              whole journey, two people cannot share it.
+              <br /><br />
+              The screen names are already claimed —
+              <code>legal.privacy</code> and <code>legal.terms</code>, linked from
+              the account menu in <code>_shared/shell-markup.js</code> — so they
+              explain themselves today and start working the day the pages land.
+            </p>
+          </div>
+          <div class="pat-demo">
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              No demo — nothing is built. Open the account menu in any prototype to
+              see the links, and <code>admin-legal-document</code> for both content
+              branches as they render today.
+            </p>
+          </div>
+        </section>
+
+        <!-- ============================================ action chooser -->
+        <section class="pat">
+          <div class="pat-note">
+            <h2 class="text-cca-label-md text-neutral-title">Action chooser dialog</h2>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              The app's "Select" dialog — one card per way of doing a thing. Read
+              off Orders &rsaquo; Actions; also used by Legal to ask whether a new
+              version is uploaded or typed. Header with a title and an X, then
+              <code>cca-card-button</code>s in a <code>flex flex-col gap-4</code>.
+              <br /><br />
+              <code>.dialog-container</code> and its <code>header</code> /
+              <code>main</code> / <code>footer</code> are fully styled by
+              <code>platform-02.css</code>, so use those element tags — the padding,
+              the divider and the close button all hang off them.
+              <code>cca-card-button</code> itself carries no styling: the utilities
+              on its inner <code>div.card-button</code> are what you must copy, and
+              the custom element needs an explicit display like every other one.
+              <br /><br />
+              It is a <strong>dialog</strong>, so the scrim is
+              <code>cdk-overlay-dark-backdrop</code> at 0.32 — not the drawer's 0.6.
+              Two states start invisible and are released together by
+              <code>mdc-dialog--open</code> on the container:
+              <code>.mat-mdc-dialog-inner-container</code> at opacity 0 and
+              <code>.mat-mdc-dialog-surface</code> at <code>scale(0.8)</code>. Add
+              that class after a layout read, never in a
+              <code>requestAnimationFrame</code>. Centring is
+              <code>.proto-dialog-wrapper</code>; width belongs on the pane (the
+              action chooser is <code>45rem</code>).
+            </p>
+          </div>
+          <div class="pat-demo">
+            <div class="flex flex-col gap-4">
+              <cca-card-button style="display: block">
+                <div class="card-button flex cursor-pointer flex-col gap-1 rounded border border-neutral-default p-4 hover:border-brand-default">
+                  <div class="flex flex-row items-center gap-4">
+                    <div class="flex flex-col">
+                      <h4 class="text-neutral-title">Upload a document</h4>
+                      <span class="text-cca-label-sm text-neutral-caption">Upload the terms &amp; conditions as a PDF or Word file.</span>
+                    </div>
+                  </div>
+                </div>
+              </cca-card-button>
+              <cca-card-button style="display: block">
+                <div class="card-button flex cursor-pointer flex-col gap-1 rounded border border-neutral-default p-4 hover:border-brand-default">
+                  <div class="flex flex-row items-center gap-4">
+                    <div class="flex flex-col">
+                      <h4 class="text-neutral-title">Write it here</h4>
+                      <span class="text-cca-label-sm text-neutral-caption">Type or paste the terms &amp; conditions into the editor.</span>
+                    </div>
+                  </div>
+                </div>
+              </cca-card-button>
+            </div>
+            <p class="mt-3 text-cca-label-sm text-neutral-caption">
+              The cards, out of the dialog. Working example:
+              <code>admin-legal-document</code> &rsaquo; Create new version.
+            </p>
+          </div>
+        </section>
+
         <!-- ============================================== drawer overlay -->
         <section class="pat">
           <div class="pat-note">
@@ -257,6 +443,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Renders the shared top-bar cluster into the placeholder above. -->
+    <script src="shell-markup.js"></script>
 
     <script>
       // The open/close helper worth copying verbatim — the offsetWidth read is
