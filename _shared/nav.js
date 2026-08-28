@@ -43,6 +43,7 @@
     Finance: 'rate-configuration', // staging: /finance/rates
     Enterprise: 'resource-availability', // Enterprise → Fleet
     Taskboard: 'taskboard-redesign',
+    Admin: 'admin.legal', // staging: /admin/legal
 
     // ---- Submenu items ----------------------------------------------------
     Orders: 'orders.list',
@@ -50,6 +51,7 @@
     Rate: 'rate-configuration', // rate-configuration's own submenu label
     Fleet: 'resource-availability',
     'Resource Availability': 'resource-availability',
+    Legal: 'admin.legal',
   };
 
   /*
@@ -59,12 +61,30 @@
    */
   var NAV_ROOTS = 'cca-side-menu, cca-side-submenu, aside, [data-nav]';
 
-  // The clickable thing for a label is rarely the element holding the text.
+  var CLICKABLE = 'a, button, [role="button"], .menu-item, .navitem, cca-side-menu-item, .sub-item';
+
+  /*
+   * The clickable thing for a label is rarely the element holding the text, so
+   * walk up to the nearest link-shaped ancestor. When there is none — some
+   * prototypes render a sidebar with plain divs — fall back to the parent.
+   *
+   * That fallback needs a guard. A submenu section HEADING is a bare span whose
+   * text can match a NAV label ("Admin" heads the Admin submenu as well as
+   * naming the rail item), and its parent is the column holding every item in
+   * the section. Wiring that would turn the whole column into one link.
+   *
+   * So refuse the fallback when the parent already contains link-shaped
+   * children: that makes it a list of nav items, not one nav item, and the
+   * label is a heading over them rather than a label for them.
+   */
   function clickableFor(el, root) {
-    return (
-      el.closest('a, button, [role="button"], .menu-item, .navitem, cca-side-menu-item, .sub-item') ||
-      (el.parentElement && el.parentElement !== root ? el.parentElement : el)
-    );
+    var linkish = el.closest(CLICKABLE);
+    if (linkish) return linkish;
+
+    var parent = el.parentElement;
+    if (!parent || parent === root) return el;
+    if (parent.querySelector(CLICKABLE)) return null;
+    return parent;
   }
 
   function wire() {

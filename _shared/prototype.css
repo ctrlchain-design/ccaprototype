@@ -80,18 +80,102 @@ cca-main .appContent .page > .proto-hug {
 /* -------------------------------------------------------------------- header */
 
 /*
- * A plain text link in the top bar — "Contact Support" and friends.
+ * .proto-header-link USED TO LIVE HERE and is gone on purpose.
  *
- * Deliberately NOT cca-btn--link: that component hard-codes
- * `text-decoration: underline`, which is correct for an inline link in prose and
- * wrong for a header action.
+ * It existed because cca-btn--link hard-codes `text-decoration: underline`,
+ * which is wrong for a header action. But the app does not use cca-btn--link
+ * there either — "Contact Support" is `cca-btn cca-btn--tertiary`, which is
+ * already undecorated, brand-coloured, and carries hover, focus and active
+ * states the workaround never had.
+ *
+ * This folder is a holding pen for gaps in the export, not a second design
+ * system: when the real thing turns up, the stand-in goes. Use
+ * cca-btn--tertiary, or better, the shared cluster in shell-markup.js.
  */
-.proto-header-link {
-  color: var(--text-brand-default);
-  text-decoration: none;
+
+/* ------------------------------------------------------------------ badges */
+
+/*
+ * A red notification count.
+ *
+ * The platform's default badge is GREEN — platform-02.css sets
+ * `--mat-badge-background-color: var(--badge-bg-green)` on :root — so an unread
+ * count renders like a success state. The app's own markup carries
+ * `mat-badge-warn`, but that class has no rule anywhere in the export, so it
+ * changes nothing.
+ *
+ * Reaching for the `.badge-bg-red` utility does not work either, and the reason
+ * is worth knowing: the token utilities live inside a cascade LAYER while
+ * `.mat-badge-content` is unlayered, and unlayered styles beat layered ones
+ * whatever their specificity or order. No utility class can win that.
+ *
+ * So set the variable the badge already reads, on the badge itself. No
+ * specificity fight, no !important, and it is the platform's own mechanism —
+ * the same one :root uses to make the default green in the first place.
+ */
+.proto-badge-critical {
+  --mat-badge-background-color: var(--badge-bg-red);
 }
-.proto-header-link:hover {
-  color: var(--text-brand-dark);
+
+/*
+ * Pull the badge onto the glyph.
+ *
+ * Material's overlap offset (-12px) positions the badge against the element
+ * carrying .mat-badge — on an icon BUTTON that is the button's corner, and the
+ * button pads its icon by 12px, so the count sits a padding's width clear of
+ * the glyph and pokes above the top bar. Subtracting that padding again lands it
+ * on the icon's top-right, which is where the product shows it.
+ *
+ * Both size steps are covered, because the offset token differs per size and a
+ * badge that switched from medium to small would silently lose the correction.
+ * The subtracted 12px is the button's own padding in each case.
+ *
+ * It is layout, not a design value: the number is the button's own padding, not
+ * a size someone picked.
+ */
+.proto-badge-on-icon {
+  --mat-badge-container-overlap-offset: calc(-12px - 12px);
+  --mat-badge-small-size-container-overlap-offset: calc(-8px - 12px);
+}
+
+/*
+ * The badge host is missing its containing block.
+ *
+ * .mat-badge-content is absolutely positioned with bottom:100% / left:100% and
+ * a negative overlap margin, so it sizes against the nearest POSITIONED
+ * ancestor. Upstream Material makes that the badge host with
+ * `.mat-badge { position: relative }` — a rule the export does not carry, the
+ * same gap as `.mdc-tab` above.
+ *
+ * Without it the badge skips the element it belongs to and lands on whatever is
+ * positioned further up. On the top bar that was the 48px button, which put the
+ * count a full 12px of padding clear of the bell and poking above the header,
+ * instead of overlapping the glyph's corner. Worth reporting to FE with the tab
+ * one; delete this when the export carries it.
+ */
+.mat-badge {
+  position: relative;
+}
+
+/* -------------------------------------------------------------------- tabs */
+
+/*
+ * The Material tab indicator is missing its containing block.
+ *
+ * `.mdc-tab-indicator` is `position: absolute; width: 100%; height: 100%`, so it
+ * sizes against the nearest positioned ancestor. That is meant to be the tab
+ * itself — upstream MDC ships `.mdc-tab { position: relative }` — but that rule
+ * is not in the export. Without it the indicator resolves against
+ * `.mat-mdc-tab-list` instead, which IS relative, and the active tab's underline
+ * stretches the full width of the strip rather than sitting under one label.
+ *
+ * This is a bundle gap, not a prototype mistake: the design system's own
+ * components/tabs.html renders the same full-width underline on both of its
+ * examples. Worth reporting to FE — when the export carries the rule, delete
+ * this block, per the "holding pen, not a second design system" rule.
+ */
+.mdc-tab {
+  position: relative;
 }
 
 /* ----------------------------------------------------- overlays and drawers */
@@ -124,6 +208,42 @@ cca-main .appContent .page > .proto-hug {
   min-width: var(--drawer-panel-min-width);
   max-width: var(--drawer-panel-max-width);
   flex-direction: column;
+}
+
+/*
+ * Dialog centering.
+ *
+ * A dialog is centred by the CDK's global position strategy, which writes
+ * justify-content and align-items onto .cdk-global-overlay-wrapper at runtime.
+ * The wrapper's own rule in material-vendor.css only makes it a full-size
+ * absolutely-positioned flex box, so a static page has to say where the pane
+ * lands — the same gap as .proto-drawer-pane, for the same reason.
+ *
+ * Width belongs to the dialog, not here: the app sets it per dialog (the action
+ * chooser is 45rem). Put it on the pane in the page.
+ *
+ * Two states to remember when opening one, both of which start INVISIBLE:
+ *   .mat-mdc-dialog-inner-container  opacity 0
+ *   .mat-mdc-dialog-surface          transform scale(0.8)
+ * Both are released by `mdc-dialog--open` on the mat-dialog-container. Add that
+ * class after a layout read, never in requestAnimationFrame — rAF does not fire
+ * in a background tab, and the dialog would stay invisible.
+ */
+.proto-dialog-wrapper {
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * Menu pane position.
+ *
+ * Same story as .proto-drawer-pane: the overlay itself is real CDK, but the app
+ * computes WHERE a menu lands from a position strategy at runtime, so a static
+ * page states it. The page sets left/top from the trigger's rect; this only
+ * makes the pane an absolutely-positioned box that the panel can size itself in.
+ */
+.proto-menu-pane {
+  position: absolute;
 }
 
 /* The container is normally added and removed from the DOM by the CDK; a
