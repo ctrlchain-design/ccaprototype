@@ -1,0 +1,244 @@
+<!doctype html>
+<!--
+  Admin › Legal — Legal Management
+  ================================
+  A faithful, clickable copy of development.ctrlchain.com/admin/legal, read off
+  the running app on 27 Aug 2026 rather than approximated from a design. Every
+  class here came out of that DOM or out of design-system/dist; nothing is
+  invented.
+
+  What the screen is: the admin view of every legal document the platform
+  serves. Three segments across the top, which are three routes in the app:
+
+    CTRLCHAIN       /admin/legal/platform      documents CtrlChain provides,
+                                               split five ways by document type
+    SIGNING HISTORY /admin/legal/sign-history   every acceptance, newest first
+    SHIPPER'S       /admin/legal/shippers       terms a shipper group provides
+                                               itself
+
+  Here they are one page with client-side switching, because a prototype has no
+  router. The URL hash keeps the segment and tab, so a reviewer can link to one.
+
+  Two things about the real screen worth knowing before changing this:
+
+  · The five document tabs do not all share a column set. Terms of Service has
+    no Sales Organisation column at all, and Privacy Policies has the column but
+    every value is empty. Both are copied as-is — a redesign has to decide what
+    to do about that, and hiding it here would hide the question.
+  · "Last Updated at" is empty for a document nobody has published, and the app
+    renders that as "To be confirmed" rather than a blank cell.
+
+  class="light" on the root element is not decoration: the platform tokens flip
+  to dark under prefers-color-scheme, so without it this renders dark for any
+  reviewer whose OS is in dark mode.
+
+  Do not write a literal html tag in this comment — not even as an example.
+  build-screens.py finds the page's name by taking the FIRST thing in the file
+  that looks like an opening html tag and reading data-screen off it, so any
+  mention up here silently steals the name and the prototype registers under
+  its folder instead of the one it declares.
+-->
+<html lang="en" class="light" data-screen="admin.legal">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Legal Management · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <!--
+      ds/index.css covers the 40 design-system components. cca-data-table is a
+      product component, so its stylesheet is one of the ~274 under
+      ds/components/ that index.css does NOT import — it has to be linked
+      explicitly, after index.css so the tokens it references already resolve.
+
+      It is what supplies .cca-data-table-buttons / -left / -right (the toolbar
+      grid above the table) and the table's own min-height. Needing a file from
+      here is a signal, per the skill: this prototype copies a screen rather
+      than composing one, which is exactly what was asked for.
+    -->
+    <link rel="stylesheet" href="../design-system/dist/ds/components/data-table.css" />
+    <!--
+      Same story: cca-message-banner's four flavours (.primary / .warning /
+      .danger / .highlight) live only in its own product stylesheet. Without
+      this the banner renders with no background at all — it is the one class
+      on that element that carries any colour.
+    -->
+    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      /*
+        The app's table scrolls inside the card while the toolbar above and the
+        paginator below stay put. .cca-data-table-wrapper is the app's own class
+        (data-table.css styles its siblings but not its own flex behaviour,
+        which the Angular host supplies), so the column sizing lives here.
+      */
+      .proto-table-card {
+        display: flex;
+        min-height: 0;
+        flex: 1;
+        flex-direction: column;
+      }
+      .proto-table-scroll {
+        min-height: 0;
+        flex: 1;
+        overflow: auto;
+      }
+
+      /*
+        mat-select's panel is normally positioned by the CDK at runtime from a
+        position strategy. A static page has to say where it lands; everything
+        else about it — surface, elevation, option states — is platform CSS.
+      */
+      .proto-select-pane {
+        position: absolute;
+        min-width: 5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--
+      cca-main > .appContent is the platform's shell grid:
+        "sidenav submenu header" / "sidenav submenu topbar" / "sidenav submenu page"
+      Children claim an area by element or class. That ancestry is load-bearing:
+      the rail's sizing, hover and active states are scoped to
+      `cca-main .appContent cca-side-menu` and vanish if you flatten it.
+    -->
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!--
+            Rail. The markup is in _shared/shell-markup.js, not here: the rail is
+            the same in every screen of the product, so it has one definition and
+            adding an item there gives it to every prototype at once.
+            data-rail names the active domain.
+          -->
+          <cca-side-menu data-rail="Admin"></cca-side-menu>
+
+          <!--
+            Admin submenu. Its items live in _shared/shell-markup.js: Legal is not
+            the only Admin screen, so the list needs one definition rather than a
+            copy per page. data-submenu-active names the current item.
+          -->
+          <cca-side-submenu data-submenu="admin" data-submenu-active="Legal"></cca-side-submenu>
+
+          <!-- Top bar — 60px. The back arrow and title are this screen's own. -->
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <div class="pl-6">
+                <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Back">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <div class="flex flex-row items-center gap-2 pl-1">
+                <h1 class="text-NC-blue-default">Legal Management</h1>
+              </div>
+              <!-- Contact Support, bell, language, avatar — from _shared/shell-markup.js. -->
+              <div data-top-bar-trailing data-initials="AF"></div>
+            </div>
+          </cca-header>
+
+          <!--
+            The environment banner. It is a shell grid child in its own right —
+            cca-message-banner claims a row above .page, which is why it spans
+            the content column and not the rail.
+          -->
+          <cca-message-banner style="display: block">
+            <div class="grid h-12 w-full grid-cols-7 content-center grayscale-mode-neutral highlight">
+              <div class="col-span-5 self-center justify-self-center">
+                <span class="text-neutral-title">Development environment — do not use real customer data (ISO 27001).</span>
+              </div>
+            </div>
+          </cca-message-banner>
+
+          <!--
+            .page owns the scroll and the gutter, and `.page > *` is
+            height: inherit — so exactly one child, with the content inside it.
+            No proto-hug here: this view genuinely fills the viewport, because
+            the table scrolls inside the card the way it does in the app.
+          -->
+          <div class="page">
+            <div class="flex h-full min-h-0 flex-col">
+              <!--
+                Segment bar. .menu-bar is the platform's own second-level route
+                nav — a container of plain <a>s where the current one carries
+                .active. 48px tall, from the component's own CSS.
+              -->
+              <nav class="menu-bar mb-4">
+                <a href="#/ctrlchain" data-segment="ctrlchain">CtrlChain</a>
+                <a href="#/signing-history" data-segment="signing-history">Signing History</a>
+                <a href="#/shippers" data-segment="shippers">Shipper's</a>
+              </nav>
+
+              <div class="page-container flex min-h-0 flex-1 flex-col" id="segment-body"></div>
+            </div>
+          </div>
+        </div>
+      </cca-main>
+    </cca-root>
+
+    <!--
+      Column options, as a CDK overlay.
+
+      Worth flagging, because it is the one place this prototype does not copy
+      the app's DOM: the running screen builds this as a mat-drawer inside a
+      mat-drawer-container that wraps the whole table. That needs the Material
+      sidenav runtime to slide and to manage its own backdrop. The repo's
+      convention — and the skill's — is the CDK overlay, which is the same
+      scrim, the same surface and the same geometry with no runtime. It reads
+      identically; it just is not the same element. See _shared/patterns.html.
+    -->
+    <div class="cdk-overlay-container" id="overlay-container" hidden>
+      <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="drawer-backdrop"></div>
+      <div
+        class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Column options"
+      >
+        <div class="flex shrink-0 flex-col gap-1 border-b border-neutral-default px-6 py-4">
+          <span class="text-cca-label-lg text-neutral-title">Column options</span>
+          <span class="text-cca-base-sm text-neutral-subtitle">
+            Add or remove columns. To change the column order, drag and drop a field
+          </span>
+        </div>
+        <div class="proto-drawer-body px-6 py-4" id="column-list"></div>
+        <div class="flex shrink-0 items-center border-t border-neutral-default px-6 py-4">
+          <button ccaButton class="cca-btn cca-btn--primary ml-auto" id="columns-confirm">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items-per-page panel. Same overlay machinery, no scrim. -->
+    <div class="cdk-overlay-container" id="select-overlay" hidden>
+      <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop" id="select-backdrop"></div>
+      <div class="cdk-overlay-pane proto-select-pane" id="select-pane">
+        <div class="mat-mdc-select-panel mdc-menu-surface mdc-menu-surface--open" role="listbox" id="select-panel"></div>
+      </div>
+    </div>
+
+    <!--
+      Shared modules load BEFORE the page script: data.js holds the records,
+      routes.js resolves data-screen links, nav.js makes the rail navigate,
+      shell.js wires Dark and Collapse.
+    -->
+    <script src="../_shared/data.js"></script>
+    <!-- Applies anything uploaded or published in this browser, before any page renders. -->
+    <script src="../_shared/legal-store.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+    <script src="../_shared/shell.js"></script>
+    <script src="legal.js"></script>
+  </body>
+</html>

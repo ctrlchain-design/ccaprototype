@@ -1,0 +1,104 @@
+<!doctype html>
+<!--
+  Terms of Service / Use — the reader-facing page
+  ================================================
+  What a customer sees when they follow this link from the account menu. Read
+  off development on 28 Aug 2026: /terms-of-service
+
+  This is NOT admin-legal-document. That screen manages versions; this one shows
+  the live one. No tabs: there is only one Terms of Service document.
+
+  Three things make it a reader page rather than an admin one:
+
+    · the LIVE version only — never a draft, never a superseded one
+    · no version dropdown and no actions
+    · NO SUBMENU. The shell is rail + header + banner + page, and the content
+      runs full width. Every other prototype here has a submenu and the starter
+      template ships one, so this is the easy thing to get wrong.
+
+  The body is rich text or a PDF depending on how that version was made — the
+  same fork the admin page has, rendered by _shared/legal-reader.js so the two
+  pages here cannot drift apart.
+
+  class="light" on the root element is not decoration: the platform tokens flip
+  to dark under prefers-color-scheme, so without it this renders dark for any
+  reviewer whose OS is in dark mode.
+
+  Never write a literal opening html tag in this comment — build-screens.py reads
+  the page's name off the first thing that looks like one.
+-->
+<html lang="en" class="light" data-screen="legal.terms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Terms of Service / Use · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+    <link rel="stylesheet" href="../_shared/legal-reader.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!--
+            Rail only — no cca-side-submenu. data-rail is empty on purpose: a
+            reader on this page is not inside a domain, so nothing is active.
+          -->
+          <cca-side-menu data-rail=""></cca-side-menu>
+
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <div class="pl-6">
+                <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Back" data-screen="orders.list">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <div class="flex flex-row items-center gap-2 pl-1">
+                <h1 class="text-NC-blue-default">Terms of Service / Use</h1>
+              </div>
+              <div data-top-bar-trailing data-initials="AF"></div>
+            </div>
+          </cca-header>
+
+          <cca-message-banner style="display: block">
+            <div class="grid h-12 w-full grid-cols-7 content-center grayscale-mode-neutral highlight">
+              <div class="col-span-5 self-center justify-self-center">
+                <span class="text-neutral-title">Development environment — do not use real customer data (ISO 27001).</span>
+              </div>
+            </div>
+          </cca-message-banner>
+
+          <div class="page">
+            <div class="page-container h-full surface-neutral-light" id="legal-reader"></div>
+          </div>
+        </div>
+      </cca-main>
+    </cca-root>
+
+    <script src="../_shared/data.js"></script>
+    <!-- Applies anything uploaded or published in this browser, before any page renders. -->
+    <script src="../_shared/legal-store.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+    <script src="../_shared/shell.js"></script>
+    <script src="../_shared/legal-reader.js"></script>
+    <script>
+      CCA_LEGAL_READER.render({ category: 'terms-of-service', tabs: false });
+    </script>
+  </body>
+</html>

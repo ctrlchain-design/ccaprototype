@@ -9,6 +9,10 @@
  * but not built yet — those links explain themselves instead of 404ing.
  */
 window.CCA_SCREENS = {
+  "admin.legal": { path: "admin-legal/", title: "Legal Management · CtrlChain" },
+  "admin.legal.document": { path: "admin-legal-document/", title: "Terms and Condition Management · CtrlChain" },
+  "legal.privacy": { path: "legal-privacy/", title: "Privacy Policy · CtrlChain" },
+  "legal.terms": { path: "legal-terms/", title: "Terms of Service / Use · CtrlChain" },
   "orders.list": { path: "orders-pinned-filters/", title: "Orders · Pinned filters · CtrlChain" },
   "playground": { path: "playground/", title: "Playground · CtrlChain prototypes" },
   "rate-configuration": { path: "rate-configuration/", title: "rate-configuration" },

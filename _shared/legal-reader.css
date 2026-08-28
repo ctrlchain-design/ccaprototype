@@ -1,0 +1,62 @@
+/*
+ * Reader-facing legal pages
+ * -------------------------
+ *   <link rel="stylesheet" href="../_shared/legal-reader.css" />
+ *
+ * Only what the two reader pages need beyond prototype.css. Typography for
+ * arbitrary document HTML, because Tailwind's preflight strips heading sizes
+ * and list markers from anything the design system does not style itself.
+ *
+ * Values are tokens and the type scale — nothing invented.
+ */
+
+.proto-richtext h3 {
+  margin: 0 0 var(--spacing) 0;
+  color: var(--text-neutral-title);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+}
+.proto-richtext p {
+  margin: 0 0 calc(var(--spacing) * 3) 0;
+  color: var(--text-neutral-body);
+}
+.proto-richtext ol,
+.proto-richtext ul {
+  margin: 0 0 calc(var(--spacing) * 3) 0;
+  padding-left: calc(var(--spacing) * 6);
+  color: var(--text-neutral-body);
+}
+.proto-richtext ol {
+  list-style: decimal;
+}
+.proto-richtext ul {
+  list-style: disc;
+}
+.proto-richtext li {
+  margin-bottom: var(--spacing);
+}
+
+/*
+ * An uploaded document fills the page the same way it does in the admin view.
+ * Layout only — the frame is the browser's own PDF viewer.
+ */
+.proto-doc-frame {
+  display: flex;
+  min-height: 24rem;
+  flex: 1;
+  flex-direction: column;
+}
+.proto-doc-viewer {
+  display: block;
+  min-height: 0;
+  width: 100%;
+  flex: 1;
+  border: 0;
+}
+
+#legal-reader {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+}

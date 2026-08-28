@@ -1,0 +1,407 @@
+<!doctype html>
+<!--
+  Admin › Legal › one document — Terms and Condition Management
+  =============================================================
+  Opens from a row in admin-legal. Read off the running app on 28 Aug 2026:
+  /admin/legal/platform/view/<id>.
+
+  Which document is decided by ?id=, carried by the link from the list, and the
+  record comes from _shared/data.js — so the row you clicked and the page you
+  land on are the same object.
+
+  Three states, all real, all from the app:
+
+    Published  version dropdown with its history, Create new version and Edit
+               current version, an updated-by line, then the document text
+    Draft      the same, with the single draft version selected
+    New        no versions at all, so an empty state with an illustration and one
+               Create New button — not a blank body
+
+  The page title in the top bar is "Terms and Condition Management", not the
+  document's name. That is the app's, and it is deliberately kept: the heading
+  inside the card is where the document names itself.
+
+  NOT BUILT YET — the reader-facing side
+  --------------------------------------
+  This page is the ADMIN view: it manages versions. Elsewhere in the platform
+  there are links to the terms themselves — the ones a shipper or carrier
+  follows at signup, when accepting an order, or from a footer. Those do NOT
+  come here.
+
+  Those links open READER PAGES of their own — checked on development, they are
+  not modals:
+
+    /privacy-policy/<id>   tabs across the top, one per region (EU · USA),
+                           an "Updated at" line, then the text
+    /terms-of-service      no tabs, there is only one document
+
+  Both drop the submenu entirely: the shell is rail + header + banner + page, and
+  the content runs the full width. Neither shows a version dropdown or any
+  action — a reader only ever sees the live version.
+
+  What the body holds depends on how that version was made: rich text if it was
+  written, the PDF if it was uploaded. That fork already exists here, in
+  versionBodyHtml() in document.js — a reader page is the same two branches with
+  the admin controls stripped off.
+
+  Not built. Screen names are already claimed by the account menu in
+  _shared/shell-markup.js — legal.privacy and legal.terms — so those links
+  explain themselves today and start working the day the pages land.
+
+  class="light" on the root element is not decoration: the platform tokens flip
+  to dark under prefers-color-scheme, so without it this renders dark for any
+  reviewer whose OS is in dark mode.
+
+  Never write a literal opening html tag in this comment — build-screens.py reads
+  the page's name off the first thing that looks like one.
+-->
+<html lang="en" class="light" data-screen="admin.legal.document">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Terms and Condition Management · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <!-- The banner's four flavours live only in this product stylesheet. -->
+    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      /*
+        The document body is rich text the platform renders through
+        cca-html-viewer. The bundle carries no typographic rules for arbitrary
+        HTML — Tailwind's preflight strips heading sizes and list markers — so
+        the few that the viewer needs are restored here, in tokens only.
+        Nothing invented: sizes are the type scale, colours are text tokens.
+      */
+      .proto-richtext h3 {
+        margin: 0 0 var(--spacing) 0;
+        color: var(--text-neutral-title);
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 500;
+      }
+      .proto-richtext p {
+        margin: 0 0 calc(var(--spacing) * 3) 0;
+        color: var(--text-neutral-body);
+      }
+      .proto-richtext ol,
+      .proto-richtext ul {
+        margin: 0 0 calc(var(--spacing) * 3) 0;
+        padding-left: calc(var(--spacing) * 6);
+        color: var(--text-neutral-body);
+      }
+      .proto-richtext ol {
+        list-style: decimal;
+      }
+      .proto-richtext ul {
+        list-style: disc;
+      }
+      .proto-richtext li {
+        margin-bottom: var(--spacing);
+      }
+
+      /*
+        The uploaded-document viewer. Layout only — the frame is the browser's
+        own PDF viewer and the surround is utility classes on the wrapper.
+
+        It FILLS the card rather than taking a fixed slice of it. It used to be
+        70vh, which is a guess: too short on a tall screen, and it left dead
+        space under the document while the card kept its own full height. Making
+        the card a flex column and letting the frame take the remainder means the
+        document is as tall as the screen allows, whatever the screen is.
+
+        The chain has to be unbroken — .page > wrapper > .page-container are all
+        flex columns, and every one needs min-height: 0 or a flex child refuses
+        to shrink below its content and the frame overflows instead of fitting.
+      */
+      #document {
+        display: flex;
+        min-height: 0;
+        flex-direction: column;
+      }
+      .proto-doc-frame {
+        display: flex;
+        min-height: 24rem;
+        flex: 1;
+        flex-direction: column;
+      }
+      .proto-doc-viewer {
+        display: block;
+        min-height: 0;
+        width: 100%;
+        flex: 1;
+        border: 0;
+      }
+
+      #document {
+        display: flex;
+        min-height: 0;
+        flex-direction: column;
+      }
+      .proto-doc-frame {
+        display: flex;
+        min-height: 24rem;
+        flex: 1;
+        flex-direction: column;
+      }
+      .proto-doc-viewer {
+        display: block;
+        min-height: 0;
+        width: 100%;
+        flex: 1;
+        border: 0;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!-- Rail and submenu are shared — see _shared/shell-markup.js. -->
+          <cca-side-menu data-rail="Admin"></cca-side-menu>
+          <cca-side-submenu data-submenu="admin" data-submenu-active="Legal"></cca-side-submenu>
+
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <!--
+                The back arrow is the only way out of this screen, so unlike the
+                decorative one on the list it actually goes somewhere.
+              -->
+              <div class="pl-6">
+                <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Back" data-screen="admin.legal">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <div class="flex flex-row items-center gap-2 pl-1">
+                <h1 class="text-NC-blue-default">Terms and Condition Management</h1>
+              </div>
+              <div data-top-bar-trailing data-initials="AF"></div>
+            </div>
+          </cca-header>
+
+          <cca-message-banner style="display: block">
+            <div class="grid h-12 w-full grid-cols-7 content-center grayscale-mode-neutral highlight">
+              <div class="col-span-5 self-center justify-self-center">
+                <span class="text-neutral-title">Development environment — do not use real customer data (ISO 27001).</span>
+              </div>
+            </div>
+          </cca-message-banner>
+
+          <!--
+            .page owns the scroll and the gutter, and `.page > *` is
+            height: inherit — so exactly one child, with the content inside it.
+          -->
+          <!--
+            .page owns the scroll; the card fills it so a document viewer can be
+            as tall as the screen. h-full rather than min-h-full: min-height lets
+            the card grow but gives a flex child nothing to measure against, so
+            the viewer inside would collapse to its content.
+          -->
+          <div class="page">
+            <div class="page-container h-full surface-neutral-light" id="document"></div>
+          </div>
+        </div>
+      </cca-main>
+    </cca-root>
+
+    <!--
+      The "Create a version" chooser.
+
+      This is the app's own action-selection dialog, read off Orders › Actions:
+      header with a title and an X, then one card per choice. The card is a
+      cca-card-button — the outer element carries no styling of its own, so the
+      inner div's utilities are what you must copy, and the custom element needs
+      an explicit display like every other one in the bundle.
+
+      It is a DIALOG, so the scrim is cdk-overlay-dark-backdrop at 0.32. Do not
+      reach for the drawer's 0.6 here; they are not interchangeable.
+    -->
+    <div class="cdk-overlay-container" id="create-overlay" hidden>
+      <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" id="create-backdrop"></div>
+      <div class="cdk-global-overlay-wrapper proto-dialog-wrapper">
+        <div class="cdk-overlay-pane mat-mdc-dialog-panel" style="width: 45rem">
+          <mat-dialog-container class="mat-mdc-dialog-container mdc-dialog cdk-dialog-container" id="create-dialog" role="dialog" aria-modal="true" aria-label="Select">
+            <div class="mat-mdc-dialog-inner-container mdc-dialog__container">
+              <div class="mat-mdc-dialog-surface mdc-dialog__surface">
+                <div class="dialog-container">
+                  <header>
+                    <h2>Select</h2>
+                    <button class="dialog-close-button" type="button" aria-label="Close" data-dialog-close>
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-xmark mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                    </button>
+                  </header>
+                  <main>
+                    <div class="flex flex-col gap-4">
+                      <cca-card-button style="display: block" data-choice="upload">
+                        <div class="card-button flex cursor-pointer flex-col gap-1 rounded border border-neutral-default p-4 hover:border-brand-default">
+                          <div class="flex flex-row items-center gap-4">
+                            <div class="flex flex-col">
+                              <h4 class="text-neutral-title">Upload a document</h4>
+                              <span class="text-cca-label-sm text-neutral-caption">Upload the terms &amp; conditions as a PDF or Word file.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </cca-card-button>
+                      <cca-card-button style="display: block" data-choice="write">
+                        <div class="card-button flex cursor-pointer flex-col gap-1 rounded border border-neutral-default p-4 hover:border-brand-default">
+                          <div class="flex flex-row items-center gap-4">
+                            <div class="flex flex-col">
+                              <h4 class="text-neutral-title">Write it here</h4>
+                              <span class="text-cca-label-sm text-neutral-caption">Type or paste the terms &amp; conditions into the editor.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </cca-card-button>
+                    </div>
+                  </main>
+                </div>
+              </div>
+            </div>
+          </mat-dialog-container>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      Step two of Create: the upload dialog.
+
+      The dropzone is the platform's cca-file-upload, read off an order's
+      Documents tab. Two things about it are worth knowing:
+
+      · The dashed border has NO border-colour class. The app writes
+        `border-neutral-dark-700`, which does not exist in the design system and
+        resolves to nothing — the colour actually comes from `currentColor` via
+        `text-neutral-title`, which is why it computes to #3e3e3e and still
+        inverts correctly in dark mode. The dead class is left out here rather
+        than copied; if you want the colour stated, `border-neutral-darker` is
+        the token that equals it.
+      · The file input is really there and really hidden. "browse" is a label
+        for it, so the picker opens for real and a chosen file shows its name.
+        Nothing is uploaded anywhere.
+    -->
+    <div class="cdk-overlay-container" id="upload-overlay" hidden>
+      <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" id="upload-backdrop"></div>
+      <div class="cdk-global-overlay-wrapper proto-dialog-wrapper">
+        <div class="cdk-overlay-pane mat-mdc-dialog-panel" style="width: 45rem">
+          <mat-dialog-container class="mat-mdc-dialog-container mdc-dialog cdk-dialog-container" id="upload-dialog" role="dialog" aria-modal="true" aria-label="Upload a document">
+            <div class="mat-mdc-dialog-inner-container mdc-dialog__container">
+              <div class="mat-mdc-dialog-surface mdc-dialog__surface">
+                <div class="dialog-container">
+                  <header>
+                    <div class="title-wrapper">
+                      <h2>Upload a document</h2>
+                      <p>One file becomes the next version of these terms &amp; conditions.</p>
+                    </div>
+                    <button class="dialog-close-button" type="button" aria-label="Close" data-upload-close>
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-xmark mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                    </button>
+                  </header>
+                  <main>
+                    <cca-file-upload class="w-full" style="display: block">
+                      <label
+                        class="grid cursor-pointer items-center justify-items-center rounded-xl border border-dashed px-3 py-8 text-neutral-title transition-colors surface-neutral-default hover:surface-neutral-light"
+                        id="dropzone"
+                      >
+                        <!--
+                          PDF only, one file.
+
+                          `accept` greys out every other type in the picker, and
+                          the absence of `multiple` limits it to one. Neither is
+                          a guarantee: `accept` is a filter the person can switch
+                          off with the picker's own "All files" option, and a
+                          DROP goes through neither. So the script validates
+                          both again — see the drop handler.
+                        -->
+                        <input type="file" id="file-input" class="hidden" accept="application/pdf,.pdf" />
+                        <img class="inline text-3xl text-neutral-disabled" src="../_shared/assets/images/file-upload.svg" alt="" width="63" height="72" />
+                        <p class="mt-6 w-full overflow-hidden text-center text-cca-base font-normal whitespace-normal">
+                          <span>Drag and drop or</span>
+                          <span class="mr-0.5 text-brand-default underline">browse</span>
+                          <span>your files</span>
+                        </p>
+                      </label>
+                    </cca-file-upload>
+                    <!-- The chosen file, or why the last one was refused. -->
+                    <div id="chosen-file" class="mt-4"></div>
+                  </main>
+                  <footer>
+                    <button ccaButton type="button" class="cca-btn cca-btn--subtle" data-upload-close>Cancel</button>
+                    <button ccaButton type="button" class="cca-btn cca-btn--primary" id="upload-confirm" disabled>Upload</button>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </mat-dialog-container>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      Delete Draft confirmation, from the Figma board. Same dialog shell as the
+      chooser; a footer this time, which .dialog-container styles by tag.
+
+      Delete is destructive, so it is the critical button — cca-btn--danger-text
+      is the design system's, and there is no cca-btn--danger to reach for.
+    -->
+    <div class="cdk-overlay-container" id="delete-overlay" hidden>
+      <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" id="delete-backdrop"></div>
+      <div class="cdk-global-overlay-wrapper proto-dialog-wrapper">
+        <div class="cdk-overlay-pane mat-mdc-dialog-panel" style="width: 32rem">
+          <mat-dialog-container class="mat-mdc-dialog-container mdc-dialog cdk-dialog-container" id="delete-dialog" role="dialog" aria-modal="true" aria-label="Delete Draft">
+            <div class="mat-mdc-dialog-inner-container mdc-dialog__container">
+              <div class="mat-mdc-dialog-surface mdc-dialog__surface">
+                <div class="dialog-container">
+                  <header>
+                    <h2>Delete Draft</h2>
+                    <button class="dialog-close-button" type="button" aria-label="Close" data-delete-close>
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-xmark mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                    </button>
+                  </header>
+                  <main>
+                    <div class="flex flex-col items-center gap-4 text-center">
+                      <cca-icon class="text-neutral-caption"><mat-icon class="mat-icon notranslate cca-icon cca-icon-info mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                      <p class="text-cca-base text-neutral-body">Are you sure you want to delete this draft?</p>
+                    </div>
+                  </main>
+                  <footer>
+                    <button ccaButton type="button" class="cca-btn cca-btn--secondary" data-delete-close>Cancel</button>
+                    <button ccaButton type="button" class="cca-btn cca-btn--danger-text" id="delete-confirm">Delete</button>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </mat-dialog-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Version list, as a menu. Same overlay machinery as any other. -->
+    <div class="cdk-overlay-container" id="version-overlay" hidden>
+      <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop" id="version-backdrop"></div>
+      <div class="cdk-overlay-pane proto-menu-pane" id="version-pane">
+        <div class="mat-mdc-select-panel mdc-menu-surface mdc-menu-surface--open" role="listbox" id="version-panel"></div>
+      </div>
+    </div>
+
+    <script src="../_shared/data.js"></script>
+    <!-- Applies anything uploaded or published in this browser, before any page renders. -->
+    <script src="../_shared/legal-store.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+    <script src="../_shared/shell.js"></script>
+    <script src="document.js"></script>
+  </body>
+</html>
