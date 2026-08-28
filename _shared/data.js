@@ -99,10 +99,351 @@
     },
   ];
 
+  /*
+   * Legal documents — Admin › Legal
+   * -------------------------------
+   * Read off development.ctrlchain.com/admin/legal on 27 Aug 2026. The document
+   * names and sales organisations are CtrlChain's own legal entities and product
+   * content, so they are verbatim; the people and customer group names in the
+   * signing history are replaced, because this repo publishes to GitHub Pages.
+   *
+   * `category` is which of the five tabs on the CTRLCHAIN segment a document
+   * belongs to. `updatedAt` is null for a document nobody has published yet —
+   * the app renders that as "To be confirmed" rather than a date.
+   */
+  var LEGAL_DOCUMENTS = [
+    // ---- Shipper T&C (13) --------------------------------------------------
+    { id: 'LEG-STC-FR',    category: 'shipper-tc', name: 'Terms & Conditions for Shippers in France',          status: 'Published', salesOrg: 'NewCold Transport Frozen SAS',        flag: 'fr', updatedAt: 'Tue, 30 Sept 2025', updatedTime: '14:35' },
+    { id: 'LEG-STC-DE',    category: 'shipper-tc', name: 'Terms & Conditions for Shippers in Germany',         status: 'Published', salesOrg: 'CtrlChain GmbH',                     flag: 'de', updatedAt: 'Mon, 20 Jul 2026',  updatedTime: '13:08' },
+    { id: 'LEG-STC-NCUS',  category: 'shipper-tc', name: 'Terms & Conditions for Shippers with NewCold USA',   status: 'Published', salesOrg: 'NewCold USA Transport LLC',          flag: 'us', updatedAt: 'Mon, 27 Jan 2025',  updatedTime: '10:48' },
+    { id: 'LEG-STC-NL',    category: 'shipper-tc', name: 'Terms & Conditions for Shippers in Netherlands',     status: 'Published', salesOrg: 'CtrlChain B.V.',                     flag: 'nl', updatedAt: 'Mon, 20 Jul 2026',  updatedTime: '13:08' },
+    { id: 'LEG-STC-NCEU',  category: 'shipper-tc', name: 'Terms & Conditions for Shippers with NewCold Pan EU', status: 'Published', salesOrg: 'NewCold Pan European B.V.',         flag: 'nl', updatedAt: 'Mon, 6 Jan 2025',   updatedTime: '10:49' },
+    { id: 'LEG-STC-PL-D',  category: 'shipper-tc', name: 'Terms & Conditions for Shippers in Poland',          status: 'Draft',     salesOrg: 'NewCold Transport Poland Sp. z o.o.', flag: 'pl', updatedAt: 'Tue, 8 Jul 2025',   updatedTime: '12:43' },
+    { id: 'LEG-STC-PL-E',  category: 'shipper-tc', name: 'Terms & Conditions for Shippers in Poland',          status: 'Published', salesOrg: 'NewCold Transport Poland Sp. z o.o. €', flag: 'pl', updatedAt: 'Thu, 27 Mar 2025', updatedTime: '11:42' },
+    { id: 'LEG-STC-ES',    category: 'shipper-tc', name: 'Terms & Conditions for Shippers in Spain',           status: 'Published', salesOrg: 'CtrlChain España S.L.U',        flag: 'es', updatedAt: 'Mon, 20 Jul 2026',  updatedTime: '13:08' },
+    { id: 'LEG-STC-UKX-E', category: 'shipper-tc', name: 'Terms & Conditions for Shippers in UK Crossborder',  status: 'New',       salesOrg: 'NewCold Wakefield Ltd Crossborder €', flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-STC-UKX-P', category: 'shipper-tc', name: 'Terms & Conditions for Shippers in UK Crossborder',  status: 'Published', salesOrg: 'NewCold Wakefield Ltd Crossborder £', flag: 'gb', updatedAt: 'Fri, 14 Aug 2026', updatedTime: '14:27' },
+    { id: 'LEG-STC-UKD-E', category: 'shipper-tc', name: 'Terms & Conditions for Shippers in UK Domestic',     status: 'Published', salesOrg: 'NewCold Wakefield Ltd Domestic €',    flag: 'gb', updatedAt: 'Mon, 17 Aug 2026', updatedTime: '11:17' },
+    { id: 'LEG-STC-UKD-P', category: 'shipper-tc', name: 'Terms & Conditions for Shippers in UK Domestic',     status: 'Published', salesOrg: 'NewCold Wakefield Ltd Domestic £',    flag: 'gb', updatedAt: 'Mon, 17 Aug 2026', updatedTime: '11:17' },
+    { id: 'LEG-STC-US',    category: 'shipper-tc', name: 'Terms & Conditions for Shippers in USA',             status: 'Published', salesOrg: 'CtrlChain USA LLC',                  flag: 'us', updatedAt: 'Mon, 20 Jul 2026',  updatedTime: '13:07' },
+
+    // ---- Carrier T&C (13) --------------------------------------------------
+    { id: 'LEG-CTC-FR',    category: 'carrier-tc', name: 'Terms and conditions for carriers in France',            status: 'Published', salesOrg: 'NewCold Transport Frozen SAS',        flag: 'fr', updatedAt: 'Thu, 6 Mar 2025',   updatedTime: '16:36' },
+    { id: 'LEG-CTC-DE',    category: 'carrier-tc', name: 'Terms & Conditions for Carriers in the Germany',         status: 'Published', salesOrg: 'CtrlChain GmbH',                     flag: 'de', updatedAt: 'Thu, 3 Oct 2024',   updatedTime: '09:13' },
+    { id: 'LEG-CTC-NCUS',  category: 'carrier-tc', name: 'Terms and Conditions for Carriers with NewCold USA',     status: 'Published', salesOrg: 'NewCold USA Transport LLC',          flag: 'us', updatedAt: 'Tue, 28 Jan 2025',  updatedTime: '09:42' },
+    { id: 'LEG-CTC-NL',    category: 'carrier-tc', name: 'Terms and conditions for carriers in Netherlands',       status: 'Published', salesOrg: 'CtrlChain B.V.',                     flag: 'nl', updatedAt: 'Thu, 3 Oct 2024',   updatedTime: '09:14' },
+    { id: 'LEG-CTC-NCEU',  category: 'carrier-tc', name: 'Terms and Conditions for Carriers with NewCold Pan EU',  status: 'Published', salesOrg: 'NewCold Pan European B.V.',          flag: 'nl', updatedAt: 'Wed, 26 Aug 2026',  updatedTime: '10:12' },
+    { id: 'LEG-CTC-PL',    category: 'carrier-tc', name: 'Terms and conditions for carriers in Poland',            status: 'Published', salesOrg: 'NewCold Transport Poland Sp. z o.o.', flag: 'pl', updatedAt: 'Thu, 14 Nov 2024',  updatedTime: '16:29' },
+    { id: 'LEG-CTC-PL-E',  category: 'carrier-tc', name: 'Terms and conditions for carriers in Poland',            status: 'Published', salesOrg: 'NewCold Transport Poland Sp. z o.o. €', flag: 'pl', updatedAt: 'Thu, 6 Mar 2025', updatedTime: '16:36' },
+    { id: 'LEG-CTC-ES',    category: 'carrier-tc', name: 'Terms & Conditions for Carriers in the Spain',           status: 'Published', salesOrg: 'CtrlChain España S.L.U',        flag: 'es', updatedAt: 'Thu, 26 Sept 2024', updatedTime: '09:14' },
+    { id: 'LEG-CTC-UKX-E', category: 'carrier-tc', name: 'T&C_Carrier_UK_Crossborder_Euro [en-Untranslated]',      status: 'New',       salesOrg: 'NewCold Wakefield Ltd Crossborder €', flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-CTC-UKX-P', category: 'carrier-tc', name: 'T&C_Carrier_UK_Crossborder_Pound [en-Untranslated]',     status: 'New',       salesOrg: 'NewCold Wakefield Ltd Crossborder £', flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-CTC-UKD-E', category: 'carrier-tc', name: 'T&C_Carrier_UK_Domestic_Euro [en-Untranslated]',         status: 'New',       salesOrg: 'NewCold Wakefield Ltd Domestic €',    flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-CTC-UKD-P', category: 'carrier-tc', name: 'T&C_Carrier_UK_Domestic_Pound [en-Untranslated]',        status: 'New',       salesOrg: 'NewCold Wakefield Ltd Domestic £',    flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-CTC-US',    category: 'carrier-tc', name: 'Terms and conditions for carriers in USA',               status: 'Published', salesOrg: 'CtrlChain USA LLC',                  flag: 'us', updatedAt: 'Thu, 3 Oct 2024',   updatedTime: '09:16' },
+
+    // ---- Terms of Service (1) — no Sales Organisation column on this tab ----
+    { id: 'LEG-TOS-SYS',   category: 'terms-of-service', name: 'Term of Use for System User', status: 'Published', salesOrg: null, flag: null, updatedAt: 'Tue, 11 Aug 2026', updatedTime: '11:46' },
+
+    // ---- Privacy Policies (2) — column present, values empty ---------------
+    // `region` is the tab label on the reader page — the app shows EU / USA there
+    // rather than the document's full name.
+    { id: 'LEG-PP-EU',     category: 'privacy-policy', region: 'EU',  name: 'Privacy Policy Europe', status: 'Published', salesOrg: null, flag: null, updatedAt: 'Tue, 25 Aug 2026', updatedTime: '15:28' },
+    { id: 'LEG-PP-US',     category: 'privacy-policy', region: 'USA', name: 'Privacy Policy US',     status: 'Draft',     salesOrg: null, flag: null, updatedAt: 'Fri, 10 Oct 2025', updatedTime: '10:55' },
+
+    // ---- Invoicing Instruction (13) ----------------------------------------
+    { id: 'LEG-II-DE',     category: 'invoicing-instruction', name: 'Invoicing Instructions CCA DE',                        status: 'Published', salesOrg: 'CtrlChain GmbH',                     flag: 'de', updatedAt: 'Tue, 20 May 2025', updatedTime: '09:53' },
+    { id: 'LEG-II-ES',     category: 'invoicing-instruction', name: 'Invoicing Instructions CCA ES',                        status: 'Published', salesOrg: 'CtrlChain España S.L.U',        flag: 'es', updatedAt: 'Tue, 22 Apr 2025', updatedTime: '14:28' },
+    { id: 'LEG-II-NL',     category: 'invoicing-instruction', name: 'Invoicing Instructions CCA NL',                        status: 'Published', salesOrg: 'CtrlChain B.V.',                     flag: 'nl', updatedAt: 'Fri, 25 Apr 2025', updatedTime: '11:40' },
+    { id: 'LEG-II-US',     category: 'invoicing-instruction', name: 'Invoicing Instructions CCA US',                        status: 'Published', salesOrg: 'CtrlChain USA LLC',                  flag: 'us', updatedAt: 'Tue, 22 Apr 2025', updatedTime: '14:29' },
+    { id: 'LEG-II-NCFR',   category: 'invoicing-instruction', name: 'Invoicing Instructions NewCold France',                status: 'Published', salesOrg: 'NewCold Transport Frozen SAS',       flag: 'fr', updatedAt: 'Mon, 5 May 2025',  updatedTime: '12:17' },
+    { id: 'LEG-II-NCEU',   category: 'invoicing-instruction', name: 'Invoicing Instructions NewCold PAN EU',                status: 'Published', salesOrg: 'NewCold Pan European B.V.',          flag: 'nl', updatedAt: 'Tue, 22 Apr 2025', updatedTime: '14:29' },
+    { id: 'LEG-II-NCPL',   category: 'invoicing-instruction', name: 'Invoicing Instructions NewCold Poland',                status: 'Published', salesOrg: 'NewCold Transport Poland Sp. z o.o.', flag: 'pl', updatedAt: 'Mon, 5 May 2025', updatedTime: '11:52' },
+    { id: 'LEG-II-NCPL-E', category: 'invoicing-instruction', name: 'Invoicing Instructions NewCold Poland Sp. z o.o. €', status: 'Published', salesOrg: 'NewCold Transport Poland Sp. z o.o. €', flag: 'pl', updatedAt: 'Wed, 7 May 2025', updatedTime: '14:37' },
+    { id: 'LEG-II-UKX-E',  category: 'invoicing-instruction', name: 'InvoicingInstruction_NC_UK_Crossborder_EUR [en-Untranslated]', status: 'New', salesOrg: 'NewCold Wakefield Ltd Crossborder €', flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-II-UKX-P',  category: 'invoicing-instruction', name: 'InvoicingInstruction_NC_UK_Crossborder_GBP [en-Untranslated]', status: 'New', salesOrg: 'NewCold Wakefield Ltd Crossborder £', flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-II-UKD-E',  category: 'invoicing-instruction', name: 'InvoicingInstruction_NC_UK_Domestic_EUR [en-Untranslated]',    status: 'New', salesOrg: 'NewCold Wakefield Ltd Domestic €',    flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-II-UKD-P',  category: 'invoicing-instruction', name: 'InvoicingInstruction_NC_UK_Domestic_GBP [en-Untranslated]',    status: 'New', salesOrg: 'NewCold Wakefield Ltd Domestic £',    flag: 'gb', updatedAt: null, updatedTime: null },
+    { id: 'LEG-II-NCUS',   category: 'invoicing-instruction', name: 'Invoicing Instructions NewCold US',                    status: 'Published', salesOrg: 'NewCold USA Transport LLC',          flag: 'us', updatedAt: 'Mon, 5 May 2025', updatedTime: '12:00' },
+  ];
+
+  /*
+   * Version history.
+   *
+   * A legal document is a container; the text lives in versions, and only one is
+   * live at a time. The app's version dropdown lists them newest first, with the
+   * current one Published (or Draft) and every superseded one Substituted — that
+   * word is the platform's, not a synonym someone picked here.
+   *
+   * A document with status New has NO versions at all, which is why its detail
+   * page is an empty state rather than a blank body.
+   *
+   * The text-or-file split matters beyond the admin page. The platform has
+   * reader-facing pages for these documents — /privacy-policy/<id> and
+   * /terms-of-service, reached from the account menu — which show the live
+   * version only, with no version picker and no actions. What they render is the
+   * rich text or the PDF depending on which of the two that version is, so
+   * anything reading these records for a reader has to handle both.
+   *
+   * These are derived rather than hand-written for all 42 documents. France is
+   * the exception: it carries the ten versions the running app actually shows,
+   * because it is the row people click first.
+   */
+  var VERSION_OVERRIDES = {
+    'LEG-STC-FR': [
+      { v: '3.3', status: 'Published' },
+      { v: '3.2', status: 'Substituted' },
+      { v: '3.1', status: 'Substituted' },
+      { v: '3.0', status: 'Substituted' },
+      { v: '2.3', status: 'Substituted' },
+      { v: '2.2', status: 'Substituted' },
+      { v: '2.1', status: 'Substituted' },
+      { v: '2.0', status: 'Substituted' },
+      { v: '1.1', status: 'Substituted' },
+      { v: '1.0', status: 'Substituted' },
+    ],
+  };
+
+  function versionsFor(doc) {
+    if (VERSION_OVERRIDES[doc.id]) return VERSION_OVERRIDES[doc.id];
+    // Never published, never drafted: nothing to show.
+    if (doc.status === 'New') return [];
+    /*
+     * A Draft sits ON TOP of a published version — that is what the app shows:
+     * the Poland document lists "1.1 Draft" then "1.0 Published". The list's
+     * status is the NEWEST version's; the live one underneath is still what a
+     * reader gets. Modelling a draft as the only version was wrong and made the
+     * reader pages think the document had never been published.
+     */
+    if (doc.status === 'Draft') {
+      return [
+        { v: '1.1', status: 'Draft' },
+        { v: '1.0', status: 'Published' },
+      ];
+    }
+    // Published: the live one plus the two it replaced.
+    return [
+      { v: '2.1', status: 'Published' },
+      { v: '2.0', status: 'Substituted' },
+      { v: '1.0', status: 'Substituted' },
+    ];
+  }
+
+  /*
+   * "Updated by" on the detail page. The app shows the admin who last touched the
+   * version; a published prototype should not carry a real colleague's name, so
+   * this is a stand-in.
+   */
+  var LEGAL_EDITOR = 'Robin admin';
+
+  LEGAL_DOCUMENTS.forEach(function (doc) {
+    doc.versions = versionsFor(doc);
+    doc.updatedBy = doc.versions.length ? LEGAL_EDITOR : null;
+  });
+
+  /*
+   * One document is an UPLOADED PDF rather than written text.
+   *
+   * Both are real states — some terms are drafted in the editor, some arrive as
+   * a file from legal counsel — and the detail page renders them differently.
+   * Without one of each in the fixture, the uploaded branch is only reachable by
+   * a reviewer finding a PDF on their own machine and dragging it in, which
+   * nobody does. So this one ships with a document attached.
+   *
+   * The PDF is generated, not borrowed: it holds the same terms the other
+   * documents show as rich text, so the preview shows something worth reading.
+   * `path` is resolved against the prototype's root by the page, since a fixture
+   * cannot know how deep the page that reads it sits.
+   */
+  var UPLOADED = window.CCA_DATA_ROOT || '../_shared/assets/sample-terms.pdf';
+  LEGAL_DOCUMENTS.filter(function (doc) { return doc.id === 'LEG-STC-NCUS'; }).forEach(function (doc) {
+    doc.versions[0].file = { name: 'TC-Shippers-NewCold-USA.pdf', type: 'application/pdf', url: UPLOADED };
+  });
+
+  /*
+   * Shipper-specific terms — the SHIPPER'S segment. One document per shipper
+   * group, provided by that group rather than by a CtrlChain sales organisation,
+   * which is why this table has "Provided by" where the platform table has
+   * "Sales Organisation" and no flag. 19 rows on development.
+   */
+  var LEGAL_SHIPPER_TERMS = [
+    { id: 'LEG-SH-01', name: "T&C for ! Aurora's Shipper Enterprise", status: 'Published', providedBy: "! Aurora's Shipper Enterprise", updatedAt: 'Mon, 22 Jun 2026',  updatedTime: '09:02' },
+    { id: 'LEG-SH-02', name: 'T&C for --> DemoMt',                    status: 'Published', providedBy: '--> DemoMt',                    updatedAt: 'Thu, 10 Apr 2025',  updatedTime: '09:41' },
+    { id: 'LEG-SH-03', name: 'T&C for Dev Test1',                     status: 'Published', providedBy: 'Dev Test1NEW',                  updatedAt: 'Tue, 15 Apr 2025',  updatedTime: '10:41' },
+    { id: 'LEG-SH-04', name: 'T&C for SaaS2',                         status: 'Published', providedBy: 'SaaS2',                         updatedAt: 'Wed, 21 May 2025',  updatedTime: '12:17' },
+    { id: 'LEG-SH-05', name: 'T&C for MT Shipper',                    status: 'Published', providedBy: 'MT Shipper',                    updatedAt: 'Wed, 31 Dec 2025',  updatedTime: '13:30' },
+    { id: 'LEG-SH-06', name: 'T&C for g250226',                       status: 'Published', providedBy: 'g250226',                       updatedAt: 'Fri, 11 Apr 2025',  updatedTime: '12:45' },
+    { id: 'LEG-SH-07', name: 'T&C for g250313',                       status: 'Published', providedBy: 'g250313',                       updatedAt: 'Tue, 15 Apr 2025',  updatedTime: '11:06' },
+    { id: 'LEG-SH-08', name: 'T&C for g2503171332',                   status: 'Published', providedBy: 'g2503171332',                   updatedAt: 'Fri, 11 Apr 2025',  updatedTime: '12:31' },
+    { id: 'LEG-SH-09', name: 'T&C for ShipperSaasBasic',              status: 'Published', providedBy: 'ShipperSaasBasic',              updatedAt: 'Mon, 20 Apr 2026',  updatedTime: '14:59' },
+    { id: 'LEG-SH-10', name: 'T&C for NordicShippersGroup',           status: 'Published', providedBy: 'NordicShippersGroup',           updatedAt: 'Mon, 4 Aug 2025',   updatedTime: '12:59' },
+    { id: 'LEG-SH-11', name: 'T&C for NordicTest',                    status: 'Published', providedBy: 'NordicTest',                    updatedAt: 'Sun, 4 May 2025',   updatedTime: '21:28' },
+    { id: 'LEG-SH-12', name: 'T&C for MS Transport Shipper',          status: 'Published', providedBy: 'MS Transport Shipper',          updatedAt: 'Mon, 9 Jun 2025',   updatedTime: '12:43' },
+    { id: 'LEG-SH-13', name: 'T&C for mt230201',                      status: 'Published', providedBy: 'mt230201',                      updatedAt: 'Fri, 7 Aug 2026',   updatedTime: '12:55' },
+    { id: 'LEG-SH-14', name: 'T&C for Valdera Fruits',                status: 'Published', providedBy: 'Valdera Fruits',                updatedAt: 'Tue, 27 May 2025',  updatedTime: '10:24' },
+    { id: 'LEG-SH-15', name: 'T&C for saas.e',                        status: 'Published', providedBy: 'saas.e',                        updatedAt: 'Mon, 20 Jul 2026',  updatedTime: '13:56' },
+    { id: 'LEG-SH-16', name: 'T&C for SaaSShiper',                    status: 'Published', providedBy: 'SaaSShiper',                    updatedAt: 'Thu, 12 Jun 2025',  updatedTime: '11:53' },
+    { id: 'LEG-SH-17', name: 'T&C for ShipperGroup01_MT_BT (do not touch)', status: 'Published', providedBy: 'ShipperGroup01_MT_BT_ES (do not touch)', updatedAt: 'Thu, 8 Jan 2026', updatedTime: '09:18' },
+    { id: 'LEG-SH-18', name: 'T&C for ShipperGroup07_BT_SaaS (do not touch)', status: 'Published', providedBy: 'ShipperGroup07_BT_SaaS (do not touch)', updatedAt: 'Thu, 8 Jan 2026', updatedTime: '09:26' },
+    { id: 'LEG-SH-19', name: 'T&C for Test group by Ravi',            status: 'Published', providedBy: 'Test group by Ravi',            updatedAt: 'Fri, 2 Jan 2026',   updatedTime: '14:07' },
+  ];
+
+  /*
+   * Signing history — every acceptance of a legal document, newest first. The
+   * real table holds 175,520 rows, which is the number the paginator reports;
+   * `signingsTotal` records that so a prototype can show the real magnitude
+   * without shipping 175,520 objects. `group` is two lines in the app: the
+   * shipper group above, the sub-group below.
+   */
+  var LEGAL_SIGNINGS = [
+    { id: 'SIGN-0001', group: 'CtrlChain',                subGroup: null,                          user: 'systemuser_412',                                signedOn: 'Term of Use for System User',                 version: 'v13.2', providedBy: null,             flag: null, signedAt: 'Thu, 27 Aug 2026', signedTime: '16:43' },
+    { id: 'SIGN-0002', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__117990ab1b3f3a63125111d186eeed49', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:37' },
+    { id: 'SIGN-0003', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__117990ab1b3f3a63125111d186eeed49', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:36' },
+    { id: 'SIGN-0004', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__5e3c1c6e2f148fc2cc10e3a5b66e34f2', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:36' },
+    { id: 'SIGN-0005', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__117990ab1b3f3a63125111d186eeed49', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:35' },
+    { id: 'SIGN-0006', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__ca68000dfc5f1da4f556e0c79ca3f22f', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:35' },
+    // A user deleted after signing: the group cell empties but the record stays.
+    { id: 'SIGN-0007', group: null,                       subGroup: null,                          user: 'USER HARD DELETED',                             signedOn: 'Term of Use for System User',                 version: 'v13.2', providedBy: null,             flag: null, signedAt: 'Thu, 27 Aug 2026', signedTime: '16:34' },
+    { id: 'SIGN-0008', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__8eb3bfe2832f1f9c428ec2eda5371dc4', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:34' },
+    { id: 'SIGN-0009', group: null,                       subGroup: null,                          user: 'USER HARD DELETED',                             signedOn: 'Term of Use for System User',                 version: 'v13.2', providedBy: null,             flag: null, signedAt: 'Thu, 27 Aug 2026', signedTime: '16:34' },
+    { id: 'SIGN-0010', group: 'AUTOMATION_STATIC_SHIPPER_1_NL', subGroup: 'AUTOMATION_STATIC_SHIPPER_1_NL', user: 'user__3c07a1be4f2d9b7e5a0c8412d6ff1e93', signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:33' },
+    { id: 'SIGN-0011', group: 'CtrlChain',                subGroup: null,                          user: 'systemuser_318',                                signedOn: 'Term of Use for System User',                 version: 'v13.2', providedBy: null,             flag: null, signedAt: 'Thu, 27 Aug 2026', signedTime: '16:31' },
+    { id: 'SIGN-0012', group: 'NordicShippersGroup',      subGroup: 'NordicShippersGroup NL',      user: 'user__b91d7fc0a3e54862bb2f11d7c8043a5e',        signedOn: 'Terms & Conditions for Shippers in Netherlands', version: 'v6.1', providedBy: 'CtrlChain B.V.', flag: 'nl', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:28' },
+    { id: 'SIGN-0013', group: 'MS Transport Shipper',     subGroup: 'MS Transport Shipper DE',     user: 'user__47ac2e91f6b840d5a1c93e07b25d6f81',        signedOn: 'Terms & Conditions for Shippers in Germany',     version: 'v4.3', providedBy: 'CtrlChain GmbH', flag: 'de', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:22' },
+    { id: 'SIGN-0014', group: 'Valdera Fruits',           subGroup: 'Valdera Fruits ES',           user: 'user__0d5b8e73c1a24f9682ee45103bd7a6c2',        signedOn: 'Terms & Conditions for Shippers in Spain',       version: 'v3.0', providedBy: 'CtrlChain España S.L.U', flag: 'es', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:19' },
+    { id: 'SIGN-0015', group: 'MT Shipper',               subGroup: 'MT Shipper FR',               user: 'user__ee1904ba7d3c46f090b5c72a8de13f47',        signedOn: 'Terms & Conditions for Shippers in France',      version: 'v9.2', providedBy: 'NewCold Transport Frozen SAS', flag: 'fr', signedAt: 'Thu, 27 Aug 2026', signedTime: '16:11' },
+  ];
+
+  var LEGAL_SIGNINGS_TOTAL = 175520;
+
+  /*
+   * The text of a written document.
+   *
+   * Here rather than in a page because two screens render it: the admin's
+   * version manager and the reader-facing pages. Kept in one place so they
+   * cannot disagree about what a document says.
+   *
+   * Obviously fake, plausibly shaped. Real terms run to thousands of words and
+   * the ones on development are full of half-finished editor notes; neither
+   * belongs in a prototype that gets published. This is short, has the shapes a
+   * reviewer needs to see — headings, paragraphs, both list types — and says
+   * what it is.
+   */
+  function legalBody(doc) {
+    var org = doc.salesOrg || 'CtrlChain';
+
+    if (doc.category === 'privacy-policy') {
+      return [
+        '<h3>1. Who we are</h3>',
+        '<p>' + org + ' is the data controller for the personal data described in this ' +
+          'policy. For any question about it, or to exercise a right below, contact our ' +
+          'data protection officer.</p>',
+        '<h3>2. What we collect</h3>',
+        '<p>We process the data you give us and the data your use of the platform ' +
+          'generates:</p>',
+        '<ul>',
+        '<li>account details — name, work email, telephone number;</li>',
+        '<li>transport records — the orders, addresses and documents you handle;</li>',
+        '<li>technical data — sign-in times, IP address, and the pages you open.</li>',
+        '</ul>',
+        '<h3>3. Why we process it</h3>',
+        '<ol>',
+        '<li>To perform the agreement under which you use the platform.</li>',
+        '<li>To meet legal obligations, including tax and customs record-keeping.</li>',
+        '<li>For our legitimate interest in keeping the platform secure and working.</li>',
+        '</ol>',
+        '<h3>4. Your rights</h3>',
+        '<p>You may ask for a copy of your data, ask us to correct it, ask us to erase ' +
+          'it where we have no further need of it, and object to processing based on ' +
+          'legitimate interest. You may also complain to your national supervisory ' +
+          'authority.</p>',
+        '<h3>5. How long we keep it</h3>',
+        '<p>Transport records are kept for seven years to meet statutory retention ' +
+          'periods. Account data is erased when the account closes.</p>',
+      ].join('');
+    }
+
+    if (doc.category === 'terms-of-service') {
+      return [
+        '<h3>1. Applicability</h3>',
+        '<p>These Terms of Use apply to every user of the CtrlChain system, and to all ' +
+          'acts relating to its use, insofar as they are not subject to imperative law.</p>',
+        '<h3>2. Account registration</h3>',
+        '<ol>',
+        '<li>A user registers an account before being granted access to the system.</li>',
+        '<li>The user is responsible for keeping their credentials secret.</li>',
+        '<li>The user must inform CtrlChain without delay of any unauthorised use.</li>',
+        '</ol>',
+        '<h3>3. Use of the system</h3>',
+        '<p>The user shall use the system in accordance with these terms and applicable ' +
+          'regulations, and only for the purposes for which it is provided. CtrlChain may ' +
+          'suspend access where these terms are breached.</p>',
+        '<h3>4. Intellectual property</h3>',
+        '<p>The system and everything in it remain the property of CtrlChain or its ' +
+          'licensors. Nothing in these terms transfers any right in it to the user.</p>',
+        '<h3>5. Governing law</h3>',
+        '<p>These terms are governed by Dutch law, and the courts of Amsterdam have ' +
+          'exclusive jurisdiction over any dispute arising from them.</p>',
+      ].join('');
+    }
+
+    // Shipper and carrier terms, and invoicing instructions.
+    var party = doc.category === 'carrier-tc' ? 'Carrier' : 'Shipper';
+    return [
+      '<h3>1. Definitions</h3>',
+      '<p>In these terms, “Carrier” means the party undertaking carriage of the goods, ' +
+        '“Shipper” means the party tendering them, and “Platform” means the CtrlChain ' +
+        'services operated by ' + org + '.</p>',
+      '<h3>2. Scope</h3>',
+      '<p>These terms apply to every transport order placed through the Platform, and ' +
+        'take precedence over any conflicting terms on a purchase order or ' +
+        'acknowledgement unless agreed in writing.</p>',
+      '<ol>',
+      '<li>Orders are accepted subject to available capacity.</li>',
+      '<li>Rates quoted exclude duties and levies unless stated.</li>',
+      '<li>Cancellation within 24 hours of the pickup window may incur a charge.</li>',
+      '</ol>',
+      '<h3>3. Liability</h3>',
+      '<p>Liability for loss of or damage to goods is limited in accordance with the ' +
+        'applicable convention, and in no event covers:</p>',
+      '<ul>',
+      '<li>indirect or consequential loss, including loss of profit;</li>',
+      '<li>delay, except where separately agreed in writing;</li>',
+      '<li>goods carried at the ' + party + '’s declared risk.</li>',
+      '</ul>',
+      '<h3>4. Governing law</h3>',
+      '<p>These terms are governed by the law of the country in which the contracting ' +
+        'sales organisation is established, and the courts of that country have ' +
+        'exclusive jurisdiction.</p>',
+    ].join('');
+  }
+
   window.CCA_DATA = {
     orders: ORDERS,
     order: function (id) {
       return ORDERS.filter(function (o) { return o.id === id; })[0] || null;
     },
+
+    legalDocuments: LEGAL_DOCUMENTS,
+    legalDocument: function (id) {
+      return LEGAL_DOCUMENTS.filter(function (d) { return d.id === id; })[0] || null;
+    },
+    legalDocumentsIn: function (category) {
+      return LEGAL_DOCUMENTS.filter(function (d) { return d.category === category; });
+    },
+    /*
+     * The LIVE version — the one a reader is shown. Never a draft, never a
+     * superseded one. Returns null for a document that has never been published,
+     * which a reader page has to handle rather than render nothing.
+     */
+    legalBody: legalBody,
+    legalLiveVersion: function (doc) {
+      if (!doc || !doc.versions) return null;
+      return doc.versions.filter(function (v) { return v.status === 'Published'; })[0] || null;
+    },
+    legalShipperTerms: LEGAL_SHIPPER_TERMS,
+    legalSignings: LEGAL_SIGNINGS,
+    legalSigningsTotal: LEGAL_SIGNINGS_TOTAL,
   };
 })();
+
