@@ -50,145 +50,22 @@
       <cca-main>
         <div class="appContent">
           <!--
-            Rail — switches domain. Shipper is the active domain, and Orders sits
-            under it in the submenu to the right.
+            Rail — switches domain. Shipper TMS is the active domain, and Orders
+            sits under it in the submenu to the right.
+
+            The markup lives in _shared/shell-markup.js, not here. The rail is
+            the same in every screen of the product, so one definition serves
+            every prototype and an item added there shows up in all of them —
+            which is how this prototype gained the Inbox item it was missing.
           -->
-          <cca-side-menu>
-            <div class="menu-wrapper">
-              <div class="logo-wrapper cursor-pointer">
-                <img class="w-8" src="../design-system/dist/assets/images/ctrlchain-logo-white.svg" alt="CtrlChain" />
-              </div>
-              <div class="side-menu">
-                <div class="menu-items">
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-booking mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Booking</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-home mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Home</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-dashboardkpi mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Dashboard</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-taskboard mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Taskboard</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item active" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-boxes mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Shipper TMS</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-truck mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Carrier TMS</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <hr class="my-2 w-full border-NC-blue-lighter opacity-50" />
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-group mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Enterprise</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-invoice-euro mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Finance</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-swap mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Integrations</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-no-more-task mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Release Notes</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-phonebook mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Addressbook</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <cca-side-menu-item style="display: block; width: 100%">
-                    <a class="a-menu-item" href="#"><div class="menu-item">
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-Gear-Settings mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Admin</span>
-                    </div></a>
-                  </cca-side-menu-item>
-                  <div class="mt-auto flex flex-col gap-2">
-                    <hr class="my-2 w-full border-NC-blue-lighter opacity-30" />
-                    <div class="menu-item" role="button" tabindex="0" data-theme-toggle>
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-moon mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Dark</span>
-                    </div>
-                    <div class="menu-item submenu-toggle" role="button" tabindex="0" data-submenu-toggle>
-                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                      <span class="menu-item-title">Collapse</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </cca-side-menu>
+          <cca-side-menu data-rail="Shipper TMS"></cca-side-menu>
 
           <!--
-            Shipper TMS submenu. The Figma frames for this flow are rail-only, so
-            the submenu is not in the design — it is here because Orders lives
-            under Shipper TMS in the product. Items, labels, order and the
-            "New Request" action are taken from staging.ctrlchain.com/shipper-tms,
-            not invented.
+            Shipper TMS submenu — items and the New Request button come from
+            _shared/shell-markup.js, so every Shipper TMS screen shows the same
+            list. data-submenu-active names the current item.
           -->
-          <cca-side-submenu>
-            <div class="submenu-container">
-              <div class="min-h-15 w-full content-center border-b border-neutral-default">
-                <img class="mr-auto max-w-32 px-4 py-3" src="../design-system/dist/assets/images/ctrlchain-text-green.svg" alt="CtrlChain" />
-              </div>
-              <div class="flex w-full flex-col gap-4 border-b border-neutral-default p-4">
-                <button ccaButton class="cca-btn cca-btn--primary icon-button-rounded w-full shadow">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-plus mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>New Request
-                </button>
-              </div>
-              <div class="flex w-full flex-col gap-4">
-                <span class="mt-4 pl-4 font-medium text-neutral-caption">Shipper TMS</span>
-                <a class="sub-item" href="#">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-request mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                  <span class="text-cca-base font-normal wrap-break-word">Spot Quotes</span>
-                </a>
-                <a class="sub-item active" href="#">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-list mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                  <span class="text-cca-base font-normal wrap-break-word">Orders</span>
-                </a>
-                <a class="sub-item" href="#">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-messages-euro mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                  <span class="text-cca-base font-normal wrap-break-word">RFP</span>
-                </a>
-                <a class="sub-item" href="#">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-route mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                  <span class="text-cca-base font-normal wrap-break-word">Contracted Lanes</span>
-                </a>
-              </div>
-            </div>
-          </cca-side-submenu>
+          <cca-side-submenu data-submenu="shipper-tms" data-submenu-active="Orders"></cca-side-submenu>
 
           <!-- Top bar -->
           <cca-header>
@@ -202,49 +79,15 @@
                 <h1 class="text-cca-label-lg text-neutral-title">Orders</h1>
               </div>
               <!--
-                Trailing cluster: Contact Support, notifications, language switch
-                with its flag, then the user menu. Structure, classes and both
-                dividers come from cca-header in the app. Contact Support and the
-                flag are in production; staging does not show Contact Support, so
-                staging alone is not a reliable reference for this bar.
+                Trailing cluster: Contact Support, notifications with their
+                count, the language switch and the user menu. Shared, in
+                _shared/shell-markup.js — it is identical on every screen, and
+                keeping a second copy here is how the two drift apart.
+
+                The avatar is initials rather than the signed-in user's photo: a
+                prototype should not carry a real person's picture.
               -->
-              <div class="mr-5 ml-auto flex h-full items-center">
-                <a class="proto-header-link text-cca-base mr-4" href="#">Contact Support</a>
-
-                <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only" aria-label="Notifications">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-bell mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-                </button>
-
-                <span class="mr-4 ml-2 block h-6 border-l border-neutral-default"></span>
-
-                <cca-language-switch style="display: block">
-                  <span class="flex items-center gap-2">
-                    <!--
-                      The platform's own flag. The export ships no flags folder,
-                      so it lives in _shared/assets/flags/ for every prototype to
-                      use. Ask FE to include assets/flags in the export.
-                    -->
-                    <img class="h-6 w-6" src="../_shared/assets/flags/en.svg" alt="" />
-                    <span class="text-cca-base text-neutral-body">English</span>
-                  </span>
-                </cca-language-switch>
-
-                <span class="mx-4 block h-6 border-l border-neutral-default"></span>
-
-                <!--
-                  The build shows the signed-in user's uploaded photo here. A
-                  prototype should not carry a real person's picture, so this is
-                  the initials form, coloured with the design system's avatar
-                  tokens. avatar-initials-white is not literally white — it
-                  inverts to dark navy in dark mode, which text-neutral-invert
-                  would not.
-                -->
-                <cca-header-menu class="header-menu" style="display: block">
-                  <cca-avatar-group style="display: block">
-                    <span class="flex h-10 w-10 items-center justify-center rounded-full avatar-bg-color text-cca-label-md avatar-initials-white">DS</span>
-                  </cca-avatar-group>
-                </cca-header-menu>
-              </div>
+              <div data-top-bar-trailing data-initials="DS"></div>
             </div>
           </cca-header>
 
@@ -258,15 +101,17 @@
             -->
             <div class="page-container proto-hug flex flex-col">
               <!--
-                Saved-view tabs. "All" is the only view that always exists —
-                every other tab is a view the user saved from applied filters, so
-                the row is rendered from state rather than hard-coded. A fresh
-                account sees "All" alone.
+                Saved-view tabs, rendered from state rather than hard-coded.
+                "All" is the only view that always exists; every other tab is one
+                a user saved from applied filters.
 
-                Composed from utilities, as the Figma does. Deliberately NOT
-                mat-tab-group: Material sizes its tab indicator with JavaScript at
-                runtime, so in a static page every indicator collapses to the full
-                width of the row and draws one green line across under the tabs.
+                The row is EMPTY when "All" is the only view — a single tab is not
+                a choice, and the app agrees: Contracted Lanes has no saved views
+                and shows no tab row at all. See renderViews().
+
+                Composed from utilities, as the Figma does. These are not Material
+                tabs: a saved view carries a home icon and a kebab menu, so it is
+                its own component rather than a mat-tab-group.
               -->
               <div class="flex items-center" id="view-tabs"></div>
 
@@ -372,6 +217,21 @@
       </cca-main>
 
       <!-- Filters drawer -->
+      <!--
+        The view menu, opened from the kebab on the active tab. Read off the
+        running app: Set as Default / Rename / Delete. Note what is NOT here —
+        the kebab does not create views. It manages the one you are on.
+
+        Same overlay machinery as the drawer, with the transparent backdrop the
+        CDK uses for a menu, so a click anywhere else closes it.
+      -->
+      <div class="cdk-overlay-container" id="view-menu-overlay" hidden>
+        <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop" id="view-menu-backdrop"></div>
+        <div class="cdk-overlay-pane proto-menu-pane" id="view-menu-pane">
+          <div class="mat-mdc-menu-panel surface-neutral-light" role="menu" id="view-menu"></div>
+        </div>
+      </div>
+
       <div class="cdk-overlay-container" id="overlay-container" hidden>
         <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="drawer-scrim"></div>
         <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default" id="filters-drawer" role="dialog" aria-modal="true" aria-label="Filters">
@@ -460,6 +320,7 @@
 
     <script src="../_shared/data.js"></script>
     <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
     <script src="../_shared/routes.js"></script>
     <script src="../_shared/nav.js"></script>
     <script src="../_shared/shell.js"></script>
@@ -492,13 +353,27 @@
       let showPinned = false;
 
       /*
-       * Saved views. "All" is a system view and is always present; it cannot be
-       * renamed or removed. Everything else in this list is something a user
-       * saved from the filters they had applied — which is why a new account has
-       * one tab, not five.
+       * Saved views. "All" is a system view: always present, never renamed or
+       * removed. Everything else is something a user saved from the filters they
+       * had applied, and each one remembers those values so selecting it
+       * re-applies them.
        *
-       * Each saved view remembers the filter values that were applied when it was
-       * saved, so selecting it re-applies them.
+       * THE STRIP ONLY EXISTS ONCE THERE IS SOMETHING TO SWITCH BETWEEN. "All" on
+       * its own is not a choice, so the row is not rendered at all — see
+       * renderViews(). That is the app's behaviour: Contracted Lanes, which has no
+       * saved views, shows the toolbar straight away with no tab row, even though
+       * its URL still carries viewId=all. Orders, which has views, shows them.
+       *
+       * Nothing but "All" for now, so the strip does not render at all. Creating a
+       * view is not designed yet — the app's tab kebab only manages the view you
+       * are on (Set as Default / Rename / Delete) and we could not find where a
+       * first one gets made, so this prototype does not invent a path.
+       *
+       * The strip and its menu are written and working; they are simply dormant.
+       * Add an entry here and both come back with no other change:
+       *
+       *   { name: 'Unassigned & late', system: false,
+       *     filters: { 'Assigned Operator': 1, 'Carrier Assignment Status': 2 } }
        */
       const VIEWS = [{ name: 'All', system: true, filters: {} }];
       let activeView = 'All';
@@ -530,6 +405,17 @@
 
       // ------------------------------------------------------ saved views
       function renderViews() {
+        /*
+         * One view is not a set of tabs. With nothing but the system "All" there
+         * is nothing to switch to, so the whole row goes — including the filler
+         * that draws the bottom border, or an empty rule would hang under the
+         * toolbar with no tabs above it.
+         */
+        if (VIEWS.length < 2) {
+          document.getElementById('view-tabs').innerHTML = '';
+          return;
+        }
+
         const tab = (v) => {
           const active = v.name === activeView;
           return `
@@ -748,13 +634,9 @@
 
       // Selecting a view re-applies the filter values it was saved with.
       document.getElementById('view-tabs').addEventListener('click', (e) => {
-        if (e.target.closest('[data-view-menu]')) {
-          const applied = FILTERS.filter((f) => f.applied > 0).length;
-          if (!applied) {
-            window.CCA_ROUTES.notice('Apply some filters first — a view is saved from them.');
-            return;
-          }
-          saveView();
+        const menuBtn = e.target.closest('[data-view-menu]');
+        if (menuBtn) {
+          openViewMenu(menuBtn);
           return;
         }
         const tab = e.target.closest('[data-view]');
@@ -766,19 +648,68 @@
         render();
       });
 
-      // A view is created FROM applied filters — that is the whole rule behind
-      // the tab row. Nothing applied means nothing to save.
-      function saveView() {
-        const snapshot = {};
-        FILTERS.forEach((f) => {
-          if (f.applied > 0) snapshot[f.name] = f.applied;
-        });
-        const name = 'View ' + VIEWS.length;
-        VIEWS.push({ name, system: false, filters: snapshot });
-        activeView = name;
-        render();
-        window.CCA_ROUTES.notice('Saved “' + name + '” from ' + Object.keys(snapshot).length + ' applied filter(s).');
+      /*
+       * The view menu. Its items are the app's — Set as Default, Rename, Delete —
+       * and none of them creates a view, which is worth knowing: the kebab
+       * manages the view you are on.
+       *
+       * Only Delete is wired, because it is the one that matters to this
+       * prototype: removing the last custom view leaves "All" alone, and the tab
+       * row disappears. The other two are out of scope for the pinned-filters
+       * flow and say so rather than pretending.
+       */
+      const viewMenuOverlay = document.getElementById('view-menu-overlay');
+      const viewMenuPane = document.getElementById('view-menu-pane');
+      const viewMenu = document.getElementById('view-menu');
+
+      function openViewMenu(trigger) {
+        const view = VIEWS.filter((v) => v.name === activeView)[0];
+        const item = (label, action, disabled) =>
+          `<button ccaButton class="mat-mdc-menu-item" role="menuitem" ${
+            disabled ? 'disabled' : `data-view-action="${action}"`
+          }><span class="mat-mdc-menu-item-text">${label}</span></button>`;
+
+        viewMenu.innerHTML =
+          item('Set as Default', 'default', false) +
+          // "All" is a system view: it cannot be renamed or deleted.
+          item('Rename', 'rename', view.system) +
+          item('Delete', 'delete', view.system);
+
+        const r = trigger.getBoundingClientRect();
+        viewMenuPane.style.left = r.left + 'px';
+        viewMenuOverlay.hidden = false;
+        viewMenuPane.style.top = r.bottom + 4 + 'px';
       }
+
+      function closeViewMenu() {
+        viewMenuOverlay.hidden = true;
+      }
+
+      viewMenuOverlay.addEventListener('click', (e) => {
+        const action = e.target.closest('[data-view-action]');
+        if (!action) {
+          closeViewMenu();
+          return;
+        }
+        const kind = action.dataset.viewAction;
+        closeViewMenu();
+
+        if (kind === 'delete') {
+          const i = VIEWS.findIndex((v) => v.name === activeView);
+          const name = VIEWS[i].name;
+          VIEWS.splice(i, 1);
+          activeView = 'All';
+          FILTERS.forEach((f) => (f.applied = 0));
+          render();
+          window.CCA_ROUTES.notice(
+            VIEWS.length < 2
+              ? `Deleted “${name}”. "All" is the only view left, so the tab row is gone.`
+              : `Deleted “${name}”.`,
+          );
+          return;
+        }
+        window.CCA_ROUTES.notice(`“${kind === 'default' ? 'Set as Default' : 'Rename'}” is outside this flow.`);
+      });
 
       render();
     </script>
