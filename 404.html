@@ -1,0 +1,90 @@
+<!doctype html>
+<!--
+  404 — and the redirect for prototypes that have moved
+  =====================================================
+  GitHub Pages serves this file for any path it cannot find, which makes it the
+  only place a static site can do a redirect. It does two jobs:
+
+    1. A prototype that MOVED sends the visitor on to its new path, keeping the
+       query string and hash, so links shared in earlier review sessions keep
+       working instead of dying.
+    2. Anything else gets a plain "not here" with a way back to the gallery.
+
+  MOVED is the record of every rename. Add to it when a prototype folder moves —
+  a reviewer's bookmark is the one thing a rename silently breaks, and the
+  screen registry cannot help because it only resolves links made INSIDE the
+  prototypes.
+
+  Deliberately has no data-screen attribute: build-screens.py only walks
+  index.html files, so this page never enters the registry, and it must not
+  claim a screen name that a real prototype owns.
+-->
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Not found · CtrlChain prototypes</title>
+
+    <script>
+      /*
+       * Runs before anything paints, so a moved link never flashes this page.
+       * Folder renames only — a moved prototype keeps its own ?id= and #hash.
+       */
+      (function () {
+        var MOVED = {
+          'admin-legal': 'legal/admin',
+          'admin-legal-document': 'legal/admin-document',
+          'legal-privacy': 'legal/privacy',
+          'legal-terms': 'legal/terms',
+        };
+
+        // /ccaprototype/admin-legal-document/?id=X  ->  segment 'admin-legal-document'
+        var path = location.pathname.replace(/\/index\.html$/, '').replace(/\/+$/, '');
+        var segment = path.split('/').pop();
+
+        if (Object.prototype.hasOwnProperty.call(MOVED, segment)) {
+          var base = path.slice(0, path.length - segment.length);
+          location.replace(base + MOVED[segment] + '/' + location.search + location.hash);
+        }
+      })();
+    </script>
+
+    <link rel="stylesheet" href="design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="_shared/prototype.css" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      .notfound {
+        display: grid;
+        place-content: center;
+        min-height: 100%;
+        padding: 2rem;
+      }
+      .notfound-card {
+        max-width: 34rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="notfound">
+      <div class="notfound-card rounded-lg border border-neutral-default surface-neutral-light p-6">
+        <h1 class="text-NC-blue-default">Nothing here</h1>
+        <p class="text-cca-base text-neutral-subtitle">
+          This prototype has either moved or was never built. The legal screens now live
+          together under one folder, so an older link like
+          <code>admin-legal-document/</code> is now
+          <code>legal/admin-document/</code> — those redirect automatically.
+        </p>
+        <p class="text-cca-base text-neutral-subtitle">
+          <a href="./">Back to the prototype list</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
