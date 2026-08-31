@@ -61,22 +61,35 @@ The short version, which applies to every change in this repo:
 
 ## Epic and story definitions
 
-Requirements do **not** live in this repo. They live in the PO vault at
-`/Users/angelica.fernando/product-owners`, under `Requirements/AllRequirements/`, which is
-the single registry the whole PO team shares — ID numbers, Dataview indexes and the
-`/create-epic`, `/create-feature`, `/create-user-story` and `/sync-ado` skills all live
-there.
+Requirements can be drafted here or in the PO vault at
+`/Users/angelica.fernando/product-owners` — it is the designer's call. Drafting next
+to the prototype is often the faster loop, because the screen and its criteria are
+being worked out together. Moving them to the vault afterwards is a copy, not a
+rewrite, and only the vault-only bits change: the `## Linked …` lists become Dataview
+blocks, and a user story drops `parent-epic` for `parent-feature`.
 
-Draft and refine requirements **in the vault, on a branch**, using the vault's own skills.
-They know its conventions: the Dataview index blocks, the full-path wikilinks, and the ID
-scan across every prefix. Writing them here instead produces files in the wrong format and
-IDs that collide the moment they reach the shared registry — which has already happened
-once.
+Use the **`/create-epic`** and **`/create-user-story`** skills here — they carry the PO
+team's requirement rules (INVEST, acceptance-criteria structure, the CtrlChain role
+list, Definition of Ready) from `.claude/references/`. The vault has its own
+`/create-epic`, `/create-feature`, `/create-user-story` and `/sync-ado` for when the
+work belongs there from the start.
 
-The legal work is on the vault branch `legal-pdf-documents`: `EPIC-AF-022` ⇄ ADO #46540,
-`FEAT-AF-052`, and stories `US-AF-313`, `328`, `329`, `330` (plus archived `US-AF-314`).
+🔴 **Check the ID registry before assigning a number, every time — not once.**
+`EPIC-`, `FEAT-` and `US-` numbers are global across the whole PO team, and the vault
+is the registry. Scan **both places** immediately before you write:
 
-**ADO is the source of truth once an item is synced** — the vault files are the drafting
+    { grep -rho 'id: US-[A-Z][A-Z]-[0-9]\{3\}' . --include='*.md'; \
+      grep -rho 'id: US-[A-Z][A-Z]-[0-9]\{3\}' \
+        /Users/angelica.fernando/product-owners/Requirements/AllRequirements/; } \
+      | grep -o '[0-9]\{3\}$' | sort -n | tail -1
+
+This collided twice on 2026-08-31. The vault gains committed work and switches
+branches while you are drafting, so a number that was free an hour ago is not free
+now — `US-AF-315`–`317` were taken by the column-naming stories mid-session and the
+legal ones had to be renumbered to `328`–`330`. Re-scan just before writing, and
+again before syncing to ADO.
+
+**ADO is the source of truth once an item is synced** — these files are the drafting
 and refinement layer.
 
 ## Committing
