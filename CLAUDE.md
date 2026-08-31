@@ -1,10 +1,17 @@
 # CtrlChain prototypes
 
-Designer-facing prototype repo. Each top-level folder is one prototype — a static
-`index.html` served from GitHub Pages, opened in a browser by whoever is
-reviewing it. No build step, no framework.
+Designer-facing prototype repo. Each prototype is a static `index.html` served
+from GitHub Pages, opened in a browser by whoever is reviewing it. No build step,
+no framework.
 
     rate-configuration/       resource-availability/       taskboard-redesign/
+    orders-pinned-filters/    legal/
+
+A top-level folder is usually one prototype. Where several screens belong to one
+capability, they nest inside a single folder instead of spreading across the repo
+root — `legal/` holds four screens, `resource-availability/` three. A nested page
+is registered exactly like a top-level one, by the `data-screen` on its own
+`<html>` element.
 
 ## The design system is the source of truth
 
@@ -51,6 +58,26 @@ The short version, which applies to every change in this repo:
   `ds/index.css`. Don't wrap them in `@layer`.
 - **Look at it before handing it over.** Start the `prototypes` preview server
   and screenshot the page.
+
+## Epic and story definitions
+
+Requirements do **not** live in this repo. They live in the PO vault at
+`/Users/angelica.fernando/product-owners`, under `Requirements/AllRequirements/`, which is
+the single registry the whole PO team shares — ID numbers, Dataview indexes and the
+`/create-epic`, `/create-feature`, `/create-user-story` and `/sync-ado` skills all live
+there.
+
+Draft and refine requirements **in the vault, on a branch**, using the vault's own skills.
+They know its conventions: the Dataview index blocks, the full-path wikilinks, and the ID
+scan across every prefix. Writing them here instead produces files in the wrong format and
+IDs that collide the moment they reach the shared registry — which has already happened
+once.
+
+The legal work is on the vault branch `legal-pdf-documents`: `EPIC-AF-022` ⇄ ADO #46540,
+`FEAT-AF-052`, and stories `US-AF-313`, `328`, `329`, `330` (plus archived `US-AF-314`).
+
+**ADO is the source of truth once an item is synced** — the vault files are the drafting
+and refinement layer.
 
 ## Committing
 
