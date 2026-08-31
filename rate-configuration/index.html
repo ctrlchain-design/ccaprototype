@@ -62,7 +62,7 @@
     </div>
     <div style="width:70%;height:1px;background:rgba(255,255,255,0.12);margin:6px 0;"></div>
 
-    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
+    <div onClick="{{ onEnterpriseNavClick }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--sidebar-main-text-default);cursor:pointer;width:100%;">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16V8l6-4 6 4v8"></path><rect x="6" y="12" width="3" height="3"></rect><rect x="11" y="12" width="3" height="3"></rect></svg>
       <span style="font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Enterprise</span>
     </div>
@@ -176,7 +176,6 @@
               <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:1100px;">
                 <thead>
                   <tr>
-                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);width:70px;">Actions</th>
                     <sc-if value="{{ groupsViewIsAll }}" hint-placeholder-val="{{ false }}">
                       <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Subgroup</th>
                     </sc-if>
@@ -192,9 +191,6 @@
                 <tbody>
                   <sc-for list="{{ groupRows }}" as="grp" hint-placeholder-count="4">
                     <tr style="border-bottom:1px solid var(--border-default);">
-                      <td style="padding:16px;vertical-align:top;">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color:var(--icon-neutral);cursor:pointer;"><circle cx="8" cy="3" r="1.3"></circle><circle cx="8" cy="8" r="1.3"></circle><circle cx="8" cy="13" r="1.3"></circle></svg>
-                      </td>
                       <sc-if value="{{ groupsViewIsAll }}" hint-placeholder-val="{{ false }}">
                         <td style="padding:16px;vertical-align:top;cursor:pointer;" onClick="{{ grp.onOpen }}">
                           <span style="font-weight:700;color:var(--text-brand-default);">{{ grp.subgroup }}</span>
@@ -267,8 +263,9 @@
                   <span style="font-size:15px;color:var(--text-caption);">{{ groupLevelLabel }}</span>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;">
-                  <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">Carrier</span>
-                  <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">Shipper</span>
+                  <sc-for list="{{ activeGroupTags }}" as="tag" hint-placeholder-count="2">
+                    <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">{{ tag }}</span>
+                  </sc-for>
                 </div>
               </div>
               <button onClick="{{ openGroupsConnection }}" style="background:transparent;color:var(--text-brand-default);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;flex-shrink:0;display:flex;align-items:center;gap:8px;">
@@ -276,6 +273,14 @@
                 Other Groups
               </button>
             </div>
+
+          <sc-if value="{{ justConnectedNote }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--color-green-50);border:1px solid var(--border-brand-lightest);border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6" style="flex-shrink:0;"><path d="M4 9.5l3 3 7-8"></path></svg>
+              <span style="flex:1;font-size:13px;color:var(--text-body);">{{ justConnectedNote }}</span>
+              <svg onClick="{{ dismissJustConnected }}" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;flex-shrink:0;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+            </div>
+          </sc-if>
 
           <sc-if value="{{ isEnterpriseLevel }}" hint-placeholder-val="{{ true }}">
             <div style="background:var(--warning-surface-lighter);border:1px solid var(--warning-border-lighter);border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
@@ -427,7 +432,17 @@
                         <sc-if value="{{ row.hasChildren }}" hint-placeholder-val="{{ false }}">
                           <svg onClick="{{ row.onToggle }}" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--text-brand-default)" stroke-width="2" style="cursor:pointer;flex-shrink:0;transform:{{ row.chevronTransform }};"><path d="M4 6l4 4 4-4"></path></svg>
                         </sc-if>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="1.6"></circle><circle cx="2" cy="8" r="1.6"></circle><circle cx="2" cy="14" r="1.6"></circle></svg>
+                        <div style="position:relative;flex-shrink:0;">
+                          <svg onClick="{{ row.onToggleRowMenu }}" width="16" height="16" viewBox="0 0 16 16" fill="var(--icon-neutral)" style="cursor:pointer;flex-shrink:0;"><circle cx="2" cy="2" r="1.6"></circle><circle cx="2" cy="8" r="1.6"></circle><circle cx="2" cy="14" r="1.6"></circle></svg>
+                          <sc-if value="{{ row.rowMenuOpen }}" hint-placeholder-val="{{ false }}">
+                            <div style="position:absolute;top:calc(100% + 4px);left:0;background:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:180px;z-index:30;padding:6px;">
+                              <div onClick="{{ row.onOpenConnections }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--text-title);font-size:14px;font-weight:500;">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3z"></path></svg>
+                                Edit connection
+                              </div>
+                            </div>
+                          </sc-if>
+                        </div>
                         <span style="font-size:15px;font-weight:600;color:var(--text-title);">{{ row.name }}</span>
                         <sc-for list="{{ row.tags }}" as="tag" hint-placeholder-count="1">
                           <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">{{ tag.label }}</span>
@@ -474,6 +489,19 @@
                     </div>
                   </div>
                   <div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Distance unit</div>
+                    <div style="display:flex;gap:12px;">
+                      <label style="flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);cursor:pointer;">
+                        <input type="radio" name="addExceptionUnit" value="km" checked="{{ addExceptionUnitIsKm }}" onChange="{{ onAddExceptionUnit }}">
+                        Kilometres (km)
+                      </label>
+                      <label style="flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);cursor:pointer;">
+                        <input type="radio" name="addExceptionUnit" value="mi" checked="{{ addExceptionUnitIsMi }}" onChange="{{ onAddExceptionUnit }}">
+                        Miles (mi)
+                      </label>
+                    </div>
+                  </div>
+                  <div>
                     <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:10px;">Rate Type</div>
                     <div style="display:flex;gap:24px;flex-wrap:nowrap;overflow-x:auto;">
                       <sc-for list="{{ addExceptionTypeOptions }}" as="opt" hint-placeholder-count="4">
@@ -512,13 +540,6 @@
                       <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">{{ addExceptionValueLabel }}</div>
                       <input value="{{ addExceptionValue }}" onChange="{{ onAddExceptionValue }}" disabled="{{ addExceptionValueDisabled }}" placeholder="0.00" style="width:100%;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;">
                     </div>
-                  </div>
-                  <div style="background:var(--warning-surface-lighter);border-radius:10px;padding:16px 18px;display:flex;gap:12px;">
-                    <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.6" style="flex-shrink:0;margin-top:2px;"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
-                    <ul style="margin:0;padding-left:18px;color:var(--warning-text);font-size:14px;line-height:1.5;">
-                      <li>This range is currently active — changing it updates the applied rate immediately.</li>
-                      <li>Orders already booked within this range will retroactively use the new value.</li>
-                    </ul>
                   </div>
                 </div>
                 <div style="display:flex;justify-content:flex-end;gap:12px;padding:20px 24px;border-top:1px solid var(--border-default);">
@@ -616,9 +637,16 @@
                     </sc-if>
                     <div style="flex:1;min-width:160px;">
                       <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Value</div>
-                      <input value="{{ addRangeValue }}" onChange="{{ onAddRangeValue }}" placeholder="e.g. 7.5 or 0.95" style="width:100%;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;">
+                      <div style="display:flex;gap:8px;">
+                        <input value="{{ addRangeValue }}" onChange="{{ onAddRangeValue }}" placeholder="e.g. 7.5 or 0.95" style="flex:1;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;min-width:0;">
+                        <select value="{{ addRangeUnit }}" onChange="{{ onAddRangeUnit }}" style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;background:#fff;color:var(--text-title);">
+                          <option value="km">km</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
+                  <sc-if value="{{ addRangeIsEdit }}" hint-placeholder-val="{{ false }}">
                   <div style="background:var(--warning-surface-lighter);border-radius:10px;padding:16px 18px;display:flex;gap:12px;">
                     <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.6" style="flex-shrink:0;margin-top:2px;"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
                     <ul style="margin:0;padding-left:18px;color:var(--warning-text);font-size:14px;line-height:1.5;">
@@ -636,6 +664,7 @@
                       </sc-if>
                     </ul>
                   </div>
+                  </sc-if>
                   </sc-if>
                   <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;flex-direction:column;gap:20px;">
@@ -657,35 +686,50 @@
                           <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the applied rate immediately. Orders already booked in this range will retroactively use the new value.</p>
                         </div>
                       </sc-if>
-                      <sc-if value="{{ addRangeConfirmHasOrders }}" hint-placeholder-val="{{ false }}">
+                      <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ false }}">
                         <div>
-                          <sc-if value="{{ addRangeViewIsDetailed }}" hint-placeholder-val="{{ false }}">
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ addRangeConfirmCount }} orders will be affected</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This new range will apply immediately to orders that fall within it.</p>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ addRangeConfirmHasOrders }}" hint-placeholder-val="{{ true }}">
+                        <div>
                             <div style="display:flex;flex-direction:column;gap:16px;">
-                              <div style="background:var(--color-neutrals-100);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:6px;">
-                                <div style="display:flex;justify-content:space-between;font-size:14px;">
-                                  <span style="color:var(--text-caption);">Current value</span>
-                                  <span style="color:var(--text-title);font-weight:700;">{{ addRangeOriginalValueDisplay }}</span>
-                                </div>
-                                <div style="display:flex;justify-content:space-between;font-size:14px;">
-                                  <span style="color:var(--text-caption);">New value</span>
-                                  <span style="color:var(--text-title);font-weight:700;">{{ addRangeNewValueDisplay }}</span>
-                                </div>
+                              <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:18px 20px 4px;">
+                                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                  <thead>
+                                    <tr>
+                                      <th></th>
+                                      <th style="text-align:right;padding-bottom:10px;font-size:12px;font-weight:700;letter-spacing:0.04em;color:var(--text-subtitle);text-transform:uppercase;">Current</th>
+                                      <th style="text-align:right;padding-bottom:10px;font-size:12px;font-weight:700;letter-spacing:0.04em;color:var(--text-title);text-transform:uppercase;">New</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr style="border-top:1px dashed var(--border-default);">
+                                      <td style="padding:12px 0;color:var(--text-subtitle);">Value</td>
+                                      <td style="padding:12px 0;text-align:right;color:var(--text-body);">{{ addRangeOriginalValueDisplay }}</td>
+                                      <td style="padding:12px 0;text-align:right;font-weight:700;color:var(--text-title);">{{ addRangeNewValueDisplay }}</td>
+                                    </tr>
+                                    <tr style="border-top:1px dashed var(--border-default);">
+                                      <td style="padding:12px 0;color:var(--text-subtitle);">Rate Type</td>
+                                      <td style="padding:12px 0;text-align:right;color:var(--text-body);">{{ addRangeOriginalTypeDisplay }}</td>
+                                      <td style="padding:12px 0;text-align:right;font-weight:700;color:var(--text-title);">{{ addRangeTypeNewDisplay }}</td>
+                                    </tr>
+                                    <tr style="border-top:1px dashed var(--border-default);">
+                                      <td style="padding:12px 0;color:var(--text-subtitle);">Distance Unit</td>
+                                      <td style="padding:12px 0;text-align:right;color:var(--text-body);">{{ addRangeOriginalUnitDisplay }}</td>
+                                      <td style="padding:12px 0;text-align:right;font-weight:700;color:var(--text-title);">{{ addRangeUnitDisplay }}</td>
+                                    </tr>
+                                    <tr style="border-top:1px dashed var(--border-default);">
+                                      <td style="padding:12px 0;color:var(--text-subtitle);">Effective Period</td>
+                                      <td style="padding:12px 0;text-align:right;color:var(--text-body);">{{ addRangeOriginalPeriodDisplay }}</td>
+                                      <td style="padding:12px 0;text-align:right;font-weight:700;color:var(--text-title);">{{ addRangeNewPeriodDisplay }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
                               </div>
-                              <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ true }}">
-                              <div style="border:1px solid var(--border-default);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
-                                <div style="width:32px;height:32px;border-radius:8px;background:var(--warning-surface-lighter);display:flex;align-items:center;justify-content:center;">
-                                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.8"><path d="M15 3v4h-4M3 15v-4h4"></path><path d="M4 8a5 5 0 018-3.2L15 7M14 10a5 5 0 01-8 3.2L3 11"></path></svg>
-                                </div>
-                                <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
-                                  <span style="font-size:15px;font-weight:700;color:var(--text-title);">{{ addRangeEligibleCount }} ELIGIBLE</span>
-                                  <span style="font-size:15px;font-weight:700;color:var(--text-caption);">{{ addRangeIneligibleCount }} INELIGIBLE — KEPT AS EXCEPTIONS</span>
-                                </div>
-                                <div style="font-size:14px;color:var(--text-caption);">{{ addRangeConfirmCount }} affected in total</div>
-                              </div>
-                              </sc-if>
                               <div style="display:flex;gap:4px;border-bottom:1px solid var(--border-default);">
-                                <div onClick="{{ setAddRangeOrdersTabAffected }}" style="{{ addRangeOrdersTabAffectedStyle }}">Affected ({{ addRangeEligibleCount }})</div>
-                                <div onClick="{{ setAddRangeOrdersTabIneligible }}" style="{{ addRangeOrdersTabIneligibleStyle }}">Ineligible ({{ addRangeIneligibleCount }})</div>
+                                <div style="{{ addRangeOrdersTabAffectedStyle }}">Affected ({{ addRangeEligibleCount }})</div>
                               </div>
                               <div style="border:1px solid var(--border-default);border-radius:8px;overflow:hidden;">
                                 <table style="width:100%;border-collapse:collapse;font-size:13px;">
@@ -694,7 +738,6 @@
                                       <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Order</th>
                                       <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Current</th>
                                       <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Recalculated</th>
-                                      <th style="text-align:right;padding:10px 12px;font-weight:600;color:var(--text-subtitle);">Status</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -708,15 +751,18 @@
                                         </td>
                                         <td style="padding:10px 12px;color:var(--text-caption);">{{ ord.current }}</td>
                                         <td style="padding:10px 12px;color:var(--text-title);font-weight:600;">{{ ord.recalculated }}</td>
-                                        <td style="padding:10px 12px;text-align:right;"><span style="{{ ord.statusPillStyle }}">{{ ord.status }}</span></td>
                                       </tr>
                                     </sc-for>
                                   </tbody>
                                 </table>
                               </div>
-                              <div style="font-size:12px;color:var(--text-caption);">Showing {{ addRangeVisibleOrders.length }} of {{ addRangeOrdersTabTotal }} {{ addRangeOrdersTabLabel }} orders</div>
+                              <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:12px;color:var(--text-caption);">Showing {{ addRangeVisibleOrders.length }} of {{ addRangeOrdersTabTotal }} {{ addRangeOrdersTabLabel }} orders</div>
+                                <sc-if value="{{ addRangeOrdersHasMore }}" hint-placeholder-val="{{ false }}">
+                                  <button onClick="{{ showMoreAddRangeOrders }}" style="background:none;border:none;color:var(--text-brand-default);font-size:12px;font-weight:700;cursor:pointer;padding:0;">Load more</button>
+                                </sc-if>
+                              </div>
                             </div>
-                          </sc-if>
                         </div>
                       </sc-if>
                     </div>
@@ -740,10 +786,13 @@
                   <sc-if value="{{ addRangeStepIsDetails }}" hint-placeholder-val="{{ true }}">
                     <button onClick="{{ closeAddRangeModal }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
                   </sc-if>
-                  <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
+                  <sc-if value="{{ addRangeConfirmShowContinue }}" hint-placeholder-val="{{ false }}">
                     <button onClick="{{ continueToReasonStep }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Continue</button>
                   </sc-if>
                   <sc-if value="{{ addRangeStepIsReasonOrDetails }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ saveAddRange }}" disabled="{{ addRangeSaveDisabled }}" style="{{ addRangeSaveStyle }}">{{ addRangeSaveLabel }}</button>
+                  </sc-if>
+                  <sc-if value="{{ addRangeConfirmShowSave }}" hint-placeholder-val="{{ false }}">
                     <button onClick="{{ saveAddRange }}" disabled="{{ addRangeSaveDisabled }}" style="{{ addRangeSaveStyle }}">{{ addRangeSaveLabel }}</button>
                   </sc-if>
                 </div>
@@ -1155,7 +1204,6 @@
                   <sc-if value="{{ isSubgroupLevel }}" hint-placeholder-val="{{ false }}">
                     <button onClick="{{ resetAllRules }}" style="background:#fff;color:var(--text-brand-default);border:1px solid var(--border-default);border-radius:8px;padding:10px 18px;font-size:14px;font-weight:500;cursor:pointer;">Reset All Rules</button>
                   </sc-if>
-                  <button onClick="{{ openRuleModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:500;cursor:pointer;">Edit Rules</button>
                 </div>
               </div>
               <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:11px 16px;">
@@ -1170,7 +1218,7 @@
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Number</th>
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Description</th>
                       <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Article Rate</th>
-                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Transport Services</th>
+                      <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Transport Service</th>
                       <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
                         <th style="text-align:left;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Vehicle Type</th>
                       </sc-if>
@@ -1276,7 +1324,7 @@
                 <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
                   <div style="position:relative;">
                     <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Article Number</label>
-                    <input value="{{ ruleModalNum }}" onChange="{{ onRuleModalNum }}" onFocus="{{ openRuleNumDropdown }}" onBlur="{{ closeRuleNumDropdown }}" placeholder="Search or type a new code..." style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);">
+                    <input value="{{ ruleModalNum }}" onChange="{{ onRuleModalNum }}" onFocus="{{ openRuleNumDropdown }}" onBlur="{{ closeRuleNumDropdown }}" disabled="{{ ruleModalIsEdit }}" placeholder="Search or type a new code..." style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:{{ ruleModalNumBg }};color:{{ ruleModalNumColor }};">
                     <sc-if value="{{ ruleNumDropdownOpen }}" hint-placeholder-val="{{ false }}">
                       <div style="position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border-default);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.12);max-height:220px;overflow-y:auto;z-index:10;">
                         <sc-for list="{{ ruleModalNumOptions }}" as="opt" hint-placeholder-count="0">
@@ -1318,15 +1366,20 @@
                     </div>
                   </sc-if>
                   <div>
-                    <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Transport Services</label>
+                    <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Transport Service</label>
+                    <sc-if value="{{ ruleModalIsEdit }}" hint-placeholder-val="{{ false }}">
+                      <div style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-caption);background:var(--color-neutrals-100);">{{ ruleModalServiceDisplay }}</div>
+                    </sc-if>
+                    <sc-if value="{{ ruleModalIsAdd }}" hint-placeholder-val="{{ true }}">
                     <div style="display:flex;flex-wrap:wrap;gap:8px;">
                       <sc-for list="{{ ruleModalServiceOptions }}" as="svc" hint-placeholder-count="0">
                         <label onClick="{{ svc.onToggle }}" style="display:flex;align-items:center;gap:6px;border:1px solid var(--form-border);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--text-title);cursor:pointer;user-select:none;">
-                          <input type="checkbox" checked="{{ svc.checked }}" onChange="{{ svc.onToggle }}" style="cursor:pointer;">
+                          <input type="radio" name="ruleModalService" checked="{{ svc.checked }}" onChange="{{ svc.onToggle }}" style="cursor:pointer;">
                           {{ svc.label }}
                         </label>
                       </sc-for>
                     </div>
+                    </sc-if>
                   </div>
                 </div>
                 </sc-if>
@@ -1442,11 +1495,162 @@
           </sc-if>
         </div>
       </sc-if>
+
+      <!-- ================= ENTERPRISE / CONNECTIONS SCREEN (entry-point demo) ================= -->
+      <sc-if value="{{ isEnterprise }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div onClick="{{ backToRateFromEnterprise }}" style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-brand-default);font-size:13px;font-weight:700;width:fit-content;">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4l-6 6 6 6"></path></svg>
+            Back to Rate Configuration
+          </div>
+          <div style="background:var(--color-blue-50);border-radius:8px;padding:14px 20px;text-align:center;">
+            <span style="font-size:13px;color:var(--color-blue-700);">Development environment — do not use real customer data (ISO 27001).</span>
+          </div>
+          <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:20px 24px;display:flex;flex-direction:column;gap:12px;">
+            <div>
+              <div style="font-size:13px;color:var(--text-caption);margin-bottom:4px;">{{ enterpriseGroup.subgroup }}</div>
+              <div style="font-family:var(--font-display);font-weight:700;font-size:19px;color:var(--text-title);">{{ enterpriseGroup.subgroup }}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+              <div style="width:80px;height:70px;border:1px solid var(--border-default);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--icon-neutral);flex-shrink:0;">
+                <svg width="28" height="28" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:14px;font-weight:700;color:var(--text-title);">Activate Carrier Group</span>
+                <div style="width:36px;height:20px;border-radius:999px;background:var(--color-neutrals-300);display:flex;align-items:center;padding:2px;box-sizing:border-box;">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2);"></div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--text-title);">Reason Of Deactivation:</div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text-body);">
+                  Diligence Date Passed
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5"><path d="M11 2l3 3-8 8H3v-3z"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:6px 12px;overflow:hidden;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="2" style="flex-shrink:0;"><path d="M10 3L5 8l5 5"></path></svg>
+            <div style="display:flex;gap:4px;overflow-x:auto;">
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">BASIC INFO</div>
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">ENTERPRISE DETAILS</div>
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">INDUSTRY VERTICAL</div>
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">FINANCE</div>
+              <div style="padding:10px 16px;border-radius:999px;background:var(--color-green-100);font-size:13px;font-weight:700;color:var(--text-brand-default);white-space:nowrap;">CONNECTIONS</div>
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">CARRIER PROFILE</div>
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">SERVICES</div>
+              <div style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-caption);white-space:nowrap;">SUBGROUPS</div>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="2" style="flex-shrink:0;"><path d="M6 3l5 5-5 5"></path></svg>
+          </div>
+          <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:24px;display:flex;flex-direction:column;gap:16px;">
+            <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--text-title);">Relations</h3>
+            <div onClick="{{ backToRateFromEnterprise }}" style="display:flex;align-items:center;gap:12px;background:var(--color-green-50);border:1px solid var(--border-brand-lightest);border-radius:8px;padding:14px 16px;cursor:pointer;">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+              <span style="flex:1;font-size:13px;color:var(--text-body);">Looking to set fuel or transport rates for these relations? That's managed in Rate Configuration.</span>
+              <span style="font-size:13px;font-weight:700;color:var(--text-brand-default);white-space:nowrap;display:flex;align-items:center;gap:4px;">
+                Go to Rate Configuration
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 4l6 6-6 6"></path></svg>
+              </span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+              <div style="flex:1;display:flex;gap:12px;max-width:460px;">
+                <div style="flex:1;display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:11px 16px;background:#fff;">
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
+                  <span style="font-size:13px;color:var(--text-caption);">Search</span>
+                </div>
+                <button style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:11px 16px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3h12M4 8h8M6.5 13h3"></path></svg>
+                  Filters
+                </button>
+              </div>
+              <button onClick="{{ openAddGroups }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                Add Groups
+              </button>
+            </div>
+            <sc-if value="{{ enterpriseRelationsEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:40px;text-align:center;color:var(--text-caption);font-size:14px;">No groups found.</div>
+            </sc-if>
+            <sc-if value="{{ enterpriseRelationsHasRows }}" hint-placeholder-val="{{ true }}">
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <thead><tr>
+                  <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Group Name</th>
+                  <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Relations</th>
+                  <th style="text-align:left;padding:10px 12px;font-weight:600;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Service Types</th>
+                </tr></thead>
+                <tbody>
+                  <sc-for list="{{ enterpriseRelationRows }}" as="row" hint-placeholder-count="3">
+                    <tr style="border-top:1px solid var(--border-default);">
+                      <td style="padding:14px 12px;color:var(--text-body);">
+                        <div>{{ row.groupName }}</div>
+                        <div style="font-size:12px;color:var(--text-brand-default);">{{ row.subGroup }}</div>
+                      </td>
+                      <td style="padding:14px 12px;color:var(--text-body);">{{ row.relation }}</td>
+                      <td style="padding:14px 12px;color:var(--text-caption);">{{ row.serviceTypes }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </sc-if>
+          </div>
+        </div>
+
+        <!-- ADD GROUPS MODAL -->
+        <sc-if value="{{ addGroupsOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1200;">
+            <div style="background:#fff;border-radius:12px;width:640px;max-width:92vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
+                <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:19px;color:var(--text-title);">Add Groups</h3>
+                <svg onClick="{{ closeAddGroups }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--border-default);">
+                <span style="{{ addGroupsStepStyleSelect }}">Select Relationships</span>
+                <div style="flex:1;height:1px;background:var(--border-default);"></div>
+                <span style="{{ addGroupsStepStylePick }}">Add Groups</span>
+              </div>
+              <div style="padding:24px;flex:1;overflow-y:auto;">
+                <sc-if value="{{ addGroupsStepIsSelect }}" hint-placeholder-val="{{ true }}">
+                  <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:14px;">Relationships</div>
+                  <sc-for list="{{ addGroupsRelOptions }}" as="opt" hint-placeholder-count="2">
+                    <label onClick="{{ opt.onSelect }}" style="display:flex;align-items:center;gap:10px;padding:10px 0;cursor:pointer;font-size:14px;color:var(--text-title);">
+                      <input type="checkbox" checked="{{ opt.checked }}" style="cursor:pointer;">{{ opt.label }}
+                    </label>
+                  </sc-for>
+                </sc-if>
+                <sc-if value="{{ addGroupsStepIsPick }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:10px 14px;margin-bottom:8px;">
+                    <svg width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
+                    <input value="{{ addGroupsSearch }}" onChange="{{ onAddGroupsSearch }}" placeholder="Search Carries" style="border:none;outline:none;font-size:14px;flex:1;">
+                    <span style="font-size:12px;color:var(--text-caption);white-space:nowrap;">{{ addGroupsSelectedCount }} Carrier are selected</span>
+                  </div>
+                  <sc-for list="{{ addGroupsCandidates }}" as="c" hint-placeholder-count="5">
+                    <label onClick="{{ c.onToggle }}" style="display:flex;align-items:center;gap:10px;padding:10px 4px;cursor:pointer;font-size:14px;color:var(--text-title);border-top:1px solid var(--border-default);">
+                      <input type="checkbox" checked="{{ c.checked }}" style="cursor:pointer;">{{ c.name }}
+                    </label>
+                  </sc-for>
+                </sc-if>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:12px;padding:16px 24px;border-top:1px solid var(--border-default);">
+                <sc-if value="{{ addGroupsStepIsSelect }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ closeAddGroups }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
+                  <button onClick="{{ goToAddGroupsPick }}" disabled="{{ addGroupsNextDisabled }}" style="{{ addGroupsNextStyle }}">Next</button>
+                </sc-if>
+                <sc-if value="{{ addGroupsStepIsPick }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ backToAddGroupsSelect }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;">Back</button>
+                  <button onClick="{{ submitAddGroups }}" disabled="{{ addGroupsSubmitDisabled }}" style="{{ addGroupsSubmitStyle }}">Add Groups</button>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </sc-if>
     </main>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;},&quot;showDetailedBreakdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Confirm Changes step&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;},&quot;showDetailedBreakdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Confirm Changes step&quot;}}">
 const TABS = ['Fuel Rate', 'Surcharges', 'Kilometre Rates', 'Minimum Rate'];
 const TRANSPORT_SERVICES = ['Full Truckload (FTL)', 'Full Container Load (FCL)', 'Less-than-Truckload (LTL)', 'Courier', 'Pallet network', 'Parcel'];
 const SERVICE_ABBR = { 'Full Truckload (FTL)': 'FTL', 'Full Container Load (FCL)': 'FCL', 'Less-than-Truckload (LTL)': 'LTL', 'Courier': 'Courier', 'Pallet network': 'Pallet network', 'Parcel': 'Parcel' };
@@ -1456,8 +1660,37 @@ const RANGE_TYPE_INFO = {
   'Fuel Not Applicable': 'No fuel surcharge applies for this range.',
 };
 function tagsFromGroupType(groupType) {
-  return ['Carrier', 'Shipper'];
+  const str = groupType || '';
+  const tags = [];
+  if (/\bCarrier\b/i.test(str)) tags.push('Carrier');
+  if (/\bShipper\b/i.test(str)) tags.push('Shipper');
+  return tags;
 }
+const ADD_GROUPS_REL_OPTIONS = ['Subcontractor', 'Allowlist'];
+const ADD_GROUPS_CANDIDATES = ['#MILAN SAAS CARRIER', 'TS Logistics GmbH', '! Marindas Carrier', '!! Lucifer Test !!', 'Lucifer 2', 'Lucifer Carrier'];
+const ENTERPRISE_RELATIONS_SEED = {
+  1: [
+    { groupName: 'TS Logistics GmbH', subGroup: 'TS Logistics GmbH', relation: 'Subcontractor', serviceTypes: '-' },
+    { groupName: 'Coenen BV', subGroup: '2LevelSubGroup', relation: 'Subcontractor', serviceTypes: '-' },
+  ],
+  2: [],
+  3: [
+    { groupName: '010922-IM-Demo', subGroup: 'dilan carrier1111', relation: 'Subcontractor', serviceTypes: '-' },
+  ],
+  4: [
+    { groupName: 'NewCold Enterprise', subGroup: 'Baltic Carriers', relation: 'Allowlist', serviceTypes: '-' },
+    { groupName: 'CtrlChain Enterprise', subGroup: 'Benelux Fleet', relation: 'Subcontractor', serviceTypes: '-' },
+    { groupName: '#MILAN SAAS CARRIER', subGroup: '#MILAN SAAS CARRIER', relation: 'Subcontractor', serviceTypes: '-' },
+  ],
+  5: [],
+  6: [
+    { groupName: 'Ingram Enterprise', subGroup: 'Nordics Distribution', relation: 'Allowlist', serviceTypes: '-' },
+  ],
+  7: [
+    { groupName: 'TS Logistics GmbH', subGroup: 'TS Logistics GmbH', relation: 'Subcontractor', serviceTypes: '-' },
+    { groupName: '!! Lucifer Test !!', subGroup: '!! Lucifer Test !!', relation: 'Subcontractor', serviceTypes: '-' },
+  ],
+};
 function buildGroupsTree(groupsData) {
   const byGroup = {};
   groupsData.forEach(row => { (byGroup[row.group] = byGroup[row.group] || []).push(row); });
@@ -1491,6 +1724,15 @@ const RULE_INFO_TEXT = {
 class Component extends DCLogic {
   state = {
     screen: 'groups',
+    enterpriseGroupId: null,
+    enterpriseRelationsByGroup: {},
+    addGroupsOpen: false,
+    addGroupsStep: 'select',
+    addGroupsRelType: '',
+    addGroupsSearch: '',
+    addGroupsSelected: [],
+    justConnectedNote: '',
+    treeMenuOpenId: null,
     activeTab: 'Fuel Rate',
     addRangeOrdersTab: 'affected',
     subTab: 'schedule',
@@ -1555,6 +1797,7 @@ class Component extends DCLogic {
     addExceptionModalOpen: false,
     addExceptionCarrierGroup: '',
     addExceptionCarrierSubgroup: '',
+    addExceptionUnit: 'km',
     addExceptionType: 'Fuel Rate/Distance',
     addExceptionStart: '',
     addExceptionEnd: '',
@@ -1627,6 +1870,37 @@ class Component extends DCLogic {
     marginBottom: -1,
   });
   goRate = (id) => this.setState({ screen: 'rate', activeGroupId: id ?? this.state.activeGroupId ?? 4, activeTab: 'Fuel Rate', subTab: 'schedule' });
+  openEnterpriseScreen = (groupId) => this.setState({ screen: 'enterprise', enterpriseGroupId: groupId, groupsConnectionOpen: false, treeMenuOpenId: null });
+  onEnterpriseNavClick = (e) => {
+    e.stopPropagation();
+    this.openEnterpriseScreen(this.state.activeGroupId || 4);
+  };
+  backToRateFromEnterprise = () => this.setState({ screen: 'rate' });
+  openAddGroups = () => this.setState({ addGroupsOpen: true, addGroupsStep: 'select', addGroupsRelType: '', addGroupsSearch: '', addGroupsSelected: [] });
+  closeAddGroups = () => this.setState({ addGroupsOpen: false });
+  selectAddGroupsRel = (rel) => this.setState({ addGroupsRelType: rel });
+  goToAddGroupsPick = () => this.setState({ addGroupsStep: 'pick' });
+  backToAddGroupsSelect = () => this.setState({ addGroupsStep: 'select' });
+  onAddGroupsSearch = (e) => this.setState({ addGroupsSearch: e.target.value });
+  toggleAddGroupsCandidate = (name) => this.setState(s => ({
+    addGroupsSelected: s.addGroupsSelected.includes(name) ? s.addGroupsSelected.filter(n => n !== name) : [...s.addGroupsSelected, name],
+  }));
+  submitAddGroups = () => this.setState(s => {
+    const groupId = s.enterpriseGroupId;
+    const existing = s.enterpriseRelationsByGroup[groupId] || ENTERPRISE_RELATIONS_SEED[groupId] || [];
+    const newRows = s.addGroupsSelected.map(name => ({ groupName: name, subGroup: name, relation: s.addGroupsRelType, serviceTypes: '-' }));
+    const firstNew = s.addGroupsSelected[0];
+    return {
+      enterpriseRelationsByGroup: { ...s.enterpriseRelationsByGroup, [groupId]: [...newRows, ...existing] },
+      addGroupsOpen: false,
+      screen: 'rate',
+      activeGroupId: groupId,
+      activeTab: 'Fuel Rate',
+      subTab: 'schedule',
+      justConnectedNote: firstNew ? `Connected to ${firstNew} — now showing rates for this relation.` : '',
+    };
+  });
+  dismissJustConnected = () => this.setState({ justConnectedNote: '' });
   toggleEnterprise = () => this.setState(s => ({ enterpriseOn: !s.enterpriseOn }));
   toggleSubgroup = () => this.setState(s => s.subgroupOn ? { subgroupConfirmOpen: true, subgroupConfirmMode: 'off' } : { subgroupConfirmOpen: true, subgroupConfirmMode: 'on' });
   confirmSubgroupToggle = () => this.setState(s => ({ subgroupOn: s.subgroupConfirmMode !== 'off', subgroupConfirmOpen: false }));
@@ -1786,6 +2060,8 @@ class Component extends DCLogic {
     addRangeValue: String(rg.value).replace('%', '').replace('€', '').trim(),
     addRangeOriginalValue: rg.value, addRangeDetailView: 'summary',
     addRangeStartFull: rg.rangeFrom, addRangeEndFull: rg.rangeTo,
+    addRangeOriginalType: rg.rateType, addRangeOriginalUnit: rg.unit || null,
+    addRangeOriginalStart: rg.rangeFrom, addRangeOriginalEnd: rg.rangeTo, addRangeUnit: 'km',
   }));
   openEditRangeModal = (listKey, row) => this.setState({
     addRangeModalOpen: true, addRangeTarget: 'editSchedule', addRangeStep: 1,
@@ -1795,6 +2071,8 @@ class Component extends DCLogic {
     addRangeValue: String(row.value).replace('%', '').replace('€', '').trim(),
     addRangeOriginalValue: row.value, addRangeDetailView: 'summary',
     addRangeStartFull: row.rangeFrom, addRangeEndFull: row.rangeTo,
+    addRangeOriginalType: row.rateType, addRangeOriginalUnit: row.unit || null,
+    addRangeOriginalStart: row.rangeFrom, addRangeOriginalEnd: row.rangeTo, addRangeUnit: 'km',
   });
   closeAddRangeModal = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, addRangeCorrectionReason: '', addRangeOrdersTab: 'affected' });
   backToScheduleHistory = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, scheduleHistoryOpen: true });
@@ -1803,14 +2081,14 @@ class Component extends DCLogic {
   backAddRangeStepToConfirm = () => this.setState({ addRangeStep: 2 });
   continueToReasonStep = () => this.setState({ addRangeStep: 3 });
   setAddRangeDetailView = (view) => this.setState({ addRangeDetailView: view });
-  setAddRangeOrdersTab = (tab) => this.setState({ addRangeOrdersTab: tab });
+  setAddRangeOrdersTab = (tab) => this.setState({ addRangeOrdersTab: tab, addRangeOrdersPage: 0 });
+  showMoreAddRangeOrders = () => this.setState(s => ({ addRangeOrdersPage: s.addRangeOrdersPage + 1 }));
   buildAffectedOrderGroups = (count, originalValue, newValue) => {
     const valueChanged = (originalValue ?? '').toString().trim() !== (newValue ?? '').toString().trim();
     const ineligibleCount = Math.max(1, Math.round(count * 0.32));
     const eligibleCount = Math.max(0, count - ineligibleCount);
-    const eligibleShown = Math.min(eligibleCount, 8);
     const eligible = [];
-    for (let i = 0; i < eligibleShown; i++) {
+    for (let i = 0; i < eligibleCount; i++) {
       const cur = 40 + i * 8.4, next = valueChanged ? cur * 1.25 : cur;
       eligible.push({
         id: `ORD-${88214 + i * 17}`,
@@ -1820,10 +2098,9 @@ class Component extends DCLogic {
         statusPillStyle: 'display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--color-green-100);color:var(--color-green-800);',
       });
     }
-    const ineligibleShown = Math.min(ineligibleCount, 8);
     const ineligibleNotes = ['Already invoiced', 'Order cancelled', 'Manual override applied'];
     const ineligible = [];
-    for (let i = 0; i < ineligibleShown; i++) {
+    for (let i = 0; i < ineligibleCount; i++) {
       const cur = 55 + i * 9.1;
       ineligible.push({
         id: `ORD-${88257 + i * 23}`,
@@ -1961,6 +2238,7 @@ class Component extends DCLogic {
   closeGroupsConnection = () => this.setState({ groupsConnectionOpen: false });
   setGroupsConnectionSearch = (e) => this.setState({ groupsConnectionSearch: e.target.value });
   toggleTreeNode = (id) => this.setState(s => ({ treeExpandedIds: { ...s.treeExpandedIds, [id]: !s.treeExpandedIds[id] } }));
+  toggleTreeRowMenu = (id) => this.setState(s => ({ treeMenuOpenId: s.treeMenuOpenId === id ? null : id }));
   flattenTree = (nodes, depth, expandedIds, search, rows) => {
     nodes.forEach(node => {
       const matches = !search || node.name.toLowerCase().includes(search);
@@ -1976,7 +2254,7 @@ class Component extends DCLogic {
   nodeOrDescendantMatches = (node, search) => node.name.toLowerCase().includes(search) || node.children.some(c => this.nodeOrDescendantMatches(c, search));
   openAddExceptionModal = () => this.setState({
     addExceptionModalOpen: true, addExceptionType: 'Fuel Rate/Distance',
-    addExceptionCarrierGroup: '', addExceptionCarrierSubgroup: '',
+    addExceptionCarrierGroup: '', addExceptionCarrierSubgroup: '', addExceptionUnit: 'km',
     addExceptionStart: '', addExceptionEnd: '', addExceptionValue: '',
   });
   closeAddExceptionModal = () => this.setState({ addExceptionModalOpen: false });
@@ -2151,6 +2429,11 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const addRangeOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.addRangeOriginalValue, s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue);
+    const shortDate = (str) => {
+      const m = (str || '').match(/(\d{1,2})\s+(\w{3})\w*\s+(\d{4})/);
+      return m ? `${m[1].padStart(2, '0')} ${m[2]} ${m[3].slice(2)}` : str;
+    };
+    const addRangeShowReasonStep = (s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange') || s.addRangeStep === 3;
     const ruleModalOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.ruleModalOriginalRate, s.ruleModalRate ? `€ ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '');
     const addRangeOrdersTabStyle = (active) => ({
       padding: '10px 4px', fontSize: 14, fontWeight: 700, cursor: 'pointer',
@@ -2163,12 +2446,43 @@ class Component extends DCLogic {
     return {
       isGroups: s.screen === 'groups',
       isRate: s.screen === 'rate',
+      isEnterprise: s.screen === 'enterprise',
+      justConnectedNote: s.justConnectedNote,
+      dismissJustConnected: this.dismissJustConnected,
+      enterpriseGroup: (s.groupsData.find(g => g.id === s.enterpriseGroupId) || s.groupsData[3]),
+      backToRateFromEnterprise: this.backToRateFromEnterprise,
+      onEnterpriseNavClick: this.onEnterpriseNavClick,
+      enterpriseRelationRows: s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || [],
+      enterpriseRelationsEmpty: (s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || []).length === 0,
+      enterpriseRelationsHasRows: (s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || []).length > 0,
+      openAddGroups: this.openAddGroups,
+      closeAddGroups: this.closeAddGroups,
+      addGroupsOpen: s.addGroupsOpen,
+      addGroupsStepIsSelect: s.addGroupsStep === 'select',
+      addGroupsStepIsPick: s.addGroupsStep === 'pick',
+      addGroupsStepStyleSelect: `font-size:13px;font-weight:${s.addGroupsStep === 'select' ? 700 : 400};color:${s.addGroupsStep === 'select' ? 'var(--text-brand-default)' : 'var(--text-caption)'};`,
+      addGroupsStepStylePick: `font-size:13px;font-weight:${s.addGroupsStep === 'pick' ? 700 : 400};color:${s.addGroupsStep === 'pick' ? 'var(--text-brand-default)' : 'var(--text-caption)'};`,
+      addGroupsRelOptions: ADD_GROUPS_REL_OPTIONS.map(label => ({ label, checked: s.addGroupsRelType === label, onSelect: () => this.selectAddGroupsRel(label) })),
+      addGroupsNextDisabled: !s.addGroupsRelType,
+      addGroupsNextStyle: `background:${s.addGroupsRelType ? 'var(--button-primary-bg-default)' : 'var(--surface-neutral-dark)'};color:${s.addGroupsRelType ? 'var(--button-primary-label)' : 'var(--text-caption)'};border:none;border-radius:8px;padding:12px 22px;font-size:14px;font-weight:700;cursor:${s.addGroupsRelType ? 'pointer' : 'not-allowed'};`,
+      goToAddGroupsPick: this.goToAddGroupsPick,
+      backToAddGroupsSelect: this.backToAddGroupsSelect,
+      addGroupsSearch: s.addGroupsSearch,
+      onAddGroupsSearch: this.onAddGroupsSearch,
+      addGroupsSelectedCount: s.addGroupsSelected.length,
+      addGroupsCandidates: ADD_GROUPS_CANDIDATES.filter(name => name.toLowerCase().includes(s.addGroupsSearch.trim().toLowerCase())).map(name => ({
+        name, checked: s.addGroupsSelected.includes(name), onToggle: () => this.toggleAddGroupsCandidate(name),
+      })),
+      addGroupsSubmitDisabled: s.addGroupsSelected.length === 0,
+      addGroupsSubmitStyle: `background:${s.addGroupsSelected.length ? 'var(--button-primary-bg-default)' : 'var(--surface-neutral-dark)'};color:${s.addGroupsSelected.length ? 'var(--button-primary-label)' : 'var(--text-caption)'};border:none;border-radius:8px;padding:12px 22px;font-size:14px;font-weight:700;cursor:${s.addGroupsSelected.length ? 'pointer' : 'not-allowed'};`,
+      submitAddGroups: this.submitAddGroups,
       pageTitle: 'Rate Configuration',
       goGroups: this.goGroups,
       activeGroup,
       isEnterpriseLevel: activeGroup.subgroup === activeGroup.group,
       isSubgroupLevel: activeGroup.subgroup !== activeGroup.group,
       groupLevelLabel: activeGroup.subgroup === activeGroup.group ? 'Enterprise' : 'Subgroup',
+      activeGroupTags: tagsFromGroupType(activeGroup.groupType),
       groupBreadcrumbs: (() => {
         const chain = [activeGroup];
         let cur = activeGroup;
@@ -2222,6 +2536,7 @@ class Component extends DCLogic {
       addRuleRow: () => this.addRuleRow(s.activeTab),
       rulesRows: (activeGroup.id === 7 ? [] : (s[s.activeTab] || [])).map(r => ({
         ...r,
+        dateRangeDisplay: r.dateRange || '01 Jan 26 – 31 Dec 26',
         notEditing: !r.editing,
         onToggleEdit: () => this.toggleRuleEdit(s.activeTab, r.id),
         onEdit: () => this.openRuleEditModal(s.activeTab, r),
@@ -2230,7 +2545,7 @@ class Component extends DCLogic {
         onEditFromMenu: () => { this.openRuleEditModal(s.activeTab, r); this.closeRowMenu(); },
         onResetFromMenu: () => { this.resetRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
         onDeleteFromMenu: () => { this.deleteRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
-        serviceTags: (r.services || []).map(svc => SERVICE_ABBR[svc] || svc),
+        serviceTags: (r.services || []).slice(0, 1).map(svc => SERVICE_ABBR[svc] || svc),
         lastUpdated: this.ruleMeta(r.id).date,
         updatedBy: this.ruleMeta(r.id).user,
         onOpenLog: () => this.openRuleChangeLog(r),
@@ -2265,8 +2580,12 @@ class Component extends DCLogic {
       addRangeStartM: s.addRangeStartM, addRangeStartD: s.addRangeStartD, addRangeStartY: s.addRangeStartY,
       addRangeEndM: s.addRangeEndM, addRangeEndD: s.addRangeEndD, addRangeEndY: s.addRangeEndY,
       addRangeValue: s.addRangeValue,
+      addRangeUnit: s.addRangeUnit || 'km',
+      onAddRangeUnit: (e) => this.setState({ addRangeUnit: e.target.value }),
       addRangeIsEdit: s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange',
       addRangeIsAdd: s.addRangeTarget !== 'editSchedule' && s.addRangeTarget !== 'detailRange',
+      addRangeConfirmShowContinue: s.addRangeStep === 2 && addRangeShowReasonStep,
+      addRangeConfirmShowSave: s.addRangeStep === 2 && !addRangeShowReasonStep,
       addRangeStartFull: s.addRangeStartFull,
       addRangeEndFull: s.addRangeEndFull,
       onAddRangeStartFull: (e) => this.setAddRangeField('addRangeStartFull', e.target.value),
@@ -2303,18 +2622,35 @@ class Component extends DCLogic {
       addRangeIneligibleCount: addRangeOrderGroups.ineligibleCount,
       addRangeOrdersTabAffectedStyle: addRangeOrdersTabStyle(s.addRangeOrdersTab !== 'ineligible'),
       addRangeOrdersTabIneligibleStyle: addRangeOrdersTabStyle(s.addRangeOrdersTab === 'ineligible'),
-      addRangeVisibleOrders: s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligible : addRangeOrderGroups.eligible,
+      addRangeVisibleOrders: (s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligible : addRangeOrderGroups.eligible).slice(0, ((s.addRangeOrdersPage || 0) + 1) * 8),
       addRangeOrdersTabTotal: s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligibleCount : addRangeOrderGroups.eligibleCount,
+      addRangeOrdersHasMore: ((s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligibleCount : addRangeOrderGroups.eligibleCount)) > ((s.addRangeOrdersPage || 0) + 1) * 8,
+      showMoreAddRangeOrders: this.showMoreAddRangeOrders,
       addRangeOrdersTabLabel: s.addRangeOrdersTab === 'ineligible' ? 'ineligible' : 'affected',
-      addRangeNewValueDisplay: s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue,
-      addRangeOriginalValueDisplay: s.addRangeOriginalValue || '—',      setAddRangeOrdersTabAffected: () => this.setAddRangeOrdersTab('affected'),
+      addRangeNewValueDisplay: (() => {
+        const nv = s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue;
+        return nv === (s.addRangeOriginalValue || '') ? '-' : nv;
+      })(),
+      addRangeOriginalValueDisplay: s.addRangeOriginalValue || '—',
+      addRangeOriginalTypeDisplay: s.addRangeOriginalType || '—',
+      addRangeTypeNewDisplay: s.addRangeType === s.addRangeOriginalType ? '-' : s.addRangeType,
+      addRangeUnitDisplay: (() => {
+        const nu = s.addRangeUnit === 'mi' ? 'Miles (mi)' : 'Kilometers (km)';
+        return nu === s.addRangeOriginalUnit ? '-' : nu;
+      })(),
+      addRangeOriginalUnitDisplay: s.addRangeOriginalUnit === 'mi' ? 'Miles (mi)' : s.addRangeOriginalUnit === 'km' ? 'Kilometers (km)' : 'Not set',
+      addRangeOriginalPeriodDisplay: (s.addRangeOriginalStart && s.addRangeOriginalEnd) ? `${shortDate(s.addRangeOriginalStart)} – ${shortDate(s.addRangeOriginalEnd)}` : '—',
+      addRangeNewPeriodDisplay: (() => {
+        if (!(s.addRangeStartFull && s.addRangeEndFull)) return '—';
+        const np = `${shortDate(s.addRangeStartFull)} – ${shortDate(s.addRangeEndFull)}`;
+        return np === `${shortDate(s.addRangeOriginalStart)} – ${shortDate(s.addRangeOriginalEnd)}` ? '-' : np;
+      })(),      setAddRangeOrdersTabAffected: () => this.setAddRangeOrdersTab('affected'),
       setAddRangeOrdersTabIneligible: () => this.setAddRangeOrdersTab('ineligible'),
       addRangeSaveLabel: s.addRangeStep === 3 ? 'Confirm' : (((s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).group && s.addRangeTarget !== 'detail') ? 'Next' : (s.addRangeTarget === 'editSchedule' ? 'Save' : 'Add')),
       addRangeSteps: [
         { label: 'Range Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 2 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
-        { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep >= 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep >= 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep >= 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
-        { label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
-      ],
+        { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep >= 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep >= 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep >= 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: addRangeShowReasonStep, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
+      ].concat(addRangeShowReasonStep ? [{ label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} }] : []),
       onAddRangeStartM: this.onDateSeg('start', 0),
       onAddRangeStartD: this.onDateSeg('start', 1),
       onAddRangeStartY: this.onDateSeg('start', 2),
@@ -2410,6 +2746,9 @@ class Component extends DCLogic {
         expanded: !!s.treeExpandedIds[node.id],
         chevronTransform: s.treeExpandedIds[node.id] ? 'rotate(0deg)' : 'rotate(-90deg)',
         onToggle: () => this.toggleTreeNode(node.id),
+        rowMenuOpen: s.treeMenuOpenId === node.id,
+        onToggleRowMenu: () => this.toggleTreeRowMenu(node.id),
+        onOpenConnections: () => this.openEnterpriseScreen(node.id),
       })),
       openAddExceptionModal: this.openAddExceptionModal,
       addExceptionModalOpen: s.addExceptionModalOpen,
@@ -2417,6 +2756,9 @@ class Component extends DCLogic {
       carrierGroupOptions: [...new Set(s.groupsData.map(g => g.group))],
       addExceptionShipperGroup: (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).subgroup,
       addExceptionCarrierGroup: s.addExceptionCarrierGroup,
+      addExceptionUnitIsKm: s.addExceptionUnit === 'km',
+      addExceptionUnitIsMi: s.addExceptionUnit === 'mi',
+      onAddExceptionUnit: (e) => this.setState({ addExceptionUnit: e.target.value }),
       onAddExceptionCarrierGroup: (e) => this.setState({ addExceptionCarrierGroup: e.target.value, addExceptionCarrierSubgroup: '' }),
       carrierSubgroupOptions: s.groupsData.filter(g => g.group === s.addExceptionCarrierGroup).map(g => g.subgroup),
       addExceptionCarrierSubgroup: s.addExceptionCarrierSubgroup,
@@ -2439,6 +2781,10 @@ class Component extends DCLogic {
       openRuleModal: this.openRuleModal,
       ruleModalOpen: s.ruleModalOpen,
       ruleModalIsEdit: s.ruleModalEditId != null,
+      ruleModalIsAdd: s.ruleModalEditId == null,
+      ruleModalServiceDisplay: s.ruleModalServices[0] || '—',
+      ruleModalNumBg: s.ruleModalEditId != null ? 'var(--color-neutrals-100)' : '#fff',
+      ruleModalNumColor: s.ruleModalEditId != null ? 'var(--text-caption)' : 'var(--text-title)',
       ruleModalShowDelete: s.ruleModalEditId != null && s.ruleModalStep === 1,
       ruleModalStepIsDetails: s.ruleModalStep === 1,
       ruleModalStepIsConfirm: s.ruleModalStep === 2,
@@ -2502,8 +2848,8 @@ class Component extends DCLogic {
       onRuleModalVehicleType: this.onRuleModalVehicleType,
       ruleModalServiceOptions: TRANSPORT_SERVICES.map(svc => ({
         label: svc,
-        checked: s.ruleModalServices.includes(svc),
-        onToggle: () => this.toggleRuleModalService(svc),
+        checked: s.ruleModalServices[0] === svc,
+        onToggle: () => this.setState({ ruleModalServices: [svc] }),
       })),
       closeRuleModal: this.closeRuleModal,
       saveRuleModal: this.saveRuleModal,
