@@ -2,12 +2,29 @@
 <!--
   Admin › Legal › one document — Terms and Condition Management
   =============================================================
-  Opens from a row in admin-legal. Read off the running app on 28 Aug 2026:
+  Opens from a row in legal/admin. Read off the running app on 28 Aug 2026:
   /admin/legal/platform/view/<id>.
 
   Which document is decided by ?id=, carried by the link from the list, and the
   record comes from _shared/data.js — so the row you clicked and the page you
   land on are the same object.
+
+  Editing depends on what the version IS. A written version opens the rich-text
+  editor (not built). A version that is an uploaded PDF has nothing to edit here
+  — the document lives in the file — so Edit asks for a corrected one instead.
+
+  What an edit DOES depends on whether the version is in force. Legal set the
+  numbering, and the running product splits it three ways:
+
+    Edit a PUBLISHED version   a point up.   2.2 → 2.3, and 2.2 is kept
+    Edit a DRAFT version       no change.    the file on it is replaced
+    Create new version         a whole up.   2.2 → 3.0, and 2.2 is kept
+
+  A published version is one people have accepted, so it is never rewritten — the
+  correction lands beside it, and what someone accepted under 2.2 can always be
+  produced. A draft is not in force and nobody has accepted it, so fixing a typo
+  before publishing swaps the file and leaves the number alone rather than burning
+  a version on it.
 
   Three states, all real, all from the app:
 
@@ -55,17 +72,17 @@
   Never write a literal opening html tag in this comment — build-screens.py reads
   the page's name off the first thing that looks like one.
 -->
-<html lang="en" class="light" data-screen="admin.legal.document">
+<html lang="en" class="light" data-root="../../" data-screen="admin.legal.document">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Terms and Condition Management · CtrlChain</title>
 
-    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
-    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="../../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../../design-system/dist/ds/index.css" />
     <!-- The banner's four flavours live only in this product stylesheet. -->
-    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
-    <link rel="stylesheet" href="../_shared/prototype.css" />
+    <link rel="stylesheet" href="../../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../../_shared/prototype.css" />
 
     <style>
       /* The bundle ships no page-level reset — the app's own index.html has it. */
@@ -300,8 +317,8 @@
                 <div class="dialog-container">
                   <header>
                     <div class="title-wrapper">
-                      <h2>Upload a document</h2>
-                      <p>One file becomes the next version of these terms &amp; conditions.</p>
+                      <h2 id="upload-title">Upload a document</h2>
+                      <p id="upload-subtitle">One file becomes the next version of these terms &amp; conditions.</p>
                     </div>
                     <button class="dialog-close-button" type="button" aria-label="Close" data-upload-close>
                       <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-xmark mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
@@ -324,7 +341,7 @@
                           both again — see the drop handler.
                         -->
                         <input type="file" id="file-input" class="hidden" accept="application/pdf,.pdf" />
-                        <img class="inline text-3xl text-neutral-disabled" src="../_shared/assets/images/file-upload.svg" alt="" width="63" height="72" />
+                        <img class="inline text-3xl text-neutral-disabled" src="../../_shared/assets/images/file-upload.svg" alt="" width="63" height="72" />
                         <p class="mt-6 w-full overflow-hidden text-center text-cca-base font-normal whitespace-normal">
                           <span>Drag and drop or</span>
                           <span class="mr-0.5 text-brand-default underline">browse</span>
@@ -394,14 +411,14 @@
       </div>
     </div>
 
-    <script src="../_shared/data.js"></script>
+    <script src="../../_shared/data.js"></script>
     <!-- Applies anything uploaded or published in this browser, before any page renders. -->
-    <script src="../_shared/legal-store.js"></script>
-    <script src="../_shared/screens.js"></script>
-    <script src="../_shared/shell-markup.js"></script>
-    <script src="../_shared/routes.js"></script>
-    <script src="../_shared/nav.js"></script>
-    <script src="../_shared/shell.js"></script>
+    <script src="../../_shared/legal-store.js"></script>
+    <script src="../../_shared/screens.js"></script>
+    <script src="../../_shared/shell-markup.js"></script>
+    <script src="../../_shared/routes.js"></script>
+    <script src="../../_shared/nav.js"></script>
+    <script src="../../_shared/shell.js"></script>
     <script src="document.js"></script>
   </body>
 </html>

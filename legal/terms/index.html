@@ -1,27 +1,12 @@
 <!doctype html>
 <!--
-  Privacy Policy — the reader-facing page
+  Terms of Service / Use — the reader-facing page
   ================================================
   What a customer sees when they follow this link from the account menu. Read
-  off development on 28 Aug 2026: /privacy-policy/<id>
+  off development on 28 Aug 2026: /terms-of-service
 
-  This is NOT admin-legal-document. That screen manages versions; this one shows
-  the live one. The tabs across the top are one per region — the app shows EU and USA.
-
-  FOR USER TESTING
-  ----------------
-  The journey this supports is: legal uploads a policy on the admin screen,
-  PUBLISHES it, then opens it here from the account menu.
-
-  Publishing is not optional. A reader is only ever shown the live version, so an
-  uploaded draft will not appear here until it is published — that is the
-  product's rule, not a prototype shortcut.
-
-  Uploads are kept in the browser's own storage (_shared/legal-store.js), which
-  means they are PER BROWSER and per machine. One person doing both halves of
-  the journey works. One person uploading and a different person looking will
-  not — they would see the fixture. To reset between sessions, run
-  CCA_LEGAL_STORE.clear() in the console and reload.
+  This is NOT legal/admin-document. That screen manages versions; this one shows
+  the live one. No tabs: there is only one Terms of Service document.
 
   Three things make it a reader page rather than an admin one:
 
@@ -42,17 +27,17 @@
   Never write a literal opening html tag in this comment — build-screens.py reads
   the page's name off the first thing that looks like one.
 -->
-<html lang="en" class="light" data-screen="legal.privacy">
+<html lang="en" class="light" data-root="../../" data-screen="legal.terms">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Privacy Policy · CtrlChain</title>
+    <title>Terms of Service / Use · CtrlChain</title>
 
-    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
-    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
-    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
-    <link rel="stylesheet" href="../_shared/prototype.css" />
-    <link rel="stylesheet" href="../_shared/legal-reader.css" />
+    <link rel="stylesheet" href="../../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../../design-system/dist/ds/index.css" />
+    <link rel="stylesheet" href="../../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../../_shared/prototype.css" />
+    <link rel="stylesheet" href="../../_shared/legal-reader.css" />
 
     <style>
       /* The bundle ships no page-level reset — the app's own index.html has it. */
@@ -82,7 +67,7 @@
                 </button>
               </div>
               <div class="flex flex-row items-center gap-2 pl-1">
-                <h1 class="text-NC-blue-default">Privacy Policy</h1>
+                <h1 class="text-NC-blue-default">Terms of Service / Use</h1>
               </div>
               <div data-top-bar-trailing data-initials="AF"></div>
             </div>
@@ -103,17 +88,17 @@
       </cca-main>
     </cca-root>
 
-    <script src="../_shared/data.js"></script>
+    <script src="../../_shared/data.js"></script>
     <!-- Applies anything uploaded or published in this browser, before any page renders. -->
-    <script src="../_shared/legal-store.js"></script>
-    <script src="../_shared/screens.js"></script>
-    <script src="../_shared/shell-markup.js"></script>
-    <script src="../_shared/routes.js"></script>
-    <script src="../_shared/nav.js"></script>
-    <script src="../_shared/shell.js"></script>
-    <script src="../_shared/legal-reader.js"></script>
+    <script src="../../_shared/legal-store.js"></script>
+    <script src="../../_shared/screens.js"></script>
+    <script src="../../_shared/shell-markup.js"></script>
+    <script src="../../_shared/routes.js"></script>
+    <script src="../../_shared/nav.js"></script>
+    <script src="../../_shared/shell.js"></script>
+    <script src="../../_shared/legal-reader.js"></script>
     <script>
-      CCA_LEGAL_READER.render({ category: 'privacy-policy', tabs: true });
+      CCA_LEGAL_READER.render({ category: 'terms-of-service', tabs: false });
     </script>
   </body>
 </html>

@@ -84,19 +84,58 @@
   }
 
   /*
+   * Stamp the record as changed just now.
+   *
+   * A document that had no versions had no updated-at either, and leaving it
+   * empty renders "Updated at:  at CEST" — the shape of a bug. This is the one
+   * place a real clock is right: the change is happening now, not on a fixture
+   * date.
+   */
+  function stampUpdated() {
+    var now = new Date();
+    doc.updatedBy = 'Robin admin';
+    doc.updatedAt = now.toLocaleDateString('en-GB', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+    doc.updatedTime =
+      String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+  }
+
+  /*
    * Uploading makes a version, which is the whole point of the flow — so the
    * file does not just vanish into a snackbar. The number bumps the minor of
    * whatever is newest, and it lands as a Draft: publishing is a separate act,
    * and inventing a Published version from an upload would overstate what the
    * button did.
    */
-  function addUploadedVersion(file, dataUrl) {
+  /*
+   * HOW A VERSION IS NUMBERED — legal's rule, not a convention picked here.
+   *
+   *   Edit               a point up.   2.2 → 2.3
+   *   Create new version a whole up.   2.2 → 3.0
+   *
+   * The distinction carries meaning: a point release is the same document
+   * corrected, a whole number is a new set of terms. Someone reading the version
+   * list can tell which happened without opening anything.
+   *
+   * It also settles a question the prototype had open. An edit does NOT rewrite
+   * the version it came from — 2.2 stays exactly as it was, and 2.3 appears
+   * beside it. So what someone accepted under 2.2 can always be produced.
+   */
+  function nextVersionNumber(kind) {
     var newest = doc.versions[0];
-    var next = '1.0';
-    if (newest) {
-      var parts = String(newest.v).split('.');
-      next = parts[0] + '.' + (Number(parts[1] || 0) + 1);
-    }
+    if (!newest) return '1.0';
+    var parts = String(newest.v).split('.');
+    var major = Number(parts[0]) || 0;
+    var minor = Number(parts[1]) || 0;
+    return kind === 'edit' ? major + '.' + (minor + 1) : major + 1 + '.0';
+  }
+
+  function addUploadedVersion(file, dataUrl, kind) {
+    var next = nextVersionNumber(kind);
 
     doc.versions.unshift({
       v: next,
@@ -109,26 +148,25 @@
       file: { name: file.name, type: file.type, url: dataUrl },
     });
 
-    /*
-     * Stamp the record. A document that had no versions had no updated-at
-     * either, and leaving it empty renders "Updated at:  at CEST" — the shape of
-     * a bug. This is the one place a real clock is right: the upload is
-     * happening now, not on a fixture date.
-     */
-    var now = new Date();
-    doc.updatedBy = 'Robin admin';
-    doc.updatedAt = now.toLocaleDateString('en-GB', {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
-    doc.updatedTime =
-      String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-
+    stampUpdated();
     current = 0;
     window.CCA_LEGAL_STORE.save(doc);
     return next;
+  }
+
+  /*
+   * The draft case. The version keeps its number and its Draft status; only the
+   * file and the updated-at change, which is what the running product does when
+   * the version being edited has not been published.
+   */
+  function replaceFileOnVersion(file, dataUrl) {
+    var version = doc.versions[current];
+
+    version.file = { name: file.name, type: file.type, url: dataUrl };
+
+    stampUpdated();
+    window.CCA_LEGAL_STORE.save(doc);
+    return version.v;
   }
 
   // ---------------------------------------------------------------- parts --
@@ -152,7 +190,7 @@
         '<span class="text-neutral-caption">Sales Organisation:</span>' +
         (document_.flag
           ? '<cca-country-flag class="max-h-4 max-w-4"><span class="h-6 w-6">' +
-            '<img class="mr-3 rounded-full" src="../_shared/assets/flags/' + esc(document_.flag) + '.svg" alt="" />' +
+            '<img class="mr-3 rounded-full" src="../../_shared/assets/flags/' + esc(document_.flag) + '.svg" alt="" />' +
             '</span></cca-country-flag>'
           : '') +
         '<span>' + esc(document_.salesOrg) + '</span></div>'
@@ -279,7 +317,7 @@
     return (
       '<div class="grid h-full place-items-center">' +
       '<div class="flex flex-col gap-4 text-center">' +
-      '<img class="mx-auto" src="../_shared/assets/images/order-empty-state.svg" alt="" width="160" height="160" />' +
+      '<img class="mx-auto" src="../../_shared/assets/images/order-empty-state.svg" alt="" width="160" height="160" />' +
       '<h3>No ' + what + ' yet</h3>' +
       '<p class="text-cca-base text-neutral-subtitle">Please create a new version for this ' +
       what.toLowerCase() + '</p>' +
@@ -415,14 +453,54 @@
   var dropzone = document.getElementById('dropzone');
 
   /*
+   * The upload dialog does three jobs, and which one decides what Confirm does.
+   * There is nothing to edit inside a PDF, so every one of them is a file:
+   *
+   *   'create'   Create new version → a NEW version, a whole number up.
+   *   'replace'  Edit, on a PUBLISHED PDF → a new version, a point up. The
+   *              published one is in force and people have accepted it, so it
+   *              is never overwritten — the correction lands beside it.
+   *   'swap'     Edit, on a DRAFT PDF → the file on that version is replaced and
+   *              the number does not move. Nothing was in force, so there is
+   *              nothing to supersede and no reason to burn a version number.
+   *
+   * The split between the last two is the whole point: correcting a typo before
+   * publishing should not look the same as amending terms people are held to.
+   */
+  var uploadMode = 'create';
+
+  /*
    * The chosen file is held here, NOT read back off the input. A dropped file
    * never lands in input.files — only the picker fills that — so reading the
    * input loses the name of anything dragged in.
    */
   var selectedFile = null;
 
-  function setUploadDialog(open) {
+  function setUploadDialog(open, mode) {
     if (open) {
+      uploadMode = mode || 'create';
+      var version = doc.versions[current];
+      var title = 'Upload a document';
+      var subtitle = 'The file becomes v' + nextVersionNumber('create') + ' of these terms & conditions.';
+      var confirm = 'Upload';
+
+      if (uploadMode === 'replace') {
+        title = 'Edit — upload a corrected document';
+        subtitle =
+          'A PDF cannot be edited here, so send a corrected file. It becomes v' +
+          nextVersionNumber('edit') + '; v' + version.v + ' stays as it is.';
+        confirm = 'Save as new point version';
+      } else if (uploadMode === 'swap') {
+        title = 'Edit — upload a corrected document';
+        subtitle =
+          'A PDF cannot be edited here, so send a corrected file. It replaces the file on v' +
+          version.v + ', which is still a draft, so the version number does not change.';
+        confirm = 'Replace the file';
+      }
+
+      document.getElementById('upload-title').textContent = title;
+      document.getElementById('upload-subtitle').textContent = subtitle;
+      document.getElementById('upload-confirm').textContent = confirm;
       uploadOverlay.hidden = false;
       void uploadBackdrop.offsetWidth; // commits the closed state so it animates
       uploadBackdrop.classList.add('cdk-overlay-backdrop-showing');
@@ -651,12 +729,23 @@
        */
       window.CCA_LEGAL_STORE.fileToDataUrl(file)
         .then(function (dataUrl) {
-          var version = addUploadedVersion(file, dataUrl);
+          var version, message;
+
+          if (uploadMode === 'swap') {
+            version = replaceFileOnVersion(file, dataUrl);
+            message =
+              '“' + file.name + '” replaces the file on v' + version +
+              '. Publish it to make it the live version.';
+          } else {
+            version = addUploadedVersion(file, dataUrl, uploadMode === 'replace' ? 'edit' : 'create');
+            message =
+              '“' + file.name + '” saved as v' + version +
+              '. Publish it to make it the live version.';
+          }
+
           setUploadDialog(false);
           render();
-          window.CCA_ROUTES.notice(
-            '“' + file.name + '” uploaded as v' + version + '. Publish it to make it the live version.',
-          );
+          window.CCA_ROUTES.notice(message);
         })
         .catch(function (error) {
           showRefusal(
@@ -708,6 +797,9 @@
       case 'create':
         setCreateDialog(true);
         break;
+      case 'edit':
+        editCurrentVersion();
+        break;
       case 'delete':
         setDeleteDialog(true);
         break;
@@ -715,9 +807,34 @@
         publishDraft();
         break;
       default:
-        window.CCA_ROUTES.notice('The version editor has not been prototyped yet.');
+        editCurrentVersion();
     }
   });
+
+  /*
+   * EDITING DEPENDS ON WHAT THE VERSION IS.
+   *
+   * A written version opens the rich-text editor. A version that is an uploaded
+   * PDF has nothing to edit here — the document lives in the file — so editing
+   * it means sending a replacement. Offering a text editor for a PDF would be a
+   * dead end, and offering nothing would look broken.
+   */
+  function editCurrentVersion() {
+    var version = doc.versions[current];
+    if (version && version.file) {
+      /*
+       * Published means people are held to it, so the correction becomes its own
+       * point version. A draft is not in force yet, so the file is simply swapped
+       * on it. Substituted never gets here — it offers no actions at all.
+       */
+      setUploadDialog(true, version.status === 'Draft' ? 'swap' : 'replace');
+      return;
+    }
+    window.CCA_ROUTES.notice(
+      'The version editor has not been prototyped yet. It would save as v' +
+        nextVersionNumber('edit') + '.',
+    );
+  }
 
   /*
    * Publishing a draft makes it the live version, and whatever was published

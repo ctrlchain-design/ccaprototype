@@ -59,7 +59,7 @@
   function orgCell(name, flag) {
     if (!name) return '';
     var img = flag
-      ? '<span class="h-3 w-3"><img class="rounded-sm" src="../_shared/assets/flags/' + esc(flag) + '.svg" alt="" /></span>'
+      ? '<span class="h-3 w-3"><img class="rounded-sm" src="../../_shared/assets/flags/' + esc(flag) + '.svg" alt="" /></span>'
       : '';
     return '<span class="flex items-center gap-2">' + img + esc(name) + '</span>';
   }

@@ -255,7 +255,9 @@
    * `path` is resolved against the prototype's root by the page, since a fixture
    * cannot know how deep the page that reads it sits.
    */
-  var UPLOADED = window.CCA_DATA_ROOT || '../_shared/assets/sample-terms.pdf';
+  var UPLOADED =
+    window.CCA_DATA_ROOT ||
+    (document.documentElement.getAttribute('data-root') || '../') + '_shared/assets/sample-terms.pdf';
   LEGAL_DOCUMENTS.filter(function (doc) { return doc.id === 'LEG-STC-NCUS'; }).forEach(function (doc) {
     doc.versions[0].file = { name: 'TC-Shippers-NewCold-USA.pdf', type: 'application/pdf', url: UPLOADED };
   });
