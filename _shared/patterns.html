@@ -118,7 +118,7 @@
               simply missing <code>.mdc-tab { position: relative }</code>, so it
               resolved against the whole strip and drew one green line across every
               tab. <code>prototype.css</code> restores the rule, and
-              <code>admin-legal</code> uses a real <code>mat-tab-group</code> with no
+              <code>legal/admin</code> uses a real <code>mat-tab-group</code> with no
               Angular at all. The design system's own components/tabs.html still
               shows the broken version — worth reporting to FE.
             </p>
@@ -250,6 +250,18 @@
               their other files vanish unexplained. Check
               <code>files.length</code>, say so, and take none.
               <br /><br />
+              <strong>Re-upload rather than edit.</strong> There is nothing to edit
+              in a PDF, so the same dialog does three jobs, and which one it does
+              depends on the version's status. Legal's rule: an edit goes a point up
+              (2.2 &rarr; 2.3), a new version goes a whole up (2.2 &rarr; 3.0). But a
+              version nobody has been held to has nothing to supersede, so editing a
+              <em>draft</em> replaces its file and leaves the number alone. Only a
+              published version is ever left untouched with a correction beside it —
+              which is what lets terms someone accepted be produced later. See
+              <code>nextVersionNumber()</code> and
+              <code>replaceFileOnVersion()</code> in
+              <code>legal/admin-document/document.js</code>.
+              <br /><br />
               <strong>One format only?</strong> Same shape of problem.
               <code>accept</code> greys out other types in the picker but is only a
               filter — the picker's own "All files" option switches it off — and a
@@ -283,7 +295,7 @@
               </div>
             </cca-file-upload>
             <p class="mt-3 text-cca-label-sm text-neutral-caption">
-              Working example: <code>admin-legal-document</code> &rsaquo; Create new
+              Working example: <code>legal/admin-document</code> &rsaquo; Create new
               version &rsaquo; Upload a document.
             </p>
           </div>
@@ -310,11 +322,11 @@
               dropdown, no Edit, no Publish. What the body holds depends on how that
               version was made: rich text if written, the PDF if uploaded. That fork
               already exists in <code>versionBodyHtml()</code> in
-              <code>admin-legal-document/document.js</code>; a reader page is those
+              <code>legal/admin-document/document.js</code>; a reader page is those
               two branches with the admin controls stripped off.
               <br /><br />
-              <strong>Built now</strong> — <code>legal-privacy</code> and
-              <code>legal-terms</code>. Uploads made on the admin screen are kept
+              <strong>Built now</strong> — <code>legal/privacy</code> and
+              <code>legal/terms</code>. Uploads made on the admin screen are kept
               in <code>localStorage</code> by <code>_shared/legal-store.js</code>
               so they survive the navigation to these pages, which a blob URL
               would not. That storage is per browser: one person can walk the
@@ -329,7 +341,7 @@
           <div class="pat-demo">
             <p class="text-cca-base-sm text-neutral-subtitle">
               No demo — nothing is built. Open the account menu in any prototype to
-              see the links, and <code>admin-legal-document</code> for both content
+              see the links, and <code>legal/admin-document</code> for both content
               branches as they render today.
             </p>
           </div>
@@ -390,7 +402,7 @@
             </div>
             <p class="mt-3 text-cca-label-sm text-neutral-caption">
               The cards, out of the dialog. Working example:
-              <code>admin-legal-document</code> &rsaquo; Create new version.
+              <code>legal/admin-document</code> &rsaquo; Create new version.
             </p>
           </div>
         </section>

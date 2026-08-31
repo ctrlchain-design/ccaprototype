@@ -122,7 +122,7 @@
    *
    * Unlike the rail, there is no single submenu to share — Admin's items are not
    * Shipper TMS's. But there is one per DOMAIN, and a domain has more than one
-   * screen, so the copy still has to be avoided: admin-legal and the legal
+   * screen, so the copy still has to be avoided: legal/admin and the legal
    * document page would otherwise carry two copies of the Admin list.
    *
    * A page names the domain and which item is current:
@@ -258,7 +258,7 @@
    * Two of these are the platform's links to its own legal documents — the ones
    * a reader follows to READ the terms, which open a modal showing the live
    * version's text or PDF. They are not the admin's version manager. See the
-   * note at the top of admin-legal-document, and the pattern in patterns.html.
+   * note at the top of legal/admin-document, and the pattern in patterns.html.
    *
    * They are written as data-screen links, so they explain themselves today and
    * start working the day that modal is built, with no edit here. Logout is not
