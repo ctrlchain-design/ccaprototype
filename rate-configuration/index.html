@@ -1664,11 +1664,10 @@ function tagsFromGroupType(groupType) {
   const tags = [];
   if (/\bCarrier\b/i.test(str)) tags.push('Carrier');
   if (/\bShipper\b/i.test(str)) tags.push('Shipper');
-  if (/\bBrokerage\b/i.test(str)) tags.push('Brokerage');
   return tags;
 }
-const ADD_GROUPS_REL_OPTIONS = ['Subcontractor', 'Allowlist', 'Brokerage', 'Managed Transport', 'SaaS'];
-const ADD_GROUPS_CANDIDATES = ['#MILAN SAAS CARRIER', 'TS Logistics GmbH', '! Marindas Carrier', '!! Lucifer Test !!', 'Lucifer 2', 'Lucifer Carrier', 'CtrlChain B.V.', 'CtrlChain USA', 'NewCold France', 'Ingram Micro Spain', 'Enepso Sp. z o.o.', 'CTS NL c/o Enepso Sp. z o.o.', 'Tesla Trucking Inc'];
+const ADD_GROUPS_REL_OPTIONS = ['Subcontractor', 'Allowlist'];
+const ADD_GROUPS_CANDIDATES = ['#MILAN SAAS CARRIER', 'TS Logistics GmbH', '! Marindas Carrier', '!! Lucifer Test !!', 'Lucifer 2', 'Lucifer Carrier'];
 const ENTERPRISE_RELATIONS_SEED = {
   1: [
     { groupName: 'TS Logistics GmbH', subGroup: 'TS Logistics GmbH', relation: 'Subcontractor', serviceTypes: '-' },
@@ -1679,7 +1678,6 @@ const ENTERPRISE_RELATIONS_SEED = {
     { groupName: '010922-IM-Demo', subGroup: 'dilan carrier1111', relation: 'Subcontractor', serviceTypes: '-' },
   ],
   4: [
-    { groupName: 'CtrlChain Enterprise', subGroup: 'CtrlChain B.V.', relation: 'Brokerage', serviceTypes: '-' },
     { groupName: 'NewCold Enterprise', subGroup: 'Baltic Carriers', relation: 'Allowlist', serviceTypes: '-' },
     { groupName: 'CtrlChain Enterprise', subGroup: 'Benelux Fleet', relation: 'Subcontractor', serviceTypes: '-' },
     { groupName: '#MILAN SAAS CARRIER', subGroup: '#MILAN SAAS CARRIER', relation: 'Subcontractor', serviceTypes: '-' },
@@ -1691,25 +1689,6 @@ const ENTERPRISE_RELATIONS_SEED = {
   7: [
     { groupName: 'TS Logistics GmbH', subGroup: 'TS Logistics GmbH', relation: 'Subcontractor', serviceTypes: '-' },
     { groupName: '!! Lucifer Test !!', subGroup: '!! Lucifer Test !!', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
-  8: [
-    { groupName: 'Ingram Enterprise', subGroup: 'Ingram Enterprise', relation: 'Brokerage', serviceTypes: '-' },
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o.', relation: 'Brokerage', serviceTypes: '-' },
-  ],
-  9: [],
-  10: [],
-  11: [
-    { groupName: 'Tesla Trucking Inc', subGroup: 'Tesla Trucking Inc', relation: 'Managed Transport', serviceTypes: '-' },
-  ],
-  12: [
-    { groupName: 'CtrlChain Enterprise', subGroup: 'CtrlChain B.V.', relation: 'Brokerage', serviceTypes: '-' },
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'CTS NL c/o Enepso Sp. z o.o.', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
-  13: [
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o.', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
-  14: [
-    { groupName: 'Ingram Enterprise', subGroup: 'Ingram Micro Spain', relation: 'Managed Transport', serviceTypes: '-' },
   ],
 };
 function buildGroupsTree(groupsData) {
@@ -1874,13 +1853,6 @@ class Component extends DCLogic {
       { id: 5, subgroup: 'Nordics Distribution', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '10:05', groupType: 'Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: '-' },
       { id: 7, subgroup: 'NewCold Enterprise', group: 'NewCold Enterprise', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Thu, 16 Jul 2026', createdTime: '09:15', groupType: 'Carrier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: 'Anders Lindqvist', industry: 'Transport' },
       { id: 6, subgroup: 'Baltic Carriers', group: 'NewCold Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '11:40', groupType: 'Carrier, Finance supplier, Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: '-' },
-      { id: 8, subgroup: 'CtrlChain B.V.', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:00', groupType: 'Brokerage, Finance supplier, Enterprise', serviceType: '-', manager: 'Martijn Coenen', industry: 'Brokerage' },
-      { id: 9, subgroup: 'CtrlChain USA', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:05', groupType: 'Brokerage, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: 'Brokerage' },
-      { id: 10, subgroup: 'NewCold France', group: 'NewCold Enterprise', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Tue, 25 Aug 2026', createdTime: '10:10', groupType: 'Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: 'Transport' },
-      { id: 11, subgroup: 'Ingram Micro Spain', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Tue, 25 Aug 2026', createdTime: '10:20', groupType: 'Shipper, Brokerage, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: 'Transport' },
-      { id: 12, subgroup: 'Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:30', groupType: 'Carrier, Brokerage, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: 'Piotr Kowalczyk', industry: 'Freight Forwarding' },
-      { id: 13, subgroup: 'CTS NL c/o Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 26 Aug 2026', createdTime: '08:45', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: 'Managed Transport' },
-      { id: 14, subgroup: 'Tesla Trucking Inc', group: 'Tesla Trucking Inc', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '14:00', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: '—', industry: 'Transport' },
     ],
     filterChipsData: [
       { id: 1, label: 'Assigned Operator: John Doe' },
