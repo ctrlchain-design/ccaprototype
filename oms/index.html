@@ -440,32 +440,55 @@
       const smallLabelBadge = (text, flavor) =>
         `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
 
-      /*
-       * BADGE SIZES, read off the Figma Orders table
-       * (IvHbK3LeammCOdlHQQYxwy, node 11187:289914):
+      /* =================================================================
+       * THE BADGE SIZE SCALE
        *
-       *   Status   "Workflow Badge",  style Badge/badge-large/strong
-       *            font-size md-16 = 14px, line-height 24 = 20px, weight 500
-       *   Transit  "Attention flag",  style Badge/badge-medium/strong
-       *            font-size sm-14 = 12px, line-height 20 = 16px, weight 500
+       * From the Core UI badge component itself —
+       * uQMin4yCGCADtRxsP1mtR7, node 10046:2752. Every family has THREE
+       * steps, and each family starts at a different base:
        *
-       * THE FLAG IS ONE STEP SMALLER THAN THE STATUS, and that is a rule, not
-       * an accident — the component's own description in Figma says "Always
-       * smaller than status and visually subordinate." An earlier revision had
-       * it exactly inverted, status at 12px next to a 14px flag, so the
-       * subordinate badge was the louder of the two.
+       *                        Default   Compact   Extra Compact
+       *   Workflow Badge         16px      14px        12px      (status)
+       *   Attention flag         14px      12px        10px      (transit)
+       *   category               14px      12px        10px      (type)
+       *   Counter                12px      10px         8px      (numerical)
        *
-       * Sizes on these badges are composed from the type and padding utilities
-       * on the inner div, not from a size modifier — there is no `--small`
-       * class. So `text-cca-base-sm` (14/20) is the large step and
-       * `text-cca-label-sm` (12/16) the medium one.
+       * THIS TABLE USES COMPACT THROUGHOUT — status 14, flag 12, category
+       * 12 — which is what the Orders table uses too, and is right for a
+       * dense table. The Figma type styles name the same thing from the
+       * other end: badge-large = 14px, badge-medium = 12px.
        *
-       * The flag's doc page shows only its 14px example; 12px here is the same
-       * component at the size the design specifies, not an invented value.
+       * Note the flag and the category sit one step BELOW the status at any
+       * given step. That keeps the flag subordinate, which its own
+       * component description makes a rule: "Always smaller than status and
+       * visually subordinate." An earlier revision here had it inverted —
+       * status at 12 next to a 14px flag — so the subordinate badge was the
+       * louder of the two.
        *
-       * Figma also says "Omit the icon in dense tables to save space" — this is
-       * a dense table, and neither badge carries one.
-       */
+       * Mapping Compact onto the FE export's type scale:
+       *   status  14/20 -> text-cca-base-sm
+       *   flag    12/16 -> text-cca-label-sm
+       *   type    12/16 -> text-cca-label-sm
+       *
+       * ⚠ THE FE EXPORT DOES NOT CARRY THIS SCALE. There are no size
+       * modifier classes on any of these components (cca-text-badge's
+       * .compact / .extra-compact are the only ones in the bundle), so size
+       * is composed from type and padding utilities on the inner div. And
+       * components/badge.html documents only part of it: two compositions
+       * for the status badge, one each for the flag and the label badge. The
+       * flag's single example is its 14px Default, so the 12px Compact this
+       * table needs has no example to copy — it is composed here from a real
+       * step on the type scale, not invented. Worth raising with FE.
+       *
+       * Other variants in the component, for whoever needs them next:
+       *   Tones            Positive, Warning, Critical, Info, Neutral
+       *   Status emphasis  Default (filled pill) or Soft (dot plus text)
+       *   category         Fill or Outline, plus Spotlight for "Recommended"
+       *   Attention flag   with icon, icon-only, or Overflow ("+1 more")
+       *
+       * Figma also says "Omit the icon in dense tables to save space" — this
+       * is a dense table, and neither badge here carries one.
+       * ================================================================= */
 
       /*
        * TRANSIT STATUS uses cca-attention-flag-badge — the "flag" badge.
