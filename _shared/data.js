@@ -178,6 +178,13 @@
    * pair. `to` is null for a single point in time rather than a window. The
    * whole window is null where no dock slot is booked yet, and `slotStatus`
    * then says what to show in its place.
+   *
+   * `toDate` is set ONLY when the window crosses midnight — a night loading
+   * slot that starts at 22:00 and finishes at 02:00 the next day. Absent is
+   * the normal case and means "same day as `date`", so a screen shows the
+   * second date only when it actually differs. The running app prints both
+   * dates unconditionally, which is why its cells repeat themselves on every
+   * same-day window.
    */
   var WAREHOUSE_ORDERS = [
     {
@@ -192,7 +199,7 @@
       statusFlavor: 'primary',
       warehouse: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', dock: 'Dock 7' },
       warehouseSide: 'origin',
-      origin: { name: 'Presov DC 1', city: 'Presov', country: 'Slovakia', date: 'Thu, 27 Aug 2026', window: { from: '06:00', to: '08:00' } },
+      origin: { name: 'Presov DC 1', city: 'Presov', country: 'Slovakia', date: 'Wed, 26 Aug 2026', window: { from: '22:00', to: '02:00', toDate: 'Thu, 27 Aug 2026' } },
       destination: { name: 'Barcelona_08001', city: 'Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: { from: '08:00', to: null } },
       lines: 14,
       pallets: 18,

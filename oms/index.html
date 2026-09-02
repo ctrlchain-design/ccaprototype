@@ -462,6 +462,16 @@
       const cityName = (city) => city.replace(/^(?:\d[\d\s]*)?(?:[A-Z]{2}\s+)?/, '');
 
       /*
+       * "Thu, 27 Aug 2026" -> "Thu 27". The full date is already in the Date
+       * column one cell to the left; all this has to say is which day the
+       * window closes on, so the year and month would be repetition.
+       */
+      const shortDate = (d) => {
+        const m = d.match(/^(\w{3}),?\s+(\d{1,2})/);
+        return m ? `${m[1]} ${m[2]}` : d;
+      };
+
+      /*
        * Which end is which, whichever domain the record came from.
        *
        * Transport records predate the warehouse ones and carry `window` as a
@@ -548,11 +558,35 @@
        */
       function timeCell(end) {
         const w = end.window;
-        const body = !w
-          ? `<span class="text-neutral-caption">${end.slotStatus || '—'}</span>`
-          : w.to
-            ? `<span>${w.from}</span><span class="px-1 text-neutral-caption">–</span><span>${w.to}</span>`
-            : `<span>${w.from}</span>`;
+        if (!w) {
+          return `<td class="mat-mdc-cell mdc-data-table__cell">
+            <cca-date-cell class="text-cca-base-sm whitespace-nowrap text-neutral-caption">${
+              end.slotStatus || '—'
+            }</cca-date-cell>
+          </td>`;
+        }
+
+        /*
+         * THE SECOND DATE APPEARS ONLY WHEN IT DIFFERS.
+         *
+         * The running app prints both ends in full, always — so a same-day
+         * window reads "Tue, 25 Aug 2026 08:00 → Tue, 25 Aug 2026 08:00". The
+         * arrow and the repetition promise a range the values do not deliver,
+         * and same-day is the common case, so most of that cell is noise.
+         *
+         * But the app is verbose for a reason: a night loading slot genuinely
+         * runs 22:00 on one date to 02:00 on the next, and dropping the date
+         * entirely would lose that. So it is conditional — `toDate` in the
+         * fixture is set only when the window crosses midnight, and only then
+         * does the date show, prefixed to the closing time where a reader is
+         * already looking.
+         */
+        const body = w.to
+          ? `<span>${w.from}</span><span class="px-1 text-neutral-caption">–</span><span>${
+              w.toDate ? `<span class="text-neutral-caption">${shortDate(w.toDate)}</span> ` : ''
+            }${w.to}</span>`
+          : `<span>${w.from}</span>`;
+
         return `<td class="mat-mdc-cell mdc-data-table__cell">
           <cca-date-cell class="text-cca-base-sm text-neutral-body whitespace-nowrap">${body}</cca-date-cell>
         </td>`;
