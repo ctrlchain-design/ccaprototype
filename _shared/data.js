@@ -42,6 +42,8 @@
       delivery: { name: 'Barcelona_08001', street: 'La Rambla, 88', city: '08001 Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: '08:00' },
       stops: 2,
       distanceKm: 2247,
+      domain: 'transport',
+      linked: ['CCW2026-000418.1'],
     },
     {
       id: 'CCA2023-000271.4',
@@ -56,10 +58,12 @@
       transitFlavor: 'match',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
-      pickup: { name: 'Bréal-sous-Montfort', street: '625 Les Bruyères', city: '35310 Bréal-sous-Montfort', country: 'France', date: 'Fri, 28 Aug 2026', window: '09:30' },
-      delivery: { name: 'São Sebastião', street: 'Unnamed Road', city: '7000 São Sebastião', country: 'Portugal', date: 'Tue, 1 Sept 2026', window: '14:00' },
+      pickup: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: '09:30' },
+      delivery: { name: 'Berlin_10115', street: 'Invalidenstraße 50', city: '10557 Berlin', country: 'Germany', date: 'Thu, 27 Aug 2026', window: '14:00' },
       stops: 2,
       distanceKm: 1680,
+      domain: 'transport',
+      linked: ['CCW2026-000420.1'],
     },
     {
       id: 'CCA2023-000272.2',
@@ -74,10 +78,12 @@
       transitFlavor: 'highlight',
       accountManager: 'Admin Bianca',
       assignedOperator: 'Sanne Meijer',
-      pickup: { name: 'Rotterdam_3011', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: '07:00' },
+      pickup: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: '07:00' },
       delivery: { name: 'Berlin_10115', street: 'Invalidenstraße 50', city: '10557 Berlin', country: 'Germany', date: 'Thu, 27 Aug 2026', window: '16:00' },
       stops: 3,
       distanceKm: 712,
+      domain: 'transport',
+      linked: ['CCW2026-000420.1'],
     },
     {
       id: 'CCA2023-000273.7',
@@ -96,6 +102,187 @@
       delivery: { name: 'Lyon_69000', street: "12 Quai Perrache", city: '69002 Lyon', country: 'France', date: 'Tue, 25 Aug 2026', window: '18:00' },
       stops: 2,
       distanceKm: 934,
+      domain: 'transport',
+      linked: [],
+    },
+    {
+      id: 'CCA2023-000274.1',
+      type: 'SaaS',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain B.V.',
+      shipperReference: '10046612',
+      status: 'Carrier Assigned',
+      statusFlavor: 'primary',
+      transitStatus: 'On time',
+      transitFlavor: 'match',
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Tom Jansen',
+      pickup: { name: 'Venlo_5928', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', date: 'Fri, 28 Aug 2026', window: '10:00' },
+      delivery: { name: 'Milan_20090', street: 'Via Mecenate 90', city: '20138 Milano', country: 'Italy', date: 'Mon, 31 Aug 2026', window: '11:30' },
+      stops: 2,
+      distanceKm: 1043,
+      domain: 'transport',
+      linked: [],
+    },
+    {
+      id: 'CCA2023-000275.2',
+      type: 'Own Fleet',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Deutschland',
+      salesOrganisation: 'CtrlChain GmbH',
+      shipperReference: '10046620',
+      status: 'Planned',
+      statusFlavor: 'accent-blue',
+      transitStatus: 'On time',
+      transitFlavor: 'match',
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Sanne Meijer',
+      pickup: { name: 'Duisburg_47059', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', date: 'Mon, 31 Aug 2026', window: '07:00' },
+      delivery: { name: 'Hamburg_20095', street: 'Grosse Elbstrasse 145', city: '22767 Hamburg', country: 'Germany', date: 'Tue, 1 Sept 2026', window: '15:00' },
+      stops: 2,
+      distanceKm: 449,
+      domain: 'transport',
+      linked: [],
+    },
+  ];
+
+
+  /*
+   * Warehouse orders — OMS
+   * ----------------------
+   * The warehouse side of the same goods the transport orders move. Kept in its
+   * OWN array rather than appended to ORDERS, deliberately: every prototype
+   * reading `CCA_DATA.orders` today means "transport orders", and quietly
+   * doubling that array would put warehouse rows into the pinned-filters
+   * prototype with no transit status to render. A screen that wants both asks
+   * for both — `CCA_DATA.allOrders()`.
+   *
+   * `type` is the warehouse movement: Inbound is goods arriving, Outbound is
+   * goods leaving. `linked` is the transport orders that carry this order's
+   * goods, which is the whole reason the two lists are being combined — an
+   * Outbound order and the transport order collecting it are one job to an
+   * operator, and two records to the system.
+   *
+   * An empty `linked` is a real case, not missing data: an Inbound where the
+   * supplier arranges its own haulage has no CtrlChain transport order at all.
+   *
+   * `warehouseSide` says which end the DC is on, so a screen can mark it
+   * without re-deriving it from the type: an Outbound leaves the warehouse, an
+   * Inbound arrives at it.
+   *
+   * A `window` is { from, to } — two SEPARATE times, because the design
+   * system's cca-trip-stop-time-window puts a .window-separator element
+   * between them and cannot take a pre-joined "06:00 – 08:00" string. `to` is
+   * null for a single point in time rather than a window. The whole window is
+   * null where no dock slot is booked yet, and `slotStatus` then says what to
+   * show in its place.
+   */
+  var WAREHOUSE_ORDERS = [
+    {
+      id: 'CCW2026-000418.1',
+      domain: 'warehouse',
+      type: 'Outbound',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain B.V.',
+      shipperReference: '10046585',
+      status: 'Ready for Dispatch',
+      statusFlavor: 'primary',
+      warehouse: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', dock: 'Dock 7' },
+      warehouseSide: 'origin',
+      origin: { name: 'Presov DC 1', city: 'Presov', country: 'Slovakia', date: 'Thu, 27 Aug 2026', window: { from: '06:00', to: '08:00' } },
+      destination: { name: 'Barcelona_08001', city: 'Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: { from: '08:00', to: null } },
+      lines: 14,
+      pallets: 18,
+      weightKg: 7420,
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Tom Jansen',
+      linked: ['CCA2023-000270.1'],
+    },
+    {
+      id: 'CCW2026-000419.2',
+      domain: 'warehouse',
+      type: 'Inbound',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain B.V.',
+      shipperReference: '10046612',
+      status: 'Slot Booked',
+      statusFlavor: 'accent-blue',
+      warehouse: { name: 'Venlo DC 1', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', dock: 'Dock 3' },
+      warehouseSide: 'destination',
+      origin: { name: 'Katowice_40-001', city: 'Katowice', country: 'Poland', date: 'Wed, 26 Aug 2026', window: { from: '16:00', to: null } },
+      destination: { name: 'Venlo DC 1', city: 'Venlo', country: 'Netherlands', date: 'Fri, 28 Aug 2026', window: { from: '13:00', to: '15:00' } },
+      lines: 6,
+      pallets: 9,
+      weightKg: 3180,
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Sanne Meijer',
+      linked: [],
+    },
+    {
+      id: 'CCW2026-000420.1',
+      domain: 'warehouse',
+      type: 'Outbound',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain España S.L.U',
+      shipperReference: '10046590 + 10046591',
+      status: 'Picking',
+      statusFlavor: 'warning',
+      warehouse: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', dock: 'Dock 2' },
+      warehouseSide: 'origin',
+      origin: { name: 'Rotterdam DC 3', city: 'Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: { from: '09:00', to: '11:00' } },
+      destination: { name: 'Berlin_10115', city: 'Berlin', country: 'Germany', date: 'Thu, 27 Aug 2026', window: { from: '14:00', to: null } },
+      lines: 31,
+      pallets: 33,
+      weightKg: 14960,
+      accountManager: 'Admin Bianca',
+      assignedOperator: 'Sanne Meijer',
+      linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
+    },
+    {
+      id: 'CCW2026-000421.3',
+      domain: 'warehouse',
+      type: 'Inbound',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Deutschland',
+      salesOrganisation: 'CtrlChain GmbH',
+      shipperReference: '10046620',
+      status: 'Awaiting Slot',
+      statusFlavor: 'neutral',
+      warehouse: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', dock: null },
+      warehouseSide: 'destination',
+      origin: { name: 'Hamburg_22767', city: 'Hamburg', country: 'Germany', date: 'Sun, 30 Aug 2026', window: { from: '11:00', to: null } },
+      destination: { name: 'Duisburg DC 1', city: 'Duisburg', country: 'Germany', date: 'Mon, 31 Aug 2026', window: null, slotStatus: 'To be confirmed' },
+      lines: 4,
+      pallets: 5,
+      weightKg: 1240,
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Tom Jansen',
+      linked: [],
+    },
+    {
+      id: 'CCW2026-000422.1',
+      domain: 'warehouse',
+      type: 'Outbound',
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain B.V.',
+      shipperReference: '10046601',
+      status: 'Slot Missed',
+      statusFlavor: 'danger',
+      warehouse: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', dock: 'Dock 1' },
+      warehouseSide: 'origin',
+      origin: { name: 'Antwerp DC 2', city: 'Antwerpen', country: 'Belgium', date: 'Mon, 24 Aug 2026', window: { from: '05:00', to: '07:00' } },
+      destination: { name: 'Lyon_69000', city: 'Lyon', country: 'France', date: 'Tue, 25 Aug 2026', window: { from: '18:00', to: null } },
+      lines: 11,
+      pallets: 12,
+      weightKg: 5380,
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Sanne Meijer',
+      linked: ['CCA2023-000273.7'],
     },
   ];
 
@@ -424,6 +611,30 @@
     orders: ORDERS,
     order: function (id) {
       return ORDERS.filter(function (o) { return o.id === id; })[0] || null;
+    },
+
+    /*
+     * Warehouse orders, and the two combined.
+     *
+     * `orders` stays transport-only so existing prototypes are unaffected;
+     * `allOrders()` is what a combined list asks for. `order()` looks in both,
+     * because a link carries an id and the receiving page should not have to
+     * know which domain that id belongs to.
+     */
+    warehouseOrders: WAREHOUSE_ORDERS,
+    allOrders: function () {
+      return ORDERS.concat(WAREHOUSE_ORDERS);
+    },
+    anyOrder: function (id) {
+      return ORDERS.concat(WAREHOUSE_ORDERS)
+        .filter(function (o) { return o.id === id; })[0] || null;
+    },
+    /* The counterpart records `linked` points at, resolved. */
+    linkedOrders: function (o) {
+      return (o && o.linked ? o.linked : []).map(function (id) {
+        return ORDERS.concat(WAREHOUSE_ORDERS)
+          .filter(function (r) { return r.id === id; })[0] || { id: id };
+      });
     },
 
     legalDocuments: LEGAL_DOCUMENTS,
