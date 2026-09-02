@@ -60,7 +60,7 @@ linked: ['CCA2023-000418.1', 'CCA2023-000501.1'],
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585 + 10046562',
       status: 'New',
-      statusFlavor: 'highlight',
+      statusFlavor: 'neutral',
       transitStatus: 'On time',
       transitFlavor: 'accent-blue',
       accountManager: 'Bianca de Vries',
@@ -116,7 +116,7 @@ linked: ['CCA2023-000420.1'],
       status: 'Missing POD',
       statusFlavor: 'danger',
       transitStatus: 'Late',
-      transitFlavor: 'warning',
+      transitFlavor: 'danger',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
       pickup: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', date: 'Mon, 24 Aug 2026', window: '06:00' },
@@ -226,9 +226,9 @@ linked: [],
    *
    * `statusFlavor` follows the badge component's tone guidance: green is for a
    * "final or positive outcome" only, so Delivered and Received are `primary`
-   * and everything in flight is `accent-blue`. Registered is `neutral` because
-   * nothing has happened yet. Explicitly NOT green for in-progress states,
-   * which the component's own description warns against.
+   * and everything else in the lifecycle — Registered included — is
+   * `accent-blue`. Explicitly NOT green for in-progress states, which the
+   * component's own description warns against.
    *
    * There is no failure status here, and that is not an omission: the warehouse
    * table carries exceptions in their own Shortage and NCR columns rather than
@@ -341,7 +341,7 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
       status: 'Registered',
-      statusFlavor: 'neutral',
+      statusFlavor: 'accent-blue',
       warehouse: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', dock: null },
       warehouseSide: 'destination',
       origin: { name: 'Nordfracht Logistik GmbH', street: 'Grosse Elbstrasse 145', city: '22767 Hamburg', country: 'Germany', date: 'Sun, 30 Aug 2026', window: { from: '11:00', to: null } },
@@ -394,6 +394,14 @@ linked: ['CCA2023-000273.7'],
    * reason: `CCA_DATA.orders` means transport orders to every prototype that
    * already reads it.
    *
+   * `status` IS THE SHARED ORDER STATUS, not an invoicing state. An invoice
+   * order is an order in the same list — the app hides them behind a "Show
+   * Invoice Orders Only" filter rather than putting them somewhere else — so it
+   * takes its status from the one vocabulary every order uses. "Paid" was wrong
+   * for that reason: paid is Completed, and the invoicing state belongs in its
+   * own field. The app has separate Customer Invoice Status and Carrier Invoice
+   * Status filters, which is where `customerInvoiceStatus` comes from.
+   *
    * ⚠ THE FIELD VALUES HERE ARE PLACEHOLDERS. These records come from an API
    * in the real product and its shape has not been read yet. What is modelled:
    * they carry the same columns as a transport order — origin, destination and
@@ -421,8 +429,9 @@ linked: ['CCA2023-000273.7'],
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585',
-      status: 'Invoice Sent',
-      statusFlavor: 'accent-blue',
+      status: 'Completed',
+      statusFlavor: 'primary',
+      customerInvoiceStatus: 'Sent',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Thu, 27 Aug 2026', window: '08:00' },
@@ -440,8 +449,8 @@ linked: ['CCA2023-000270.1'],
       shipperSubGroup: 'Ingram Micro Deutschland',
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
-      status: 'Overdue',
-      statusFlavor: 'danger',
+      status: 'Completed',
+      statusFlavor: 'primary',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
       pickup: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', date: 'Mon, 31 Aug 2026', window: '07:00' },
@@ -459,8 +468,9 @@ linked: [],
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046612',
-      status: 'Paid',
+      status: 'Completed',
       statusFlavor: 'primary',
+      customerInvoiceStatus: 'Paid',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Venlo DC 1', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', date: 'Fri, 28 Aug 2026', window: '10:00' },
