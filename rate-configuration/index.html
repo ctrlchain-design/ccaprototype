@@ -128,7 +128,7 @@
         <div onClick="{{ goGroups }}" style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-brand-default);cursor:pointer;">
           <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L5 9l6 6"></path></svg>
         </div>
-        <h1 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ pageTitle }}</h1>
+        <h1 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">{{ pageTitle }}</h1>
       </div>
       <div style="display:flex;align-items:center;gap:20px;">
         <div style="position:relative;color:var(--icon-neutral);cursor:pointer;">
@@ -209,8 +209,23 @@
                       <td style="padding:16px;vertical-align:top;color:var(--text-body);">
                         <div>{{ grp.created }}</div>
                       </td>
-                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:160px;">{{ grp.groupType }}</td>
-                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.serviceType }}</td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:180px;">
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                          <sc-for list="{{ grp.groupTypeTags }}" as="tag" hint-placeholder-count="1">
+                            <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:3px 9px;white-space:nowrap;">{{ tag }}</span>
+                          </sc-for>
+                        </div>
+                      </td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:180px;">
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                          <sc-for list="{{ grp.serviceTypeTags }}" as="tag" hint-placeholder-count="1">
+                            <span style="font-size:12px;font-weight:400;color:var(--text-brand-darker);background:var(--color-green-100);border-radius:6px;padding:3px 9px;white-space:nowrap;">{{ tag }}</span>
+                          </sc-for>
+                          <sc-if value="{{ grp.hasNoServiceType }}" hint-placeholder-val="{{ false }}">
+                            <span style="color:var(--text-caption);">—</span>
+                          </sc-if>
+                        </div>
+                      </td>
                       <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.manager }}</td>
                       <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.industry }}</td>
                     </tr>
@@ -258,7 +273,7 @@
               </div>
               <div style="flex:1;display:flex;flex-direction:column;gap:16px;">
                 <div style="display:flex;align-items:center;gap:10px;">
-                  <h2 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--text-title);">{{ activeGroup.subgroup }}</h2>
+                  <h2 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-3xl);color:var(--text-title);">{{ activeGroup.subgroup }}</h2>
                   <span style="color:var(--text-caption);">•</span>
                   <span style="font-size:15px;color:var(--text-caption);">{{ groupLevelLabel }}</span>
                 </div>
@@ -314,7 +329,7 @@
                         <tr style="border-bottom:1px solid var(--border-default);">
                           <td style="padding:14px 12px;"><span style="{{ row.statusBadgeStyle }}">{{ row.status }}</span></td>
                           <td style="padding:14px 12px;color:var(--text-body);">{{ row.rangeFrom }} → {{ row.rangeTo }}</td>
-                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.value }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.valueDisplay }}</td>
                           <td style="padding:14px 12px;color:var(--text-body);">{{ row.rateType }}</td>
                           <td style="padding:14px 12px;color:var(--text-body);">
                             <div>{{ row.lastUpdated }}</div>
@@ -368,7 +383,7 @@
                             </div>
                           </td>
                           <td style="padding:14px 12px;color:var(--text-body);">{{ row.rangeFrom }} → {{ row.rangeTo }}</td>
-                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.value }}</td>
+                          <td style="padding:14px 12px;color:var(--text-body);">{{ row.valueDisplay }}</td>
                           <td style="padding:14px 12px;color:var(--text-body);">{{ row.rateType }}</td>
                           <td style="padding:14px 12px;color:var(--text-body);">
                             <div>{{ row.lastUpdated }}</div>
@@ -418,7 +433,7 @@
             <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
               <div style="background:#fff;border-radius:12px;width:900px;max-width:94vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
-                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">Other Groups</h3>
+                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">Other Groups</h3>
                   <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeGroupsConnection }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
                 </div>
                 <div style="padding:20px 24px;overflow-y:auto;flex:1;">
@@ -463,25 +478,25 @@
             <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
               <div style="background:#fff;border-radius:12px;width:820px;max-width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
-                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">Set Carrier Fuel Rate Exception</h3>
+                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">Add an exception</h3>
                   <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeAddExceptionModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
                 </div>
                 <div style="padding:24px;display:flex;flex-direction:column;gap:20px;">
                   <div>
-                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Shipper group</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">This group</div>
                     <div style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);background:var(--color-neutrals-100);">{{ addExceptionShipperGroup }}</div>
                   </div>
                   <div>
-                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Carrier group</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Applies when working with</div>
                     <div style="display:flex;gap:12px;">
                       <select value="{{ addExceptionCarrierGroup }}" onChange="{{ onAddExceptionCarrierGroup }}" style="flex:1;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);">
-                        <option value="">Carrier Name</option>
+                        <option value="">Select group</option>
                         <sc-for list="{{ carrierGroupOptions }}" as="g" hint-placeholder-count="3">
                           <option value="{{ g }}">{{ g }}</option>
                         </sc-for>
                       </select>
                       <select value="{{ addExceptionCarrierSubgroup }}" onChange="{{ onAddExceptionCarrierSubgroup }}" style="flex:1;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-title);">
-                        <option value="">Carrier Subgroup</option>
+                        <option value="">Select subgroup</option>
                         <sc-for list="{{ carrierSubgroupOptions }}" as="sg" hint-placeholder-count="1">
                           <option value="{{ sg }}">{{ sg }}</option>
                         </sc-for>
@@ -559,7 +574,7 @@
                     <sc-if value="{{ addRangeIsPastEdit }}" hint-placeholder-val="{{ false }}">
                       <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" onClick="{{ backToScheduleHistory }}" style="cursor:pointer;"><path d="M10 3L5 8l5 5"></path></svg>
                     </sc-if>
-                    <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ addRangeModalTitle }}</h3>
+                    <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">{{ addRangeModalTitle }}</h3>
                   </div>
                   <sc-if value="{{ addRangeIsNotPastEdit }}" hint-placeholder-val="{{ true }}">
                     <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeAddRangeModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
@@ -603,48 +618,35 @@
                     </sc-if>
                   </div>
                   <div style="display:flex;gap:20px;flex-wrap:wrap;">
-                    <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ true }}">
-                      <div>
-                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
-                        <div style="display:flex;align-items:center;gap:4px;border:1px solid var(--border-default);border-radius:8px;padding:8px 10px;">
-                          <input value="{{ addRangeStartM }}" onChange="{{ onAddRangeStartM }}" onKeyDown="{{ onAddRangeStartMKey }}" ref="{{ refAddRangeStartM }}" inputMode="numeric" maxLength="2" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
-                          <span>/</span>
-                          <input value="{{ addRangeStartD }}" onChange="{{ onAddRangeStartD }}" onKeyDown="{{ onAddRangeStartDKey }}" ref="{{ refAddRangeStartD }}" inputMode="numeric" maxLength="2" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
-                          <span>/</span>
-                          <input value="{{ addRangeStartY }}" onChange="{{ onAddRangeStartY }}" onKeyDown="{{ onAddRangeStartYKey }}" ref="{{ refAddRangeStartY }}" inputMode="numeric" maxLength="4" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
-                        </div>
-                      </div>
-                      <div>
-                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
-                        <div style="display:flex;align-items:center;gap:4px;border:1px solid var(--border-default);border-radius:8px;padding:8px 10px;">
-                          <input value="{{ addRangeEndM }}" onChange="{{ onAddRangeEndM }}" onKeyDown="{{ onAddRangeEndMKey }}" ref="{{ refAddRangeEndM }}" inputMode="numeric" maxLength="2" placeholder="MM" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
-                          <span>/</span>
-                          <input value="{{ addRangeEndD }}" onChange="{{ onAddRangeEndD }}" onKeyDown="{{ onAddRangeEndDKey }}" ref="{{ refAddRangeEndD }}" inputMode="numeric" maxLength="2" placeholder="DD" style="width:36px;border:none;outline:none;text-align:center;font-size:14px;">
-                          <span>/</span>
-                          <input value="{{ addRangeEndY }}" onChange="{{ onAddRangeEndY }}" onKeyDown="{{ onAddRangeEndYKey }}" ref="{{ refAddRangeEndY }}" inputMode="numeric" maxLength="4" placeholder="YYYY" style="width:52px;border:none;outline:none;text-align:center;font-size:14px;">
-                        </div>
-                      </div>
-                    </sc-if>
-                    <sc-if value="{{ addRangeIsEdit }}" hint-placeholder-val="{{ false }}">
-                      <div>
-                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
-                        <input value="{{ addRangeStartFull }}" onChange="{{ onAddRangeStartFull }}" disabled="{{ addRangeIsPastEdit }}" style="{{ addRangeStartInputStyle }}">
-                      </div>
-                      <div>
-                        <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
-                        <input value="{{ addRangeEndFull }}" onChange="{{ onAddRangeEndFull }}" disabled="{{ addRangeIsPastEdit }}" style="{{ addRangeEndInputStyle }}">
-                      </div>
-                    </sc-if>
+                     <!-- One native date picker for both add and edit. The add path previously
+                          used six free-typed MM/DD/YYYY boxes and the edit path a free-typed
+                          full-date string, which also wrote two different formats into rows. -->
+                     <div>
+                       <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Start Date</div>
+                       <input type="date" value="{{ addRangeStartISO }}" onChange="{{ onAddRangeStartISO }}" disabled="{{ addRangeIsPastEdit }}" style="{{ addRangeStartInputStyle }}">
+                     </div>
+                     <div>
+                       <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">End Date</div>
+                       <input type="date" value="{{ addRangeEndISO }}" onChange="{{ onAddRangeEndISO }}" disabled="{{ addRangeIsPastEdit }}" style="{{ addRangeEndInputStyle }}">
+                     </div>
+                    <sc-if value="{{ addRangeShowValueField }}" hint-placeholder-val="{{ true }}">
                     <div style="flex:1;min-width:160px;">
                       <div style="font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Value</div>
-                      <div style="display:flex;gap:8px;">
+                      <div style="display:flex;gap:8px;align-items:center;">
                         <input value="{{ addRangeValue }}" onChange="{{ onAddRangeValue }}" placeholder="e.g. 7.5 or 0.95" style="flex:1;border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;min-width:0;">
-                        <select value="{{ addRangeUnit }}" onChange="{{ onAddRangeUnit }}" style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;background:#fff;color:var(--text-title);">
-                          <option value="km">km</option>
-                          <option value="mi">mi</option>
-                        </select>
+                        <sc-if value="{{ addRangeTypeIsPercentage }}" hint-placeholder-val="{{ false }}">
+                          <span style="font-size:14px;color:var(--text-title);flex-shrink:0;">%</span>
+                        </sc-if>
+                        <sc-if value="{{ addRangeTypeIsDistance }}" hint-placeholder-val="{{ false }}">
+                          <span style="font-size:14px;color:var(--text-caption);flex-shrink:0;">/</span>
+                          <select value="{{ addRangeUnit }}" onChange="{{ onAddRangeUnit }}" style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;background:#fff;color:var(--text-title);">
+                            <option value="km">km</option>
+                            <option value="mi">mi</option>
+                          </select>
+                        </sc-if>
                       </div>
                     </div>
+                    </sc-if>
                   </div>
                   <sc-if value="{{ addRangeIsEdit }}" hint-placeholder-val="{{ false }}">
                   <div style="background:var(--warning-surface-lighter);border-radius:10px;padding:16px 18px;display:flex;gap:12px;">
@@ -668,33 +670,11 @@
                   </sc-if>
                   <sc-if value="{{ addRangeStepIsConfirm }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;flex-direction:column;gap:20px;">
-                      <sc-if value="{{ addRangeIsFutureEdit }}" hint-placeholder-val="{{ false }}">
-                        <div>
-                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">This is a scheduled future rate</h3>
-                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">No orders are affected yet. The new value will take effect on the scheduled start date.</p>
-                        </div>
-                      </sc-if>
-                      <sc-if value="{{ addRangeIsPastEdit }}" hint-placeholder-val="{{ false }}">
-                        <div>
-                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ addRangeConfirmCount }} orders affected</h3>
-                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This is a correction from a past date. Affected orders will be recalculated using the corrected value from the date it should have applied.</p>
-                        </div>
-                      </sc-if>
-                      <sc-if value="{{ addRangeIsCurrentEdit }}" hint-placeholder-val="{{ true }}">
-                        <div>
-                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ addRangeConfirmCount }} orders affected</h3>
-                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the applied rate immediately. Orders already booked in this range will retroactively use the new value.</p>
-                        </div>
-                      </sc-if>
-                      <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ false }}">
-                        <div>
-                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ addRangeConfirmCount }} orders will be affected</h3>
-                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This new range will apply immediately to orders that fall within it.</p>
-                        </div>
-                      </sc-if>
-                      <sc-if value="{{ addRangeConfirmHasOrders }}" hint-placeholder-val="{{ true }}">
-                        <div>
-                            <div style="display:flex;flex-direction:column;gap:16px;">
+                       <div>
+                         <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">Review this change</h3>
+                         <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">The current setting, and what it becomes when you confirm.</p>
+                       </div>
+                       <sc-if value="{{ addRangeConfirmHasOrders }}" hint-placeholder-val="{{ true }}">
                               <div style="background:#fff;border:1px solid var(--border-default);border-radius:10px;padding:18px 20px 4px;">
                                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
                                   <thead>
@@ -728,9 +708,33 @@
                                   </tbody>
                                 </table>
                               </div>
-                              <div style="display:flex;gap:4px;border-bottom:1px solid var(--border-default);">
-                                <div style="{{ addRangeOrdersTabAffectedStyle }}">Affected ({{ addRangeEligibleCount }})</div>
-                              </div>
+                       </sc-if>
+                      <sc-if value="{{ addRangeIsFutureEdit }}" hint-placeholder-val="{{ false }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">This is a scheduled future rate</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">No orders are affected yet. The new value will take effect on the scheduled start date.</p>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsPastEdit }}" hint-placeholder-val="{{ false }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">{{ addRangeConfirmCount }} orders affected</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This is a correction from a past date. Affected orders will be recalculated using the corrected value from the date it should have applied.</p>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsCurrentEdit }}" hint-placeholder-val="{{ true }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">{{ addRangeConfirmCount }} orders affected</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the applied rate immediately. Orders already booked in this range will retroactively use the new value.</p>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ addRangeIsAdd }}" hint-placeholder-val="{{ false }}">
+                        <div>
+                          <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">{{ addRangeConfirmCount }} orders will be affected</h3>
+                          <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This new range will apply immediately to orders that fall within it.</p>
+                        </div>
+                      </sc-if>
+                       <sc-if value="{{ addRangeConfirmHasOrders }}" hint-placeholder-val="{{ true }}">
+                         <div style="display:flex;flex-direction:column;gap:16px;">
                               <div style="border:1px solid var(--border-default);border-radius:8px;overflow:hidden;">
                                 <table style="width:100%;border-collapse:collapse;font-size:13px;">
                                   <thead>
@@ -756,15 +760,23 @@
                                   </tbody>
                                 </table>
                               </div>
-                              <div style="display:flex;align-items:center;gap:12px;">
-                                <div style="font-size:12px;color:var(--text-caption);">Showing {{ addRangeVisibleOrders.length }} of {{ addRangeOrdersTabTotal }} {{ addRangeOrdersTabLabel }} orders</div>
-                                <sc-if value="{{ addRangeOrdersHasMore }}" hint-placeholder-val="{{ false }}">
-                                  <button onClick="{{ showMoreAddRangeOrders }}" style="background:none;border:none;color:var(--text-brand-default);font-size:12px;font-weight:700;cursor:pointer;padding:0;">Load more</button>
-                                </sc-if>
+                              <div style="display:flex;align-items:center;justify-content:flex-end;gap:24px;font-size:13px;color:var(--text-body);">
+                                <span>Items per page</span>
+                                <select value="{{ addRangeOrdersPerPage }}" onChange="{{ onAddRangeOrdersPerPage }}" style="border:1px solid var(--border-default);border-radius:6px;padding:6px 10px;font-size:13px;font-family:var(--font-ui);background:#fff;color:var(--text-body);">
+                                  <option value="10">10</option>
+                                  <option value="25">25</option>
+                                  <option value="50">50</option>
+                                </select>
+                                <span>{{ addRangeOrdersRangeLabel }}</span>
+                                <div style="display:flex;gap:14px;">
+                                  <svg onClick="{{ onAddRangeOrdersFirst }}" style="{{ addRangeOrdersFirstStyle }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3v10M12 3L6 8l6 5"></path></svg>
+                                  <svg onClick="{{ onAddRangeOrdersPrev }}" style="{{ addRangeOrdersPrevStyle }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3L5 8l5 5"></path></svg>
+                                  <svg onClick="{{ onAddRangeOrdersNext }}" style="{{ addRangeOrdersNextStyle }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"></path></svg>
+                                  <svg onClick="{{ onAddRangeOrdersLast }}" style="{{ addRangeOrdersLastStyle }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3l6 5-6 5M12 3v10"></path></svg>
+                                </div>
                               </div>
-                            </div>
-                        </div>
-                      </sc-if>
+                         </div>
+                       </sc-if>
                     </div>
                   </sc-if>
                   <sc-if value="{{ addRangeStepIsReason }}" hint-placeholder-val="{{ false }}">
@@ -807,7 +819,7 @@
                 <div style="width:44px;height:44px;border-radius:50%;background:var(--color-green-100);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
                   <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6"><circle cx="9" cy="9" r="6.5"></circle><path d="M9 8v4M9 6v.01"></path></svg>
                 </div>
-                <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ subgroupConfirmTitle }}</h3>
+                <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">{{ subgroupConfirmTitle }}</h3>
                 <p style="margin:0;font-size:15px;line-height:1.5;color:var(--text-caption);">{{ subgroupConfirmBody }}</p>
                 <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-default);">
                   <button onClick="{{ cancelSubgroupToggle }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
@@ -942,7 +954,7 @@
                               <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
                                 <input value="{{ row.value }}" onChange="{{ row.onValue }}" style="width:80px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
                               </sc-if>
-                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.value }}</sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.valueDisplay }}</sc-if>
                             </td>
                             <td style="padding:14px 12px;color:var(--text-body);">
                               <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
@@ -970,7 +982,8 @@
                   <sc-if value="{{ scheduleEmpty }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
                       <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 2v3M11 2v3"></path></svg>
-                      <p style="margin:0;font-size:15px;color:var(--text-caption);">The fuel rate hasn't been set up yet.</p>
+                      <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">No fuel rate set</div>
+                      <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);max-width:420px;">Orders for this group will not carry a fuel charge until a range is added.</p>
                       <button onClick="{{ openAddRangeModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
                         Add New Range
@@ -1051,7 +1064,7 @@
                               <sc-if value="{{ rg.editing }}" hint-placeholder-val="{{ false }}">
                                 <input value="{{ rg.value }}" onChange="{{ rg.onValue }}" style="width:90px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
                               </sc-if>
-                              <sc-if value="{{ rg.notEditing }}" hint-placeholder-val="{{ true }}">{{ rg.value }}</sc-if>
+                              <sc-if value="{{ rg.notEditing }}" hint-placeholder-val="{{ true }}">{{ rg.valueDisplay }}</sc-if>
                             </td>
                             <td style="padding:14px 12px;color:var(--text-body);">{{ rg.rateType }}</td>
                             <td style="padding:14px 12px;color:var(--text-body);">
@@ -1072,7 +1085,7 @@
                       <h3 style="margin:0;font-size:16px;font-weight:500;color:var(--text-title);">Rules Exception</h3>
                       <svg onMouseEnter="{{ showExceptionInfo }}" onMouseLeave="{{ hideExceptionInfo }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;flex-shrink:0;"><circle cx="8" cy="8" r="6"></circle><path d="M8 7v4M8 5v.01"></path></svg>
                       <sc-if value="{{ exceptionInfoOpen }}" hint-placeholder-val="{{ false }}">
-                        <div style="position:absolute;top:100%;left:0;margin-top:8px;background:var(--color-neutrals-800,#1f2937);color:#fff;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;width:260px;z-index:20;box-shadow:0 8px 16px rgba(0,0,0,0.2);">Overrides that apply the fuel rate to a specific carrier group or subgroup instead of the default schedule.</div>
+                        <div style="position:absolute;top:100%;left:0;margin-top:8px;background:var(--color-neutrals-800,#1f2937);color:#fff;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;width:260px;z-index:20;box-shadow:0 8px 16px rgba(0,0,0,0.2);">A different rate for a specific connected group, instead of the default schedule.</div>
                       </sc-if>
                     </div>
                     <div style="display:flex;gap:12px;">
@@ -1109,7 +1122,8 @@
                     <sc-if value="{{ exceptionEmpty }}" hint-placeholder-val="{{ false }}">
                       <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
                         <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6h12M5 1.5v3M11 1.5v3"></path></svg>
-                        <p style="margin:0;font-size:15px;color:var(--text-caption);">No exceptions have been set up yet.</p>
+                        <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">No exceptions for this group</div>
+                        <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);max-width:420px;">The schedule above applies to all connected groups. Add an exception when one group has a different agreement.</p>
                         <button onClick="{{ openAddExceptionModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
                           Add New Exception
@@ -1162,7 +1176,7 @@
                               <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
                                 <input value="{{ row.value }}" onChange="{{ row.onValue }}" style="width:90px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
                               </sc-if>
-                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.value }}</sc-if>
+                              <sc-if value="{{ row.notEditing }}" hint-placeholder-val="{{ true }}">{{ row.valueDisplay }}</sc-if>
                             </td>
                             <td style="padding:14px 12px;color:var(--text-body);">
                               <sc-if value="{{ row.editing }}" hint-placeholder-val="{{ false }}">
@@ -1210,6 +1224,18 @@
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
                 <input value="{{ rulesSearch }}" onChange="{{ setRulesSearch }}" placeholder="Search your article number, or article description" style="border:none;outline:none;font-size:14px;flex:1;font-family:var(--font-ui);">
               </div>
+              <sc-if value="{{ kmRatesBlocked }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
+                  <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="1.5" y="5" width="9" height="6" rx="1"></rect><path d="M10.5 7.5h2.5l1.5 2v1.5h-4z"></path><circle cx="4.5" cy="12" r="1.2"></circle><circle cx="11.5" cy="12" r="1.2"></circle></svg>
+                  <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">No kilometre rates for this group</div>
+                  <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);max-width:420px;">Kilometre rates are set per vehicle type on the carrier that operates them. {{ activeGroup.subgroup }} is {{ activeGroupRolePhrase }}, so there are no vehicles to price here.</p>
+                  <button onClick="{{ openRuleModal }}" style="background:var(--button-primary-bg-default);color:var(--button-primary-label);border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                    Add a rate anyway
+                  </button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ kmRatesAvailable }}" hint-placeholder-val="{{ true }}">
               <div style="overflow-x:visible;">
                 <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:700px;">
                   <thead>
@@ -1256,7 +1282,7 @@
                           <sc-if value="{{ rule.editing }}" hint-placeholder-val="{{ false }}">
                             <input value="{{ rule.rate }}" onChange="{{ rule.onRate }}" style="width:100px;border:1px solid var(--form-border);border-radius:6px;padding:6px 8px;font-size:13px;">
                           </sc-if>
-                          <sc-if value="{{ rule.notEditing }}" hint-placeholder-val="{{ true }}">{{ rule.rate }}</sc-if>
+                          <sc-if value="{{ rule.notEditing }}" hint-placeholder-val="{{ true }}">{{ rule.rateDisplay }}</sc-if>
                         </td>
                         <td style="padding:14px 12px;color:var(--text-body);">
                           <div style="display:flex;flex-wrap:wrap;gap:6px;max-width:220px;">
@@ -1290,6 +1316,7 @@
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3l6 5-6 5M12 3v10"></path></svg>
                 </div>
               </div>
+              </sc-if>
             </div>
           </sc-if>
 
@@ -1298,7 +1325,7 @@
             <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;">
               <div style="background:#fff;border-radius:12px;width:600px;max-width:90vw;max-height:88vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
-                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ ruleModalTitle }}</h3>
+                  <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">{{ ruleModalTitle }}</h3>
                   <sc-if value="{{ ruleModalStepIsDetails }}" hint-placeholder-val="{{ true }}">
                     <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" stroke-linecap="round" onClick="{{ closeRuleModal }}" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
                   </sc-if>
@@ -1344,13 +1371,13 @@
                     <label style="display:block;font-size:14px;font-weight:700;color:var(--text-title);margin-bottom:8px;">Rate</label>
                     <div style="display:flex;gap:12px;">
                       <div style="flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;">
-                        <span style="color:var(--text-caption);">€</span>
+                        <span style="color:var(--text-caption);">{{ activeCurrencySymbol }}</span>
                         <input value="{{ ruleModalRate }}" onChange="{{ onRuleModalRate }}" placeholder="0.00" style="border:none;outline:none;flex:1;font-size:14px;font-family:var(--font-ui);width:0;">
                         <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><path d="M2 5l4-4 4 4M2 9l4 4 4-4"></path></svg>
                       </div>
                       <select value="{{ ruleModalUnit }}" onChange="{{ onRuleModalUnit }}" style="border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:#fff;">
                         <option value="/ order">/ order</option>
-                        <option value="/ km">/ km</option>
+                        <option value="{{ activeRatePerDistance }}">{{ activeRatePerDistance }}</option>
                         <option value="/ shipment">/ shipment</option>
                       </select>
                     </div>
@@ -1386,7 +1413,7 @@
                 <sc-if value="{{ ruleModalStepIsConfirm }}" hint-placeholder-val="{{ false }}">
                   <div style="padding:24px;display:flex;flex-direction:column;gap:16px;">
                     <div>
-                      <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-title);">{{ confirmChangeCount }} orders affected</h3>
+                      <h3 style="margin:0 0 6px;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">{{ confirmChangeCount }} orders affected</h3>
                       <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-caption);">This change updates the rate used for this rule. Affected orders will be recalculated using the new value.</p>
                     </div>
                     <div style="background:var(--color-neutrals-100);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:6px;">
@@ -1482,7 +1509,7 @@
                     <div style="width:44px;height:44px;border-radius:50%;background:var(--warning-surface-lighter);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
                       <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="var(--warning-text)" stroke-width="1.6"><path d="M9 2l8 14H1z"></path><path d="M9 7v4M9 13.2v.01"></path></svg>
                     </div>
-                    <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-title);">{{ deleteConfirmTitle }}</h3>
+                    <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">{{ deleteConfirmTitle }}</h3>
                     <p style="margin:0;font-size:15px;line-height:1.5;color:var(--text-caption);">You'll need to register the article again, and any pricing list using it will be affected immediately.</p>
                     <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-default);">
                       <button onClick="{{ closeDeleteConfirm }}" style="background:#fff;color:var(--text-title);border:1px solid var(--border-default);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;">Cancel</button>
@@ -1509,7 +1536,7 @@
           <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:20px 24px;display:flex;flex-direction:column;gap:12px;">
             <div>
               <div style="font-size:13px;color:var(--text-caption);margin-bottom:4px;">{{ enterpriseGroup.subgroup }}</div>
-              <div style="font-family:var(--font-display);font-weight:700;font-size:19px;color:var(--text-title);">{{ enterpriseGroup.subgroup }}</div>
+              <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-3xl);color:var(--text-title);">{{ enterpriseGroup.subgroup }}</div>
             </div>
             <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
               <div style="width:80px;height:70px;border:1px solid var(--border-default);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--icon-neutral);flex-shrink:0;">
@@ -1545,7 +1572,7 @@
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="2" style="flex-shrink:0;"><path d="M6 3l5 5-5 5"></path></svg>
           </div>
           <div style="border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--border-default);padding:24px;display:flex;flex-direction:column;gap:16px;">
-            <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--text-title);">Relations</h3>
+            <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-title);">Relations</h3>
             <div onClick="{{ backToRateFromEnterprise }}" style="display:flex;align-items:center;gap:12px;background:var(--color-green-50);border:1px solid var(--border-brand-lightest);border-radius:8px;padding:14px 16px;cursor:pointer;">
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="var(--text-brand-default)" stroke-width="1.6" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
               <span style="flex:1;font-size:13px;color:var(--text-body);">Looking to set fuel or transport rates for these relations? That's managed in Rate Configuration.</span>
@@ -1587,7 +1614,10 @@
                         <div>{{ row.groupName }}</div>
                         <div style="font-size:12px;color:var(--text-brand-default);">{{ row.subGroup }}</div>
                       </td>
-                      <td style="padding:14px 12px;color:var(--text-body);">{{ row.relation }}</td>
+                      <td style="padding:14px 12px;color:var(--text-body);">
+                        <div style="font-weight:700;">{{ row.relation }}</div>
+                        <div style="font-size:12px;color:var(--text-caption);">{{ row.relationDetail }}</div>
+                      </td>
                       <td style="padding:14px 12px;color:var(--text-caption);">{{ row.serviceTypes }}</td>
                     </tr>
                   </sc-for>
@@ -1602,7 +1632,7 @@
           <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1200;">
             <div style="background:#fff;border-radius:12px;width:640px;max-width:92vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
               <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-default);">
-                <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:19px;color:var(--text-title);">Add Groups</h3>
+                <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--text-title);">Add Groups</h3>
                 <svg onClick="{{ closeAddGroups }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
               </div>
               <div style="display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--border-default);">
@@ -1622,8 +1652,8 @@
                 <sc-if value="{{ addGroupsStepIsPick }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--border-default);border-radius:8px;padding:10px 14px;margin-bottom:8px;">
                     <svg width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
-                    <input value="{{ addGroupsSearch }}" onChange="{{ onAddGroupsSearch }}" placeholder="Search Carries" style="border:none;outline:none;font-size:14px;flex:1;">
-                    <span style="font-size:12px;color:var(--text-caption);white-space:nowrap;">{{ addGroupsSelectedCount }} Carrier are selected</span>
+                    <input value="{{ addGroupsSearch }}" onChange="{{ onAddGroupsSearch }}" placeholder="Search groups" style="border:none;outline:none;font-size:14px;flex:1;">
+                    <span style="font-size:12px;color:var(--text-caption);white-space:nowrap;">{{ addGroupsSelectedCount }} groups selected</span>
                   </div>
                   <sc-for list="{{ addGroupsCandidates }}" as="c" hint-placeholder-count="5">
                     <label onClick="{{ c.onToggle }}" style="display:flex;align-items:center;gap:10px;padding:10px 4px;cursor:pointer;font-size:14px;color:var(--text-title);border-top:1px solid var(--border-default);">
@@ -1659,58 +1689,111 @@ const RANGE_TYPE_INFO = {
   'Fuel Percentage': 'A percentage surcharge applied to the base transport cost.',
   'Fuel Not Applicable': 'No fuel surcharge applies for this range.',
 };
-function tagsFromGroupType(groupType) {
-  const str = groupType || '';
-  const tags = [];
-  if (/\bCarrier\b/i.test(str)) tags.push('Carrier');
-  if (/\bShipper\b/i.test(str)) tags.push('Shipper');
-  if (/\bBrokerage\b/i.test(str)) tags.push('Brokerage');
-  return tags;
+/* Three separate vocabularies, deliberately not merged into one field:
+ *   groupType   — what the company IS
+ *   serviceType — how it is served (subgroup level)
+ *   relation    — the counterparty's role in one specific pairing
+ */
+const GROUP_TYPE_VALUES = ['Shipper', 'Carrier', 'Freight Forwarder', 'CtrlChain Entity'];
+const SERVICE_TYPE_VALUES = ['Brokerage', 'Managed Transport', 'SaaS'];
+const RELATION_VALUES = ['Customer', 'Supplier', 'Subcontractor'];
+function splitTags(value, allowed) {
+  const parts = String(value || '').split(',').map(s => s.trim());
+  return allowed.filter(v => parts.includes(v));
 }
-const ADD_GROUPS_REL_OPTIONS = ['Subcontractor', 'Allowlist', 'Brokerage', 'Managed Transport', 'SaaS'];
-const ADD_GROUPS_CANDIDATES = ['#MILAN SAAS CARRIER', 'TS Logistics GmbH', '! Marindas Carrier', '!! Lucifer Test !!', 'Lucifer 2', 'Lucifer Carrier', 'CtrlChain B.V.', 'CtrlChain USA', 'NewCold France', 'Ingram Micro Spain', 'Enepso Sp. z o.o.', 'CTS NL c/o Enepso Sp. z o.o.', 'Tesla Trucking Inc'];
+function tagsFromGroupType(groupType) { return splitTags(groupType, GROUP_TYPE_VALUES); }
+/* Kilometre rates are priced per vehicle type on the carrier that operates the
+ * vehicles, so a group with no Carrier role has nothing to price here. Derived
+ * from groupType rather than from an id, so a multi-role group such as
+ * "Carrier, Freight Forwarder" still counts as a carrier. */
+function isCarrierGroup(group) {
+  return tagsFromGroupType(group && group.groupType).includes('Carrier');
+}
+function tagsFromServiceType(serviceType) { return splitTags(serviceType, SERVICE_TYPE_VALUES); }
+/* The Relations column has to say which way the money and the transport flow,
+ * because "Customer" alone reads ambiguously once both sides are companies. */
+function relationSentence(relation, thisSide) {
+  const other = thisSide || 'this group';
+  if (relation === 'Customer') return `Customer — buys transport from ${other}`;
+  if (relation === 'Supplier') return `Supplier — sells transport to ${other}`;
+  if (relation === 'Subcontractor') return `Subcontractor — carries loads on behalf of ${other}`;
+  return relation || '';
+}
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+/* Rows store dates as display strings ("Sat, 01 Aug 2026", occasionally with a
+ * trailing time, and sometimes "Select date" or "open"). A native date input
+ * needs ISO, so convert both ways and fail soft to an empty field rather than
+ * showing a broken date. */
+function dateToISO(display) {
+  const m = String(display || '').match(/(\d{1,2})\s+([A-Za-z]{3})[a-z]*\s+(\d{4})/);
+  if (!m) return '';
+  const mi = MONTHS_SHORT.findIndex(x => x.toLowerCase() === m[2].toLowerCase());
+  if (mi < 0) return '';
+  return `${m[3]}-${String(mi + 1).padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+}
+function isoToDate(iso) {
+  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return '';
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  if (isNaN(d.getTime())) return '';
+  return `${DAYS_SHORT[d.getDay()]}, ${m[3]} ${MONTHS_SHORT[Number(m[2]) - 1]} ${m[1]}`;
+}
+const CURRENCY_SYMBOLS = { EUR: '€', USD: '$' };
+function currencySymbol(code) { return CURRENCY_SYMBOLS[code] || '€'; }
+/* Fixture rates are written in euros; re-render them in the active group's currency. */
+function inCurrency(value, code) {
+  return String(value == null ? '' : value).replace(/€/g, currencySymbol(code));
+}
+const ADD_GROUPS_REL_OPTIONS = RELATION_VALUES;
+const ADD_GROUPS_CANDIDATES = ['CtrlChain B.V.', 'CtrlChain USA', 'Ingram', 'Ingram Micro Spain', 'NewCold France', 'Enepso Sp. z o.o. (FF)', 'CTS NL c/o Enepso Sp. z o.o.', 'TESLA TRUCKING INC (R)'];
+/* Relations are a property of the PAIR, so each pairing is seeded from both
+ * sides with mirrored roles. Keyed by the id of the group whose Relations tab
+ * you are looking at; relationDetail names that same group, so the direction
+ * reads correctly whichever side you open. */
 const ENTERPRISE_RELATIONS_SEED = {
-  1: [
-    { groupName: 'TS Logistics GmbH', subGroup: 'TS Logistics GmbH', relation: 'Subcontractor', serviceTypes: '-' },
-    { groupName: 'Coenen BV', subGroup: '2LevelSubGroup', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
+  1: [],
   2: [],
-  3: [
-    { groupName: '010922-IM-Demo', subGroup: 'dilan carrier1111', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
+  3: [],
+  // Ingram (Shipper) — scenario 1, seen from the buying side
   4: [
-    { groupName: 'CtrlChain Enterprise', subGroup: 'CtrlChain B.V.', relation: 'Brokerage', serviceTypes: '-' },
-    { groupName: 'NewCold Enterprise', subGroup: 'Baltic Carriers', relation: 'Allowlist', serviceTypes: '-' },
-    { groupName: 'CtrlChain Enterprise', subGroup: 'Benelux Fleet', relation: 'Subcontractor', serviceTypes: '-' },
-    { groupName: '#MILAN SAAS CARRIER', subGroup: '#MILAN SAAS CARRIER', relation: 'Subcontractor', serviceTypes: '-' },
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Supplier', relationDetail: 'Supplier — sells transport to Ingram', serviceTypes: 'Brokerage' },
   ],
   5: [],
-  6: [
-    { groupName: 'Ingram Enterprise', subGroup: 'Nordics Distribution', relation: 'Allowlist', serviceTypes: '-' },
-  ],
-  7: [
-    { groupName: 'TS Logistics GmbH', subGroup: 'TS Logistics GmbH', relation: 'Subcontractor', serviceTypes: '-' },
-    { groupName: '!! Lucifer Test !!', subGroup: '!! Lucifer Test !!', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
+  6: [],
+  7: [],
+  // CtrlChain B.V. — scenarios 1 and 2 meet here: sells to shippers, buys from carriers
   8: [
-    { groupName: 'Ingram Enterprise', subGroup: 'Ingram Enterprise', relation: 'Brokerage', serviceTypes: '-' },
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o.', relation: 'Brokerage', serviceTypes: '-' },
+    { groupName: 'Ingram', subGroup: 'Ingram', relation: 'Customer', relationDetail: 'Customer — buys transport from CtrlChain B.V.', serviceTypes: 'Brokerage' },
+    { groupName: 'NewCold', subGroup: 'NewCold France', relation: 'Customer', relationDetail: 'Customer — buys transport from CtrlChain B.V.', serviceTypes: 'Brokerage' },
+    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to CtrlChain B.V.', serviceTypes: 'Brokerage' },
   ],
-  9: [],
-  10: [],
+  // CtrlChain USA — same shape as B.V., but priced in USD per mile
+  9: [
+    { groupName: 'Tesla Trucking', subGroup: 'TESLA TRUCKING INC (R)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to CtrlChain USA', serviceTypes: 'Brokerage' },
+  ],
+  // NewCold France — subgroup-level override of the NewCold group
+  10: [
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Supplier', relationDetail: 'Supplier — sells transport to NewCold France', serviceTypes: 'Brokerage' },
+  ],
+  // Ingram Micro Spain — scenario 4, shipper buying direct under Managed Transport
   11: [
-    { groupName: 'Tesla Trucking Inc', subGroup: 'Tesla Trucking Inc', relation: 'Managed Transport', serviceTypes: '-' },
+    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to Ingram Micro Spain', serviceTypes: 'Managed Transport' },
   ],
-  12: [
-    { groupName: 'CtrlChain Enterprise', subGroup: 'CtrlChain B.V.', relation: 'Brokerage', serviceTypes: '-' },
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'CTS NL c/o Enepso Sp. z o.o.', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
-  13: [
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o.', relation: 'Subcontractor', serviceTypes: '-' },
-  ],
+  12: [],
+  13: [],
+  // TESLA TRUCKING INC (R) — sells to a freight forwarder and to CtrlChain USA
   14: [
-    { groupName: 'Ingram Enterprise', subGroup: 'Ingram Micro Spain', relation: 'Managed Transport', serviceTypes: '-' },
+    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Customer', relationDetail: 'Customer — buys transport from TESLA TRUCKING INC (R)', serviceTypes: '-' },
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain USA', relation: 'Customer', relationDetail: 'Customer — buys transport from TESLA TRUCKING INC (R)', serviceTypes: 'Brokerage' },
   ],
+  // Enepso (FF) — scenarios 2, 3 and 4 all touch this record
+  15: [
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Customer', relationDetail: 'Customer — buys transport from Enepso Sp. z o.o. (FF)', serviceTypes: 'Brokerage' },
+    { groupName: 'Ingram', subGroup: 'Ingram Micro Spain', relation: 'Customer', relationDetail: 'Customer — buys transport from Enepso Sp. z o.o. (FF)', serviceTypes: 'Managed Transport' },
+    { groupName: 'Tesla Trucking', subGroup: 'TESLA TRUCKING INC (R)', relation: 'Subcontractor', relationDetail: 'Subcontractor — carries loads on behalf of Enepso Sp. z o.o. (FF)', serviceTypes: '-' },
+  ],
+  16: [],
 };
 function buildGroupsTree(groupsData) {
   const byGroup = {};
@@ -1756,6 +1839,8 @@ class Component extends DCLogic {
     treeMenuOpenId: null,
     activeTab: 'Fuel Rate',
     addRangeOrdersTab: 'affected',
+    addRangeOrdersPage: 0,
+    addRangeOrdersPerPage: 10,
     subTab: 'schedule',
     bannerVisible: true,
     groupsView: 'enterprises',
@@ -1806,8 +1891,6 @@ class Component extends DCLogic {
     rowMenuOpenId: null,
     addRangeModalOpen: false,
     addRangeType: null,
-    addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
-    addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
     addRangeValue: '',
     addRangeOriginalValue: '',
     addRangeDetailView: 'summary',
@@ -1867,20 +1950,22 @@ class Component extends DCLogic {
       { id: 9, num: '428', desc: 'L4H4 Minimum ride fare', rate: '€ 85.80', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'] },
     ],
     groupsData: [
-      { id: 1, subgroup: 'CtrlChain Enterprise', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load', manager: 'Martijn Coenen', industry: 'Transport' },
-      { id: 2, subgroup: 'Benelux Fleet', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:15', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: '-' },
-      { id: 3, subgroup: 'DACH Operations', group: 'CtrlChain Enterprise', parentSubgroup: 'Benelux Fleet', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:20', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: '-' },
-      { id: 4, subgroup: 'Ingram Enterprise', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Shipper, Finance customer, Location, Enterprise', serviceType: '-', manager: 'Sanne de Groot', industry: 'Transport' },
-      { id: 5, subgroup: 'Nordics Distribution', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '10:05', groupType: 'Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: '-' },
-      { id: 7, subgroup: 'NewCold Enterprise', group: 'NewCold Enterprise', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Thu, 16 Jul 2026', createdTime: '09:15', groupType: 'Carrier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: 'Anders Lindqvist', industry: 'Transport' },
-      { id: 6, subgroup: 'Baltic Carriers', group: 'NewCold Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '11:40', groupType: 'Carrier, Finance supplier, Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: '-' },
-      { id: 8, subgroup: 'CtrlChain B.V.', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:00', groupType: 'Brokerage, Finance supplier, Enterprise', serviceType: '-', manager: 'Martijn Coenen', industry: 'Brokerage' },
-      { id: 9, subgroup: 'CtrlChain USA', group: 'CtrlChain Enterprise', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:05', groupType: 'Brokerage, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: 'Brokerage' },
-      { id: 10, subgroup: 'NewCold France', group: 'NewCold Enterprise', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Tue, 25 Aug 2026', createdTime: '10:10', groupType: 'Shipper, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: 'Transport' },
-      { id: 11, subgroup: 'Ingram Micro Spain', group: 'Ingram Enterprise', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Tue, 25 Aug 2026', createdTime: '10:20', groupType: 'Shipper, Brokerage, Finance customer, Enterprise', serviceType: '-', manager: '—', industry: 'Transport' },
-      { id: 12, subgroup: 'Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:30', groupType: 'Carrier, Brokerage, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: 'Piotr Kowalczyk', industry: 'Freight Forwarding' },
-      { id: 13, subgroup: 'CTS NL c/o Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 26 Aug 2026', createdTime: '08:45', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', manager: '—', industry: 'Managed Transport' },
-      { id: 14, subgroup: 'Tesla Trucking Inc', group: 'Tesla Trucking Inc', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '14:00', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL)', manager: '—', industry: 'Transport' },
+      { id: 1, subgroup: 'CtrlChain', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'CtrlChain Entity', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: 'Martijn Coenen', industry: 'Transport' },
+      { id: 8, subgroup: 'CtrlChain B.V.', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:00', groupType: 'CtrlChain Entity', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: 'Martijn Coenen', industry: 'Transport' },
+      { id: 9, subgroup: 'CtrlChain USA', group: 'CtrlChain', addr1: 'Gateway Freight Terminal', addr2: '2100 Logistics Pkwy, Chicago, IL 60638, USA', created: 'Mon, 24 Aug 2026', createdTime: '09:05', groupType: 'CtrlChain Entity', serviceType: 'Brokerage', currency: 'USD', distanceUnit: 'mi', manager: '—', industry: 'Transport' },
+      { id: 4, subgroup: 'Ingram', group: 'Ingram', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Shipper', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: 'Sanne de Groot', industry: 'Transport' },
+      { id: 11, subgroup: 'Ingram Micro Spain', group: 'Ingram', addr1: 'Zona Franca Logistics Centre', addr2: 'Carrer A 42, 08040 Barcelona, Spain', created: 'Tue, 25 Aug 2026', createdTime: '10:20', groupType: 'Shipper', serviceType: 'Managed Transport, Brokerage', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: 'Transport' },
+      { id: 5, subgroup: 'Nordics Distribution', group: 'Ingram', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '10:05', groupType: 'Shipper', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
+      { id: 2, subgroup: 'Benelux Fleet', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:15', groupType: 'Carrier', serviceType: 'Managed Transport', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
+      { id: 3, subgroup: 'DACH Operations', group: 'CtrlChain', parentSubgroup: 'Benelux Fleet', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:20', groupType: 'Carrier', serviceType: 'Managed Transport', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
+      { id: 7, subgroup: 'NewCold', group: 'NewCold', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Thu, 16 Jul 2026', createdTime: '09:15', groupType: 'Shipper', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: 'Anders Lindqvist', industry: 'Transport' },
+      { id: 10, subgroup: 'NewCold France', group: 'NewCold', addr1: 'Plateforme Logistique Nord', addr2: '14 Rue du Transport, 59810 Lesquin, France', created: 'Tue, 25 Aug 2026', createdTime: '10:10', groupType: 'Shipper', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: 'Transport' },
+      { id: 6, subgroup: 'Baltic Carriers', group: 'NewCold', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '11:40', groupType: 'Carrier', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
+      { id: 12, subgroup: 'Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:30', groupType: 'Carrier, Freight Forwarder', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: 'Piotr Kowalczyk', industry: 'Transport' },
+      { id: 15, subgroup: 'Enepso Sp. z o.o. (FF)', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:35', groupType: 'Carrier, Freight Forwarder', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: 'Piotr Kowalczyk', industry: 'Transport' },
+      { id: 13, subgroup: 'CTS NL c/o Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 26 Aug 2026', createdTime: '08:45', groupType: 'Carrier', serviceType: 'Managed Transport', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: 'Transport' },
+      { id: 16, subgroup: 'Tesla Trucking', group: 'Tesla Trucking', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '13:55', groupType: 'Carrier', serviceType: '-', currency: 'USD', distanceUnit: 'mi', manager: '—', industry: 'Transport' },
+      { id: 14, subgroup: 'TESLA TRUCKING INC (R)', group: 'Tesla Trucking', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '14:00', groupType: 'Carrier', serviceType: '-', currency: 'USD', distanceUnit: 'mi', manager: '—', industry: 'Transport' },
     ],
     filterChipsData: [
       { id: 1, label: 'Assigned Operator: John Doe' },
@@ -1916,7 +2001,13 @@ class Component extends DCLogic {
   submitAddGroups = () => this.setState(s => {
     const groupId = s.enterpriseGroupId;
     const existing = s.enterpriseRelationsByGroup[groupId] || ENTERPRISE_RELATIONS_SEED[groupId] || [];
-    const newRows = s.addGroupsSelected.map(name => ({ groupName: name, subGroup: name, relation: s.addGroupsRelType, serviceTypes: '-' }));
+    const thisSide = (s.groupsData.find(g => g.id === groupId) || {}).subgroup || 'this group';
+    const newRows = s.addGroupsSelected.map(name => ({
+      groupName: name, subGroup: name,
+      relation: s.addGroupsRelType,
+      relationDetail: relationSentence(s.addGroupsRelType, thisSide),
+      serviceTypes: '-',
+    }));
     const firstNew = s.addGroupsSelected[0];
     return {
       enterpriseRelationsByGroup: { ...s.enterpriseRelationsByGroup, [groupId]: [...newRows, ...existing] },
@@ -2035,7 +2126,8 @@ class Component extends DCLogic {
   commitRuleModal = () => this.setState(s => {
     const key = s.activeTab;
     const n = parseFloat(s.ruleModalRate);
-    const rate = `€ ${isNaN(n) ? '0.00' : n.toFixed(2)}`;
+    const sym = currencySymbol((s.groupsData.find(g => g.id === s.activeGroupId) || {}).currency);
+    const rate = `${sym} ${isNaN(n) ? '0.00' : n.toFixed(2)}`;
     const vehicleType = key === 'Kilometre Rates' ? s.ruleModalVehicleType : undefined;
     if (s.ruleModalEditId != null) {
       return {
@@ -2070,14 +2162,12 @@ class Component extends DCLogic {
   });
   openAddRangeModal = () => this.setState({
     addRangeModalOpen: true, addRangeTarget: 'schedule', addRangeType: null, addRangeStep: 1, addRangeEditRowStatus: null,
-    addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
-    addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
+    addRangeStartFull: '', addRangeEndFull: '',
     addRangeValue: '',
   });
   openAddRangeModalForDetail = () => this.setState({
     addRangeModalOpen: true, addRangeTarget: 'detail', addRangeType: null, addRangeStep: 1, addRangeEditRowStatus: null,
-    addRangeStartM: '', addRangeStartD: '', addRangeStartY: '',
-    addRangeEndM: '', addRangeEndD: '', addRangeEndY: '',
+    addRangeStartFull: '', addRangeEndFull: '',
     addRangeValue: '',
   });
   openEditDetailRangeModal = (rg) => this.setState(s => ({
@@ -2109,8 +2199,8 @@ class Component extends DCLogic {
   backAddRangeStepToConfirm = () => this.setState({ addRangeStep: 2 });
   continueToReasonStep = () => this.setState({ addRangeStep: 3 });
   setAddRangeDetailView = (view) => this.setState({ addRangeDetailView: view });
-  setAddRangeOrdersTab = (tab) => this.setState({ addRangeOrdersTab: tab, addRangeOrdersPage: 0 });
-  showMoreAddRangeOrders = () => this.setState(s => ({ addRangeOrdersPage: s.addRangeOrdersPage + 1 }));
+  setAddRangeOrdersPerPage = (e) => this.setState({ addRangeOrdersPerPage: parseInt(e.target.value, 10) || 10, addRangeOrdersPage: 0 });
+  goAddRangeOrdersPage = (page) => this.setState({ addRangeOrdersPage: Math.max(0, page) });
   buildAffectedOrderGroups = (count, originalValue, newValue) => {
     const valueChanged = (originalValue ?? '').toString().trim() !== (newValue ?? '').toString().trim();
     const ineligibleCount = Math.max(1, Math.round(count * 0.32));
@@ -2143,36 +2233,6 @@ class Component extends DCLogic {
   };
   setAddRangeType = (type) => this.setState({ addRangeType: type });
   setAddRangeField = (field, value) => this.setState({ [field]: value });
-  dateSegRefs = {};
-  dateSegChain = {
-    start: [['addRangeStartM', 2], ['addRangeStartD', 2], ['addRangeStartY', 4]],
-    end: [['addRangeEndM', 2], ['addRangeEndD', 2], ['addRangeEndY', 4]],
-  };
-  onDateSeg = (which, idx) => (e) => {
-    const chain = this.dateSegChain[which];
-    let digits = (e.target.value || '').replace(/\D/g, '');
-    const patch = {};
-    let i = idx;
-    while (digits.length && i < chain.length) {
-      const [field, max] = chain[i];
-      patch[field] = digits.slice(0, max);
-      digits = digits.slice(max);
-      i++;
-    }
-    if (!Object.keys(patch).length) patch[chain[idx][0]] = '';
-    const lastFilled = i - 1;
-    this.setState(patch, () => {
-      const filledToMax = patch[chain[lastFilled]?.[0]]?.length === chain[lastFilled]?.[1];
-      const next = chain[filledToMax ? lastFilled + 1 : lastFilled];
-      if (next && this.dateSegRefs[next[0]]) this.dateSegRefs[next[0]].focus();
-    });
-  };
-  onDateSegKey = (which, idx) => (e) => {
-    if (e.key !== 'Backspace' || e.target.value !== '' || idx === 0) return;
-    const prev = this.dateSegChain[which][idx - 1];
-    const el = this.dateSegRefs[prev[0]];
-    if (el) { e.preventDefault(); el.focus(); }
-  };
   saveAddRange = () => {
     const s = this.state;
     if (s.addRangeStep === 1) {
@@ -2190,8 +2250,10 @@ class Component extends DCLogic {
     this.setState({ confirmChangeOpen: false, ruleModalStep: 1 });
   };
   commitAddRange = () => this.setState(s => {
-    const startDate = `${s.addRangeStartM}/${s.addRangeStartD}/${s.addRangeStartY}`;
-    const endDate = `${s.addRangeEndM}/${s.addRangeEndD}/${s.addRangeEndY}`;
+    /* Both add and edit now come from the same date picker, so new rows get
+     * the same display format as the seeded ones instead of "8/1/2026". */
+    const startDate = s.addRangeStartFull;
+    const endDate = s.addRangeEndFull;
     const valueSuffix = s.addRangeType === 'Fuel Percentage' ? '%' : '';
     const value = valueSuffix ? `${s.addRangeValue}${valueSuffix}` : s.addRangeValue;
     if (s.addRangeTarget === 'editSchedule') {
@@ -2290,7 +2352,8 @@ class Component extends DCLogic {
   setAddExceptionField = (field, value) => this.setState({ [field]: value });
   saveAddException = () => this.setState(s => {
     const suffix = s.addExceptionType === 'Fuel Percentage' ? '%' : '';
-    const prefix = (s.addExceptionType === 'Fuel Rate/Distance' || s.addExceptionType === 'Transport Rate/Distance') ? '€ ' : '';
+    const prefix = (s.addExceptionType === 'Fuel Rate/Distance' || s.addExceptionType === 'Transport Rate/Distance')
+      ? currencySymbol((s.groupsData.find(g => g.id === s.activeGroupId) || {}).currency) + ' ' : '';
     const value = s.addExceptionType === 'Fuel Not Applicable' ? '—' : `${prefix}${s.addExceptionValue}${suffix}`;
     return {
       exceptionRows: [{
@@ -2343,7 +2406,9 @@ class Component extends DCLogic {
 
   buildRows(listKey) {
     const activeGroup = this.state.groupsData.find(g => g.id === this.state.activeGroupId);
-    if (activeGroup && activeGroup.id === 7) return [];
+    /* Removed: a hardcoded `activeGroup.id === 7` gate that blanked the fuel
+     * schedule and exception list for one arbitrary group. Fuel rate applies
+     * to every group role, so nothing is gated here. */
     const ACTIVE_RANGE_OVERRIDES = { 4: ['Wed, 15 Jul 2026', 'Fri, 14 Aug 2026'] };
     let sourceRows = (listKey === 'scheduleRows' && activeGroup && (activeGroup.id === 4 || ACTIVE_RANGE_OVERRIDES[activeGroup.id]))
       ? this.state[listKey].map(row => {
@@ -2362,6 +2427,7 @@ class Component extends DCLogic {
     }
     return sourceRows.map(row => ({
       ...row,
+      valueDisplay: inCurrency(row.value, activeGroup && activeGroup.currency),
       notEditing: !row.editing,
       statusBadgeStyle: this.statusBadgeStyle(row.status),
       isWarning: row.status === 'No active range',
@@ -2457,12 +2523,25 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const addRangeOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.addRangeOriginalValue, s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue);
+    /* Affected-orders paginator, matching the platform's own control:
+     *   Items per page [n]   from - to of total   |<  <  >  >|
+     * Page is clamped on read so changing the page size can never leave you
+     * stranded past the end of the list. */
+    const addRangeOrdersTotal = s.addRangeOrdersTab === 'ineligible'
+      ? addRangeOrderGroups.ineligibleCount : addRangeOrderGroups.eligibleCount;
+    const addRangeOrdersPerPage = s.addRangeOrdersPerPage || 10;
+    const addRangeOrdersLastPage = Math.max(0, Math.ceil(addRangeOrdersTotal / addRangeOrdersPerPage) - 1);
+    const addRangeOrdersPage = Math.min(s.addRangeOrdersPage || 0, addRangeOrdersLastPage);
+    const addRangeOrdersStart = addRangeOrdersPage * addRangeOrdersPerPage;
+    const addRangeOrdersAtStart = addRangeOrdersPage === 0;
+    const addRangeOrdersAtEnd = addRangeOrdersPage >= addRangeOrdersLastPage;
+    const pagerIconStyle = (disabled) => `cursor:${disabled ? 'not-allowed' : 'pointer'};color:${disabled ? 'var(--color-neutrals-400)' : 'var(--text-brand-default)'};flex-shrink:0;`;
     const shortDate = (str) => {
       const m = (str || '').match(/(\d{1,2})\s+(\w{3})\w*\s+(\d{4})/);
       return m ? `${m[1].padStart(2, '0')} ${m[2]} ${m[3].slice(2)}` : str;
     };
     const addRangeShowReasonStep = (s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange') || s.addRangeStep === 3;
-    const ruleModalOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.ruleModalOriginalRate, s.ruleModalRate ? `€ ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '');
+    const ruleModalOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.ruleModalOriginalRate, s.ruleModalRate ? `${currencySymbol(activeGroup.currency)} ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '');
     const addRangeOrdersTabStyle = (active) => ({
       padding: '10px 4px', fontSize: 14, fontWeight: 700, cursor: 'pointer',
       color: active ? 'var(--text-brand-default)' : 'var(--text-subtitle)',
@@ -2471,6 +2550,24 @@ class Component extends DCLogic {
     });
     const groupsData = s.groupsData;
     const activeGroup = groupsData.find(g => g.id === s.activeGroupId) || groupsData[3];
+    /* Kilometre rates need a Carrier role to mean anything (see isCarrierGroup).
+     * The tab itself always stays visible — only the table is swapped for an
+     * explanatory empty state. Fuel Rate and Surcharges are never gated.
+     * OPEN QUESTION: whether Minimum Rate should be gated the same way is
+     * unresolved, so it is deliberately left ungated. */
+    const kmRatesBlocked = s.activeTab === 'Kilometre Rates' && !isCarrierGroup(activeGroup);
+    /* Fuel Not Applicable hides the Value field, so requiring a value there
+     * would leave the primary button permanently disabled. */
+    const addRangeIsComplete = !!s.addRangeType
+      && (s.addRangeType === 'Fuel Not Applicable' || !!s.addRangeValue);
+    /* The empty-state sentence names the role, so it has to follow the data:
+     * the non-carrier case is not always a shipper (CtrlChain entities land
+     * here too). Derived, not hardcoded. */
+    const activeGroupRoles = tagsFromGroupType(activeGroup.groupType);
+    const activeGroupRolePhrase = activeGroupRoles.includes('Shipper') ? 'a shipper group'
+      : activeGroupRoles.includes('CtrlChain Entity') ? 'a CtrlChain entity'
+      : activeGroupRoles.includes('Freight Forwarder') ? 'a freight forwarder'
+      : 'not a carrier group';
     return {
       isGroups: s.screen === 'groups',
       isRate: s.screen === 'rate',
@@ -2480,7 +2577,10 @@ class Component extends DCLogic {
       enterpriseGroup: (s.groupsData.find(g => g.id === s.enterpriseGroupId) || s.groupsData[3]),
       backToRateFromEnterprise: this.backToRateFromEnterprise,
       onEnterpriseNavClick: this.onEnterpriseNavClick,
-      enterpriseRelationRows: s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || [],
+      enterpriseRelationRows: (s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || []).map(r => ({
+        ...r,
+        relationDetail: r.relationDetail || relationSentence(r.relation, ((s.groupsData.find(g => g.id === s.enterpriseGroupId) || {}).subgroup)),
+      })),
       enterpriseRelationsEmpty: (s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || []).length === 0,
       enterpriseRelationsHasRows: (s.enterpriseRelationsByGroup[s.enterpriseGroupId] || ENTERPRISE_RELATIONS_SEED[s.enterpriseGroupId] || []).length > 0,
       openAddGroups: this.openAddGroups,
@@ -2511,6 +2611,11 @@ class Component extends DCLogic {
       isSubgroupLevel: activeGroup.subgroup !== activeGroup.group,
       groupLevelLabel: activeGroup.subgroup === activeGroup.group ? 'Enterprise' : 'Subgroup',
       activeGroupTags: tagsFromGroupType(activeGroup.groupType),
+      activeServiceTags: tagsFromServiceType(activeGroup.serviceType),
+      activeCurrency: activeGroup.currency || 'EUR',
+      activeCurrencySymbol: currencySymbol(activeGroup.currency),
+      activeDistanceUnit: activeGroup.distanceUnit || 'km',
+      activeRatePerDistance: '/ ' + (activeGroup.distanceUnit || 'km'),
       groupBreadcrumbs: (() => {
         const chain = [activeGroup];
         let cur = activeGroup;
@@ -2534,7 +2639,13 @@ class Component extends DCLogic {
       groupsViewEnterprisesStyle: this.groupsViewTabStyle(s.groupsView === 'enterprises'),
       groupsViewAllStyle: this.groupsViewTabStyle(s.groupsView === 'all'),
       groupsViewIsAll: s.groupsView === 'all',
-      groupRows: groupsData.filter(g => s.groupsView === 'all' || g.subgroup === g.group).map(g => ({ ...g, onOpen: () => this.goRate(g.id) })),
+      groupRows: groupsData.filter(g => s.groupsView === 'all' || g.subgroup === g.group).map(g => ({
+        ...g,
+        groupTypeTags: tagsFromGroupType(g.groupType),
+        serviceTypeTags: tagsFromServiceType(g.serviceType),
+        hasNoServiceType: tagsFromServiceType(g.serviceType).length === 0,
+        onOpen: () => this.goRate(g.id),
+      })),
       filterChips: s.filterChipsData.map(c => ({ ...c, onRemove: () => {} })),
 
       bannerVisible: s.subgroupOn && activeGroup.subgroup === activeGroup.group,
@@ -2562,8 +2673,12 @@ class Component extends DCLogic {
       isKilometreRatesTab: s.activeTab === 'Kilometre Rates',
       resetAllRules: () => this.resetAllRules(s.activeTab),
       addRuleRow: () => this.addRuleRow(s.activeTab),
-      rulesRows: (activeGroup.id === 7 ? [] : (s[s.activeTab] || [])).map(r => ({
+      kmRatesBlocked,
+      kmRatesAvailable: !kmRatesBlocked,
+      activeGroupRolePhrase,
+      rulesRows: (kmRatesBlocked ? [] : (s[s.activeTab] || [])).map(r => ({
         ...r,
+        rateDisplay: inCurrency(r.rate, activeGroup.currency),
         dateRangeDisplay: r.dateRange || '01 Jan 26 – 31 Dec 26',
         notEditing: !r.editing,
         onToggleEdit: () => this.toggleRuleEdit(s.activeTab, r.id),
@@ -2605,19 +2720,24 @@ class Component extends DCLogic {
         type, selected: s.addRangeType === type, onSelect: () => this.setAddRangeType(type),
       })),
       addRangeTypeInfo: RANGE_TYPE_INFO[s.addRangeType] || '',
-      addRangeStartM: s.addRangeStartM, addRangeStartD: s.addRangeStartD, addRangeStartY: s.addRangeStartY,
-      addRangeEndM: s.addRangeEndM, addRangeEndD: s.addRangeEndD, addRangeEndY: s.addRangeEndY,
       addRangeValue: s.addRangeValue,
+      /* Rate Type drives the Value field:
+       *   Fuel Rate/Distance  → value + " / " + km|mi unit
+       *   Fuel Percentage     → value only, no distance unit
+       *   Fuel Not Applicable → no value field at all */
+      addRangeTypeIsDistance: s.addRangeType === 'Fuel Rate/Distance',
+      addRangeTypeIsPercentage: s.addRangeType === 'Fuel Percentage',
+      addRangeShowValueField: s.addRangeType !== 'Fuel Not Applicable',
       addRangeUnit: s.addRangeUnit || 'km',
       onAddRangeUnit: (e) => this.setState({ addRangeUnit: e.target.value }),
       addRangeIsEdit: s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange',
       addRangeIsAdd: s.addRangeTarget !== 'editSchedule' && s.addRangeTarget !== 'detailRange',
       addRangeConfirmShowContinue: s.addRangeStep === 2 && addRangeShowReasonStep,
       addRangeConfirmShowSave: s.addRangeStep === 2 && !addRangeShowReasonStep,
-      addRangeStartFull: s.addRangeStartFull,
-      addRangeEndFull: s.addRangeEndFull,
-      onAddRangeStartFull: (e) => this.setAddRangeField('addRangeStartFull', e.target.value),
-      onAddRangeEndFull: (e) => this.setAddRangeField('addRangeEndFull', e.target.value),
+      addRangeStartISO: dateToISO(s.addRangeStartFull),
+      addRangeEndISO: dateToISO(s.addRangeEndFull),
+      onAddRangeStartISO: (e) => this.setAddRangeField('addRangeStartFull', isoToDate(e.target.value)),
+      onAddRangeEndISO: (e) => this.setAddRangeField('addRangeEndFull', isoToDate(e.target.value)),
       addRangeModalTitle: (s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange') ? 'Edit Range' : 'Add New Range',
       addRangeNeedsConfirm: true,
       addRangeStep: s.addRangeStep,
@@ -2646,20 +2766,26 @@ class Component extends DCLogic {
       addRangeViewIsSummary: !(this.props.showDetailedBreakdown ?? false),
       addRangeViewIsDetailed: this.props.showDetailedBreakdown ?? false,
       addRangeOrderGroups: addRangeOrderGroups,
-      addRangeEligibleCount: addRangeOrderGroups.eligibleCount,
-      addRangeIneligibleCount: addRangeOrderGroups.ineligibleCount,
-      addRangeOrdersTabAffectedStyle: addRangeOrdersTabStyle(s.addRangeOrdersTab !== 'ineligible'),
-      addRangeOrdersTabIneligibleStyle: addRangeOrdersTabStyle(s.addRangeOrdersTab === 'ineligible'),
-      addRangeVisibleOrders: (s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligible : addRangeOrderGroups.eligible).slice(0, ((s.addRangeOrdersPage || 0) + 1) * 8),
-      addRangeOrdersTabTotal: s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligibleCount : addRangeOrderGroups.eligibleCount,
-      addRangeOrdersHasMore: ((s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligibleCount : addRangeOrderGroups.eligibleCount)) > ((s.addRangeOrdersPage || 0) + 1) * 8,
-      showMoreAddRangeOrders: this.showMoreAddRangeOrders,
-      addRangeOrdersTabLabel: s.addRangeOrdersTab === 'ineligible' ? 'ineligible' : 'affected',
+      addRangeVisibleOrders: (s.addRangeOrdersTab === 'ineligible' ? addRangeOrderGroups.ineligible : addRangeOrderGroups.eligible)
+        .slice(addRangeOrdersStart, addRangeOrdersStart + addRangeOrdersPerPage),
+      addRangeOrdersPerPage: String(addRangeOrdersPerPage),
+      onAddRangeOrdersPerPage: this.setAddRangeOrdersPerPage,
+      addRangeOrdersRangeLabel: addRangeOrdersTotal === 0
+        ? `0 of 0`
+        : `${addRangeOrdersStart + 1} - ${Math.min(addRangeOrdersStart + addRangeOrdersPerPage, addRangeOrdersTotal)} of ${addRangeOrdersTotal}`,
+      addRangeOrdersFirstStyle: pagerIconStyle(addRangeOrdersAtStart),
+      addRangeOrdersPrevStyle: pagerIconStyle(addRangeOrdersAtStart),
+      addRangeOrdersNextStyle: pagerIconStyle(addRangeOrdersAtEnd),
+      addRangeOrdersLastStyle: pagerIconStyle(addRangeOrdersAtEnd),
+      onAddRangeOrdersFirst: () => this.goAddRangeOrdersPage(0),
+      onAddRangeOrdersPrev: () => this.goAddRangeOrdersPage(addRangeOrdersPage - 1),
+      onAddRangeOrdersNext: () => this.goAddRangeOrdersPage(Math.min(addRangeOrdersLastPage, addRangeOrdersPage + 1)),
+      onAddRangeOrdersLast: () => this.goAddRangeOrdersPage(addRangeOrdersLastPage),
       addRangeNewValueDisplay: (() => {
         const nv = s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue;
         return nv === (s.addRangeOriginalValue || '') ? '-' : nv;
       })(),
-      addRangeOriginalValueDisplay: s.addRangeOriginalValue || '—',
+      addRangeOriginalValueDisplay: inCurrency(s.addRangeOriginalValue, activeGroup.currency) || '—',
       addRangeOriginalTypeDisplay: s.addRangeOriginalType || '—',
       addRangeTypeNewDisplay: s.addRangeType === s.addRangeOriginalType ? '-' : s.addRangeType,
       addRangeUnitDisplay: (() => {
@@ -2672,31 +2798,12 @@ class Component extends DCLogic {
         if (!(s.addRangeStartFull && s.addRangeEndFull)) return '—';
         const np = `${shortDate(s.addRangeStartFull)} – ${shortDate(s.addRangeEndFull)}`;
         return np === `${shortDate(s.addRangeOriginalStart)} – ${shortDate(s.addRangeOriginalEnd)}` ? '-' : np;
-      })(),      setAddRangeOrdersTabAffected: () => this.setAddRangeOrdersTab('affected'),
-      setAddRangeOrdersTabIneligible: () => this.setAddRangeOrdersTab('ineligible'),
+      })(),
       addRangeSaveLabel: s.addRangeStep === 3 ? 'Confirm' : (((s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).subgroup === (s.groupsData.find(x => x.id === s.activeGroupId) || s.groupsData[3]).group && s.addRangeTarget !== 'detail') ? 'Next' : (s.addRangeTarget === 'editSchedule' ? 'Save' : 'Add')),
       addRangeSteps: [
         { label: 'Range Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 2 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
         { label: 'Confirm Changes', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep >= 2 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep >= 2, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep >= 2 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: addRangeShowReasonStep, lineStyle: { flex: 1, height: 1, background: s.addRangeStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
       ].concat(addRangeShowReasonStep ? [{ label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.addRangeStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.addRangeStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.addRangeStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} }] : []),
-      onAddRangeStartM: this.onDateSeg('start', 0),
-      onAddRangeStartD: this.onDateSeg('start', 1),
-      onAddRangeStartY: this.onDateSeg('start', 2),
-      onAddRangeEndM: this.onDateSeg('end', 0),
-      onAddRangeEndD: this.onDateSeg('end', 1),
-      onAddRangeEndY: this.onDateSeg('end', 2),
-      onAddRangeStartMKey: this.onDateSegKey('start', 0),
-      onAddRangeStartDKey: this.onDateSegKey('start', 1),
-      onAddRangeStartYKey: this.onDateSegKey('start', 2),
-      onAddRangeEndMKey: this.onDateSegKey('end', 0),
-      onAddRangeEndDKey: this.onDateSegKey('end', 1),
-      onAddRangeEndYKey: this.onDateSegKey('end', 2),
-      refAddRangeStartM: (el) => { this.dateSegRefs.addRangeStartM = el; },
-      refAddRangeStartD: (el) => { this.dateSegRefs.addRangeStartD = el; },
-      refAddRangeStartY: (el) => { this.dateSegRefs.addRangeStartY = el; },
-      refAddRangeEndM: (el) => { this.dateSegRefs.addRangeEndM = el; },
-      refAddRangeEndD: (el) => { this.dateSegRefs.addRangeEndD = el; },
-      refAddRangeEndY: (el) => { this.dateSegRefs.addRangeEndY = el; },
       onAddRangeValue: (e) => this.setAddRangeField('addRangeValue', e.target.value),
       saveAddRange: this.saveAddRange,
       confirmChangeOpen: s.confirmChangeOpen,
@@ -2704,8 +2811,8 @@ class Component extends DCLogic {
       confirmChangeMessage: `Are you sure? This change will affect ${s.confirmChangeCount} orders.`,
       cancelChange: this.cancelChange,
       confirmChange: this.confirmChange,
-      addRangeSaveDisabled: !(s.addRangeType && s.addRangeValue),
-      addRangeSaveStyle: this.ruleModalSaveStyle(!(s.addRangeType && s.addRangeValue)),
+      addRangeSaveDisabled: !addRangeIsComplete,
+      addRangeSaveStyle: this.ruleModalSaveStyle(!addRangeIsComplete),
       resetScheduleRows: this.resetScheduleRows,
       showResetButton: this.props.showResetButton ?? true,
       scheduleMenuOpen: s.scheduleMenuOpen,
@@ -2721,13 +2828,14 @@ class Component extends DCLogic {
         { id: 2, status: 'Expired', rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '28 Mar 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 2, rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', status: 'Expired' }) },
         { id: 4, status: 'Deleted', rangeFrom: 'Sat, 01 Jun 2024', rangeTo: 'Mon, 30 Jun 2024', value: '7%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Deleted'), lastUpdated: '15 Jun 2024', updatedBy: 'M. Kowalski', isExpired: false },
         { id: 3, status: 'Expired', rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '25 Sep 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 3, rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', status: 'Expired' }) },
-      ],
+      ].map(r => ({ ...r, valueDisplay: inCurrency(r.value, activeGroup.currency) })),
       exceptionDetailOpen: s.exceptionDetailOpen,
       exceptionDetailClosed: !s.exceptionDetailOpen,
       closeExceptionDetail: this.closeExceptionDetail,
       exceptionDetailTitle: `Fuel Settings for ${(s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).groupName || ''}`,
       exceptionDetailRanges: ((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).ranges || []).map(rg => ({
         ...rg,
+        valueDisplay: inCurrency(rg.value, activeGroup.currency),
         notEditing: !rg.editing,
         statusBadgeStyle: this.statusBadgeStyle(rg.status),
         onRangeFrom: (e) => this.updateDetailRange(s.exceptionDetailId, rg.id, 'rangeFrom', e.target.value),
@@ -2757,7 +2865,7 @@ class Component extends DCLogic {
         { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 03 Apr 2022 08:00', rangeTo: 'Mon, 10 Apr 2022 08:00', value: '€ 1.35', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '1 Apr 2022', updatedBy: 'A. de Vries' },
         { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Tue, 05 Apr 2022 08:00', rangeTo: 'Tue, 12 Apr 2022 08:00', value: '€ 1.10', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '3 Apr 2022', updatedBy: 'M. Kowalski' },
         { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 07 Apr 2022 08:00', rangeTo: 'Thu, 14 Apr 2022 08:00', value: '€ 1.55', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '5 Apr 2022', updatedBy: 'A. de Vries' },
-      ],
+      ].map(r => ({ ...r, valueDisplay: inCurrency(r.value, activeGroup.currency) })),
       addExceptionRow: this.addExceptionRow,
       openGroupsConnection: this.openGroupsConnection,
       groupsConnectionOpen: s.groupsConnectionOpen,
@@ -2831,8 +2939,8 @@ class Component extends DCLogic {
         { label: 'Rule Details', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: '2px solid var(--text-brand-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: true, labelStyle: { fontSize: 14, fontWeight: 600, color: 'var(--text-title)', whiteSpace: 'nowrap' }, hasLine: true, lineStyle: { flex: 1, height: 1, background: s.ruleModalStep >= 3 ? 'var(--text-brand-default)' : 'var(--border-default)', margin: '0 16px' } },
         { label: 'Reason for Correction', circleStyle: { width: 20, height: 20, borderRadius: '50%', border: s.ruleModalStep === 3 ? '2px solid var(--text-brand-default)' : '2px solid var(--border-default)', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }, dotOn: s.ruleModalStep === 3, labelStyle: { fontSize: 14, fontWeight: 600, color: s.ruleModalStep === 3 ? 'var(--text-title)' : 'var(--text-subtitle)', whiteSpace: 'nowrap' }, hasLine: false, lineStyle: {} },
       ],
-      ruleModalOriginalValueDisplay: s.ruleModalOriginalRate || '—',
-      ruleModalNewValueDisplay: s.ruleModalRate ? `€ ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '—',
+      ruleModalOriginalValueDisplay: inCurrency(s.ruleModalOriginalRate, activeGroup.currency) || '—',
+      ruleModalNewValueDisplay: s.ruleModalRate ? `${currencySymbol(activeGroup.currency)} ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '—',
       ruleModalEligibleCount: ruleModalOrderGroups.eligibleCount,
       ruleModalIneligibleCount: ruleModalOrderGroups.ineligibleCount,
       ruleModalOrdersTabAffectedStyle: addRangeOrdersTabStyle(s.ruleModalOrdersTab !== 'ineligible'),
