@@ -272,7 +272,7 @@
                   of the content box. Compare the child's width against
                   clientWidth minus padding instead.
 
-                  2356px total, so it scrolls — and that is what the design does
+                  2328px total, so it scrolls — and that is what the design does
                   too. The Orders table in Figma
                   (IvHbK3LeammCOdlHQQYxwy, node 11187:289914) is 3193px wide
                   natively, and the OMS warehouse table
@@ -280,7 +280,7 @@
                   ~24 columns. A wide scrolling table is the pattern here, not
                   a failure to fit.
                 -->
-                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 589)">
+                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 582)">
                   <colgroup>
                     <col style="width: calc(var(--spacing) * 22)" />  <!-- Actions -->
                     <col style="width: calc(var(--spacing) * 26)" />  <!-- Category -->
@@ -289,7 +289,7 @@
                     <col style="width: calc(var(--spacing) * 55)" />  <!-- Client -->
                     <col style="width: calc(var(--spacing) * 42)" />  <!-- Sales Organisation -->
                     <col style="width: calc(var(--spacing) * 42)" />  <!-- Customer Reference -->
-                    <col style="width: calc(var(--spacing) * 47)" />  <!-- Status -->
+                    <col style="width: calc(var(--spacing) * 40)" />  <!-- Status -->
                     <col style="width: calc(var(--spacing) * 30)" />  <!-- Transit Status -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Origin -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Destination -->
@@ -435,8 +435,16 @@
        * badge in the Category column looks the same as every other, and so does
        * every badge in the type column.
        */
+      /*
+       * `border border-transparent` for the same reason the status badge has
+       * one: this is the FILLED variant, so it carries no border of its own and
+       * came out 2px shorter than the three outlined badges beside it. The
+       * invisible border equalises the box model. `leading-4` also goes — the
+       * 16px line-height comes from text-cca-label-sm already, and stating it
+       * twice was how this drifted.
+       */
       const categoryBadge = (domain) =>
-        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal neutral">${
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg border border-transparent whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm font-normal neutral">${
           CATEGORY[domain] || domain
         }</div></cca-label-badge>`;
 
@@ -478,10 +486,24 @@
        * status at 12 next to a 14px flag — so the subordinate badge was the
        * louder of the two.
        *
-       * Mapping Compact onto the FE export's type scale:
-       *   status  14/20 -> text-cca-base-sm
-       *   flag    12/16 -> text-cca-label-sm
-       *   type    12/16 -> text-cca-label-sm
+       * Rendered heights per step, from the component:
+       *
+       *   Workflow Badge   16px -> 36/28   14px -> 24   12px -> 20
+       *   Attention flag   14px -> 28      12px -> 20   10px -> 18
+       *   category         14px -> 28      12px -> 20   10px -> 18
+       *
+       * WHAT THIS TABLE USES: 12px for all three, which is the only size where
+       * the families share a height. See statusBadge for why matching heights
+       * beat following the per-family step here.
+       *
+       *   status  12/16 -> text-cca-label-sm   px-1.5 py-0.5  + transparent border
+       *   flag    12/16 -> text-cca-label-sm   px-1.5 py-0.5
+       *   type    12/16 -> text-cca-label-sm   px-1.5 py-0.5
+       *
+       * PADDING IS PART OF THE SIZE STEP, not a free choice — all three take
+       * 6px/2px. Careful with the FE doc page here: it pairs its 14px status
+       * example with px-2.5 py-1, which is Default's padding, so copying that
+       * markup wholesale gives a smaller type in a bigger box.
        *
        * ⚠ THE FE EXPORT DOES NOT CARRY THIS SCALE. There are no size
        * modifier classes on any of these components (cca-text-badge's
@@ -520,14 +542,40 @@
        * data.js: On time and Early are accent-blue, Late is warning.
        */
       const flagBadge = (text, flavor) =>
-        `<cca-attention-flag-badge><div class="font-medium flex w-fit items-center justify-center rounded-full whitespace-nowrap border gap-1 px-2 py-0.5 text-cca-label-sm ${flavor}"><span>${text}</span></div></cca-attention-flag-badge>`;
+        `<cca-attention-flag-badge><div class="font-medium flex w-fit items-center justify-center rounded-full whitespace-nowrap border gap-1 px-1.5 py-0.5 text-cca-label-sm ${flavor}"><span>${text}</span></div></cca-attention-flag-badge>`;
 
-      // The LARGER of the two status-badge variants the bundle documents
-      // (components/badge.html shows px-2.5/text-cca-base-sm and
-      // px-2/text-cca-label-sm). Figma's Badge/badge-large/strong is the 14px
-      // one, so this is that.
+      /*
+       * ALL THREE BADGES ARE THE SAME HEIGHT — 12px type, 6px/2px padding.
+       *
+       * The component's Compact step is not one size across the families:
+       *
+       *   Workflow Badge   16px -> 36/28   14px -> 24   12px -> 20
+       *   Attention flag   14px -> 28      12px -> 20   10px -> 18
+       *   category         14px -> 28      12px -> 20   10px -> 18
+       *
+       * So Workflow's Compact is 14px/24px tall while the flag's and the
+       * category's are 12px/20px. Side by side in one row that reads as a
+       * mismatch, and 12px is the ONLY size where all three families land on
+       * the same height. Hence 12px everywhere — Compact for the flag and the
+       * category, one step further down for the status.
+       *
+       * This is a deliberate departure from the per-family scale: the
+       * component would have the status a step larger. Matching heights in a
+       * dense table won out.
+       *
+       * `border border-transparent` on the status badge is doing real work,
+       * not decoration. A CSS border adds to an auto height, so the two
+       * bordered badges come out 2px taller than an unbordered one at the same
+       * type and padding. An invisible border gives the status the same box
+       * model, and all three measure identically.
+       *
+       * Note this lands at 22px, not the 20px Figma reports. Figma draws its
+       * stroke inside the hug box; CSS puts a border outside the line box, and
+       * there is no utility for a 1px inset. 22px consistently beats 20px on
+       * one badge and 22px on the others.
+       */
       const statusBadge = (text, flavor) =>
-        `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2.5 text-cca-base-sm ${flavor}">${text}</div></cca-status-badge>`;
+        `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full border border-transparent py-0.5 whitespace-nowrap font-medium px-1.5 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
 
       /*
        * "Does not apply", said out loud — used by the Linked column, where a
