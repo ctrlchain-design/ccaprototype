@@ -211,11 +211,9 @@
                         with another value can do neither.
                       -->
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin Date</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin Time</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">First Pickup Date/Time</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination Date</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination Time</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Last Delivery Date/Time</th>
                       <!-- Transit status folds in here (change 3) — it applied to
                            transport only, so as its own column it was empty on
                            every warehouse row. -->
@@ -462,16 +460,6 @@
       const cityName = (city) => city.replace(/^(?:\d[\d\s]*)?(?:[A-Z]{2}\s+)?/, '');
 
       /*
-       * "Thu, 27 Aug 2026" -> "Thu 27". The full date is already in the Date
-       * column one cell to the left; all this has to say is which day the
-       * window closes on, so the year and month would be repetition.
-       */
-      const shortDate = (d) => {
-        const m = d.match(/^(\w{3}),?\s+(\d{1,2})/);
-        return m ? `${m[1]} ${m[2]}` : d;
-      };
-
-      /*
        * Which end is which, whichever domain the record came from.
        *
        * Transport records predate the warehouse ones and carry `window` as a
@@ -479,13 +467,10 @@
        * here rather than in the fixture, so the transport shape other
        * prototypes already read is left alone.
        */
-      const asWindow = (w) => (typeof w === 'string' ? { from: w, to: null } : w || null);
-
       function ends(o) {
-        const side = (e) => ({ ...e, window: asWindow(e.window) });
         return o.domain === 'transport'
-          ? { origin: side(o.pickup), destination: side(o.delivery), dcSide: null }
-          : { origin: side(o.origin), destination: side(o.destination), dcSide: o.warehouseSide };
+          ? { origin: o.pickup, destination: o.delivery, dcSide: null }
+          : { origin: o.origin, destination: o.destination, dcSide: o.warehouseSide };
       }
 
       /*
@@ -519,89 +504,93 @@
       }
 
       /*
-       * Date and time both use the design system's own cca-date-cell rather
-       * than bare spans. See the stylesheet comment in <head> for why it needs
-       * linking separately.
+       * THE DATE/TIME CELL — cca-date-cell, composed to match the running app.
        *
-       * The element tag is load-bearing, not decoration — the CSS is scoped to
-       * it, so a plain div with the same classes gets none of it. Typography is
-       * not part of the component (it is only `display: flex`), so the text
-       * utilities stay.
+       * cca-date-cell is the design system's date cell: owner libs/ui/src,
+       * isDesignSystem true in the bundle manifest. Its stylesheet is 34 bytes
+       * (`display: flex`) because the layout lives in its Angular TEMPLATE, and
+       * the export ships CSS only — so the internals are composed here from
+       * tokens and utilities to match what the app renders:
+       *
+       *     Between
+       *     (clock) Tue, 25 Aug 2026  ->  Tue, 25 Aug 2026
+       *             08:00                 08:00
+       *
+       * A "Between" label, a clock, then both ends of the window as a date over
+       * a time, with an arrow between them.
+       *
+       * NOTE ON FIDELITY: the app prints BOTH ends in full even when they are
+       * identical, so a point in time reads "Between … 08:00 -> … 08:00". That
+       * repetition is real and this reproduces it rather than quietly improving
+       * it — a prototype that renders the component differently from the
+       * product is not showing the component. It is also the honest baseline
+       * for deciding whether to change it.
+       *
+       * Earlier revisions of this page split date and time into four separate
+       * columns and dropped the label, clock and arrow. That is why the header
+       * wording is the app's own ("First Pickup Date/Time") rather than
+       * invented: the whole window is one cell again, as the product has it.
        */
-      function dateCell(value) {
-        return `<td class="mat-mdc-cell mdc-data-table__cell">
-          <cca-date-cell class="text-cca-base-sm text-neutral-body whitespace-nowrap">${
-            value || '—'
-          }</cca-date-cell>
-        </td>`;
-      }
 
       /*
-       * Time uses cca-date-cell as well, so both halves of a stop read as one
-       * component rather than two.
-       *
-       * There IS a cca-trip-stop-time-window, and this used it at first — it
-       * ships a .window-separator muted to --text-neutral-caption, which is
-       * exactly the dash between two times. But that rule is ELEMENT-SCOPED
-       * (`cca-trip-stop-time-window .window-separator`), so the class does
-       * nothing under any other tag and the separator would silently fall back
-       * to body colour. The text-neutral-caption utility is the same token
-       * applied a supported way, and dropping the component drops the second
-       * hand-linked stylesheet with it.
-       *
-       * A window is still two values from the fixture, never a joined string —
-       * that is what makes the dash ours to style and each time its own sortable
-       * value. A single point in time gets no dash and no second value. An
-       * unconfirmed slot (an inbound nobody has booked a dock for yet) prints
-       * its status instead: a real value in this column, not an empty one — it
-       * is the thing a planner is scanning for.
+       * Both ends as { date, time }, whichever domain and shape the record
+       * carries. Transport records hold `window` as a single time string; a
+       * point in time therefore has `to` equal to `from`, which is exactly what
+       * makes the app's cell repeat itself. Warehouse records hold
+       * { from, to, toDate }, where toDate is set only across midnight.
        */
-      function timeCell(end) {
+      function windowEnds(end) {
         const w = end.window;
+        if (!w) return null;
+        if (typeof w === 'string') {
+          return { from: { date: end.date, time: w }, to: { date: end.date, time: w } };
+        }
+        return {
+          from: { date: end.date, time: w.from },
+          to: { date: w.toDate || end.date, time: w.to || w.from },
+        };
+      }
+
+      function dateTimeCell(end) {
+        const w = windowEnds(end);
+
+        // No dock slot booked yet — the status is the value, and there is no
+        // window to lay out.
         if (!w) {
           return `<td class="mat-mdc-cell mdc-data-table__cell">
-            <cca-date-cell class="text-cca-base-sm whitespace-nowrap text-neutral-caption">${
+            <cca-date-cell class="text-cca-base-sm text-neutral-caption">${
               end.slotStatus || '—'
             }</cca-date-cell>
           </td>`;
         }
 
-        /*
-         * THE SECOND DATE APPEARS ONLY WHEN IT DIFFERS.
-         *
-         * The running app prints both ends in full, always — so a same-day
-         * window reads "Tue, 25 Aug 2026 08:00 → Tue, 25 Aug 2026 08:00". The
-         * arrow and the repetition promise a range the values do not deliver,
-         * and same-day is the common case, so most of that cell is noise.
-         *
-         * But the app is verbose for a reason: a night loading slot genuinely
-         * runs 22:00 on one date to 02:00 on the next, and dropping the date
-         * entirely would lose that. So it is conditional — `toDate` in the
-         * fixture is set only when the window crosses midnight, and only then
-         * does the date show, prefixed to the closing time where a reader is
-         * already looking.
-         */
-        const body = w.to
-          ? `<span>${w.from}</span><span class="px-1 text-neutral-caption">–</span><span>${
-              w.toDate ? `<span class="text-neutral-caption">${shortDate(w.toDate)}</span> ` : ''
-            }${w.to}</span>`
-          : `<span>${w.from}</span>`;
+        const stack = (e) => `
+          <span class="flex flex-col">
+            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.date}</span>
+            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.time}</span>
+          </span>`;
 
         return `<td class="mat-mdc-cell mdc-data-table__cell">
-          <cca-date-cell class="text-cca-base-sm text-neutral-body whitespace-nowrap">${body}</cca-date-cell>
+          <cca-date-cell class="flex-col gap-1">
+            <span class="text-cca-label-sm text-neutral-caption">Between</span>
+            <span class="flex items-start gap-2">
+              <span class="text-neutral-caption">${icon('clock')}</span>
+              ${stack(w.from)}
+              <span class="pt-0.5 text-neutral-caption">${icon('arrow-right')}</span>
+              ${stack(w.to)}
+            </span>
+          </cca-date-cell>
         </td>`;
       }
 
-      // All six cells for one order, in header order.
+      // Place then window, for each end, in header order.
       function endColumns(o) {
         const e = ends(o);
         return (
           placeCell(e.origin, e.dcSide === 'origin') +
-          dateCell(e.origin.date) +
-          timeCell(e.origin) +
+          dateTimeCell(e.origin) +
           placeCell(e.destination, e.dcSide === 'destination') +
-          dateCell(e.destination.date) +
-          timeCell(e.destination)
+          dateTimeCell(e.destination)
         );
       }
 
