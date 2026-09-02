@@ -595,54 +595,35 @@
        * ================================================================= */
 
       /*
-       * TRANSIT STATUS uses cca-attention-flag-badge — the "flag" badge.
-       * libs/ui/src, isDesignSystem true, documented in
-       * design-system/dist/components/badge.html, and this markup is copied
-       * from there verbatim.
+       * TRANSIT STATUS — cca-label-badge with `emphasis-outline`, NOT the
+       * attention flag badge.
        *
-       * It is a different component from the Status badge on purpose: in the
-       * Figma Orders table the two sit SIDE BY SIDE as separate columns, Status
-       * filled and Transit Status an outlined pill.
+       * The flag badge was the right component and this used it, until "On
+       * time" had to be green. IT HAS NO GREEN TONE: the export defines only
+       * neutral, accent-blue, warning and danger, and the Figma component
+       * agrees — its tones are Warning, Critical, Info and Overflow, with no
+       * Positive (uQMin4yCGCADtRxsP1mtR7 node 10046:4545). Passing `primary`
+       * to it renders undefined grey #3e3e3e; verified in the browser rather
+       * than assumed.
        *
-       * ⚠ ITS VARIANTS ARE ONLY neutral / accent-blue / warning / danger —
-       * no green, no purple. The fixtures used to carry `match`, `highlight`
-       * and `primary` for transit, none of which this component defines, so
-       * they would have rendered as an unstyled borderless box. Remapped in
-       * data.js: On time and Early are accent-blue, Late is warning.
+       * cca-label-badge does have `primary`, and `emphasis-outline` sets
+       * `border-color: currentColor` — so the border takes the flavour's own
+       * text colour and any flavour becomes an outlined pill. `rounded-full`
+       * keeps the pill shape the flag badge had; the radius is a utility, not
+       * part of either component.
+       *
+       * THE WHOLE COLUMN MOVES, not just On time. Rendering one value with a
+       * label badge and the others with a flag badge would make the column two
+       * components deep depending on the row's data — the same thing that was
+       * wrong about filling only the warehouse type badges.
+       *
+       * Still 22px, so it matches the other three badges. Worth raising the
+       * missing Positive tone with FE: with it, this column could go back to
+       * the flag badge, which is what it semantically is.
        */
-      const flagBadge = (text, flavor) =>
-        `<cca-attention-flag-badge><div class="font-medium flex w-fit items-center justify-center rounded-full whitespace-nowrap border gap-1 px-1.5 py-0.5 text-cca-label-sm ${flavor}"><span>${text}</span></div></cca-attention-flag-badge>`;
+      const transitBadge = (text, flavor) =>
+        `<cca-label-badge><div class="flex w-fit items-center justify-center gap-1 rounded-full border whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm font-medium ${flavor} emphasis-outline"><span>${text}</span></div></cca-label-badge>`;
 
-      /*
-       * ALL THREE BADGES ARE THE SAME HEIGHT — 12px type, 6px/2px padding.
-       *
-       * The component's Compact step is not one size across the families:
-       *
-       *   Workflow Badge   16px -> 36/28   14px -> 24   12px -> 20
-       *   Attention flag   14px -> 28      12px -> 20   10px -> 18
-       *   category         14px -> 28      12px -> 20   10px -> 18
-       *
-       * So Workflow's Compact is 14px/24px tall while the flag's and the
-       * category's are 12px/20px. Side by side in one row that reads as a
-       * mismatch, and 12px is the ONLY size where all three families land on
-       * the same height. Hence 12px everywhere — Compact for the flag and the
-       * category, one step further down for the status.
-       *
-       * This is a deliberate departure from the per-family scale: the
-       * component would have the status a step larger. Matching heights in a
-       * dense table won out.
-       *
-       * `border border-transparent` on the status badge is doing real work,
-       * not decoration. A CSS border adds to an auto height, so the two
-       * bordered badges come out 2px taller than an unbordered one at the same
-       * type and padding. An invisible border gives the status the same box
-       * model, and all three measure identically.
-       *
-       * Note this lands at 22px, not the 20px Figma reports. Figma draws its
-       * stroke inside the hug box; CSS puts a border outside the line box, and
-       * there is no utility for a 1px inset. 22px consistently beats 20px on
-       * one badge and 22px on the others.
-       */
       const statusBadge = (text, flavor) =>
         `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full border border-transparent py-0.5 whitespace-nowrap font-medium px-1.5 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
 
@@ -1205,7 +1186,7 @@
             <td class="mat-mdc-cell mdc-data-table__cell">${statusBadge(o.status, o.statusFlavor)}</td>
             <td class="mat-mdc-cell mdc-data-table__cell">${
               o.transitStatus
-                ? flagBadge(o.transitStatus, o.transitFlavor)
+                ? transitBadge(o.transitStatus, o.transitFlavor)
                 : notApplicable(
                     o.domain === 'warehouse'
                       ? 'A warehouse order is not in transit'
