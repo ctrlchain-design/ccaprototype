@@ -52,11 +52,11 @@
        to ask for everything leaving Rotterdam when both ends share a cell.
 
        So place, date and time are each their own column, per end — six in
-       total, each sorted on separately. The date and time columns use the
-       design system's own cca-date-cell and cca-trip-stop-time-window rather
-       than bare text; both need linking by hand, which the <head> explains.
-       14 columns do not fit the page and the table scrolls; that is the real
-       cost of combining, and worth seeing rather than hiding.
+       total, each sorted on separately. The date and time columns both use the
+       design system's own cca-date-cell rather than bare text; it needs
+       linking by hand, which the <head> explains. 14 columns do not fit the
+       page and the table scrolls; that is the real cost of combining, and
+       worth seeing rather than hiding.
 
        Linked is the payoff — the counterpart records, so a fan-out (one
        Outbound, two trailers on the same lane) is visible in the list instead
@@ -79,25 +79,20 @@
     <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
 
     <!--
-      TWO EXTRA STYLESHEETS, which is a departure from the usual two-link rule —
+      ONE EXTRA STYLESHEET, which is a departure from the usual two-link rule —
       called out here rather than left to be discovered.
 
-      ds/index.css covers the 40 documented design-system components. These two
-      are real libs/ui/src components (the same owner as cca-label-badge and
-      cca-search-field) but they live among the ~274 product stylesheets under
-      ds/components/ that index.css does not import, so they have to be linked
-      by hand:
+      ds/index.css covers the 40 documented design-system components.
+      cca-date-cell is a real libs/ui/src component (the same owner as
+      cca-label-badge and cca-search-field) but it lives among the ~274 product
+      stylesheets under ds/components/ that index.css does not import, so it has
+      to be linked by hand. Nothing else in the bundle renders a date, so a
+      table with Date and Time columns cannot avoid it.
 
-        cca-date-cell             the date cell
-        cca-trip-stop-time-window a time window — inline-flex, with a
-                                  .window-separator between the two times
-
-      Nothing else in the bundle renders a date or a time window, so a table
-      with Date and Time columns cannot avoid them. Both go BEFORE
-      _shared/prototype.css so the shared layer can still override.
+      It goes BEFORE _shared/prototype.css so the shared layer can still
+      override.
     -->
     <link rel="stylesheet" href="../design-system/dist/ds/components/date-cell.css" />
-    <link rel="stylesheet" href="../design-system/dist/ds/components/trip-stop-time-window.css" />
 
     <link rel="stylesheet" href="../_shared/prototype.css" />
 
@@ -514,16 +509,14 @@
       }
 
       /*
-       * Date and time use the design system's own elements rather than bare
-       * spans — cca-date-cell and cca-trip-stop-time-window, both real
-       * libs/ui/src components. See the stylesheet comment in <head> for why
-       * they need linking separately.
+       * Date and time both use the design system's own cca-date-cell rather
+       * than bare spans. See the stylesheet comment in <head> for why it needs
+       * linking separately.
        *
-       * The element tags are load-bearing, not decoration: all the CSS is
-       * scoped to them (`cca-trip-stop-time-window .window-separator`), so a
-       * plain div with the same classes gets none of it. Typography is not part
-       * of either component — cca-date-cell is only `display: flex` — so the
-       * text utilities stay.
+       * The element tag is load-bearing, not decoration — the CSS is scoped to
+       * it, so a plain div with the same classes gets none of it. Typography is
+       * not part of the component (it is only `display: flex`), so the text
+       * utilities stay.
        */
       function dateCell(value) {
         return `<td class="mat-mdc-cell mdc-data-table__cell">
@@ -534,25 +527,34 @@
       }
 
       /*
-       * A window is two times with the component's own .window-separator
-       * between them, which the design system mutes to --text-neutral-caption.
-       * That separator is exactly why the fixture carries { from, to } instead
-       * of a joined string — there has to be something to put between.
+       * Time uses cca-date-cell as well, so both halves of a stop read as one
+       * component rather than two.
        *
-       * A single point in time is the same element with no separator and no
-       * second value. An unconfirmed slot (an inbound nobody has booked a dock
-       * for yet) prints its status instead: that is a real value in this
-       * column, not an empty one — it is the thing a planner is scanning for.
+       * There IS a cca-trip-stop-time-window, and this used it at first — it
+       * ships a .window-separator muted to --text-neutral-caption, which is
+       * exactly the dash between two times. But that rule is ELEMENT-SCOPED
+       * (`cca-trip-stop-time-window .window-separator`), so the class does
+       * nothing under any other tag and the separator would silently fall back
+       * to body colour. The text-neutral-caption utility is the same token
+       * applied a supported way, and dropping the component drops the second
+       * hand-linked stylesheet with it.
+       *
+       * A window is still two values from the fixture, never a joined string —
+       * that is what makes the dash ours to style and each time its own sortable
+       * value. A single point in time gets no dash and no second value. An
+       * unconfirmed slot (an inbound nobody has booked a dock for yet) prints
+       * its status instead: a real value in this column, not an empty one — it
+       * is the thing a planner is scanning for.
        */
       function timeCell(end) {
         const w = end.window;
         const body = !w
           ? `<span class="text-neutral-caption">${end.slotStatus || '—'}</span>`
           : w.to
-            ? `<span>${w.from}</span><span class="window-separator px-1">–</span><span>${w.to}</span>`
+            ? `<span>${w.from}</span><span class="px-1 text-neutral-caption">–</span><span>${w.to}</span>`
             : `<span>${w.from}</span>`;
         return `<td class="mat-mdc-cell mdc-data-table__cell">
-          <cca-trip-stop-time-window class="text-cca-base-sm text-neutral-body whitespace-nowrap">${body}</cca-trip-stop-time-window>
+          <cca-date-cell class="text-cca-base-sm text-neutral-body whitespace-nowrap">${body}</cca-date-cell>
         </td>`;
       }
 

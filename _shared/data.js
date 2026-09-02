@@ -171,12 +171,13 @@
    * without re-deriving it from the type: an Outbound leaves the warehouse, an
    * Inbound arrives at it.
    *
-   * A `window` is { from, to } — two SEPARATE times, because the design
-   * system's cca-trip-stop-time-window puts a .window-separator element
-   * between them and cannot take a pre-joined "06:00 – 08:00" string. `to` is
-   * null for a single point in time rather than a window. The whole window is
-   * null where no dock slot is booked yet, and `slotStatus` then says what to
-   * show in its place.
+   * A `window` is { from, to } — two SEPARATE times, never a pre-joined
+   * "06:00 – 08:00" string. A screen has to be able to put its own separator
+   * between them, and each time has to be sortable and filterable on its own:
+   * "arriving after 13:00" is a question about one end of the window, not the
+   * pair. `to` is null for a single point in time rather than a window. The
+   * whole window is null where no dock slot is booked yet, and `slotStatus`
+   * then says what to show in its place.
    */
   var WAREHOUSE_ORDERS = [
     {
