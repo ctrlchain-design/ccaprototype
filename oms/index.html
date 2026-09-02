@@ -259,7 +259,20 @@
                   authoritative; on `auto` a width is only a hint that
                   unwrappable content overrides.
 
-                  2328px total, so it scrolls — and that is what the design does
+                  FIXED LAYOUT CLIPS SILENTLY, which is the cost. A badge is
+                  `whitespace-nowrap` inside an inline-flex, so when it does not
+                  fit it just gets cut — no wrap, no ellipsis, no error. Status
+                  is 47 units because "Searching for Carrier" is 155px at the
+                  14px badge size and the cell has 14px padding each side; 40
+                  units clipped it by 23px. Measure the widest real value before
+                  narrowing any of these.
+
+                  And `td.scrollWidth > td.clientWidth` DOES NOT CATCH IT — the
+                  td reports no overflow while its inline-flex child hangs out
+                  of the content box. Compare the child's width against
+                  clientWidth minus padding instead.
+
+                  2356px total, so it scrolls — and that is what the design does
                   too. The Orders table in Figma
                   (IvHbK3LeammCOdlHQQYxwy, node 11187:289914) is 3193px wide
                   natively, and the OMS warehouse table
@@ -267,7 +280,7 @@
                   ~24 columns. A wide scrolling table is the pattern here, not
                   a failure to fit.
                 -->
-                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 582)">
+                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 589)">
                   <colgroup>
                     <col style="width: calc(var(--spacing) * 22)" />  <!-- Actions -->
                     <col style="width: calc(var(--spacing) * 26)" />  <!-- Category -->
@@ -276,7 +289,7 @@
                     <col style="width: calc(var(--spacing) * 55)" />  <!-- Client -->
                     <col style="width: calc(var(--spacing) * 42)" />  <!-- Sales Organisation -->
                     <col style="width: calc(var(--spacing) * 42)" />  <!-- Customer Reference -->
-                    <col style="width: calc(var(--spacing) * 40)" />  <!-- Status -->
+                    <col style="width: calc(var(--spacing) * 47)" />  <!-- Status -->
                     <col style="width: calc(var(--spacing) * 30)" />  <!-- Transit Status -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Origin -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Destination -->
