@@ -171,6 +171,30 @@
    * Orders list renders them on. The postcode lives in `city`, as it does in
    * the transport records, so both domains format identically.
    *
+   * STATUSES ARE THE REAL LIFECYCLE, not invented ones. In order:
+   *
+   *     Registered -> Ready to Ship -> Truck Arrived -> Loaded
+   *                -> Departed -> Delivered
+   *
+   * That is the Outbound run; an Inbound ends at Received rather than
+   * Delivered (the OMS warehouse table shows Received on its Inbound rows and
+   * Departed on its Outbound ones). Earlier revisions of this file guessed at
+   * Slot Booked / Picking / Ready for Dispatch / Awaiting Slot / Slot Missed —
+   * none of which exist.
+   *
+   * `statusFlavor` follows the badge component's tone guidance: green is for a
+   * "final or positive outcome" only, so Delivered and Received are `primary`
+   * and everything in flight is `accent-blue`. Registered is `neutral` because
+   * nothing has happened yet. Explicitly NOT green for in-progress states,
+   * which the component's own description warns against.
+   *
+   * There is no failure status here, and that is not an omission: the warehouse
+   * table carries exceptions in their own Shortage and NCR columns rather than
+   * in Status.
+   *
+   * The fixtures run chronologically — the earliest dates are furthest along
+   * the lifecycle, the latest is only just Registered.
+   *
    * An empty `linked` is a real case, not missing data: an Inbound where the
    * supplier arranges its own haulage has no CtrlChain transport order at all.
    *
@@ -202,8 +226,8 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585',
-      status: 'Ready for Dispatch',
-      statusFlavor: 'primary',
+      status: 'Loaded',
+      statusFlavor: 'accent-blue',
       warehouse: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', dock: 'Dock 7' },
       warehouseSide: 'origin',
       origin: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Wed, 26 Aug 2026', window: { from: '22:00', to: '02:00', toDate: 'Thu, 27 Aug 2026' } },
@@ -223,7 +247,7 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046612',
-      status: 'Slot Booked',
+      status: 'Truck Arrived',
       statusFlavor: 'accent-blue',
       warehouse: { name: 'Venlo DC 1', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', dock: 'Dock 3' },
       warehouseSide: 'destination',
@@ -244,8 +268,8 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain España S.L.U',
       shipperReference: '10046590 + 10046591',
-      status: 'Picking',
-      statusFlavor: 'warning',
+      status: 'Departed',
+      statusFlavor: 'accent-blue',
       warehouse: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', dock: 'Dock 2' },
       warehouseSide: 'origin',
       origin: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: { from: '09:00', to: '11:00' } },
@@ -265,7 +289,7 @@
       shipperSubGroup: 'Ingram Micro Deutschland',
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
-      status: 'Awaiting Slot',
+      status: 'Registered',
       statusFlavor: 'neutral',
       warehouse: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', dock: null },
       warehouseSide: 'destination',
@@ -286,8 +310,8 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046601',
-      status: 'Slot Missed',
-      statusFlavor: 'danger',
+      status: 'Delivered',
+      statusFlavor: 'primary',
       warehouse: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', dock: 'Dock 1' },
       warehouseSide: 'origin',
       origin: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', date: 'Mon, 24 Aug 2026', window: { from: '05:00', to: '07:00' } },
