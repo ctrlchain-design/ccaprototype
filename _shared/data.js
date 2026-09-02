@@ -43,7 +43,7 @@
       stops: 2,
       distanceKm: 2247,
       domain: 'transport',
-      linked: ['CCW2026-000418.1'],
+      linked: ['CCA2023-000418.1'],
     },
     {
       id: 'CCA2023-000271.4',
@@ -63,7 +63,7 @@
       stops: 2,
       distanceKm: 1680,
       domain: 'transport',
-      linked: ['CCW2026-000420.1'],
+      linked: ['CCA2023-000420.1'],
     },
     {
       id: 'CCA2023-000272.2',
@@ -83,7 +83,7 @@
       stops: 3,
       distanceKm: 712,
       domain: 'transport',
-      linked: ['CCW2026-000420.1'],
+      linked: ['CCA2023-000420.1'],
     },
     {
       id: 'CCA2023-000273.7',
@@ -103,7 +103,7 @@
       stops: 2,
       distanceKm: 934,
       domain: 'transport',
-      linked: [],
+      linked: ['CCA2023-000422.1'],
     },
     {
       id: 'CCA2023-000274.1',
@@ -159,7 +159,10 @@
    * for both — `CCA_DATA.allOrders()`.
    *
    * `type` is the warehouse movement: Inbound is goods arriving, Outbound is
-   * goods leaving. `linked` is the transport orders that carry this order's
+   * goods leaving. The reference number carries the SAME `CCA` prefix as a
+   * transport order — the domain is the `type`, never the reference. These sit
+   * in their own number block only because they were created later; one series
+   * with gaps in it is what the real sequence looks like. `linked` is the transport orders that carry this order's
    * goods, which is the whole reason the two lists are being combined — an
    * Outbound order and the transport order collecting it are one job to an
    * operator, and two records to the system.
@@ -188,7 +191,7 @@
    */
   var WAREHOUSE_ORDERS = [
     {
-      id: 'CCW2026-000418.1',
+      id: 'CCA2023-000418.1',
       domain: 'warehouse',
       type: 'Outbound',
       shipperGroup: 'Ingram Micro Global',
@@ -209,7 +212,7 @@
       linked: ['CCA2023-000270.1'],
     },
     {
-      id: 'CCW2026-000419.2',
+      id: 'CCA2023-000419.2',
       domain: 'warehouse',
       type: 'Inbound',
       shipperGroup: 'Ingram Micro Global',
@@ -230,7 +233,7 @@
       linked: [],
     },
     {
-      id: 'CCW2026-000420.1',
+      id: 'CCA2023-000420.1',
       domain: 'warehouse',
       type: 'Outbound',
       shipperGroup: 'Ingram Micro Global',
@@ -251,7 +254,7 @@
       linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
-      id: 'CCW2026-000421.3',
+      id: 'CCA2023-000421.3',
       domain: 'warehouse',
       type: 'Inbound',
       shipperGroup: 'Ingram Micro Global',
@@ -272,7 +275,7 @@
       linked: [],
     },
     {
-      id: 'CCW2026-000422.1',
+      id: 'CCA2023-000422.1',
       domain: 'warehouse',
       type: 'Outbound',
       shipperGroup: 'Ingram Micro Global',

@@ -11,23 +11,28 @@
   This prototype exists to show what that combining actually costs, because
   "put them in the same table" is not free. Four things had to change:
 
-    1. THE TYPE BADGE NOW SPANS TWO DOMAINS. Brokerage, MT, SaaS and Own Fleet
-       are transport; Inbound and Outbound are warehouse. Six words sharing one
-       column, so the badge has to group them or the row loses its fastest
-       read: transport stays outlined `neutral`, warehouse is filled
-       `accent-blue`. Filled against outlined, not two shades of dark text —
-       see typeFlavor for why the first attempt failed.
+    1. THE TYPE BADGE SPANS EVERY DOMAIN, AS ONE COMPONENT. Brokerage, MT,
+       SaaS and Own Fleet are transport; Inbound and Outbound are warehouse.
+       They share a column and they share a treatment — every badge is
+       `neutral emphasis-outline`, exactly as the existing orders list renders
+       it.
 
-    2. ONE FILTER, NOT TWO. A warehouse planner should not scroll past
-       transport orders all day, so the list needs a scope — but it needs
-       exactly one way to set it. The order-type chips are it: Brokerage, MT,
-       SaaS and Own Fleet are the transport types, Inbound and Outbound the
-       warehouse ones, and "warehouse only" is picking those two.
+       An earlier revision filled the warehouse ones with `accent-blue` to
+       separate the domains by form. That is out: splitting one component into
+       two treatments by data value stops the column being a single thing.
+       Which leaves an open question — see the note at the foot of this file.
 
-       Saved views for Warehouse and Transport were tried here and removed. Two
-       controls over the same axis is two things that can disagree, and the
-       reviewer then has to work out which wins. The tab row is left dormant
-       rather than deleted, so a real saved view can come back later.
+    2. ORDER TYPE IS A FILTER, NOT A CONTROL OF ITS OWN. A warehouse planner
+       should not scroll past transport orders all day, so the list needs
+       narrowing — but the product already has a mechanism for that, and the
+       row above the table already belongs to it.
+
+       This page carried a bespoke set of cca-chip type toggles in that row for
+       several revisions. It was wrong twice: it collided with the pinned-filters
+       row (see orders-pinned-filters/), and it looked like a filter without
+       being one — hard-coded values the Filters drawer knew nothing about. So
+       Order Type joins the filter list, and reaches the row only by being
+       pinned, as any filter does.
 
     3. TRANSIT STATUS STOPS BEING A COLUMN. A warehouse order is not in
        transit — it is being picked, or waiting for a dock slot — so a Transit
@@ -180,17 +185,23 @@
               </div>
 
               <!--
-                Order-type chips — the only filter on this list, and the
-                whole of the scope mechanism (change 2). Selectable filter chips
-                from design-system/dist/components/chips.html, the sanctioned
-                component for exactly this.
+                PINNED FILTERS. This row belongs to them and nothing else.
 
-                Multi-select, transport types first and warehouse after, so
-                "warehouse only" is Inbound + Outbound rather than a separate
-                control that has to be kept in step with this one. Nothing
-                selected means no filter.
+                It held a bespoke set of cca-chip order-type toggles for a
+                while, which was wrong: this slot is already spoken for by the
+                pinned-filters mechanism (see orders-pinned-filters/), so a
+                second chip set here either collides with pinned chips or
+                silently replaces them. Worse, it LOOKED like a filter without
+                being one — hard-coded values that the Filters drawer knew
+                nothing about.
+
+                Order Type is a filter like any other. It belongs in the drawer,
+                and it reaches this row only when a user pins it. The chip is
+                the real pinned-filter chip — a pin glyph and the filter's name,
+                markup shared with orders-pinned-filters, which is where the
+                pin/unpin flow itself is prototyped.
               -->
-              <div class="mt-4 flex flex-wrap items-center gap-2" id="type-chips" role="listbox" aria-label="Filter by order type"></div>
+              <div class="mt-3 flex flex-wrap items-center gap-3" id="pinned-filters-row"></div>
 
               <!-- The combined table -->
               <div class="mt-4 overflow-x-auto">
@@ -224,13 +235,6 @@
                   </thead>
                   <tbody class="mdc-data-table__content" id="orders-rows"></tbody>
                 </table>
-
-                <!-- Empty state, for a chip combination that matches nothing. -->
-                <div class="hidden flex-col items-center gap-2 py-8" id="orders-empty">
-                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-box mat-ligature-font mat-icon-inline text-neutral-caption" aria-hidden="true"></mat-icon></cca-icon>
-                  <span class="text-cca-label-md text-neutral-title">No orders match these filters</span>
-                  <span class="text-cca-base-sm text-neutral-caption">Clear an order type to see the full list.</span>
-                </div>
 
                 <!-- Pagination. The app uses mat-paginator; the bundle ships no
                      static markup for it, so this is composed from utilities. -->
@@ -294,36 +298,37 @@
        * `accent-blue`. Both are real cca-label-badge flavours — see
        * design-system/dist/ds/components/label-badge.css.
        */
+      /*
+       * The order-type vocabulary, and which domain each type belongs to.
+       *
+       * Nothing renders from this any more — the badge just prints `o.type` —
+       * but it is the list the Order Type filter offers, and it records the
+       * grouping that the list itself cannot show. Kept here so the next person
+       * does not have to reconstruct it from the fixtures.
+       */
       const TYPES = [
-        { name: 'Brokerage', domain: 'transport', flavor: 'neutral' },
-        { name: 'MT', domain: 'transport', flavor: 'neutral' },
-        { name: 'SaaS', domain: 'transport', flavor: 'neutral' },
-        { name: 'Own Fleet', domain: 'transport', flavor: 'neutral' },
-        { name: 'Inbound', domain: 'warehouse', flavor: 'accent-blue' },
-        { name: 'Outbound', domain: 'warehouse', flavor: 'accent-blue' },
+        { name: 'Brokerage', domain: 'transport' },
+        { name: 'MT', domain: 'transport' },
+        { name: 'SaaS', domain: 'transport' },
+        { name: 'Own Fleet', domain: 'transport' },
+        { name: 'Inbound', domain: 'warehouse' },
+        { name: 'Outbound', domain: 'warehouse' },
       ];
 
       /*
-       * The badge is FILLED for warehouse and OUTLINED for transport.
+       * ONE COMPONENT FOR EVERY TYPE, whichever domain it belongs to.
        *
-       * Colour alone was not enough. The first version gave both the
-       * `emphasis-outline` treatment the existing list uses, which forces
-       * `background-color: transparent !important` — so the only difference
-       * between the two domains was the text colour, near-black against dark
-       * navy, at 12px. Measured in the browser: rgb(16,21,46) versus
-       * rgb(13,55,89). Technically distinct, invisible in practice.
+       * An earlier revision filled the warehouse badges with `accent-blue` and
+       * left transport outlined, so the two domains differed in form. That is
+       * out: a badge is a badge, and splitting one component into two
+       * treatments by data value makes the column stop being a single thing.
+       * The domain is legible from the type word itself — Inbound and Outbound
+       * are not transport words — and from the Linked column beside it.
        *
-       * Dropping emphasis-outline on the warehouse types lets `accent-blue`
-       * paint its tint, so the domains differ in FORM and not just hue. Both
-       * are stock cca-label-badge flavours — see
-       * design-system/dist/ds/components/label-badge.css.
+       * So every badge is `neutral emphasis-outline`, exactly as the existing
+       * orders list renders it.
        */
-      const typeFlavor = (name) => {
-        const t = TYPES.filter((x) => x.name === name)[0];
-        if (!t) return 'neutral emphasis-outline';
-        return t.domain === 'warehouse' ? 'accent-blue' : 'neutral emphasis-outline';
-      };
-      let selectedTypes = []; // empty = no type filter, not "none selected"
+      const TYPE_FLAVOR = 'neutral';
 
       // ------------------------------------------------------------- helpers
       const icon = (name) =>
@@ -335,10 +340,11 @@
       // Smaller than the documented label badge: the design system has no size
       // modifier, so the size is the type utility one step down the scale with
       // tighter vertical padding. Matches the existing orders list.
-      // `flavor` carries the outline modifier here, because whether the badge is
-      // filled or outlined is what distinguishes the two domains — see typeFlavor.
+      // Smaller than the documented label badge: the design system has no size
+      // modifier, so the size is the type utility one step down the scale with
+      // tighter vertical padding. Matches the existing orders list.
       const smallLabelBadge = (text, flavor) =>
-        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ${flavor}">${text}</div></cca-label-badge>`;
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
 
       const statusBadge = (text, flavor) =>
         `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
@@ -353,11 +359,54 @@
         `<span class="text-cca-base-sm text-neutral-caption" title="${why}" aria-label="${why}">—</span>`;
 
       // ------------------------------------------------------- what's on screen
-      function visibleOrders() {
-        // No selection is "no type filter", not "nothing selected" — an empty
-        // chip row must show everything, not an empty table.
-        if (!selectedTypes.length) return ALL;
-        return ALL.filter((o) => selectedTypes.indexOf(o.type) !== -1);
+      /*
+       * Everything, unfiltered. Narrowing this list is the Filters drawer's
+       * job and the pinned row's — see orders-pinned-filters/, where that flow
+       * is prototyped. This page is about the combined table itself.
+       */
+      const visibleOrders = () => ALL;
+
+      /*
+       * Pinned filters.
+       *
+       * The same shape orders-pinned-filters uses: a filter knows its name and
+       * whether it is pinned, and only the pinned ones reach the row above the
+       * table. Order Type is the new entry — the one this page adds — and it is
+       * pinned here so the row is not empty in a review.
+       *
+       * `showPinned` is the drawer toggle. It is true here because the toggle
+       * itself is prototyped next door; this page only needs to show that
+       * Order Type takes its place among the existing filters rather than
+       * inventing a control beside them.
+       */
+      const FILTERS = [
+        { name: 'Order Type', pinned: true },
+        { name: 'Account Manager', pinned: true },
+        { name: 'Assigned Operator', pinned: false },
+        { name: 'Carrier Assignment Status', pinned: false },
+        { name: 'Customer Invoice Status', pinned: false },
+      ];
+      let showPinned = true;
+
+      /*
+       * The real pinned-filter chip — a pin glyph and the filter's name, on the
+       * neutral-dark surface. Markup shared with orders-pinned-filters so the
+       * two pages cannot drift. `pinned` is the icon name; `pin` does not exist
+       * in the font.
+       */
+      function renderPinnedRow() {
+        const row = document.getElementById('pinned-filters-row');
+        const pinned = FILTERS.filter((f) => f.pinned);
+        row.hidden = !showPinned || pinned.length === 0;
+        row.innerHTML = pinned
+          .map(
+            (f) => `
+          <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
+            ${icon('pinned')}
+            <span class="truncate">${f.name}</span>
+          </span>`
+          )
+          .join('');
       }
 
       // ------------------------------------------------------------ saved views
@@ -389,47 +438,6 @@
           VIEWS.map(tab).join('') +
           // Filler keeps the bottom border running to the edge of the row.
           '<div class="h-12 flex-1 border-b border-neutral-default surface-neutral-light"></div>';
-      }
-
-      // ------------------------------------------------------------- type chips
-      /*
-       * Markup copied from design-system/dist/components/chips.html. The
-       * checkmark graphic is part of the component, not decoration: it is what
-       * shows selection, together with the brand outline `cca-chip` applies via
-       * mdc-evolution-chip--selected.
-       *
-       * Counts are computed against the ACTIVE VIEW, not the whole list — a
-       * count that ignores the view would promise rows the view then hides.
-       */
-      function renderTypeChips() {
-        const chips = TYPES.filter((t) => ALL.some((o) => o.type === t.name)).map((t) => {
-          const selected = selectedTypes.indexOf(t.name) !== -1;
-          // Counted against the whole list, never against the current
-          // selection — a count that moved as you picked chips would tell you
-          // how many of a type you had already chosen, which is not the
-          // question the number is there to answer.
-          const n = ALL.filter((o) => o.type === t.name).length;
-          return `
-            <mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable cca-chip mat-primary${
-              selected ? ' mdc-evolution-chip--selected' : ''
-            }" data-type="${t.name}">
-              <span class="mat-mdc-chip-focus-overlay"></span>
-              <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
-                <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="${selected}">
-                  <span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">
-                    <span class="mdc-evolution-chip__checkmark">
-                      <svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">
-                        <path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-                      </svg>
-                    </span>
-                  </span>
-                  <span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">${t.name} (${n})</span>
-                </span>
-              </span>
-            </mat-chip-option>`;
-        });
-
-        document.getElementById('type-chips').innerHTML = chips.join('');
       }
 
       // ------------------------------------------------------------- the table
@@ -646,8 +654,7 @@
             <td class="mat-mdc-cell mdc-data-table__cell">
               <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Row actions">${icon('ellipsis-vertical')}</button>
             </td>
-            <!-- The flavour is the domain (change 1). -->
-            <td class="mat-mdc-cell mdc-data-table__cell">${smallLabelBadge(o.type, typeFlavor(o.type))}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${smallLabelBadge(o.type, TYPE_FLAVOR)}</td>
             <td class="mat-mdc-cell mdc-data-table__cell">
               <!-- By SCREEN NAME, not folder — _shared/routes.js resolves it, and
                    the click explains itself until the detail exists. -->
@@ -678,8 +685,6 @@
           )
           .join('');
 
-        document.getElementById('orders-empty').classList.toggle('hidden', rows.length > 0);
-        document.getElementById('orders-empty').classList.toggle('flex', rows.length === 0);
         document.getElementById('row-count').textContent = rows.length
           ? `1 – ${rows.length} of ${rows.length}`
           : '0 of 0';
@@ -690,22 +695,11 @@
 
       function render() {
         renderViews();
-        renderTypeChips();
+        renderPinnedRow();
         renderRows();
       }
 
       // ------------------------------------------------------------- behaviour
-      document.addEventListener('click', function (e) {
-        const chip = e.target.closest('[data-type]');
-        if (chip) {
-          const name = chip.getAttribute('data-type');
-          const at = selectedTypes.indexOf(name);
-          if (at === -1) selectedTypes.push(name);
-          else selectedTypes.splice(at, 1);
-          render();
-        }
-      });
-
       render();
     </script>
   </body>
