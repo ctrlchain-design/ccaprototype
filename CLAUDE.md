@@ -25,8 +25,9 @@ overwrites the whole folder on each export.
 
 ## Building or changing a prototype
 
-**Start on a branch, named after the prototype folder** — never build on `main`,
-because committing publishes and half-finished work would go live.
+**Start on a branch, named after the prototype folder** — never build on `main`.
+Branching is automatic and needs no one's permission; see "Branch, commit,
+publish" below for why the three are kept apart.
 
 Use the **`/prototype` skill** — it has the workflow, the lookup recipes, the
 starter template and the gotchas. Load it before writing prototype markup, not
@@ -92,12 +93,41 @@ again before syncing to ADO.
 **ADO is the source of truth once an item is synced** — these files are the drafting
 and refinement layer.
 
-## Committing
+## Branch, commit, publish — three separate things
 
-Use the **`/prototype-commit` skill**. It has the message style and how to split
-work along the repo's layers. Committing here **merges to `main` and publishes**
-by default — that is deliberate, so don't ask each time. Stop only for a merge
-conflict, or a prototype nobody has looked at in a browser.
+GitHub Pages serves `main`, so only the last of these goes live. Keep them
+distinct and never roll one into the next.
+
+**Branch is automatic. Never ask, never skip it.** The moment prototype work
+starts, if the repo is sitting on `main`, branch — named after the prototype
+folder. Nobody should have to ask for this and nobody should have to be
+reminded, because work committed on `main` is published work.
+
+    git checkout main && git pull
+    git checkout -b orders-detail
+
+Already on a branch for this work? Stay on it.
+
+**"Commit" means commit to the branch, and stop there.** Nothing is published.
+Use the **`/prototype-commit` skill** for it — it carries the message style and
+how to split work along the repo's layers. **Invoke the skill every time**,
+rather than running `git` by hand from memory of what it said: its stop-and-ask
+conditions are the whole point, and they are what gets skipped when the commands
+are hand-rolled.
+
+**"Publish" means merge to `main` and push**, which puts the prototype live at
+`https://ctrlchain-design.github.io/ccaprototype/<folder>/`. Do that only when
+someone asks for it in those words. Two things that are *not* permission to
+publish:
+
+- **An earlier "go ahead".** It covered the state of the work at that moment,
+  not everything that follows. Mid-iteration, each change needs its own.
+- **Fixing your own mistake.** A commit that only undoes an error you shipped
+  needs the same go-ahead as any other change — arguably more, since the last
+  one was wrong.
+
+Stop and report rather than publishing when the merge would conflict, or when
+nobody has looked at the prototype in a browser.
 
 ## Lookups
 

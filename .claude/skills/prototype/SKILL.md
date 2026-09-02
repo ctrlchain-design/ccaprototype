@@ -208,10 +208,11 @@ state to the taskboard", or a description with enough in it to start.
 
 ## Workflow
 
-### 0. Start on a branch — before touching a file
+### 0. Branch — automatically, before touching a file
 
-Never build or edit a prototype on `main`. Committing publishes, so work done on
-`main` goes live the moment it is committed, half-finished and unreviewed.
+**If the repo is on `main`, branch. Do not ask; just do it and say so.** This is
+not a decision the user should have to make or be prompted for — `main` is what
+GitHub Pages serves, so work committed there is published work.
 
     git checkout main
     git pull
@@ -233,6 +234,10 @@ out — otherwise you inherit someone else's unpublished work and it rides along
 when yours is published.
 
 If the user is already on a branch for this prototype, stay on it.
+
+Branching is free and reversible; publishing is neither. Committing to the
+branch as work goes along is always fine — merging it to `main` is what waits
+for the word "publish". See the `/prototype-commit` skill.
 
 ### 1. Find the vocabulary
 

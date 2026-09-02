@@ -55,8 +55,8 @@ shared — everyone who clones gets the same one, and improving it improves it f
 the team.
 
 **Prototypes are built on a branch**, named after the folder — never on `main`,
-because committing publishes and half-finished work would go live. One name for
-the whole thing: the folder `orders-detail/` is the branch `orders-detail`, the
+which is what GitHub Pages serves. Branching happens automatically when work
+starts; nobody has to ask for it. One name for the whole thing: the folder `orders-detail/` is the branch `orders-detail`, the
 screen `orders.detail`, and the URL `/ccaprototype/orders-detail/`.
 
 By hand it is a branch, a folder and a file:
@@ -224,23 +224,37 @@ actual diff, splits the work along the repo's layers — the design-system expor
 history already uses. Generated files are committed with whatever regenerated
 them, never on their own.
 
-**Committing publishes.** The skill commits on your prototype branch, merges to
-`main`, pushes and deletes the merged branch, and
-GitHub Pages serves it a minute or two later — no confirmation step, because
-that was the slow part. It stops and asks only if the merge would conflict, or
-if the prototype has not been checked in a browser.
+**Committing does not publish.** The skill commits on your prototype branch and
+stops there. Nothing is live, so commit as often as you like — that is the point
+of the branch.
 
-Say "just commit" or "don't publish yet" to keep something on a branch.
+Publishing is a separate word. See below.
 
 ## Publishing
 
-Push to `main`. GitHub Pages serves the repository root, so a folder committed at
-`my-prototype/` is live at
+**Say "publish".** The skill then merges your branch into `main`, pushes, and
+deletes the merged branch. GitHub Pages serves the repository root, so a folder
+at `my-prototype/` is live at
 `https://ctrlchain-design.github.io/ccaprototype/my-prototype/` within a minute or
 two. `.nojekyll` keeps Pages from processing anything — files are served exactly as
 committed.
 
-Pushing publishes. Nothing else does.
+It stops and reports instead if the merge would conflict, or if nobody has looked
+at the prototype in a browser.
+
+Merging to `main` publishes. Nothing else does — not branching, not committing.
+
+**Three words, three jobs.** Worth keeping straight, because only the last one
+is visible to anyone else:
+
+| You say | What happens | Live? |
+| --- | --- | --- |
+| *(nothing — it is automatic)* | branch off `main`, named after the folder | no |
+| **commit** | commit onto that branch | no |
+| **publish** | merge to `main` and push | **yes** |
+
+An earlier "go ahead" does not carry forward to later changes, and a commit that
+only fixes a mistake you already published still needs the word.
 
 ---
 
