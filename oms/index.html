@@ -1,0 +1,687 @@
+<!doctype html>
+<!--
+  OMS — warehouse orders in the Shipper TMS orders list
+  =====================================================
+
+  The premise: warehouse orders (OMS) stop being a separate list and join the
+  transport orders already in Shipper TMS › Orders. To an operator, an Outbound
+  order and the transport order collecting it are ONE job — two records only
+  because the system keeps them apart.
+
+  This prototype exists to show what that combining actually costs, because
+  "put them in the same table" is not free. Four things had to change:
+
+    1. THE TYPE BADGE NOW SPANS TWO DOMAINS. Brokerage, MT, SaaS and Own Fleet
+       are transport; Inbound and Outbound are warehouse. Six words sharing one
+       column, so the badge has to group them or the row loses its fastest
+       read: transport stays outlined `neutral`, warehouse is filled
+       `accent-blue`. Filled against outlined, not two shades of dark text —
+       see typeFlavor for why the first attempt failed.
+
+    2. ONE FILTER, NOT TWO. A warehouse planner should not scroll past
+       transport orders all day, so the list needs a scope — but it needs
+       exactly one way to set it. The order-type chips are it: Brokerage, MT,
+       SaaS and Own Fleet are the transport types, Inbound and Outbound the
+       warehouse ones, and "warehouse only" is picking those two.
+
+       Saved views for Warehouse and Transport were tried here and removed. Two
+       controls over the same axis is two things that can disagree, and the
+       reviewer then has to work out which wins. The tab row is left dormant
+       rather than deleted, so a real saved view can come back later.
+
+    3. TRANSIT STATUS STOPS BEING A COLUMN. A warehouse order is not in
+       transit — it is being picked, or waiting for a dock slot — so a Transit
+       Status column is empty on every warehouse row, and a column that is
+       blank half the time earns its width badly. It folds into Status as a
+       second line instead: state on top, timeliness under it, present only
+       where it means something. Absence in a stacked cell reads as "does not
+       apply" without needing a dash and a tooltip to explain itself.
+
+       This was found by building it. The first version kept the column and put
+       an em dash in it; at 1600px the table then needed 10 columns in 916px of
+       page, cells wrapped to four lines and rows were 153px tall. The column
+       was the thing to cut.
+
+    4. WHERE AND WHEN BECOME REAL COLUMNS, and Linked is added.
+
+       Both record types have two ends — the warehouse is simply one of them
+       (origin for an Outbound, destination for an Inbound). That is the honest
+       shared concept, and it is what makes the two comparable in one table at
+       all. It started as a single "Location" column holding a
+       `Rotterdam → Berlin` route, which turned out to be unfilterable: no way
+       to ask for everything leaving Rotterdam when both ends share a cell.
+
+       So place, date and time are each their own column, per end — six in
+       total, each sorted on separately. The date and time columns use the
+       design system's own cca-date-cell and cca-trip-stop-time-window rather
+       than bare text; both need linking by hand, which the <head> explains.
+       14 columns do not fit the page and the table scrolls; that is the real
+       cost of combining, and worth seeing rather than hiding.
+
+       Linked is the payoff — the counterpart records, so a fan-out (one
+       Outbound, two trailers on the same lane) is visible in the list instead
+       of only on a detail page.
+
+  Everything renders from _shared/data.js. Warehouse orders live in their own
+  array there and this page asks for both with `allOrders()` — see the comment
+  on WAREHOUSE_ORDERS for why they are not simply appended to `orders`.
+
+  Never write a literal opening html tag in this comment: build-screens.py reads
+  data-screen off the first thing that looks like one.
+-->
+<html lang="en" class="light" data-screen="oms.orders">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orders · Warehouse &amp; Transport · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+
+    <!--
+      TWO EXTRA STYLESHEETS, which is a departure from the usual two-link rule —
+      called out here rather than left to be discovered.
+
+      ds/index.css covers the 40 documented design-system components. These two
+      are real libs/ui/src components (the same owner as cca-label-badge and
+      cca-search-field) but they live among the ~274 product stylesheets under
+      ds/components/ that index.css does not import, so they have to be linked
+      by hand:
+
+        cca-date-cell             the date cell
+        cca-trip-stop-time-window a time window — inline-flex, with a
+                                  .window-separator between the two times
+
+      Nothing else in the bundle renders a date or a time window, so a table
+      with Date and Time columns cannot avoid them. Both go BEFORE
+      _shared/prototype.css so the shared layer can still override.
+    -->
+    <link rel="stylesheet" href="../design-system/dist/ds/components/date-cell.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/trip-stop-time-window.css" />
+
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it.
+         Everything else this page needs is in ../_shared/prototype.css. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <!-- Rail and submenu are shared — see _shared/shell-markup.js. -->
+          <cca-side-menu data-rail="Shipper TMS"></cca-side-menu>
+          <cca-side-submenu data-submenu="shipper-tms" data-submenu-active="Orders"></cca-side-submenu>
+
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <div class="flex flex-row items-center gap-2 pl-6">
+                <!-- A classless h2 is the app's own document title: 20px medium,
+                     styled globally. A text-cca-* utility here would shrink it. -->
+                <h2 class="text-neutral-title">Orders</h2>
+              </div>
+              <div data-top-bar-trailing data-initials="AF"></div>
+            </div>
+          </cca-header>
+
+          <div class="page">
+            <div class="page-container proto-hug flex flex-col">
+              <!--
+                Saved-view tabs. This is where the domain scope lives (change 2):
+                `All orders` is the system view, `Warehouse` and `Transport` are
+                saved ones. Rendered from state, as in orders-pinned-filters —
+                a saved view carries a home icon and a kebab, so it is composed
+                from utilities rather than being a mat-tab-group.
+              -->
+              <div class="flex items-center" id="view-tabs"></div>
+
+              <!-- Toolbar -->
+              <div class="mt-4 flex items-center gap-4">
+                <div class="max-w-140 min-w-60 flex-1">
+                  <cca-search-field class="proto-no-subscript" style="display: block">
+                    <mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary mat-mdc-form-field-has-icon-prefix w-full">
+                      <div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+                        <div class="mat-mdc-form-field-flex">
+                          <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>
+                            <div class="mdc-notched-outline__notch mat-mdc-notch-piece"></div>
+                            <div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div>
+                          </div>
+                          <div class="mat-mdc-form-field-icon-prefix">
+                            <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-search mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                          </div>
+                          <div class="mat-mdc-form-field-infix">
+                            <!-- Placeholder widened: a warehouse order is found by
+                                 its own reference, not a transport one. -->
+                            <input id="orders-search" type="text" class="mat-mdc-input-element mdc-text-field__input" placeholder="Search by order, shipper or warehouse reference" value="" autocomplete="off" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
+                    </mat-form-field>
+                  </cca-search-field>
+                </div>
+
+                <button ccaButton class="cca-btn cca-btn--subtle" id="filters-button" aria-haspopup="dialog" aria-expanded="false">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-filter mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  Filters
+                </button>
+
+                <div class="ml-auto flex items-center gap-4">
+                  <button ccaButton class="cca-btn cca-btn--secondary cca-btn--icon-only" aria-label="Export">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-export mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--secondary cca-btn--icon-only" aria-label="More actions">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-ellipsis-vertical mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!--
+                Order-type chips — the only filter on this list, and the
+                whole of the scope mechanism (change 2). Selectable filter chips
+                from design-system/dist/components/chips.html, the sanctioned
+                component for exactly this.
+
+                Multi-select, transport types first and warehouse after, so
+                "warehouse only" is Inbound + Outbound rather than a separate
+                control that has to be kept in step with this one. Nothing
+                selected means no filter.
+              -->
+              <div class="mt-4 flex flex-wrap items-center gap-2" id="type-chips" role="listbox" aria-label="Filter by order type"></div>
+
+              <!-- The combined table -->
+              <div class="mt-4 overflow-x-auto">
+                <table class="mat-mdc-table mdc-data-table__table min-w-max" style="width: 100%">
+                  <thead>
+                    <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Actions</th>
+                      <!-- The order-type badge is its own column in the design, with no header. -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell w-22" role="columnheader"></th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Group</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Sales Organisation</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Reference</th>
+                      <!--
+                        New (change 4). Six columns where there was one
+                        "Location", because every one of these is a field
+                        somebody filters or sorts on, and a value sharing a cell
+                        with another value can do neither.
+                      -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin Date</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin Time</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination Date</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination Time</th>
+                      <!-- Transit status folds in here (change 3) — it applied to
+                           transport only, so as its own column it was empty on
+                           every warehouse row. -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
+                      <!-- New (change 4). -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Linked</th>
+                    </tr>
+                  </thead>
+                  <tbody class="mdc-data-table__content" id="orders-rows"></tbody>
+                </table>
+
+                <!-- Empty state, for a chip combination that matches nothing. -->
+                <div class="hidden flex-col items-center gap-2 py-8" id="orders-empty">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-box mat-ligature-font mat-icon-inline text-neutral-caption" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-label-md text-neutral-title">No orders match these filters</span>
+                  <span class="text-cca-base-sm text-neutral-caption">Clear an order type to see the full list.</span>
+                </div>
+
+                <!-- Pagination. The app uses mat-paginator; the bundle ships no
+                     static markup for it, so this is composed from utilities. -->
+                <div class="flex items-center justify-end gap-4 py-4">
+                  <span class="text-cca-label-sm text-neutral-caption">Rows per page</span>
+                  <span class="flex items-center gap-2 rounded-lg border border-neutral-default px-3 py-1 text-cca-base-sm text-neutral-body">
+                    10
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevron-down mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </span>
+                  <span class="text-cca-label-sm text-neutral-caption" id="row-count"></span>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="First page" disabled>
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Previous page" disabled>
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevron-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Next page">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevron-right mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                  <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Last page">
+                    <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-chevrons-right mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </cca-main>
+    </cca-root>
+
+    <script src="../_shared/data.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+    <script src="../_shared/shell.js"></script>
+
+    <script>
+      'use strict';
+
+      // Both domains, from the shared fixtures. `orders` alone is transport-only.
+      const ALL = window.CCA_DATA.allOrders();
+
+      /*
+       * Only the system view. Warehouse and Transport were saved views here at
+       * one point and came out again: a second scope mechanism sitting next to
+       * the type chips meant two controls that could disagree, and a reviewer
+       * having to work out which one won. The chips do the whole job.
+       *
+       * With one view there are no tabs to show — a single tab is not a choice,
+       * and the app agrees: Contracted Lanes has no saved views and renders no
+       * tab row. The strip below is written and dormant, so adding a view back
+       * brings it and its kebab menu back with no other change.
+       */
+      const VIEWS = [{ name: 'All', system: true }];
+      let activeView = 'All';
+
+      /*
+       * Order types, grouped by domain. The flavour is the domain (change 1):
+       * transport keeps the `neutral` the list uses today, warehouse takes
+       * `accent-blue`. Both are real cca-label-badge flavours — see
+       * design-system/dist/ds/components/label-badge.css.
+       */
+      const TYPES = [
+        { name: 'Brokerage', domain: 'transport', flavor: 'neutral' },
+        { name: 'MT', domain: 'transport', flavor: 'neutral' },
+        { name: 'SaaS', domain: 'transport', flavor: 'neutral' },
+        { name: 'Own Fleet', domain: 'transport', flavor: 'neutral' },
+        { name: 'Inbound', domain: 'warehouse', flavor: 'accent-blue' },
+        { name: 'Outbound', domain: 'warehouse', flavor: 'accent-blue' },
+      ];
+
+      /*
+       * The badge is FILLED for warehouse and OUTLINED for transport.
+       *
+       * Colour alone was not enough. The first version gave both the
+       * `emphasis-outline` treatment the existing list uses, which forces
+       * `background-color: transparent !important` — so the only difference
+       * between the two domains was the text colour, near-black against dark
+       * navy, at 12px. Measured in the browser: rgb(16,21,46) versus
+       * rgb(13,55,89). Technically distinct, invisible in practice.
+       *
+       * Dropping emphasis-outline on the warehouse types lets `accent-blue`
+       * paint its tint, so the domains differ in FORM and not just hue. Both
+       * are stock cca-label-badge flavours — see
+       * design-system/dist/ds/components/label-badge.css.
+       */
+      const typeFlavor = (name) => {
+        const t = TYPES.filter((x) => x.name === name)[0];
+        if (!t) return 'neutral emphasis-outline';
+        return t.domain === 'warehouse' ? 'accent-blue' : 'neutral emphasis-outline';
+      };
+      let selectedTypes = []; // empty = no type filter, not "none selected"
+
+      // ------------------------------------------------------------- helpers
+      const icon = (name) =>
+        `<cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-${name} mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>`;
+
+      const labelBadge = (text, flavor) =>
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-1 text-cca-base-sm leading-5 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
+
+      // Smaller than the documented label badge: the design system has no size
+      // modifier, so the size is the type utility one step down the scale with
+      // tighter vertical padding. Matches the existing orders list.
+      // `flavor` carries the outline modifier here, because whether the badge is
+      // filled or outlined is what distinguishes the two domains — see typeFlavor.
+      const smallLabelBadge = (text, flavor) =>
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ${flavor}">${text}</div></cca-label-badge>`;
+
+      const statusBadge = (text, flavor) =>
+        `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
+
+      /*
+       * "Does not apply", said out loud — used by the Linked column, where a
+       * blank cell would read as missing data. The title says WHY there is no
+       * counterpart, which is the part a reader cannot infer. aria-label carries
+       * it too, since a screen reader gets nothing from a dash.
+       */
+      const notApplicable = (why) =>
+        `<span class="text-cca-base-sm text-neutral-caption" title="${why}" aria-label="${why}">—</span>`;
+
+      // ------------------------------------------------------- what's on screen
+      function visibleOrders() {
+        // No selection is "no type filter", not "nothing selected" — an empty
+        // chip row must show everything, not an empty table.
+        if (!selectedTypes.length) return ALL;
+        return ALL.filter((o) => selectedTypes.indexOf(o.type) !== -1);
+      }
+
+      // ------------------------------------------------------------ saved views
+      function renderViews() {
+        if (VIEWS.length < 2) {
+          // Including the filler, or an empty rule would hang under the toolbar
+          // with no tabs above it.
+          document.getElementById('view-tabs').innerHTML = '';
+          return;
+        }
+
+        const tab = (v) => {
+          const active = v.name === activeView;
+          return `
+            <div class="flex h-12 w-40 shrink-0 cursor-pointer items-center justify-center gap-1.5 overflow-clip surface-neutral-light px-3 py-2 ${
+              active ? 'border-b-2 border-brand-default' : 'border-b border-neutral-default'
+            }" role="tab" aria-selected="${active}" data-view="${v.name}">
+              ${v.system ? icon('home') : ''}
+              <span class="truncate text-cca-label-lg ${active ? 'text-brand-default' : 'text-neutral-caption'}">${v.name}</span>
+              ${
+                active && !v.system
+                  ? `<button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="View options">${icon('ellipsis-vertical')}</button>`
+                  : ''
+              }
+            </div>`;
+        };
+
+        document.getElementById('view-tabs').innerHTML =
+          VIEWS.map(tab).join('') +
+          // Filler keeps the bottom border running to the edge of the row.
+          '<div class="h-12 flex-1 border-b border-neutral-default surface-neutral-light"></div>';
+      }
+
+      // ------------------------------------------------------------- type chips
+      /*
+       * Markup copied from design-system/dist/components/chips.html. The
+       * checkmark graphic is part of the component, not decoration: it is what
+       * shows selection, together with the brand outline `cca-chip` applies via
+       * mdc-evolution-chip--selected.
+       *
+       * Counts are computed against the ACTIVE VIEW, not the whole list — a
+       * count that ignores the view would promise rows the view then hides.
+       */
+      function renderTypeChips() {
+        const chips = TYPES.filter((t) => ALL.some((o) => o.type === t.name)).map((t) => {
+          const selected = selectedTypes.indexOf(t.name) !== -1;
+          // Counted against the whole list, never against the current
+          // selection — a count that moved as you picked chips would tell you
+          // how many of a type you had already chosen, which is not the
+          // question the number is there to answer.
+          const n = ALL.filter((o) => o.type === t.name).length;
+          return `
+            <mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable cca-chip mat-primary${
+              selected ? ' mdc-evolution-chip--selected' : ''
+            }" data-type="${t.name}">
+              <span class="mat-mdc-chip-focus-overlay"></span>
+              <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
+                <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="${selected}">
+                  <span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">
+                    <span class="mdc-evolution-chip__checkmark">
+                      <svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">
+                        <path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                      </svg>
+                    </span>
+                  </span>
+                  <span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">${t.name} (${n})</span>
+                </span>
+              </span>
+            </mat-chip-option>`;
+        });
+
+        document.getElementById('type-chips').innerHTML = chips.join('');
+      }
+
+      // ------------------------------------------------------------- the table
+      /*
+       * Origin and Destination (change 4).
+       *
+       * This is the column pair that makes the two record types genuinely
+       * comparable, and it is also why they belong in one table at all: a
+       * transport order and a warehouse order BOTH have two ends. The warehouse
+       * is simply one of them —
+       *
+       *   Outbound — the warehouse IS the origin, goods leave it
+       *   Inbound  — the warehouse IS the destination, goods arrive at it
+       *
+       * They were one combined "Location" column to begin with, holding a
+       * `Rotterdam → Berlin` route for transport and a single site for
+       * warehouse. That cannot be filtered or sorted: there is no way to ask
+       * for "everything leaving Rotterdam" when both ends share a cell, and no
+       * way to sort on either. Two columns, one concept each.
+       */
+
+      /*
+       * Transport records carry a postal city ("3072 AP Rotterdam"); warehouse
+       * records carry a bare one. Strip a leading postcode — digits, then an
+       * optional two-letter Dutch suffix — so the two domains line up in the
+       * same column instead of one being visibly noisier than the other.
+       */
+      const cityName = (city) => city.replace(/^(?:\d[\d\s]*)?(?:[A-Z]{2}\s+)?/, '');
+
+      /*
+       * Which end is which, whichever domain the record came from.
+       *
+       * Transport records predate the warehouse ones and carry `window` as a
+       * plain time string; warehouse records carry { from, to }. Normalised
+       * here rather than in the fixture, so the transport shape other
+       * prototypes already read is left alone.
+       */
+      const asWindow = (w) => (typeof w === 'string' ? { from: w, to: null } : w || null);
+
+      function ends(o) {
+        const side = (e) => ({ ...e, window: asWindow(e.window) });
+        return o.domain === 'transport'
+          ? { origin: side(o.pickup), destination: side(o.delivery), dcSide: null }
+          : { origin: side(o.origin), destination: side(o.destination), dcSide: o.warehouseSide };
+      }
+
+      /*
+       * The warehouse end gets the loading-dock glyph, the other end a plain
+       * location marker. Both names checked against
+       * design-system/dist/tokens/icons.json rather than guessed — truck-ramp-box
+       * and location-dot are real; `warehouse` and `pin` are not.
+       */
+      /*
+       * Place, date and time are three COLUMNS per end, not three lines in one
+       * cell — six columns across the two ends.
+       *
+       * Two reasons they cannot share a cell. There is no component that renders
+       * a date and a time together: cca-date-time-detail and cca-date-cell exist
+       * but are deep app components outside ds/index.css, and cca-date-cell is
+       * only `display: flex`. And a value sharing a cell cannot be sorted or
+       * filtered on — "leaving Rotterdam", "leaving on the 26th" and "leaving
+       * before 08:00" are three different questions, and a table answers them
+       * only if each is its own column.
+       *
+       * The cost is width: 14 columns do not fit the page, so the table scrolls
+       * horizontally. It buys shorter rows in exchange, since every one of these
+       * cells is now a single line.
+       */
+      function placeCell(end, isDc) {
+        return `<td class="mat-mdc-cell mdc-data-table__cell">
+          <span class="flex items-center gap-1 whitespace-nowrap text-cca-base-sm text-neutral-body">${
+            icon(isDc ? 'truck-ramp-box' : 'location-dot')
+          }${cityName(end.city || end.name)}</span>
+        </td>`;
+      }
+
+      /*
+       * Date and time use the design system's own elements rather than bare
+       * spans — cca-date-cell and cca-trip-stop-time-window, both real
+       * libs/ui/src components. See the stylesheet comment in <head> for why
+       * they need linking separately.
+       *
+       * The element tags are load-bearing, not decoration: all the CSS is
+       * scoped to them (`cca-trip-stop-time-window .window-separator`), so a
+       * plain div with the same classes gets none of it. Typography is not part
+       * of either component — cca-date-cell is only `display: flex` — so the
+       * text utilities stay.
+       */
+      function dateCell(value) {
+        return `<td class="mat-mdc-cell mdc-data-table__cell">
+          <cca-date-cell class="text-cca-base-sm text-neutral-body whitespace-nowrap">${
+            value || '—'
+          }</cca-date-cell>
+        </td>`;
+      }
+
+      /*
+       * A window is two times with the component's own .window-separator
+       * between them, which the design system mutes to --text-neutral-caption.
+       * That separator is exactly why the fixture carries { from, to } instead
+       * of a joined string — there has to be something to put between.
+       *
+       * A single point in time is the same element with no separator and no
+       * second value. An unconfirmed slot (an inbound nobody has booked a dock
+       * for yet) prints its status instead: that is a real value in this
+       * column, not an empty one — it is the thing a planner is scanning for.
+       */
+      function timeCell(end) {
+        const w = end.window;
+        const body = !w
+          ? `<span class="text-neutral-caption">${end.slotStatus || '—'}</span>`
+          : w.to
+            ? `<span>${w.from}</span><span class="window-separator px-1">–</span><span>${w.to}</span>`
+            : `<span>${w.from}</span>`;
+        return `<td class="mat-mdc-cell mdc-data-table__cell">
+          <cca-trip-stop-time-window class="text-cca-base-sm text-neutral-body whitespace-nowrap">${body}</cca-trip-stop-time-window>
+        </td>`;
+      }
+
+      // All six cells for one order, in header order.
+      function endColumns(o) {
+        const e = ends(o);
+        return (
+          placeCell(e.origin, e.dcSide === 'origin') +
+          dateCell(e.origin.date) +
+          timeCell(e.origin) +
+          placeCell(e.destination, e.dcSide === 'destination') +
+          dateCell(e.destination.date) +
+          timeCell(e.destination)
+        );
+      }
+
+      /*
+       * Linked (change 4) — the counterpart records. This column is the reason
+       * the two lists are being merged at all: it makes the relationship visible
+       * where the work happens, instead of only on a detail page.
+       *
+       * One link resolves to a direct link. Several show a count, because naming
+       * two references in a table cell is unreadable and the detail page is
+       * where a fan-out belongs. No links is a real state, not missing data —
+       * an Inbound whose supplier arranges its own haulage has none.
+       */
+      function linkedCell(o) {
+        const links = o.linked || [];
+        if (!links.length) {
+          return notApplicable(
+            o.domain === 'warehouse'
+              ? 'No transport order — haulage arranged by the supplier'
+              : 'No warehouse order on this transport'
+          );
+        }
+        /*
+         * Always a count, never a reference — for two reasons.
+         *
+         * Consistency: an earlier version printed the full reference when there
+         * was one link and "2 orders" when there were more, so the column
+         * changed what kind of thing it showed depending on the row.
+         *
+         * Width: a reference is ~175px of column, and the tenth column was
+         * already past the edge of the page. The count is ~100px and brings the
+         * table back inside it.
+         *
+         * The link still resolves — to the counterpart itself when there is one,
+         * and to this order's own detail when there are several, since that is
+         * where a fan-out is actually listed.
+         */
+        const target = links.length === 1 ? links[0] : o.id;
+        return `
+          <a class="proto-header-link flex items-center gap-1 text-cca-base-sm whitespace-nowrap" href="#"
+             data-screen="orders.detail" data-params='{"id":"${target}"}'
+             title="${links.join(', ')}">
+            ${icon('link')}${links.length} order${links.length === 1 ? '' : 's'}
+          </a>`;
+      }
+
+      function renderRows() {
+        const rows = visibleOrders();
+        document.getElementById('orders-rows').innerHTML = rows
+          .map(
+            (o) => `
+          <tr class="mat-mdc-row mdc-data-table__row">
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Row actions">${icon('ellipsis-vertical')}</button>
+            </td>
+            <!-- The flavour is the domain (change 1). -->
+            <td class="mat-mdc-cell mdc-data-table__cell">${smallLabelBadge(o.type, typeFlavor(o.type))}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <!-- By SCREEN NAME, not folder — _shared/routes.js resolves it, and
+                   the click explains itself until the detail exists. -->
+              <a class="cca-btn cca-btn--link whitespace-nowrap" href="#"
+                 data-screen="orders.detail" data-params='{"id":"${o.id}"}'>${o.id}</a>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <div class="flex flex-col gap-1 text-cca-base-sm text-neutral-body">
+                <span class="flex items-center gap-1 whitespace-nowrap">${icon('building')}${o.shipperGroup}</span>
+                <span class="flex items-center gap-1 whitespace-nowrap">${icon('users')}${o.shipperSubGroup}</span>
+              </div>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.salesOrganisation}</span>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.shipperReference}</span>
+            </td>
+            ${endColumns(o)}
+            <td class="mat-mdc-cell mdc-data-table__cell">
+              <div class="flex flex-col items-start gap-1">
+                ${statusBadge(o.status, o.statusFlavor)}
+                ${o.domain === 'transport' ? labelBadge(o.transitStatus, o.transitFlavor) : ''}
+              </div>
+            </td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${linkedCell(o)}</td>
+          </tr>`
+          )
+          .join('');
+
+        document.getElementById('orders-empty').classList.toggle('hidden', rows.length > 0);
+        document.getElementById('orders-empty').classList.toggle('flex', rows.length === 0);
+        document.getElementById('row-count').textContent = rows.length
+          ? `1 – ${rows.length} of ${rows.length}`
+          : '0 of 0';
+
+        // data-screen links are added after routes.js ran, so re-resolve them.
+        if (window.CCA_ROUTES) window.CCA_ROUTES.resolve();
+      }
+
+      function render() {
+        renderViews();
+        renderTypeChips();
+        renderRows();
+      }
+
+      // ------------------------------------------------------------- behaviour
+      document.addEventListener('click', function (e) {
+        const chip = e.target.closest('[data-type]');
+        if (chip) {
+          const name = chip.getAttribute('data-type');
+          const at = selectedTypes.indexOf(name);
+          if (at === -1) selectedTypes.push(name);
+          else selectedTypes.splice(at, 1);
+          render();
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>

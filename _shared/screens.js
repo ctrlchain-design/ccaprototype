@@ -13,6 +13,7 @@ window.CCA_SCREENS = {
   "admin.legal.document": { path: "legal/admin-document/", title: "Terms and Condition Management · CtrlChain" },
   "legal.privacy": { path: "legal/privacy/", title: "Privacy Policy · CtrlChain" },
   "legal.terms": { path: "legal/terms/", title: "Terms of Service / Use · CtrlChain" },
+  "oms.orders": { path: "oms/", title: "Orders · Warehouse &amp; Transport · CtrlChain" },
   "orders.list": { path: "orders-pinned-filters/", title: "Orders · Pinned filters · CtrlChain" },
   "playground": { path: "playground/", title: "Playground · CtrlChain prototypes" },
   "rate-configuration": { path: "rate-configuration/", title: "rate-configuration" },
