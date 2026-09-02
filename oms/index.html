@@ -225,42 +225,49 @@
                   authoritative; on `auto` a width is only a hint that
                   unwrappable content overrides.
 
-                  FIXED LAYOUT CLIPS SILENTLY. A badge is `whitespace-nowrap`
-                  inside an inline-flex, so when it does not fit it is simply
-                  cut — no wrap, no ellipsis, no error. Measure the widest real
-                  value before narrowing any of these. And note
-                  `td.scrollWidth > td.clientWidth` DOES NOT CATCH IT: the td
-                  reports no overflow while its inline-flex child hangs out of
-                  the content box. Compare the child's width against
-                  clientWidth minus padding instead.
+                  ⚠ HOW THESE CLIP, AND WHY IT IS EASY TO MISS. The two window
+                  columns were 200px against an intrinsic 286px and had been
+                  losing 114px of every cell — silently. Two traps stacked up:
 
-                  3100px total. That is close to the running app's own Orders
-                  table, which is 3161px across 18 columns
-                  (development.ctrlchain.com/shipper-tms/order, and
-                  IvHbK3LeammCOdlHQQYxwy node 11187:289914). A wide scrolling
-                  table is the pattern here, not a failure to fit.
+                    · cca-date-cell is `display: flex`, so it reports the
+                      column width no matter what it holds. Measuring IT tells
+                      you nothing.
+                    · Its flex children then SHRINK below their content, and
+                      `getBoundingClientRect()` returns the shrunk box, so the
+                      text overflows a span that measures as fitting.
+
+                  `td.scrollWidth > td.clientWidth` does not catch it either.
+                  To check these, sum the children's `scrollWidth` and compare
+                  against clientWidth minus padding — and note the stacks now
+                  carry `shrink-0`, so a too-narrow column overflows visibly
+                  instead of clipping quietly.
+
+                  The window columns are 316px against the 324px the app allots
+                  them, and Creation Date Time 172px, a little over the 161px the app
+                  allots it because this stacks a clock beside the date
+                  (IvHbK3LeammCOdlHQQYxwy node 11187:289914). 3328px total.
                 -->
-                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 775)">
+                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 832)">
                   <colgroup>
                     <col style="width: calc(var(--spacing) * 22)" />  <!-- Actions -->
                     <col style="width: calc(var(--spacing) * 26)" />  <!-- Category -->
                     <col style="width: calc(var(--spacing) * 25)" />  <!-- Order type -->
                     <col style="width: calc(var(--spacing) * 44)" />  <!-- Reference Number -->
+                    <col style="width: calc(var(--spacing) * 40)" />  <!-- Status -->
+                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Transit Status -->
                     <col style="width: calc(var(--spacing) * 55)" />  <!-- Client -->
                     <col style="width: calc(var(--spacing) * 45)" />  <!-- Sales Organisation -->
                     <col style="width: calc(var(--spacing) * 44)" />  <!-- Trip Reference -->
                     <col style="width: calc(var(--spacing) * 45)" />  <!-- Customer Reference -->
-                    <col style="width: calc(var(--spacing) * 40)" />  <!-- Status -->
-                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Transit Status -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Origin -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Destination -->
                     <col style="width: calc(var(--spacing) * 28)" />  <!-- Total Stops -->
-                    <col style="width: calc(var(--spacing) * 50)" />  <!-- Origin Date/Time -->
-                    <col style="width: calc(var(--spacing) * 50)" />  <!-- Destination Date/Time -->
+                    <col style="width: calc(var(--spacing) * 79)" />  <!-- Origin Date/Time -->
+                    <col style="width: calc(var(--spacing) * 79)" />  <!-- Destination Date/Time -->
                     <col style="width: calc(var(--spacing) * 55)" />  <!-- Carrier Group(s) -->
                     <col style="width: calc(var(--spacing) * 36)" />  <!-- Shipment Issues -->
                     <col style="width: calc(var(--spacing) * 32)" />  <!-- POD Approved -->
-                    <col style="width: calc(var(--spacing) * 44)" />  <!-- Creation Date Time -->
+                    <col style="width: calc(var(--spacing) * 43)" />  <!-- Creation Date Time -->
                   </colgroup>
                   <thead>
                     <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
@@ -269,12 +276,12 @@
                       <!-- The type badge is its own column in the design, with no header. -->
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader"></th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Transit Status</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Client</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Sales Organisation</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Trip Reference</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Customer Reference</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Transit Status</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Total Stops</th>
@@ -1014,8 +1021,10 @@
             }</cca-date-cell>
           </td>`;
         }
+        // shrink-0: without it these collapse below their text and the
+        // overflow is invisible — see the colgroup comment.
         const stack = (e) => `
-          <span class="flex flex-col">
+          <span class="flex shrink-0 flex-col">
             <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.date}</span>
             <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.time}</span>
           </span>`;
@@ -1118,10 +1127,14 @@
         return `<td class="mat-mdc-cell mdc-data-table__cell">
           <cca-date-cell class="flex-col gap-1">
             <span class="text-cca-label-sm text-neutral-caption">At</span>
-            <span class="flex items-center gap-1.5 whitespace-nowrap">
+            <!-- Date over time, as the app stacks it. Inline needed 183px
+                 against the 161px the app allots this column. -->
+            <span class="flex items-start gap-1.5">
               <span class="text-neutral-caption">${icon('clock')}</span>
-              <span class="text-cca-base-sm text-neutral-body">${o.createdAt}</span>
-              <span class="text-cca-base-sm text-neutral-body">${o.createdTime}</span>
+              <span class="flex shrink-0 flex-col">
+                <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.createdAt}</span>
+                <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.createdTime}</span>
+              </span>
             </span>
           </cca-date-cell>
         </td>`;
@@ -1164,6 +1177,25 @@
               <a class="cca-btn cca-btn--link whitespace-nowrap" href="#"
                  data-screen="orders.detail" data-params='{"id":"${o.id}"}'>${o.id}</a>
             </td>
+            <!--
+              Status and Transit sit beside the reference, not out past the
+              company columns. They are what a reader scans for after finding
+              the order, and 10 columns of Client / Sales Organisation /
+              references had been pushing them off the first screen.
+
+              Still two columns, not one stacked cell — they are two different
+              badge components, which the stacked version hid.
+            -->
+            <td class="mat-mdc-cell mdc-data-table__cell">${statusBadge(o.status, o.statusFlavor)}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${
+              o.transitStatus
+                ? transitBadge(o.transitStatus, o.transitFlavor)
+                : notApplicable(
+                    o.domain === 'warehouse'
+                      ? 'A warehouse order is not in transit'
+                      : 'An invoice order is not in transit'
+                  )
+            }</td>
             <td class="mat-mdc-cell mdc-data-table__cell">
               <div class="flex flex-col gap-1 text-cca-base-sm text-neutral-body">
                 <span class="flex items-center gap-1">${icon('building')}${o.shipperGroup}</span>
@@ -1177,22 +1209,6 @@
             <td class="mat-mdc-cell mdc-data-table__cell">
               <span class="text-cca-base-sm text-neutral-body">${o.shipperReference}</span>
             </td>
-            <!--
-              Status and Transit Status are TWO COLUMNS, side by side, as the
-              Figma Orders table has them. They were stacked in one cell for
-              several revisions — which also hid that they are two different
-              badge components, not one badge on two lines.
-            -->
-            <td class="mat-mdc-cell mdc-data-table__cell">${statusBadge(o.status, o.statusFlavor)}</td>
-            <td class="mat-mdc-cell mdc-data-table__cell">${
-              o.transitStatus
-                ? transitBadge(o.transitStatus, o.transitFlavor)
-                : notApplicable(
-                    o.domain === 'warehouse'
-                      ? 'A warehouse order is not in transit'
-                      : 'An invoice order is not in transit'
-                  )
-            }</td>
             ${endColumns(o)}
           </tr>`
           )
