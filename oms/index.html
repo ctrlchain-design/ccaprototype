@@ -210,40 +210,6 @@
               <!-- The combined table -->
               <div class="mt-4 overflow-x-auto">
                 <!--
-                  COLUMN WIDTHS live here, in a colgroup, in the platform's own
-                  --spacing units (1 unit = 0.25rem) so every width is a
-                  multiple of the design system's scale, not a made-up pixel.
-
-                  Three things had to be true for these to actually apply, and
-                  each one was a trap:
-
-                  1. NOT w-* UTILITIES. `.mat-mdc-table` sets `min-width: 100%`
-                     UNLAYERED in material-data.css, and unlayered CSS beats
-                     Tailwind's layered utilities whatever the import order — so
-                     `min-w-max` on the table computed to 100%, not
-                     max-content. Worse, `w-22`, which this table carried on the
-                     type column (copied from orders-pinned-filters), IS NOT A
-                     CLASS THE BUNDLE DEFINES. Nothing sets `.w-22`, so it
-                     silently did nothing and that column was content-sized all
-                     along.
-
-                  2. `table-layout: fixed`. On `auto`, a colgroup width is only
-                     a hint, and content that cannot wrap overrides it — the
-                     date/time cells held their 314px and every one of the 13
-                     widths was ignored. Fixed makes the colgroup authoritative.
-
-                  3. THE DATE/TIME CELL HAD TO GET NARROWER. It is what forced
-                     those columns wide: two timestamps side by side, the way
-                     the app lays them out, need ~314px. Each end now takes its
-                     own line, which is a deliberate stack and not a wrap — see
-                     dateTimeCell for why wrapping was worse.
-
-                  Total is 1952px against ~1613px of page, so the table still
-                  scrolls horizontally. That is not a spacing failure — 13
-                  columns carrying two date-time ranges do not fit one screen,
-                  and the scroll is the honest consequence.
-                -->
-                <!--
                   COLUMN WIDTHS in a colgroup, in the platform's --spacing units
                   (1 unit = 0.25rem), so every width is a multiple of the design
                   system's scale rather than a made-up pixel.
@@ -259,42 +225,42 @@
                   authoritative; on `auto` a width is only a hint that
                   unwrappable content overrides.
 
-                  FIXED LAYOUT CLIPS SILENTLY, which is the cost. A badge is
-                  `whitespace-nowrap` inside an inline-flex, so when it does not
-                  fit it just gets cut — no wrap, no ellipsis, no error. Status
-                  is 47 units because "Searching for Carrier" is 155px at the
-                  14px badge size and the cell has 14px padding each side; 40
-                  units clipped it by 23px. Measure the widest real value before
-                  narrowing any of these.
-
-                  And `td.scrollWidth > td.clientWidth` DOES NOT CATCH IT — the
-                  td reports no overflow while its inline-flex child hangs out
-                  of the content box. Compare the child's width against
+                  FIXED LAYOUT CLIPS SILENTLY. A badge is `whitespace-nowrap`
+                  inside an inline-flex, so when it does not fit it is simply
+                  cut — no wrap, no ellipsis, no error. Measure the widest real
+                  value before narrowing any of these. And note
+                  `td.scrollWidth > td.clientWidth` DOES NOT CATCH IT: the td
+                  reports no overflow while its inline-flex child hangs out of
+                  the content box. Compare the child's width against
                   clientWidth minus padding instead.
 
-                  2328px total, so it scrolls — and that is what the design does
-                  too. The Orders table in Figma
-                  (IvHbK3LeammCOdlHQQYxwy, node 11187:289914) is 3193px wide
-                  natively, and the OMS warehouse table
-                  (29Ixi12L8wlQPTh3oVg0ao, node 103:57407) is 5004px across
-                  ~24 columns. A wide scrolling table is the pattern here, not
-                  a failure to fit.
+                  3100px total. That is close to the running app's own Orders
+                  table, which is 3161px across 18 columns
+                  (development.ctrlchain.com/shipper-tms/order, and
+                  IvHbK3LeammCOdlHQQYxwy node 11187:289914). A wide scrolling
+                  table is the pattern here, not a failure to fit.
                 -->
-                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 582)">
+                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 775)">
                   <colgroup>
                     <col style="width: calc(var(--spacing) * 22)" />  <!-- Actions -->
                     <col style="width: calc(var(--spacing) * 26)" />  <!-- Category -->
-                    <col style="width: calc(var(--spacing) * 25)" />  <!-- Type -->
+                    <col style="width: calc(var(--spacing) * 25)" />  <!-- Order type -->
                     <col style="width: calc(var(--spacing) * 44)" />  <!-- Reference Number -->
                     <col style="width: calc(var(--spacing) * 55)" />  <!-- Client -->
-                    <col style="width: calc(var(--spacing) * 42)" />  <!-- Sales Organisation -->
-                    <col style="width: calc(var(--spacing) * 42)" />  <!-- Customer Reference -->
+                    <col style="width: calc(var(--spacing) * 45)" />  <!-- Sales Organisation -->
+                    <col style="width: calc(var(--spacing) * 44)" />  <!-- Trip Reference -->
+                    <col style="width: calc(var(--spacing) * 45)" />  <!-- Customer Reference -->
                     <col style="width: calc(var(--spacing) * 40)" />  <!-- Status -->
                     <col style="width: calc(var(--spacing) * 30)" />  <!-- Transit Status -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Origin -->
                     <col style="width: calc(var(--spacing) * 52)" />  <!-- Destination -->
-                    <col style="width: calc(var(--spacing) * 76)" />  <!-- Origin Date/Time -->
-                    <col style="width: calc(var(--spacing) * 76)" />  <!-- Destination Date/Time -->
+                    <col style="width: calc(var(--spacing) * 28)" />  <!-- Total Stops -->
+                    <col style="width: calc(var(--spacing) * 50)" />  <!-- Origin Date/Time -->
+                    <col style="width: calc(var(--spacing) * 50)" />  <!-- Destination Date/Time -->
+                    <col style="width: calc(var(--spacing) * 55)" />  <!-- Carrier Group(s) -->
+                    <col style="width: calc(var(--spacing) * 36)" />  <!-- Shipment Issues -->
+                    <col style="width: calc(var(--spacing) * 32)" />  <!-- POD Approved -->
+                    <col style="width: calc(var(--spacing) * 44)" />  <!-- Creation Date Time -->
                   </colgroup>
                   <thead>
                     <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
@@ -305,17 +271,30 @@
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Client</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Sales Organisation</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Trip Reference</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Customer Reference</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Transit Status</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Total Stops</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin Date/Time</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination Date/Time</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Carrier Group(s)</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipment Issues</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">POD Approved</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Creation Date Time</th>
                     </tr>
                   </thead>
                   <tbody class="mdc-data-table__content" id="orders-rows"></tbody>
                 </table>
+
+                <!-- Reachable again now that the drawer can filter to nothing. -->
+                <div class="hidden flex-col items-center gap-2 py-8" id="orders-empty">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-box mat-ligature-font mat-icon-inline text-neutral-caption" aria-hidden="true"></mat-icon></cca-icon>
+                  <span class="text-cca-label-md text-neutral-title">No orders match these filters</span>
+                  <span class="text-cca-base-sm text-neutral-caption">Clear a value in the Filters drawer to widen the list.</span>
+                </div>
 
                 <!-- Pagination. The app uses mat-paginator; the bundle ships no
                      static markup for it, so this is composed from utilities. -->
@@ -344,6 +323,96 @@
           </div>
         </div>
       </cca-main>
+
+      <!--
+        FILTERS DRAWER — read off the running app at
+        development.ctrlchain.com/shipper-tms/order, not from the Figma, because
+        the app has moved on from it. Two differences worth knowing if you
+        compare against orders-pinned-filters/, which was built from the board:
+
+          · The header is the ACTIVE SAVED VIEW's name, not the word "Filters".
+            Filters belong to a view — which is why views and filters are one
+            mechanism and not two.
+          · The footer is a single "Save Changes", disabled until something
+            changes. There is no Clear/Apply pair; picking a value applies it.
+
+        Overlay machinery is the CDK's, per the design system: a
+        cdk-overlay-container, the sidenav scrim (proto-drawer-backdrop, which
+        is the 0.6 drawer scrim rather than the 0.32 dialog one) and a pane.
+      -->
+      <div class="cdk-overlay-container" id="overlay-container" hidden>
+        <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="drawer-scrim"></div>
+        <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default" id="filters-drawer" role="dialog" aria-modal="true" aria-label="Filters">
+          <div class="flex h-16 shrink-0 items-center gap-2 border-b border-neutral-default px-6">
+            <span class="text-cca-label-lg text-neutral-title" id="drawer-title">All orders</span>
+            <cca-numerical-badge id="drawer-count" hidden>
+              <span class="rounded-full font-medium success inline-flex items-center justify-center align-middle min-w-3.75">
+                <span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">0</span>
+              </span>
+            </cca-numerical-badge>
+          </div>
+
+          <div class="shrink-0 px-6 py-4">
+            <cca-search-field class="proto-no-subscript" style="display: block">
+              <mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-primary mat-mdc-form-field-has-icon-prefix w-full">
+                <div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
+                  <div class="mat-mdc-form-field-flex">
+                    <div class="mdc-notched-outline">
+                      <div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>
+                      <div class="mdc-notched-outline__notch mat-mdc-notch-piece"></div>
+                      <div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div>
+                    </div>
+                    <div class="mat-mdc-form-field-icon-prefix">
+                      <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-search mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                    </div>
+                    <div class="mat-mdc-form-field-infix">
+                      <input id="filter-search" type="text" class="mat-mdc-input-element mdc-text-field__input" placeholder="Search by filter name" value="" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+                <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
+              </mat-form-field>
+            </cca-search-field>
+          </div>
+
+          <div class="proto-drawer-body px-6">
+            <div class="proto-switch-row flex items-center rounded-lg surface-neutral-default px-4 py-2" id="pin-toggle-row">
+              <mat-slide-toggle class="mat-mdc-slide-toggle mat-primary">
+                <div class="mdc-form-field mat-internal-form-field">
+                  <button type="button" role="switch" aria-checked="true" id="pin-toggle" class="mdc-switch mdc-switch--selected">
+                    <div class="mdc-switch__track"></div>
+                    <div class="mdc-switch__handle-track">
+                      <div class="mdc-switch__handle">
+                        <div class="mdc-switch__shadow"><div class="mdc-elevation-overlay"></div></div>
+                        <div class="mdc-switch__ripple"></div>
+                        <div class="mdc-switch__icons">
+                          <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+                          </svg>
+                          <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 13H4v-2h16v2z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                  <label for="pin-toggle">Show pinned filters above the table</label>
+                </div>
+              </mat-slide-toggle>
+            </div>
+
+            <!-- Pinned filters sort to the top and open expanded, as in the app. -->
+            <div class="mt-5 flex flex-col gap-5" id="pinned-list"></div>
+            <hr class="my-4 border-neutral-default" id="pinned-divider" />
+            <!-- Everything else: collapsed, alphabetical. -->
+            <div class="flex flex-col gap-4 pb-4" id="unpinned-list"></div>
+          </div>
+
+          <div class="flex shrink-0 items-center justify-end border-t border-neutral-default px-6 py-4">
+            <button ccaButton class="cca-btn cca-btn--primary" id="save-view" disabled>Save Changes</button>
+          </div>
+        </div>
+      </div>
     </cca-root>
 
     <script src="../_shared/data.js"></script>
@@ -588,57 +657,241 @@
 
       // ------------------------------------------------------- what's on screen
       /*
-       * Everything, unfiltered. Narrowing this list is the Filters drawer's
-       * job and the pinned row's — see orders-pinned-filters/, where that flow
-       * is prototyped. This page is about the combined table itself.
+       * The table honours whatever the drawer has applied. Only the three
+       * chip filters actually narrow anything here — the rest name their
+       * control without implementing it, since this page is about the table.
+       *
+       * An empty selection means "no filter", never "nothing matches": a
+       * filter with no values chosen must not empty the table.
        */
-      const visibleOrders = () => ALL;
+      function visibleOrders() {
+        const applied = (name) => (FILTERS.filter((f) => f.name === name)[0] || {}).applied || [];
+        const cat = applied('Category');
+        const type = applied('Order Type');
+        const stat = applied('Order Status');
+        // The filter spells MT out; the badge abbreviates it.
+        const typeOf = (o) => (o.type === 'MT' ? 'Managed transportation' : o.type);
+        return ALL.filter((o) => {
+          if (cat.length && cat.indexOf(CATEGORY[o.domain]) === -1) return false;
+          if (type.length && type.indexOf(typeOf(o)) === -1) return false;
+          if (stat.length && stat.indexOf(o.status) === -1) return false;
+          return true;
+        });
+      }
 
-      /*
-       * Pinned filters.
+      /* =================================================================
+       * FILTERS — the real list, read off the running app at
+       * development.ctrlchain.com/shipper-tms/order. 31 filters there; this
+       * adds Category, which is this table's own.
        *
-       * The same shape orders-pinned-filters uses: a filter knows its name and
-       * whether it is pinned, and only the pinned ones reach the row above the
-       * table. Order Type is the new entry — the one this page adds — and it is
-       * pinned here so the row is not empty in a review.
+       * HOW FILTERS WORK, since it is one mechanism and not three:
        *
-       * `showPinned` is the drawer toggle. It is true here because the toggle
-       * itself is prototyped next door; this page only needs to show that
-       * Order Type takes its place among the existing filters rather than
-       * inventing a control beside them.
-       */
+       *   · Filters belong to the ACTIVE SAVED VIEW. The drawer is headed by
+       *     the view's name, not by the word "Filters", and the count badge
+       *     counts filters with values applied in that view.
+       *   · Each row carries a PIN, the name, a count badge once values are
+       *     applied, and a chevron. Pinned rows sort to the top and open
+       *     expanded; the rest sit below, collapsed, alphabetical.
+       *   · Pinning is a LAYOUT choice, not a filtering one. It surfaces the
+       *     filter above the table; it applies nothing. The "Show pinned
+       *     filters above the table" switch hides that row wholesale.
+       *   · Values are `cca-chip` — selectable filter chips, INSIDE the drawer.
+       *     This page briefly had them above the table, which collided with the
+       *     pinned row; that is what the chips are for, one level in.
+       *   · There is no Apply step. Picking a value filters immediately; the
+       *     only footer action is Save Changes, which saves the view.
+       *
+       * `kind` is how the row renders its control, matching the app: chips for
+       * an enumerated set, text for free entry, select for a lookup, date for a
+       * range, switch for a boolean.
+       * ================================================================= */
       const FILTERS = [
-        { name: 'Category', pinned: true },
-        { name: 'Order Type', pinned: true },
-        { name: 'Account Manager', pinned: true },
-        { name: 'Assigned Operator', pinned: false },
-        { name: 'Carrier Assignment Status', pinned: false },
-        { name: 'Customer Invoice Status', pinned: false },
+        // --- pinned ------------------------------------------------------
+        { name: 'Category', kind: 'chips', pinned: true,
+          values: ['Transport', 'Warehouse', 'Invoice'], applied: [] },
+        { name: 'Order Type', kind: 'chips', pinned: true,
+          /* The app spells MT out as "Managed transportation" in the filter
+             while the badge abbreviates it. Warehouse types are appended —
+             the app's list is transport-only. */
+          values: ['Brokerage', 'Managed transportation', 'Own Fleet', 'SAAS', 'Inbound', 'Outbound'],
+          applied: [] },
+        { name: 'Order Status', kind: 'chips', pinned: true,
+          /* Transport statuses are the app's own. Warehouse adds its
+             lifecycle — see WAREHOUSE_ORDERS in _shared/data.js. */
+          values: ['Cancelled', 'Carrier Informed', 'Completed', 'Delivery Attempt Failed',
+                   'In Transit', 'Missing POD', 'New', 'Searching for Carrier',
+                   'Registered', 'Ready to Ship', 'Truck Arrived', 'Loaded', 'Departed', 'Delivered'],
+          applied: [] },
+        // --- the rest, as the app orders them ----------------------------
+        { name: 'Account Manager', kind: 'select', pinned: false },
+        { name: 'Addresses', kind: 'text', pinned: false },
+        { name: 'Assigned Operator', kind: 'select', pinned: false },
+        { name: 'Booked with Contracted Lane', kind: 'select', pinned: false },
+        { name: 'Carrier Assignment Status', kind: 'select', pinned: false },
+        { name: 'Carrier Enterprise', kind: 'select', pinned: false },
+        { name: 'Carrier Group', kind: 'select', pinned: false },
+        { name: 'Carrier Invoice Status', kind: 'select', pinned: false },
+        { name: 'Customer Invoice Status', kind: 'select', pinned: false },
+        { name: 'Desired Delivery Date', kind: 'date', pinned: false },
+        { name: 'Desired Pickup Date', kind: 'date', pinned: false },
+        { name: 'Desired Pickup or Delivery Date', kind: 'date', pinned: false },
+        { name: 'Destination Location', kind: 'select', pinned: false },
+        { name: 'Expected Delivery Date', kind: 'date', pinned: false },
+        { name: 'Expected Pickup Date', kind: 'date', pinned: false },
+        { name: 'Expected Pickup or Delivery Date', kind: 'date', pinned: false },
+        { name: 'First Cargo Loaded Date', kind: 'date', pinned: false },
+        { name: 'Has DIFOT Reason code', kind: 'switch', pinned: false },
+        { name: 'Last Cargo Unloaded Date', kind: 'date', pinned: false },
+        { name: 'License plate', kind: 'text', pinned: false },
+        { name: 'Negative margin', kind: 'switch', pinned: false },
+        { name: 'Order created', kind: 'date', pinned: false },
+        { name: 'Origin Location', kind: 'select', pinned: false },
+        { name: 'POD Status', kind: 'select', pinned: false },
+        { name: 'Sales Organisation', kind: 'select', pinned: false },
+        { name: 'Service Type', kind: 'select', pinned: false },
+        { name: 'Shipper Enterprise', kind: 'select', pinned: false },
+        { name: 'Shipper Group', kind: 'select', pinned: false },
+        /* The app's current answer to hidden invoice orders: a boolean that
+           reveals them. This table shows them by Category instead, so the
+           filter is here for completeness rather than doing the work. */
+        { name: 'Show Invoice Orders Only', kind: 'switch', pinned: false },
       ];
       let showPinned = true;
+      let filterQuery = '';
+
+      const appliedCount = (f) => (f.applied ? f.applied.length : 0);
+      const totalApplied = () => FILTERS.filter((f) => appliedCount(f)).length;
 
       /*
-       * The real pinned-filter chip — a pin glyph and the filter's name, on the
-       * neutral-dark surface. Markup shared with orders-pinned-filters so the
-       * two pages cannot drift. `pinned` is the icon name; `pin` does not exist
-       * in the font.
+       * The pinned chip above the table. `pinned-yes` is the PINNED glyph —
+       * plain `pinned` is the unpinned one, which this page had by mistake.
+       * Text is `Name` when nothing is applied and `Name: value, value` once it
+       * is, with an ✕ to clear, exactly as the app renders it.
+       *
+       * The app uses a cca-filter-values-chip component for this
+       * (ds/components/filter-values-chip.css). This is still the composed
+       * version shared with orders-pinned-filters so the two pages match.
        */
       function renderPinnedRow() {
         const row = document.getElementById('pinned-filters-row');
         const pinned = FILTERS.filter((f) => f.pinned);
         row.hidden = !showPinned || pinned.length === 0;
         row.innerHTML = pinned
-          .map(
-            (f) => `
+          .map((f) => {
+            const n = appliedCount(f);
+            return `
           <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
-            ${icon('pinned')}
-            <span class="truncate">${f.name}</span>
-          </span>`
-          )
+            ${icon('pinned-yes')}
+            <span class="truncate">${f.name}${n ? ': ' + f.applied.join(', ') : ''}</span>
+            ${
+              n
+                ? `<button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="Clear ${f.name}" data-clear="${f.name}">${icon('xmark')}</button>`
+                : ''
+            }
+          </span>`;
+          })
           .join('');
       }
 
-      // ------------------------------------------------------------ saved views
+      // ------------------------------------------------------------ the drawer
+      function filterControl(f) {
+        if (f.kind === 'chips') {
+          return `<div class="mt-3 flex flex-wrap items-center gap-2">${f.values
+            .map((v) => {
+              const on = (f.applied || []).indexOf(v) !== -1;
+              return `
+              <mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable mdc-evolution-chip--with-primary-graphic cca-chip mat-primary${
+                on ? ' mdc-evolution-chip--selected' : ''
+              }" data-filter="${f.name}" data-value="${v}">
+                <span class="mat-mdc-chip-focus-overlay"></span>
+                <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
+                  <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="${on}">
+                    <span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">
+                      <span class="mdc-evolution-chip__checkmark">
+                        <svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">
+                          <path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">${v}</span>
+                  </span>
+                </span>
+              </mat-chip-option>`;
+            })
+            .join('')}</div>`;
+        }
+        // The other kinds are named rather than drawn: this page is about the
+        // table, and the controls themselves are prototyped next door.
+        const label = { text: 'Free text', select: 'Lookup', date: 'Date range', switch: 'On / off' }[f.kind];
+        return `<div class="mt-2 text-cca-base-sm text-neutral-caption">${label}</div>`;
+      }
+
+      function filterRow(f, expanded) {
+        const n = appliedCount(f);
+        return `
+          <div data-filter-row="${f.name}">
+            <div class="flex cursor-pointer items-center gap-2">
+              <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="${
+                f.pinned ? 'Unpin' : 'Pin'
+              } ${f.name}" data-pin="${f.name}">${icon(f.pinned ? 'pinned-yes' : 'pinned')}</button>
+              <span class="text-cca-label-md text-neutral-title">${f.name}</span>
+              ${
+                n
+                  ? `<cca-numerical-badge class="ml-auto"><span class="rounded-full font-medium success inline-flex items-center justify-center align-middle min-w-3.75"><span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">${n}</span></span></cca-numerical-badge>`
+                  : '<span class="ml-auto"></span>'
+              }
+              ${icon(expanded ? 'chevron-up' : 'chevron-down')}
+            </div>
+            ${expanded ? filterControl(f) : ''}
+          </div>`;
+      }
+
+      function renderDrawer() {
+        const q = filterQuery.trim().toLowerCase();
+        const match = (f) => !q || f.name.toLowerCase().indexOf(q) !== -1;
+        const pinned = FILTERS.filter((f) => f.pinned && match(f));
+        const rest = FILTERS.filter((f) => !f.pinned && match(f));
+
+        document.getElementById('pinned-list').innerHTML = pinned.map((f) => filterRow(f, true)).join('');
+        document.getElementById('unpinned-list').innerHTML = rest.map((f) => filterRow(f, false)).join('');
+        document.getElementById('pinned-divider').hidden = !pinned.length || !rest.length;
+
+        const badge = document.getElementById('drawer-count');
+        const n = totalApplied();
+        badge.hidden = !n;
+        if (n) badge.querySelector('span span').textContent = n;
+
+        // The switch is meaningless with nothing pinned, so it disables.
+        document.getElementById('pin-toggle-row').classList.toggle('opacity-50', !FILTERS.some((f) => f.pinned));
+
+        const count = document.querySelector('[data-filter-count]');
+        if (count) {
+          count.hidden = !n;
+          if (n) count.querySelector('span span').textContent = n;
+        }
+      }
+
+      function openDrawer(open) {
+        const c = document.getElementById('overlay-container');
+        const scrim = document.getElementById('drawer-scrim');
+        const btn = document.getElementById('filters-button');
+        if (open) {
+          renderDrawer();
+          c.hidden = false;
+          // Commit opacity 0 with a layout read, then transition. NOT rAF —
+          // it does not fire in a background tab, so the scrim would never fade.
+          void scrim.offsetWidth;
+          scrim.classList.add('cdk-overlay-backdrop-showing');
+          document.documentElement.classList.add('cdk-global-scrollblock');
+        } else {
+          scrim.classList.remove('cdk-overlay-backdrop-showing');
+          c.hidden = true;
+          document.documentElement.classList.remove('cdk-global-scrollblock');
+        }
+        btn.setAttribute('aria-expanded', String(open));
+      }
+
+      // ------------------------------------------------------------ saved views      // ------------------------------------------------------------ saved views
       function renderViews() {
         if (VIEWS.length < 2) {
           // Including the filler, or an empty rule would hang under the toolbar
@@ -798,14 +1051,114 @@
         </td>`;
       }
 
+      /*
+       * THE COLUMNS THE RUNNING APP HAS THAT THIS TABLE WAS MISSING —
+       * Trip Reference, Total Stops, Carrier Group(s), Shipment Issues, POD
+       * Approved and Creation Date Time. Read off
+       * development.ctrlchain.com/shipper-tms/order, whose Orders table carries
+       * 18 columns; this one had 13.
+       *
+       * Several of them are TRANSPORT concepts and say so on the other two
+       * domains rather than sitting blank:
+       *
+       *   Total Stops       a warehouse movement has no stops, and an invoice
+       *                     is not a journey
+       *   Carrier Group(s)  belongs to the transport leg; a warehouse order's
+       *                     carrier is on its linked transport order
+       *   POD Approved      proof of delivery is the transport leg's
+       *
+       * Trip Reference and Creation Date Time apply to all three, and a
+       * warehouse order shares the trip reference of the transport that
+       * collects it — which is a second way the two domains are already
+       * joined in the data, alongside `linked`.
+       */
+      const plain = (v) =>
+        `<td class="mat-mdc-cell mdc-data-table__cell"><span class="text-cca-base-sm text-neutral-body">${v}</span></td>`;
+
+      function tripCell(o) {
+        return o.tripReference
+          ? plain(`<span class="whitespace-nowrap">${o.tripReference}</span>`)
+          : `<td class="mat-mdc-cell mdc-data-table__cell">${notApplicable(
+              'No trip raised for this order yet'
+            )}</td>`;
+      }
+
+      /*
+       * Stops over distance, the way the app stacks them — and the distance in
+       * the brand colour, which is how it draws the km line.
+       */
+      function stopsCell(o) {
+        if (!o.stops) {
+          return `<td class="mat-mdc-cell mdc-data-table__cell">${notApplicable(
+            o.domain === 'warehouse'
+              ? 'A warehouse movement has no stops'
+              : 'An invoice order is not a journey'
+          )}</td>`;
+        }
+        return `<td class="mat-mdc-cell mdc-data-table__cell">
+          <div class="flex flex-col gap-1">
+            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.stops} stops</span>
+            <span class="text-cca-base-sm text-brand-default whitespace-nowrap">${o.distanceKm} km</span>
+          </div>
+        </td>`;
+      }
+
+      // Same two-line shape as Client, so the two read as the same kind of thing.
+      function carrierCell(o) {
+        if (!o.carrierGroup) {
+          return `<td class="mat-mdc-cell mdc-data-table__cell">${notApplicable(
+            o.domain === 'warehouse'
+              ? 'The carrier is on the linked transport order'
+              : 'An invoice order has no carrier'
+          )}</td>`;
+        }
+        return `<td class="mat-mdc-cell mdc-data-table__cell">
+          <div class="flex flex-col gap-1 text-cca-base-sm text-neutral-body">
+            <span class="flex items-center gap-1">${icon('building')}${o.carrierGroup}</span>
+            <span class="flex items-center gap-1">${icon('users')}${o.carrierSubGroup}</span>
+          </div>
+        </td>`;
+      }
+
+      /*
+       * Yes / No, spelled out as the app spells it — not a tick or a blank,
+       * both of which leave a reader guessing whether the answer is "no" or
+       * "not known". `undefined` is the third state and says so.
+       */
+      function yesNoCell(value, why) {
+        if (value === undefined || value === null) {
+          return `<td class="mat-mdc-cell mdc-data-table__cell">${notApplicable(why)}</td>`;
+        }
+        return plain(value ? 'Yes' : 'No');
+      }
+
+      // "At" over a date over a time, matching the app's Creation Date Time.
+      function createdCell(o) {
+        return `<td class="mat-mdc-cell mdc-data-table__cell">
+          <cca-date-cell class="flex-col gap-1">
+            <span class="text-cca-label-sm text-neutral-caption">At</span>
+            <span class="flex items-center gap-1.5 whitespace-nowrap">
+              <span class="text-neutral-caption">${icon('clock')}</span>
+              <span class="text-cca-base-sm text-neutral-body">${o.createdAt}</span>
+              <span class="text-cca-base-sm text-neutral-body">${o.createdTime}</span>
+            </span>
+          </cca-date-cell>
+        </td>`;
+      }
+
       // Address then window, for each end, in header order.
       function endColumns(o) {
         const e = ends(o);
         return (
           addressCell(e.origin) +
           addressCell(e.destination) +
+          stopsCell(o) +
           dateTimeCell(e.origin) +
-          dateTimeCell(e.destination)
+          dateTimeCell(e.destination) +
+          carrierCell(o) +
+          yesNoCell(o.shipmentIssues, 'Not tracked on this order type') +
+          yesNoCell(o.podApproved, 'Proof of delivery is the transport leg\'s') +
+          createdCell(o)
         );
       }
 
@@ -839,6 +1192,7 @@
             <td class="mat-mdc-cell mdc-data-table__cell">
               <span class="text-cca-base-sm text-neutral-body">${o.salesOrganisation}</span>
             </td>
+            ${tripCell(o)}
             <td class="mat-mdc-cell mdc-data-table__cell">
               <span class="text-cca-base-sm text-neutral-body">${o.shipperReference}</span>
             </td>
@@ -863,6 +1217,11 @@
           )
           .join('');
 
+        const empty = document.getElementById('orders-empty');
+        if (empty) {
+          empty.classList.toggle('hidden', rows.length > 0);
+          empty.classList.toggle('flex', rows.length === 0);
+        }
         document.getElementById('row-count').textContent = rows.length
           ? `1 – ${rows.length} of ${rows.length}`
           : '0 of 0';
@@ -875,7 +1234,67 @@
         renderViews();
         renderPinnedRow();
         renderRows();
+        if (!document.getElementById('overlay-container').hidden) renderDrawer();
       }
+
+      // ------------------------------------------------------------- behaviour
+      document.getElementById('filters-button').addEventListener('click', () => openDrawer(true));
+      document.getElementById('drawer-scrim').addEventListener('click', () => openDrawer(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') openDrawer(false);
+      });
+      document.getElementById('filter-search').addEventListener('input', (e) => {
+        filterQuery = e.target.value;
+        renderDrawer();
+      });
+
+      document.getElementById('pin-toggle').addEventListener('click', function () {
+        showPinned = this.getAttribute('aria-checked') !== 'true';
+        this.setAttribute('aria-checked', String(showPinned));
+        this.classList.toggle('mdc-switch--selected', showPinned);
+        this.classList.toggle('mdc-switch--unselected', !showPinned);
+        renderPinnedRow();
+      });
+
+      document.getElementById('filters-drawer').addEventListener('click', (e) => {
+        /*
+         * Pin: a LAYOUT change, so it re-renders the chip row and the drawer
+         * but never touches which rows the table shows.
+         */
+        const pin = e.target.closest('[data-pin]');
+        if (pin) {
+          const f = FILTERS.filter((x) => x.name === pin.getAttribute('data-pin'))[0];
+          f.pinned = !f.pinned;
+          renderDrawer();
+          renderPinnedRow();
+          return;
+        }
+        // A value chip applies immediately — there is no Apply step.
+        const chip = e.target.closest('[data-value]');
+        if (chip) {
+          const f = FILTERS.filter((x) => x.name === chip.getAttribute('data-filter'))[0];
+          const v = chip.getAttribute('data-value');
+          f.applied = f.applied || [];
+          const at = f.applied.indexOf(v);
+          if (at === -1) f.applied.push(v);
+          else f.applied.splice(at, 1);
+          document.getElementById('save-view').disabled = false;
+          renderDrawer();
+          renderPinnedRow();
+          renderRows();
+        }
+      });
+
+      // The ✕ on a pinned chip clears that filter's values, not its pin.
+      document.getElementById('pinned-filters-row').addEventListener('click', (e) => {
+        const clear = e.target.closest('[data-clear]');
+        if (!clear) return;
+        const f = FILTERS.filter((x) => x.name === clear.getAttribute('data-clear'))[0];
+        f.applied = [];
+        renderPinnedRow();
+        renderRows();
+        if (!document.getElementById('overlay-container').hidden) renderDrawer();
+      });
 
       // ------------------------------------------------------------- behaviour
       render();
