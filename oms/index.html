@@ -243,53 +243,63 @@
                   columns carrying two date-time ranges do not fit one screen,
                   and the scroll is the honest consequence.
                 -->
-                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 488)">
+                <!--
+                  COLUMN WIDTHS in a colgroup, in the platform's --spacing units
+                  (1 unit = 0.25rem), so every width is a multiple of the design
+                  system's scale rather than a made-up pixel.
+
+                  Not w-* utilities: `.mat-mdc-table` sets `min-width: 100%`
+                  UNLAYERED in material-data.css, and unlayered CSS beats
+                  Tailwind's layered utilities whatever the import order — so
+                  `min-w-max` computed to 100%. And `w-22`, which this table
+                  carried on the type column (copied from
+                  orders-pinned-filters), IS NOT A CLASS THE BUNDLE DEFINES.
+
+                  `table-layout: fixed` is what makes the colgroup
+                  authoritative; on `auto` a width is only a hint that
+                  unwrappable content overrides.
+
+                  2432px total, so it scrolls — and that is what the design does
+                  too. The Orders table in Figma
+                  (IvHbK3LeammCOdlHQQYxwy, node 11187:289914) is 3193px wide
+                  natively, and the OMS warehouse table
+                  (29Ixi12L8wlQPTh3oVg0ao, node 103:57407) is 5004px across
+                  ~24 columns. A wide scrolling table is the pattern here, not
+                  a failure to fit.
+                -->
+                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 608)">
                   <colgroup>
-                    <col style="width: calc(var(--spacing) * 20)" />  <!-- Actions -->
+                    <col style="width: calc(var(--spacing) * 22)" />  <!-- Actions -->
                     <col style="width: calc(var(--spacing) * 26)" />  <!-- Category -->
-                    <col style="width: calc(var(--spacing) * 25)" />  <!-- Order type -->
+                    <col style="width: calc(var(--spacing) * 25)" />  <!-- Type -->
                     <col style="width: calc(var(--spacing) * 44)" />  <!-- Reference Number -->
-                    <col style="width: calc(var(--spacing) * 55)" />  <!-- Shipper Group -->
-                    <col style="width: calc(var(--spacing) * 45)" />  <!-- Sales Organisation -->
-                    <col style="width: calc(var(--spacing) * 45)" />  <!-- Shipper Reference -->
-                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Origin -->
-                    <col style="width: calc(var(--spacing) * 50)" />  <!-- First Pickup Date/Time -->
-                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Destination -->
-                    <col style="width: calc(var(--spacing) * 50)" />  <!-- Last Delivery Date/Time -->
-                    <col style="width: calc(var(--spacing) * 42)" />  <!-- Status -->
+                    <col style="width: calc(var(--spacing) * 55)" />  <!-- Client -->
+                    <col style="width: calc(var(--spacing) * 42)" />  <!-- Sales Organisation -->
+                    <col style="width: calc(var(--spacing) * 42)" />  <!-- Customer Reference -->
+                    <col style="width: calc(var(--spacing) * 40)" />  <!-- Status -->
+                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Transit Status -->
+                    <col style="width: calc(var(--spacing) * 52)" />  <!-- Origin -->
+                    <col style="width: calc(var(--spacing) * 52)" />  <!-- Destination -->
+                    <col style="width: calc(var(--spacing) * 76)" />  <!-- Origin Date/Time -->
+                    <col style="width: calc(var(--spacing) * 76)" />  <!-- Destination Date/Time -->
                     <col style="width: calc(var(--spacing) * 26)" />  <!-- Linked -->
                   </colgroup>
                   <thead>
                     <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Actions</th>
-                      <!--
-                        CATEGORY (change 1). Leftmost data column, because it is
-                        the coarsest grouping and the one a reader scans for.
-                      -->
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Category</th>
-                      <!-- The order-type badge is its own column in the design, with no
-                           header. Width comes from the colgroup; the w-22 that used to be
-                           here is not a class the design system defines. -->
+                      <!-- The type badge is its own column in the design, with no header. -->
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader"></th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Group</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Client</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Sales Organisation</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Reference</th>
-                      <!--
-                        New (change 4). Six columns where there was one
-                        "Location", because every one of these is a field
-                        somebody filters or sorts on, and a value sharing a cell
-                        with another value can do neither.
-                      -->
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">First Pickup Date/Time</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Last Delivery Date/Time</th>
-                      <!-- Transit status folds in here (change 3) — it applied to
-                           transport only, so as its own column it was empty on
-                           every warehouse row. -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Customer Reference</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
-                      <!-- New (change 4). -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Transit Status</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Origin Date/Time</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Destination Date/Time</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Linked</th>
                     </tr>
                   </thead>
@@ -423,9 +433,6 @@
       const icon = (name) =>
         `<cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-${name} mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>`;
 
-      const labelBadge = (text, flavor) =>
-        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-1 text-cca-base-sm leading-5 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
-
       // Smaller than the documented label badge: the design system has no size
       // modifier, so the size is the type utility one step down the scale with
       // tighter vertical padding. Matches the existing orders list.
@@ -434,6 +441,25 @@
       // tighter vertical padding. Matches the existing orders list.
       const smallLabelBadge = (text, flavor) =>
         `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ${flavor} emphasis-outline">${text}</div></cca-label-badge>`;
+
+      /*
+       * TRANSIT STATUS uses cca-attention-flag-badge — the "flag" badge.
+       * libs/ui/src, isDesignSystem true, documented in
+       * design-system/dist/components/badge.html, and this markup is copied
+       * from there verbatim.
+       *
+       * It is a different component from the Status badge on purpose: in the
+       * Figma Orders table the two sit SIDE BY SIDE as separate columns, Status
+       * filled and Transit Status an outlined pill.
+       *
+       * ⚠ ITS VARIANTS ARE ONLY neutral / accent-blue / warning / danger —
+       * no green, no purple. The fixtures used to carry `match`, `highlight`
+       * and `primary` for transit, none of which this component defines, so
+       * they would have rendered as an unstyled borderless box. Remapped in
+       * data.js: On time and Early are accent-blue, Late is warning.
+       */
+      const flagBadge = (text, flavor) =>
+        `<cca-attention-flag-badge><div class="font-medium flex w-fit items-center justify-center rounded-full whitespace-nowrap border gap-1 px-2 py-0.5 text-cca-base-sm ${flavor}"><span>${text}</span></div></cca-attention-flag-badge>`;
 
       const statusBadge = (text, flavor) =>
         `<cca-status-badge><div class="flex w-fit items-center justify-center rounded-full py-1 whitespace-nowrap font-medium px-2 text-cca-label-sm ${flavor}">${text}</div></cca-status-badge>`;
@@ -550,99 +576,75 @@
        */
 
       /*
-       * Transport records carry a postal city ("3072 AP Rotterdam"); warehouse
-       * records carry a bare one. Strip a leading postcode — digits, then an
-       * optional two-letter Dutch suffix — so the two domains line up in the
-       * same column instead of one being visibly noisier than the other.
-       */
-      const cityName = (city) => city.replace(/^(?:\d[\d\s]*)?(?:[A-Z]{2}\s+)?/, '');
-
-      /*
-       * Which end is which, whichever domain the record came from.
+       * THE ADDRESS CELL — the format the Orders list uses, four lines in one
+       * column behind a single marker:
        *
-       * Transport records predate the warehouse ones and carry `window` as a
-       * plain time string; warehouse records carry { from, to }. Normalised
-       * here rather than in the fixture, so the transport shape other
-       * prototypes already read is left alone.
-       */
-      /*
-       * Branch on WAREHOUSE, not on transport. Warehouse orders are the only
-       * ones carrying origin/destination directly; everything else — transport
-       * and invoice both — uses pickup/delivery. Testing for transport instead
-       * sent invoice rows down the warehouse branch, where o.origin is
-       * undefined, and the whole table rendered empty.
-       */
-      function ends(o) {
-        return o.domain === 'warehouse'
-          ? { origin: o.origin, destination: o.destination, dcSide: o.warehouseSide }
-          : { origin: o.pickup, destination: o.delivery, dcSide: null };
-      }
-
-      /*
-       * The warehouse end gets the loading-dock glyph, the other end a plain
-       * location marker. Both names checked against
-       * design-system/dist/tokens/icons.json rather than guessed — truck-ramp-box
-       * and location-dot are real; `warehouse` and `pin` are not.
-       */
-      /*
-       * Place, date and time are three COLUMNS per end, not three lines in one
-       * cell — six columns across the two ends.
+       *     (pin) Oradea International Airport
+       *           Calea Aradului 80
+       *           410223 Oradea
+       *           Romania
        *
-       * Two reasons they cannot share a cell. There is no component that renders
-       * a date and a time together: cca-date-time-detail and cca-date-cell exist
-       * but are deep app components outside ds/index.css, and cca-date-cell is
-       * only `display: flex`. And a value sharing a cell cannot be sorted or
-       * filtered on — "leaving Rotterdam", "leaving on the 26th" and "leaving
-       * before 08:00" are three different questions, and a table answers them
-       * only if each is its own column.
+       * Name, street, postal city, country. Read off the Orders table in Figma
+       * (IvHbK3LeammCOdlHQQYxwy, node 11187:289914), where the columns are
+       * First Pickup Address and Last Delivery Address.
        *
-       * The cost is width: 14 columns do not fit the page, so the table scrolls
-       * horizontally. It buys shorter rows in exchange, since every one of these
-       * cells is now a single line.
+       * The OMS warehouse table (29Ixi12L8wlQPTh3oVg0ao, node 103:57407)
+       * splits the same information across TWO columns per end — Ship From plus
+       * Loading Address, Ship To plus Delivery Address, with the address on one
+       * line. Going generic means one column per end for both domains, in the
+       * Orders format, rather than four columns that only warehouse fills.
+       *
+       * Every end gets `location-dot`, warehouse included. An earlier revision
+       * gave the warehouse end the truck-ramp-box dock glyph; with Category now
+       * saying "Warehouse" in its own column that was saying the same thing
+       * twice, and a per-domain glyph is the opposite of generic.
+       *
+       * No `whitespace-nowrap` here: under `table-layout: fixed` a long name
+       * ("Elektro Components Sp. z o.o.") has to be able to wrap inside its
+       * column rather than overflow it.
        */
-      function placeCell(end, isDc) {
+      function addressCell(end) {
         return `<td class="mat-mdc-cell mdc-data-table__cell">
-          <span class="flex items-center gap-1 whitespace-nowrap text-cca-base-sm text-neutral-body">${
-            icon(isDc ? 'truck-ramp-box' : 'location-dot')
-          }${cityName(end.city || end.name)}</span>
+          <span class="flex items-center gap-2">
+            <span class="text-neutral-caption">${icon('location-dot')}</span>
+            <span class="flex flex-col text-cca-base-sm text-neutral-body">
+              <span>${end.name}</span>
+              <span class="text-neutral-caption">${end.street}</span>
+              <span class="text-neutral-caption">${end.city}</span>
+              <span class="text-neutral-caption">${end.country}</span>
+            </span>
+          </span>
         </td>`;
       }
 
       /*
-       * THE DATE/TIME CELL — cca-date-cell, composed to match the running app.
-       *
-       * cca-date-cell is the design system's date cell: owner libs/ui/src,
-       * isDesignSystem true in the bundle manifest. Its stylesheet is 34 bytes
-       * (`display: flex`) because the layout lives in its Angular TEMPLATE, and
-       * the export ships CSS only — so the internals are composed here from
-       * tokens and utilities to match what the app renders:
-       *
-       *     Between
-       *     (clock) Tue, 25 Aug 2026  ->  Tue, 25 Aug 2026
-       *             08:00                 08:00
-       *
-       * A "Between" label, a clock, then both ends of the window as a date over
-       * a time, with an arrow between them.
-       *
-       * NOTE ON FIDELITY: the app prints BOTH ends in full even when they are
-       * identical, so a point in time reads "Between … 08:00 -> … 08:00". That
-       * repetition is real and this reproduces it rather than quietly improving
-       * it — a prototype that renders the component differently from the
-       * product is not showing the component. It is also the honest baseline
-       * for deciding whether to change it.
-       *
-       * Earlier revisions of this page split date and time into four separate
-       * columns and dropped the label, clock and arrow. That is why the header
-       * wording is the app's own ("First Pickup Date/Time") rather than
-       * invented: the whole window is one cell again, as the product has it.
+       * Which end is which, whichever domain the record came from. Branch on
+       * WAREHOUSE, not transport: warehouse records are the only ones carrying
+       * origin/destination directly, while transport AND invoice both use
+       * pickup/delivery. Testing for transport sent invoice rows down the
+       * warehouse branch, where o.origin is undefined, and the whole table
+       * rendered empty.
        */
+      function ends(o) {
+        return o.domain === 'warehouse'
+          ? { origin: o.origin, destination: o.destination }
+          : { origin: o.pickup, destination: o.delivery };
+      }
 
       /*
-       * Both ends as { date, time }, whichever domain and shape the record
-       * carries. Transport records hold `window` as a single time string; a
-       * point in time therefore has `to` equal to `from`, which is exactly what
-       * makes the app's cell repeat itself. Warehouse records hold
-       * { from, to, toDate }, where toDate is set only across midnight.
+       * THE DATE/TIME CELL — cca-date-cell, laid out as the app and the Figma
+       * both lay it out: a "Between" label, a clock, then each end as a date
+       * over a time, side by side with an arrow between.
+       *
+       * This went through a stacked, one-line-per-end version to save column
+       * width. The Figma settles it: the Orders table puts them side by side
+       * and is 3193px wide, so the width is the design's own choice and the
+       * table is meant to scroll.
+       *
+       * cca-date-cell is the design system's date cell — libs/ui/src,
+       * isDesignSystem true. Its stylesheet is 34 bytes (`display: flex`)
+       * because the layout lives in its Angular template, which the export does
+       * not ship, so the internals are composed here.
        */
       function windowEnds(end) {
         const w = end.window;
@@ -658,9 +660,6 @@
 
       function dateTimeCell(end) {
         const w = windowEnds(end);
-
-        // No dock slot booked yet — the status is the value, and there is no
-        // window to lay out.
         if (!w) {
           return `<td class="mat-mdc-cell mdc-data-table__cell">
             <cca-date-cell class="text-cca-base-sm text-neutral-caption">${
@@ -668,45 +667,31 @@
             }</cca-date-cell>
           </td>`;
         }
-
-        /*
-         * ONE LINE PER END — deliberately, not by wrapping.
-         *
-         * The app lays the two ends side by side, which needs ~314px and made
-         * every colgroup width unenforceable. Letting that row wrap instead
-         * was worse: the arrow landed wherever the break fell, so it led the
-         * second line on some rows and dangled off the first on others.
-         *
-         * So the stack is explicit. Each end gets its own line — a marker,
-         * then the date, then the time — and the arrow always sits at the head
-         * of the second, where it reads as "through to". Every part of the
-         * component survives, reflowed: the Between label, the clock, both
-         * dates, both times and the arrow. It costs ~120px of column and
-         * returns consistent rows.
-         */
-        const line = (glyph, e) => `
-          <span class="flex items-center gap-1.5 whitespace-nowrap">
-            <span class="text-neutral-caption">${glyph}</span>
-            <span class="text-cca-base-sm text-neutral-body">${e.date}</span>
-            <span class="text-cca-base-sm text-neutral-body">${e.time}</span>
+        const stack = (e) => `
+          <span class="flex flex-col">
+            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.date}</span>
+            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.time}</span>
           </span>`;
-
         return `<td class="mat-mdc-cell mdc-data-table__cell">
           <cca-date-cell class="flex-col gap-1">
             <span class="text-cca-label-sm text-neutral-caption">Between</span>
-            ${line(icon('clock'), w.from)}
-            ${line(icon('arrow-right'), w.to)}
+            <span class="flex items-start gap-2">
+              <span class="text-neutral-caption">${icon('clock')}</span>
+              ${stack(w.from)}
+              <span class="pt-0.5 text-neutral-caption">${icon('arrow-right')}</span>
+              ${stack(w.to)}
+            </span>
           </cca-date-cell>
         </td>`;
       }
 
-      // Place then window, for each end, in header order.
+      // Address then window, for each end, in header order.
       function endColumns(o) {
         const e = ends(o);
         return (
-          placeCell(e.origin, e.dcSide === 'origin') +
+          addressCell(e.origin) +
+          addressCell(e.destination) +
           dateTimeCell(e.origin) +
-          placeCell(e.destination, e.dcSide === 'destination') +
           dateTimeCell(e.destination)
         );
       }
@@ -777,27 +762,33 @@
             </td>
             <td class="mat-mdc-cell mdc-data-table__cell">
               <div class="flex flex-col gap-1 text-cca-base-sm text-neutral-body">
-                <span class="flex items-center gap-1 whitespace-nowrap">${icon('building')}${o.shipperGroup}</span>
-                <span class="flex items-center gap-1 whitespace-nowrap">${icon('users')}${o.shipperSubGroup}</span>
+                <span class="flex items-center gap-1">${icon('building')}${o.shipperGroup}</span>
+                <span class="flex items-center gap-1">${icon('users')}${o.shipperSubGroup}</span>
               </div>
             </td>
             <td class="mat-mdc-cell mdc-data-table__cell">
-              <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.salesOrganisation}</span>
+              <span class="text-cca-base-sm text-neutral-body">${o.salesOrganisation}</span>
             </td>
             <td class="mat-mdc-cell mdc-data-table__cell">
-              <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${o.shipperReference}</span>
+              <span class="text-cca-base-sm text-neutral-body">${o.shipperReference}</span>
             </td>
+            <!--
+              Status and Transit Status are TWO COLUMNS, side by side, as the
+              Figma Orders table has them. They were stacked in one cell for
+              several revisions — which also hid that they are two different
+              badge components, not one badge on two lines.
+            -->
+            <td class="mat-mdc-cell mdc-data-table__cell">${statusBadge(o.status, o.statusFlavor)}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${
+              o.transitStatus
+                ? flagBadge(o.transitStatus, o.transitFlavor)
+                : notApplicable(
+                    o.domain === 'warehouse'
+                      ? 'A warehouse order is not in transit'
+                      : 'An invoice order is not in transit'
+                  )
+            }</td>
             ${endColumns(o)}
-            <td class="mat-mdc-cell mdc-data-table__cell">
-              <div class="flex flex-col items-start gap-1">
-                ${statusBadge(o.status, o.statusFlavor)}
-                ${
-                  o.domain === 'transport' && o.transitStatus
-                    ? labelBadge(o.transitStatus, o.transitFlavor)
-                    : ''
-                }
-              </div>
-            </td>
             <td class="mat-mdc-cell mdc-data-table__cell">${linkedCell(o)}</td>
           </tr>`
           )
