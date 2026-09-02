@@ -43,7 +43,7 @@
       stops: 2,
       distanceKm: 2247,
       domain: 'transport',
-      linked: ['CCA2023-000418.1'],
+      linked: ['CCA2023-000418.1', 'CCA2023-000501.1'],
     },
     {
       id: 'CCA2023-000271.4',
@@ -123,7 +123,7 @@
       stops: 2,
       distanceKm: 1043,
       domain: 'transport',
-      linked: [],
+      linked: ['CCA2023-000503.1'],
     },
     {
       id: 'CCA2023-000275.2',
@@ -294,6 +294,87 @@
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
       linked: ['CCA2023-000273.7'],
+    },
+  ];
+
+
+  /*
+   * Invoice orders
+   * --------------
+   * The third domain in the combined list. Unlike the other two these have NO
+   * type: there is no invoice equivalent of Brokerage or Inbound, so `type` is
+   * null and the type-badge cell says so rather than sitting empty.
+   *
+   * Same array-per-domain pattern as WAREHOUSE_ORDERS, and for the same
+   * reason: `CCA_DATA.orders` means transport orders to every prototype that
+   * already reads it.
+   *
+   * ⚠ THE FIELD VALUES HERE ARE PLACEHOLDERS. These records come from an API
+   * in the real product and its shape has not been read yet. What is modelled:
+   * they carry the same columns as a transport order — origin, destination and
+   * both date/time windows — because that is what the list needs in order to
+   * show them at all.
+   *
+   * Two things are assumptions worth checking before anyone builds on this:
+   *
+   *   · `status` values (Invoice Sent / Paid / Overdue) are invented. The real
+   *     vocabulary will come from the API.
+   *   · NO `transitStatus`. An invoice is not in transit, so the Status column
+   *     renders one badge for these rather than stacking a timeliness line
+   *     under it — the same treatment warehouse orders get.
+   *
+   * `linked` is the transport order an invoice bills. An unlinked invoice is a
+   * real case, not missing data — an advance or standalone invoice bills no
+   * single order.
+   */
+  var INVOICE_ORDERS = [
+    {
+      id: 'CCA2023-000501.1',
+      domain: 'invoice',
+      type: null,
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain B.V.',
+      shipperReference: '10046585',
+      status: 'Invoice Sent',
+      statusFlavor: 'accent-blue',
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Tom Jansen',
+      pickup: { name: 'Presov_080 01', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Thu, 27 Aug 2026', window: '08:00' },
+      delivery: { name: 'Barcelona_08001', street: 'La Rambla, 88', city: '08001 Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: '08:00' },
+      linked: ['CCA2023-000270.1'],
+    },
+    {
+      id: 'CCA2023-000502.1',
+      domain: 'invoice',
+      type: null,
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Deutschland',
+      salesOrganisation: 'CtrlChain GmbH',
+      shipperReference: '10046620',
+      status: 'Overdue',
+      statusFlavor: 'danger',
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Sanne Meijer',
+      pickup: { name: 'Duisburg_47059', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', date: 'Mon, 31 Aug 2026', window: '07:00' },
+      delivery: { name: 'Hamburg_20095', street: 'Grosse Elbstrasse 145', city: '22767 Hamburg', country: 'Germany', date: 'Tue, 1 Sept 2026', window: '15:00' },
+      linked: [],
+    },
+    {
+      id: 'CCA2023-000503.1',
+      domain: 'invoice',
+      type: null,
+      shipperGroup: 'Ingram Micro Global',
+      shipperSubGroup: 'Ingram Micro Netherlands',
+      salesOrganisation: 'CtrlChain B.V.',
+      shipperReference: '10046612',
+      status: 'Paid',
+      statusFlavor: 'primary',
+      accountManager: 'Bianca de Vries',
+      assignedOperator: 'Tom Jansen',
+      pickup: { name: 'Venlo_5928', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', date: 'Fri, 28 Aug 2026', window: '10:00' },
+      delivery: { name: 'Milan_20090', street: 'Via Mecenate 90', city: '20138 Milano', country: 'Italy', date: 'Mon, 31 Aug 2026', window: '11:30' },
+      linked: ['CCA2023-000274.1'],
     },
   ];
 
@@ -633,17 +714,18 @@
      * know which domain that id belongs to.
      */
     warehouseOrders: WAREHOUSE_ORDERS,
+    invoiceOrders: INVOICE_ORDERS,
     allOrders: function () {
-      return ORDERS.concat(WAREHOUSE_ORDERS);
+      return ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS);
     },
     anyOrder: function (id) {
-      return ORDERS.concat(WAREHOUSE_ORDERS)
+      return ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
         .filter(function (o) { return o.id === id; })[0] || null;
     },
     /* The counterpart records `linked` points at, resolved. */
     linkedOrders: function (o) {
       return (o && o.linked ? o.linked : []).map(function (id) {
-        return ORDERS.concat(WAREHOUSE_ORDERS)
+        return ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
           .filter(function (r) { return r.id === id; })[0] || { id: id };
       });
     },

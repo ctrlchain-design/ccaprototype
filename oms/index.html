@@ -11,16 +11,20 @@
   This prototype exists to show what that combining actually costs, because
   "put them in the same table" is not free. Four things had to change:
 
-    1. THE TYPE BADGE SPANS EVERY DOMAIN, AS ONE COMPONENT. Brokerage, MT,
-       SaaS and Own Fleet are transport; Inbound and Outbound are warehouse.
-       They share a column and they share a treatment — every badge is
-       `neutral emphasis-outline`, exactly as the existing orders list renders
-       it.
+    1. CATEGORY IS ITS OWN COLUMN, because the type word cannot carry the
+       domain. Transport types are Brokerage, MT, SaaS and Own Fleet;
+       warehouse types are Inbound and Outbound; an INVOICE ORDER HAS NO TYPE
+       AT ALL. So there is no word to infer the domain from on an invoice row,
+       and with three domains a reader would be memorising which of eight
+       words belongs where. An explicit column is also sortable and
+       filterable, which inference never was.
 
-       An earlier revision filled the warehouse ones with `accent-blue` to
-       separate the domains by form. That is out: splitting one component into
-       two treatments by data value stops the column being a single thing.
-       Which leaves an open question — see the note at the foot of this file.
+       The two badge columns use the label badge's two variants — Category
+       filled `neutral`, type outlined `neutral emphasis-outline` — so they
+       tell themselves apart, with the heavier carrying the coarser fact.
+       Each column has ONE fixed variant; an earlier revision instead varied
+       a single column's badge by row data, which is what stopped that column
+       being one thing.
 
     2. ORDER TYPE IS A FILTER, NOT A CONTROL OF ITS OWN. A warehouse planner
        should not scroll past transport orders all day, so the list needs
@@ -205,12 +209,68 @@
 
               <!-- The combined table -->
               <div class="mt-4 overflow-x-auto">
-                <table class="mat-mdc-table mdc-data-table__table min-w-max" style="width: 100%">
+                <!--
+                  COLUMN WIDTHS live here, in a colgroup, in the platform's own
+                  --spacing units (1 unit = 0.25rem) so every width is a
+                  multiple of the design system's scale, not a made-up pixel.
+
+                  Three things had to be true for these to actually apply, and
+                  each one was a trap:
+
+                  1. NOT w-* UTILITIES. `.mat-mdc-table` sets `min-width: 100%`
+                     UNLAYERED in material-data.css, and unlayered CSS beats
+                     Tailwind's layered utilities whatever the import order — so
+                     `min-w-max` on the table computed to 100%, not
+                     max-content. Worse, `w-22`, which this table carried on the
+                     type column (copied from orders-pinned-filters), IS NOT A
+                     CLASS THE BUNDLE DEFINES. Nothing sets `.w-22`, so it
+                     silently did nothing and that column was content-sized all
+                     along.
+
+                  2. `table-layout: fixed`. On `auto`, a colgroup width is only
+                     a hint, and content that cannot wrap overrides it — the
+                     date/time cells held their 314px and every one of the 13
+                     widths was ignored. Fixed makes the colgroup authoritative.
+
+                  3. THE DATE/TIME CELL HAD TO GET NARROWER. It is what forced
+                     those columns wide: two timestamps side by side, the way
+                     the app lays them out, need ~314px. Each end now takes its
+                     own line, which is a deliberate stack and not a wrap — see
+                     dateTimeCell for why wrapping was worse.
+
+                  Total is 1952px against ~1613px of page, so the table still
+                  scrolls horizontally. That is not a spacing failure — 13
+                  columns carrying two date-time ranges do not fit one screen,
+                  and the scroll is the honest consequence.
+                -->
+                <table class="mat-mdc-table mdc-data-table__table" style="table-layout: fixed; width: calc(var(--spacing) * 488)">
+                  <colgroup>
+                    <col style="width: calc(var(--spacing) * 20)" />  <!-- Actions -->
+                    <col style="width: calc(var(--spacing) * 26)" />  <!-- Category -->
+                    <col style="width: calc(var(--spacing) * 25)" />  <!-- Order type -->
+                    <col style="width: calc(var(--spacing) * 44)" />  <!-- Reference Number -->
+                    <col style="width: calc(var(--spacing) * 55)" />  <!-- Shipper Group -->
+                    <col style="width: calc(var(--spacing) * 45)" />  <!-- Sales Organisation -->
+                    <col style="width: calc(var(--spacing) * 45)" />  <!-- Shipper Reference -->
+                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Origin -->
+                    <col style="width: calc(var(--spacing) * 50)" />  <!-- First Pickup Date/Time -->
+                    <col style="width: calc(var(--spacing) * 30)" />  <!-- Destination -->
+                    <col style="width: calc(var(--spacing) * 50)" />  <!-- Last Delivery Date/Time -->
+                    <col style="width: calc(var(--spacing) * 42)" />  <!-- Status -->
+                    <col style="width: calc(var(--spacing) * 26)" />  <!-- Linked -->
+                  </colgroup>
                   <thead>
                     <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Actions</th>
-                      <!-- The order-type badge is its own column in the design, with no header. -->
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell w-22" role="columnheader"></th>
+                      <!--
+                        CATEGORY (change 1). Leftmost data column, because it is
+                        the coarsest grouping and the one a reader scans for.
+                      -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Category</th>
+                      <!-- The order-type badge is its own column in the design, with no
+                           header. Width comes from the colgroup; the w-22 that used to be
+                           here is not a class the design system defines. -->
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader"></th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Shipper Group</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Sales Organisation</th>
@@ -316,6 +376,18 @@
       ];
 
       /*
+       * The three domains, and what the Category column calls each.
+       *
+       * This column exists because the type word stopped being able to carry
+       * the domain. With two domains it just about worked — Inbound and
+       * Outbound are not transport words — but a third breaks it: an invoice
+       * order has NO type at all, so there is no word to read the domain from.
+       * Making it an explicit column also makes it sortable and filterable,
+       * which inference never was.
+       */
+      const CATEGORY = { transport: 'Transport', warehouse: 'Warehouse', invoice: 'Invoice' };
+
+      /*
        * ONE COMPONENT FOR EVERY TYPE, whichever domain it belongs to.
        *
        * An earlier revision filled the warehouse badges with `accent-blue` and
@@ -329,6 +401,23 @@
        * orders list renders it.
        */
       const TYPE_FLAVOR = 'neutral';
+
+      /*
+       * Category uses the label badge's OTHER variant: filled `neutral`, where
+       * the type badge is `neutral emphasis-outline`. Filled against outlined
+       * makes the two columns tell themselves apart at a glance, and the
+       * heavier of the two carries the coarser fact.
+       *
+       * Note this is NOT the thing that was rejected earlier. That was one
+       * column rendering one component two ways depending on the row's data.
+       * This is two different columns, each with its own fixed variant — every
+       * badge in the Category column looks the same as every other, and so does
+       * every badge in the type column.
+       */
+      const categoryBadge = (domain) =>
+        `<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal neutral">${
+          CATEGORY[domain] || domain
+        }</div></cca-label-badge>`;
 
       // ------------------------------------------------------------- helpers
       const icon = (name) =>
@@ -380,6 +469,7 @@
        * inventing a control beside them.
        */
       const FILTERS = [
+        { name: 'Category', pinned: true },
         { name: 'Order Type', pinned: true },
         { name: 'Account Manager', pinned: true },
         { name: 'Assigned Operator', pinned: false },
@@ -475,10 +565,17 @@
        * here rather than in the fixture, so the transport shape other
        * prototypes already read is left alone.
        */
+      /*
+       * Branch on WAREHOUSE, not on transport. Warehouse orders are the only
+       * ones carrying origin/destination directly; everything else — transport
+       * and invoice both — uses pickup/delivery. Testing for transport instead
+       * sent invoice rows down the warehouse branch, where o.origin is
+       * undefined, and the whole table rendered empty.
+       */
       function ends(o) {
-        return o.domain === 'transport'
-          ? { origin: o.pickup, destination: o.delivery, dcSide: null }
-          : { origin: o.origin, destination: o.destination, dcSide: o.warehouseSide };
+        return o.domain === 'warehouse'
+          ? { origin: o.origin, destination: o.destination, dcSide: o.warehouseSide }
+          : { origin: o.pickup, destination: o.delivery, dcSide: null };
       }
 
       /*
@@ -572,21 +669,33 @@
           </td>`;
         }
 
-        const stack = (e) => `
-          <span class="flex flex-col">
-            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.date}</span>
-            <span class="text-cca-base-sm text-neutral-body whitespace-nowrap">${e.time}</span>
+        /*
+         * ONE LINE PER END — deliberately, not by wrapping.
+         *
+         * The app lays the two ends side by side, which needs ~314px and made
+         * every colgroup width unenforceable. Letting that row wrap instead
+         * was worse: the arrow landed wherever the break fell, so it led the
+         * second line on some rows and dangled off the first on others.
+         *
+         * So the stack is explicit. Each end gets its own line — a marker,
+         * then the date, then the time — and the arrow always sits at the head
+         * of the second, where it reads as "through to". Every part of the
+         * component survives, reflowed: the Between label, the clock, both
+         * dates, both times and the arrow. It costs ~120px of column and
+         * returns consistent rows.
+         */
+        const line = (glyph, e) => `
+          <span class="flex items-center gap-1.5 whitespace-nowrap">
+            <span class="text-neutral-caption">${glyph}</span>
+            <span class="text-cca-base-sm text-neutral-body">${e.date}</span>
+            <span class="text-cca-base-sm text-neutral-body">${e.time}</span>
           </span>`;
 
         return `<td class="mat-mdc-cell mdc-data-table__cell">
           <cca-date-cell class="flex-col gap-1">
             <span class="text-cca-label-sm text-neutral-caption">Between</span>
-            <span class="flex items-start gap-2">
-              <span class="text-neutral-caption">${icon('clock')}</span>
-              ${stack(w.from)}
-              <span class="pt-0.5 text-neutral-caption">${icon('arrow-right')}</span>
-              ${stack(w.to)}
-            </span>
+            ${line(icon('clock'), w.from)}
+            ${line(icon('arrow-right'), w.to)}
           </cca-date-cell>
         </td>`;
       }
@@ -654,7 +763,12 @@
             <td class="mat-mdc-cell mdc-data-table__cell">
               <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Row actions">${icon('ellipsis-vertical')}</button>
             </td>
-            <td class="mat-mdc-cell mdc-data-table__cell">${smallLabelBadge(o.type, TYPE_FLAVOR)}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${categoryBadge(o.domain)}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell">${
+              o.type
+                ? smallLabelBadge(o.type, TYPE_FLAVOR)
+                : notApplicable('Invoice orders have no order type')
+            }</td>
             <td class="mat-mdc-cell mdc-data-table__cell">
               <!-- By SCREEN NAME, not folder — _shared/routes.js resolves it, and
                    the click explains itself until the detail exists. -->
@@ -677,7 +791,11 @@
             <td class="mat-mdc-cell mdc-data-table__cell">
               <div class="flex flex-col items-start gap-1">
                 ${statusBadge(o.status, o.statusFlavor)}
-                ${o.domain === 'transport' ? labelBadge(o.transitStatus, o.transitFlavor) : ''}
+                ${
+                  o.domain === 'transport' && o.transitStatus
+                    ? labelBadge(o.transitStatus, o.transitFlavor)
+                    : ''
+                }
               </div>
             </td>
             <td class="mat-mdc-cell mdc-data-table__cell">${linkedCell(o)}</td>
