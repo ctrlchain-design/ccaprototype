@@ -217,8 +217,14 @@
     };
     var dot = '<span class="flex h-4 w-4 shrink-0 rounded-full border-2 border-solid ' +
               'border-brand-default surface-neutral-light"></span>';
-    /* A reefer only. `info-text` is the bundle's own info colour (#2a628f). */
-    var temp = o.detail.cargo.temperatureRange
+    /*
+     * A REEFER'S, NOT A WAREHOUSE ORDER'S. temperatureRange comes from the
+     * shared ORDER_DETAIL block, so it rendered on every order — a warehouse
+     * order was showing a required range and a disconnected sensor it has no
+     * claim to. Gated on the transport domain rather than on the field being
+     * present.
+     */
+    var temp = o.domain !== 'warehouse' && o.detail.cargo.temperatureRange
       ? '<div class="flex items-center gap-2">' +
         '<span class="text-neutral-caption">' + icon('temperature-3') + '</span>' +
         '<div><p class="text-2xs text-neutral-caption">Required: ' +
@@ -246,8 +252,14 @@
       '</div></cca-trip-indicator>' +
       end(o.domain === 'warehouse' ? 'Destination' : 'Last Delivery', e.b) +
       '</div>' + temp + '</header>' +
-      '<button ccaButton hierarchy="tertiary" type="button" ' +
-      'class="cca-btn cca-btn--tertiary cca-btn--icon-only ml-2" aria-label="Order actions">' +
+      /*
+       * `subtle`, not `tertiary`. cca-btn--tertiary sets `border: none`, so the
+       * kebab had no outline at all; cca-btn--subtle recolours the base rule's
+       * `1px solid transparent` to button-subtle-border-default (#d9d9d9).
+       * It is also the hierarchy the app uses on this exact button.
+       */
+      '<button ccaButton hierarchy="subtle" type="button" ' +
+      'class="cca-btn cca-btn--subtle cca-btn--icon-only ml-2" aria-label="Order actions">' +
       icon('ellipsis-vertical') + '</button>' +
       '</div>' +
       '<hr />' +
