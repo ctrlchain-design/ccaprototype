@@ -262,22 +262,26 @@ linked: [],
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'JB', name: 'Joost Bakker', role: 'Client', email: 'joost.bakker@example.com' },
       /* Three trip numbers, not a contracted lane: the warehouse's own,
          the transport leg's if one is linked, and the customer's if they
          gave one. N/A is a real state here, not missing fixture data. */
       tripNumbers: { warehouse: '24655', transport: 'TRIP2026-020684', customer: null },
       domain: 'warehouse',
       type: 'Outbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585',
       status: 'Loaded',
       statusFlavor: 'accent-blue',
       warehouse: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', dock: 'Dock 7' },
       warehouseSide: 'origin',
-      origin: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Wed, 26 Aug 2026', window: { from: '22:00', to: '02:00', toDate: 'Thu, 27 Aug 2026' } },
-      destination: { name: 'Ingram Micro Barcelona', street: 'La Rambla, 88', city: '08001 Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: { from: '08:00', to: null } },
+      origin: { name: '', street: 'Nishoek 2', city: 'Kruiningen, 4416 PE', country: 'NL', date: 'Wed, 26 Aug 2026', window: { from: '22:00', to: '02:00', toDate: 'Thu, 27 Aug 2026' } },
+      destination: { name: 'Heywood Coldstore', street: 'Hareshill Road', city: 'Heywood/Lancashire, OL10 2TP', country: '044', date: 'Sun, 30 Aug 2026', window: { from: '08:00', to: null } },
       lines: 14,
       pallets: 18,
       weightKg: 7420,
@@ -290,14 +294,18 @@ linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'JB', name: 'Joost Bakker', role: 'Client', email: 'joost.bakker@example.com' },
       /* Three trip numbers, not a contracted lane: the warehouse's own,
          the transport leg's if one is linked, and the customer's if they
          gave one. N/A is a real state here, not missing fixture data. */
       tripNumbers: { warehouse: '24655', transport: null, customer: null },
       domain: 'warehouse',
       type: 'Inbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046612',
       status: 'Truck Arrived',
@@ -318,14 +326,18 @@ linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'SM', name: 'Sanne Meijer', role: 'Client', email: 'sanne.meijer@example.com' },
       /* Three trip numbers, not a contracted lane: the warehouse's own,
          the transport leg's if one is linked, and the customer's if they
          gave one. N/A is a real state here, not missing fixture data. */
       tripNumbers: { warehouse: '24702', transport: 'TRIP2026-020456', customer: 'CT-88417' },
       domain: 'warehouse',
       type: 'Outbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain España S.L.U',
       shipperReference: '10046590 + 10046591',
       status: 'Departed',
@@ -346,14 +358,18 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'KV', name: 'Katrin Vogel', role: 'Client', email: 'katrin.vogel@example.com' },
       /* Three trip numbers, not a contracted lane: the warehouse's own,
          the transport leg's if one is linked, and the customer's if they
          gave one. N/A is a real state here, not missing fixture data. */
       tripNumbers: { warehouse: '24688', transport: null, customer: 'CT-88392' },
       domain: 'warehouse',
       type: 'Inbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Deutschland',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Deutschland',
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
       status: 'Registered',
@@ -374,14 +390,18 @@ linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'JB', name: 'Joost Bakker', role: 'Client', email: 'joost.bakker@example.com' },
       /* Three trip numbers, not a contracted lane: the warehouse's own,
          the transport leg's if one is linked, and the customer's if they
          gave one. N/A is a real state here, not missing fixture data. */
       tripNumbers: { warehouse: '24711', transport: 'TRIP2026-019672', customer: null },
       domain: 'warehouse',
       type: 'Outbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046601',
       status: 'Delivered',

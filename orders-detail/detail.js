@@ -465,25 +465,40 @@
 
   function contacts(o) {
     var c = o.detail.contacts;
-    return card('Contacts', '',
-      '<div class="flex flex-col gap-5">' +
+    /*
+     * A WAREHOUSE ORDER HAS NO ASSIGNED OPERATOR BLOCK. Removed on request:
+     * the operator is CtrlChain's own person, and on a warehouse order the
+     * contact that matters is the client whose goods are being handled.
+     *
+     * Its shipper is also its own, not ORDER_DETAIL's. That shared record is
+     * the transport fixture's Booker; a warehouse order's counterpart is the
+     * client, with `role: 'Client'`, so each warehouse order carries a
+     * shipperContact and this prefers it.
+     */
+    var wh = o.domain === 'warehouse';
+    var shipper = (wh && o.shipperContact) || c.shipper;
+
+    var operator = wh ? '' :
       '<div>' +
       '<p class="text-2xs text-neutral-caption">Assigned Operator</p>' +
       '<div class="mt-2 flex items-center gap-3">' + avatar(c.operator.initials) +
       '<div><p class="text-cca-base-sm text-neutral-body">' + esc(o.assignedOperator) + '</p>' +
       '<p class="flex items-center gap-1 text-2xs text-neutral-caption">' +
-      icon('building') + esc(o.salesOrganisation) + '</p></div></div></div>' +
+      icon('building') + esc(o.salesOrganisation) + '</p></div></div></div>';
+
+    return card('Contacts', '',
+      '<div class="flex flex-col gap-5">' + operator +
       '<div>' +
       '<p class="text-2xs text-neutral-caption">Shipper</p>' +
-      '<div class="mt-2 flex items-center gap-3">' + avatar(c.shipper.initials) +
-      '<div><p class="text-cca-base-sm text-neutral-body">' + esc(c.shipper.name) + '</p>' +
-      '<p class="text-2xs text-neutral-caption">' + esc(c.shipper.role) + '</p>' +
+      '<div class="mt-2 flex items-center gap-3">' + avatar(shipper.initials) +
+      '<div><p class="text-cca-base-sm text-neutral-body">' + esc(shipper.name) + '</p>' +
+      '<p class="text-2xs text-neutral-caption">' + esc(shipper.role) + '</p>' +
       '<p class="flex items-center gap-1 text-2xs text-neutral-caption">' +
       icon('building') + esc(o.shipperGroup) + '</p>' +
       '<p class="flex items-center gap-1 text-2xs text-neutral-caption">' +
       icon('users') + esc(o.shipperSubGroup) + '</p>' +
       '<a class="cursor-pointer text-2xs text-brand-default underline" href="mailto:' +
-      esc(c.shipper.email) + '">' + esc(c.shipper.email) + '</a>' +
+      esc(shipper.email) + '">' + esc(shipper.email) + '</a>' +
       '</div></div></div></div>');
   }
 
@@ -754,19 +769,31 @@
       '<div class="flex items-start gap-3 p-3">' +
       '<span class="grid h-6 w-6 min-w-6 place-content-center rounded-full surface-neutral-default text-cca-label-sm text-neutral-body">' +
       n + '</span>' +
-      '<button type="button" class="flex flex-1 items-start gap-2 text-left" data-toggle="stop-' + n + '">' +
+      (wh ? '<div class="flex flex-1 items-start gap-2">' :
+            '<button type="button" class="flex flex-1 items-start gap-2 text-left" data-toggle="stop-' + n + '">') +
       '<div class="flex-1">' + typeBadge(kind) +
       /* An h3 on staging — the stop's address is the sub-heading of its card. */
       '<h3 class="mt-1 text-cca-base-sm text-neutral-body">' +
       esc([end.name, end.street, end.city, end.country].filter(Boolean).join(', ')) + '</h3></div>' +
-      '<span class="text-neutral-caption" id="stop-' + n + '-chevron">' +
-      icon(open ? 'chevron-up' : 'chevron-down') + '</span>' +
-      '</button></div>' +
-      '<div class="' + (open ? '' : 'hidden ') + 'border-t border-neutral-default p-3" id="stop-' + n + '-body">' +
-      (wh
-        ? facts
-        : '<div class="grid grid-cols-2 gap-4">' + openingHours + facts + '</div>' + totalsStrip) +
-      '</div></cca-stop-card>'
+      (wh ? '' :
+        '<span class="text-neutral-caption" id="stop-' + n + '-chevron">' +
+        icon(open ? 'chevron-up' : 'chevron-down') + '</span>') +
+      (wh ? '</div>' : '</button>') + '</div>' +
+      /*
+       * A WAREHOUSE STOP IS ITS ADDRESS AND NOTHING ELSE. Location Type and
+       * Instructions have gone the same way as Opening Hours and the totals:
+       * all four came from the shared ORDER_DETAIL fixture and said the same
+       * thing on every stop of every order.
+       *
+       * With no body there is nothing to expand, so the chevron and the toggle
+       * go too — a disclosure control that opens an empty panel is worse than
+       * no control.
+       */
+      (wh ? '' :
+        '<div class="' + (open ? '' : 'hidden ') + 'border-t border-neutral-default p-3" id="stop-' + n + '-body">' +
+        '<div class="grid grid-cols-2 gap-4">' + openingHours + facts + '</div>' + totalsStrip +
+        '</div>') +
+      '</cca-stop-card>'
     );
   }
 
@@ -800,8 +827,10 @@
         num('Customer Trip Number', t.customer, null) +
         '</div>',
         '<div class="flex flex-col gap-3">' +
-        stopCard(1, 'Origin', e.a, o, true) +
-        stopCard(2, 'Destination', e.b, o, false) +
+        /* Loading and Delivery, which is what a warehouse order calls its two
+           ends — Origin/Destination is the list column's vocabulary. */
+        stopCard(1, 'Loading', e.a, o, true) +
+        stopCard(2, 'Delivery', e.b, o, false) +
         '</div>');
     }
     var trip = o.tripReference
