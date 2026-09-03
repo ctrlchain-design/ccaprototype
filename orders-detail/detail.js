@@ -857,28 +857,54 @@
    */
   function dateAndTimes(o) {
     var e = ends(o);
+    var wh = o.domain === 'warehouse';
+    /*
+     * The stop names follow Locations Info. A warehouse order calls its ends
+     * Loading and Delivery there, so the same two stops must not be Origin and
+     * Destination here — one page, two names for one thing.
+     */
     var rows = [
-      { label: 'Stop #1', kind: o.domain === 'warehouse' ? 'Origin' : 'Pickup', end: e.a },
-      { label: 'Stop #2', kind: o.domain === 'warehouse' ? 'Destination' : 'Delivery', end: e.b },
+      { label: 'Stop #1', kind: wh ? 'Loading' : 'Pickup', end: e.a },
+      { label: 'Stop #2', kind: wh ? 'Delivery' : 'Delivery', end: e.b },
     ];
+
+    /*
+     * A WAREHOUSE ORDER SHOWS THREE TIME COLUMNS, not five.
+     *
+     * Expected and Waiting Time are carrier telemetry — a transport leg
+     * reports an ETA and how long the driver waited at the gate. A warehouse
+     * order has neither, and Arrived collapses into Actual: what was desired,
+     * what actually happened, and when the cargo moved.
+     */
+    var cols = wh
+      ? ['Location', 'Desired', 'Actual', 'Cargo Load/Unload']
+      : ['Location', 'Desired', 'Expected', 'Arrived', 'Cargo Load / Cargo Unload', 'Waiting Time'];
+
+    var cell = function (inner) {
+      return '<td class="mat-mdc-cell mdc-data-table__cell">' + inner + '</td>';
+    };
+
     return card('Date & Times', headerAction('Edit'),
       '<div class="overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
-      ['Location', 'Desired', 'Expected', 'Arrived', 'Cargo Load / Cargo Unload', 'Waiting Time']
-        .map(function (h) {
-          return '<th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">' + h + '</th>';
-        }).join('') +
+      cols.map(function (h) {
+        return '<th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">' + h + '</th>';
+      }).join('') +
       '</tr></thead><tbody class="mdc-data-table__content">' +
       rows.map(function (r) {
         var w = win(r.end.window);
+        var location = cell(
+          '<span class="text-cca-base-sm text-neutral-body whitespace-nowrap">' +
+          r.label + '<br />(' + r.kind + ')</span>');
+        var desired = cell(stamp('Between', r.end.date, w.from + ' – ' + w.to));
+        var cargo = cell(stamp('At', r.end.date, w.to));
         return '<tr class="mat-mdc-row mdc-data-table__row">' +
-          '<td class="mat-mdc-cell mdc-data-table__cell"><span class="text-cca-base-sm text-neutral-body whitespace-nowrap">' +
-          r.label + '<br />(' + r.kind + ')</span></td>' +
-          '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('Between', r.end.date, w.from + ' – ' + w.to) + '</td>' +
-          '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('At', r.end.date, w.from) + '</td>' +
-          '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('At', r.end.date, w.from) + '</td>' +
-          '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('At', r.end.date, w.to) + '</td>' +
-          '<td class="mat-mdc-cell mdc-data-table__cell"><span class="text-2xs text-neutral-caption">0 minutes</span></td>' +
+          location + desired +
+          (wh
+            ? cell(stamp('At', r.end.date, w.from)) + cargo
+            : cell(stamp('At', r.end.date, w.from)) +
+              cell(stamp('At', r.end.date, w.from)) + cargo +
+              cell('<span class="text-2xs text-neutral-caption">0 minutes</span>')) +
           '</tr>';
       }).join('') +
       '</tbody></table></div>');
