@@ -864,13 +864,23 @@
             : '<span class="text-neutral-body">N/A</span>') +
           '</span>';
       };
-      return card('Locations Info',
-        '<div class="flex flex-wrap items-center gap-3">' +
+      /*
+       * The trip numbers go BELOW the heading, not beside it.
+       *
+       * card() puts its action in a flex row next to the h2, which is right
+       * for a single button. Three labelled references are too much for that
+       * row at this column width: they squeezed the heading until "Locations
+       * Info" wrapped onto two lines and then stacked themselves three deep
+       * beside it. Passing no action leaves the h2 the full width, and the
+       * numbers get a row of their own that wraps as one group.
+       */
+      return card('Locations Info', '',
+        '<div class="-mt-2 flex flex-wrap items-center gap-x-6 gap-y-1">' +
         num('Warehouse Trip Number', t.warehouse, 'trips.detail') +
         num('Transport Trip Number', t.transport, 'trips.detail') +
         num('Customer Trip Number', t.customer, null) +
-        '</div>',
-        '<div class="flex flex-col gap-3">' +
+        '</div>' +
+        '<div class="mt-4 flex flex-col gap-3">' +
         /* Loading and Delivery, which is what a warehouse order calls its two
            ends — Origin/Destination is the list column's vocabulary. */
         stopCard(1, 'Loading', e.a, o, true) +
