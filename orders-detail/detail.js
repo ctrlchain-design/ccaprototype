@@ -426,7 +426,11 @@
        o.customerInvoiceStatus === 'Paid' ? 'primary' : 'neutral-caption'],
       /* No carrier on a warehouse order, so no carrier invoice to have a
          status. The row was reading "Not Invoiced" as though one were pending. */
-      o.carrierGroup ? ['Carrier Invoice Status', 'Not Invoiced', 'neutral-caption'] : null,
+      /* Warehouse orders now DO carry a haulier, but CtrlChain does not invoice
+         it — so this row stays gated on the domain rather than on carrierGroup,
+         which would have quietly brought it back. */
+      o.domain === 'warehouse' ? null
+        : (o.carrierGroup ? ['Carrier Invoice Status', 'Not Invoiced', 'neutral-caption'] : null),
       /* A warehouse order carries the three-state podStatus; transport still
          has only the podApproved boolean. */
       o.podStatus
@@ -634,6 +638,33 @@
     var c = o.detail.contacts.carrierContact;
     /* Warehouse and invoice orders have no carrier — it belongs to the
        transport leg — so the card says so rather than showing empty fields. */
+    /*
+     * A WAREHOUSE ORDER'S CARRIER IS THE TRUCK AT THE DOCK, so it gets the
+     * card without the shipment accordion transport wraps around it — that
+     * accordion exists because one transport order can carry several legs,
+     * each with its own carrier. A warehouse order is a single handling event.
+     */
+    if (o.domain === 'warehouse') {
+      var wv = o.warehouseVehicle || {};
+      return card('Carrier & Vehicle Details', '',
+        '<p class="text-cca-label-md text-neutral-title">Carrier Company</p>' +
+        '<p class="mt-2 flex items-center gap-1 text-cca-base-sm text-neutral-body">' +
+        icon('building') + esc(o.carrierGroup) + '</p>' +
+        '<p class="flex items-center gap-1 text-cca-base-sm text-neutral-body">' +
+        icon('users') + esc(o.carrierSubGroup) + '</p>' +
+        '<hr class="my-4 border-neutral-default" />' +
+        '<p class="text-cca-label-md text-neutral-title">Vehicle</p>' +
+        '<div class="mt-3">' + fieldGrid([
+          ['Licence Plate Number', esc(wv.plate)],
+          ['Dock', esc(o.warehouse && o.warehouse.dock)],
+        ]) + '</div>' +
+        '<hr class="my-4 border-neutral-default" />' +
+        '<p class="text-cca-label-md text-neutral-title">Driver</p>' +
+        '<div class="mt-3">' + fieldGrid([
+          ['Name', esc(wv.driver)],
+          ['Phone', esc(wv.phone)],
+        ]) + '</div>');
+    }
     if (!o.carrierGroup) {
       return card('Carrier & Vehicle Details', '',
         '<p class="text-cca-base-sm text-neutral-caption">' +
@@ -1260,7 +1291,7 @@
         top +
         '<div class="mt-4 flex flex-wrap items-start gap-4">' +
         '<div class="flex min-w-80 flex-1 flex-col gap-4">' +
-        financeSummary(o) + contacts(o) +
+        financeSummary(o) + contacts(o) + carrierAndVehicle(o) +
         '</div>' +
         '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
         locationsInfo(o) + dateAndTimes(o) +

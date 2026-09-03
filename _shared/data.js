@@ -262,6 +262,13 @@ linked: [],
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Zeeland',
+      warehouseVehicle: { plate: 'BX-472-K', driver: 'Rens de Groot', phone: '+31 113 55 21 40' },
       /* Not Sent -> Uploaded -> Approved. Distinct from transport's
          podApproved boolean, which cannot express "uploaded but not yet
          signed off" — the state that decides whether there is a document
@@ -299,6 +306,13 @@ linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Zeeland',
+      warehouseVehicle: { plate: 'BX-118-P', driver: 'Rens de Groot', phone: '+31 113 55 21 40' },
       /* Not Sent -> Uploaded -> Approved. Distinct from transport's
          podApproved boolean, which cannot express "uploaded but not yet
          signed off" — the state that decides whether there is a document
@@ -336,6 +350,13 @@ linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Rotterdam Haulage N.V.',
+      carrierSubGroup: 'RH Zuid-Holland',
+      warehouseVehicle: { plate: 'RH-903-T', driver: 'Milan Visser', phone: '+31 10 240 88 12' },
       /* Not Sent -> Uploaded -> Approved. Distinct from transport's
          podApproved boolean, which cannot express "uploaded but not yet
          signed off" — the state that decides whether there is a document
@@ -373,6 +394,13 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Spedition Vogel GmbH',
+      carrierSubGroup: 'Vogel Nordrhein',
+      warehouseVehicle: { plate: 'K-VG 4471', driver: 'Lars Brandt', phone: '+49 221 55 90 33' },
       /* Not Sent -> Uploaded -> Approved. Distinct from transport's
          podApproved boolean, which cannot express "uploaded but not yet
          signed off" — the state that decides whether there is a document
@@ -410,6 +438,13 @@ linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Zeeland',
+      warehouseVehicle: { plate: 'BX-472-K', driver: 'Rens de Groot', phone: '+31 113 55 21 40' },
       /* Not Sent -> Uploaded -> Approved. Distinct from transport's
          podApproved boolean, which cannot express "uploaded but not yet
          signed off" — the state that decides whether there is a document
