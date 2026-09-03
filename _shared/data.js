@@ -482,6 +482,72 @@ linked: ['CCA2023-000274.1'],
     },
   ];
 
+
+  /*
+   * Order detail — the fields only a detail page needs
+   * --------------------------------------------------
+   * The list needs a dozen fields per order; the detail page needs sixty. Rather
+   * than bloat every record, the extra sits here and is merged on demand by
+   * `CCA_DATA.orderDetail(id)`.
+   *
+   * Read off the Basic Info tab of a real order at
+   * development.ctrlchain.com/shipper-tms/order/detail/{ref}/info — the
+   * STRUCTURE only. Every value is invented: that page carries live customer
+   * data behind an ISO 27001 notice, and this repo publishes to GitHub Pages.
+   *
+   * `openingHours` is per-location and the app shows a "Show More" after five
+   * days, so all seven are here to give that something to reveal.
+   */
+  var ORDER_DETAIL = {
+    cargo: {
+      kind: 'Pallet',
+      estimatedTotalWeight: '3,500 kg',
+      calculatedTotalWeight: '3,500 kg',
+      estimatedValue: '€ 250,000.00',
+      temperatureRange: '-25 °C to -18 °C',
+      foodOrPerishable: 'Food',
+      hazardous: 'No',
+      goodsPalletised: 'All',
+      loadingMethod: 'Door Loading',
+      maxPallets: '10',
+      maxPalletHeight: '-',
+      description: 'Euro pallets',
+    },
+    pallet: {
+      name: 'Euro-pallet (120 x 80 x 180)',
+      quantity: '10',
+      description: 'Euro pallets',
+      weight: '350 kg',
+      requestedExchange: '10/10',
+      actualLoading: '10',
+      actualUnloading: '10',
+    },
+    vehicle: {
+      motor: { vehicle: 'Semi-tractor', plate: 'WGM4722K', truckNumber: '-' },
+      trailer: { type: 'Trailer', bodyType: 'Curtainside', plate: '12', trailerNumber: '-' },
+      driver: { name: 'Marek Nowak', phone: '+48 22 290 27 62' },
+    },
+    contacts: {
+      operator: { initials: 'TJ', name: 'Tom Jansen', company: 'CtrlChain B.V.', flag: 'nl' },
+      shipper: { initials: 'IM', name: 'Ingram Micro Booker', role: 'Booker',
+                 email: 'booker@example.com' },
+      carrierContact: { phone: '+48 22 290 27 62', email: 'planning@example.com' },
+    },
+    /* Zero throughout, as an un-offset order reads on the real page. */
+    co2: { offset: '0 t', water: '0 l', lives: '0 people', land: '0 m²', trees: '0 trees' },
+    openingHours: [
+      { day: 'Monday', hours: '06:00 - 18:00' },
+      { day: 'Tuesday', hours: '06:00 - 18:00' },
+      { day: 'Wednesday', hours: '06:00 - 18:00' },
+      { day: 'Thursday', hours: '06:00 - 18:00' },
+      { day: 'Friday', hours: '06:00 - 18:00' },
+      { day: 'Saturday', hours: 'Closed' },
+      { day: 'Sunday', hours: 'Closed' },
+    ],
+    locationType: 'Warehouse',
+    totals: { weight: '3,500 kg', items: '10', exchangeNeeded: '10', actualExchange: 'n/a' },
+  };
+
   /*
    * Legal documents — Admin › Legal
    * -------------------------------
@@ -826,6 +892,20 @@ linked: ['CCA2023-000274.1'],
       return ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
         .filter(function (o) { return o.id === id; })[0] || null;
     },
+    /*
+     * An order plus everything a detail page needs. The shared ORDER_DETAIL
+     * block is the same for every order — fixture data, not a claim that real
+     * orders share a cargo manifest.
+     */
+    orderDetail: function (id) {
+      var o = ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
+        .filter(function (r) { return r.id === id; })[0];
+      if (!o) return null;
+      var out = { detail: ORDER_DETAIL };
+      Object.keys(o).forEach(function (k) { out[k] = o[k]; });
+      return out;
+    },
+
     /* The counterpart records `linked` points at, resolved. */
     linkedOrders: function (o) {
       return (o && o.linked ? o.linked : []).map(function (id) {
