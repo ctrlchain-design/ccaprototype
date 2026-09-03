@@ -177,15 +177,15 @@
                 <thead>
                   <tr>
                     <sc-if value="{{ groupsViewIsAll }}" hint-placeholder-val="{{ false }}">
-                      <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Subgroup</th>
+                      <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Group Name</th>
                     </sc-if>
                     <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Group</th>
                     <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Address</th>
-                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Creation Date</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Creation date</th>
                     <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Group Types</th>
                     <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Service Types</th>
                     <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Account Manager</th>
-                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Industry</th>
+                    <th style="text-align:left;padding:10px 16px;font-size:13px;font-weight:500;color:var(--text-subtitle);border-bottom:1px solid var(--border-default);">Industry Vertical</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -209,23 +209,8 @@
                       <td style="padding:16px;vertical-align:top;color:var(--text-body);">
                         <div>{{ grp.created }}</div>
                       </td>
-                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:180px;">
-                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                          <sc-for list="{{ grp.groupTypeTags }}" as="tag" hint-placeholder-count="1">
-                            <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:3px 9px;white-space:nowrap;">{{ tag }}</span>
-                          </sc-for>
-                        </div>
-                      </td>
-                      <td style="padding:16px;vertical-align:top;color:var(--text-body);max-width:180px;">
-                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                          <sc-for list="{{ grp.serviceTypeTags }}" as="tag" hint-placeholder-count="1">
-                            <span style="font-size:12px;font-weight:400;color:var(--text-brand-darker);background:var(--color-green-100);border-radius:6px;padding:3px 9px;white-space:nowrap;">{{ tag }}</span>
-                          </sc-for>
-                          <sc-if value="{{ grp.hasNoServiceType }}" hint-placeholder-val="{{ false }}">
-                            <span style="color:var(--text-caption);">—</span>
-                          </sc-if>
-                        </div>
-                      </td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.groupType }}</td>
+                      <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.serviceType }}</td>
                       <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.manager }}</td>
                       <td style="padding:16px;vertical-align:top;color:var(--text-body);">{{ grp.industry }}</td>
                     </tr>
@@ -638,11 +623,7 @@
                           <span style="font-size:14px;color:var(--text-title);flex-shrink:0;">%</span>
                         </sc-if>
                         <sc-if value="{{ addRangeTypeIsDistance }}" hint-placeholder-val="{{ false }}">
-                          <span style="font-size:14px;color:var(--text-caption);flex-shrink:0;">/</span>
-                          <select value="{{ addRangeUnit }}" onChange="{{ onAddRangeUnit }}" style="border:1px solid var(--border-default);border-radius:8px;padding:10px 12px;font-size:14px;background:#fff;color:var(--text-title);">
-                            <option value="km">km</option>
-                            <option value="mi">mi</option>
-                          </select>
+                          <span style="font-size:14px;color:var(--text-caption);flex-shrink:0;">/ {{ activeDistanceUnit }}</span>
                         </sc-if>
                       </div>
                     </div>
@@ -694,11 +675,6 @@
                                       <td style="padding:12px 0;color:var(--text-subtitle);">Rate Type</td>
                                       <td style="padding:12px 0;text-align:right;color:var(--text-body);">{{ addRangeOriginalTypeDisplay }}</td>
                                       <td style="padding:12px 0;text-align:right;font-weight:700;color:var(--text-title);">{{ addRangeTypeNewDisplay }}</td>
-                                    </tr>
-                                    <tr style="border-top:1px dashed var(--border-default);">
-                                      <td style="padding:12px 0;color:var(--text-subtitle);">Distance Unit</td>
-                                      <td style="padding:12px 0;text-align:right;color:var(--text-body);">{{ addRangeOriginalUnitDisplay }}</td>
-                                      <td style="padding:12px 0;text-align:right;font-weight:700;color:var(--text-title);">{{ addRangeUnitDisplay }}</td>
                                     </tr>
                                     <tr style="border-top:1px dashed var(--border-default);">
                                       <td style="padding:12px 0;color:var(--text-subtitle);">Effective Period</td>
@@ -1375,11 +1351,9 @@
                         <input value="{{ ruleModalRate }}" onChange="{{ onRuleModalRate }}" placeholder="0.00" style="border:none;outline:none;flex:1;font-size:14px;font-family:var(--font-ui);width:0;">
                         <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><path d="M2 5l4-4 4 4M2 9l4 4 4-4"></path></svg>
                       </div>
-                      <select value="{{ ruleModalUnit }}" onChange="{{ onRuleModalUnit }}" style="border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:#fff;">
-                        <option value="/ order">/ order</option>
-                        <option value="{{ activeRatePerDistance }}">{{ activeRatePerDistance }}</option>
-                        <option value="/ shipment">/ shipment</option>
-                      </select>
+                      <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
+                        <span style="display:flex;align-items:center;padding:12px 14px;font-size:14px;font-family:var(--font-ui);color:var(--text-caption);white-space:nowrap;">{{ activeRatePerDistance }}</span>
+                      </sc-if>
                     </div>
                   </div>
                   <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
@@ -1694,8 +1668,14 @@ const RANGE_TYPE_INFO = {
  *   serviceType — how it is served (subgroup level)
  *   relation    — the counterparty's role in one specific pairing
  */
-const GROUP_TYPE_VALUES = ['Shipper', 'Carrier', 'Freight Forwarder', 'CtrlChain Entity'];
-const SERVICE_TYPE_VALUES = ['Brokerage', 'Managed Transport', 'SaaS'];
+/* The real system's group types. "Freight Forwarder" is NOT one of them —
+ * where a company is a freight forwarder that lives in its display name only.
+ * Production pairs them: carriers get "Carrier, Finance supplier" (we pay
+ * them), shippers get "Shipper, Finance customer" (they pay us). */
+const GROUP_TYPE_VALUES = ['Carrier', 'Shipper', 'Finance supplier', 'Finance customer', 'Location', 'Enterprise'];
+/* Service types are transport services, not commercial arrangements — same
+ * list the rate rows already use, so there is one source of truth. */
+const SERVICE_TYPE_VALUES = TRANSPORT_SERVICES;
 const RELATION_VALUES = ['Customer', 'Supplier', 'Subcontractor'];
 function splitTags(value, allowed) {
   const parts = String(value || '').split(',').map(s => s.trim());
@@ -1705,7 +1685,7 @@ function tagsFromGroupType(groupType) { return splitTags(groupType, GROUP_TYPE_V
 /* Kilometre rates are priced per vehicle type on the carrier that operates the
  * vehicles, so a group with no Carrier role has nothing to price here. Derived
  * from groupType rather than from an id, so a multi-role group such as
- * "Carrier, Freight Forwarder" still counts as a carrier. */
+ * "Carrier, Finance supplier, Enterprise" still counts as a carrier. */
 function isCarrierGroup(group) {
   return tagsFromGroupType(group && group.groupType).includes('Carrier');
 }
@@ -1739,6 +1719,38 @@ function isoToDate(iso) {
   if (isNaN(d.getTime())) return '';
   return `${DAYS_SHORT[d.getDay()]}, ${m[3]} ${MONTHS_SHORT[Number(m[2]) - 1]} ${m[1]}`;
 }
+/* Distance unit is an enterprise-level setting (Basic Info > Area of
+ * Operations) that reflects into the rates. It is NEVER set on a rate, and a
+ * subgroup always follows its parent enterprise with no override of its own. */
+const AREA_DISTANCE_UNITS = { 'Europe': 'km', 'North America': 'mile' };
+function distanceUnitForGroup(group, groupsData) {
+  if (!group) return 'km';
+  const enterprise = group.subgroup === group.group
+    ? group                                                    // already the enterprise
+    : (groupsData || []).find(g => g.group === group.group && g.subgroup === g.group);
+  return AREA_DISTANCE_UNITS[(enterprise || {}).areaOfOperations] || 'km';
+}
+/* Rates read singular ("€1.50 / mile"); a counted distance reads plural
+ * ("0 – 250 miles"). Nothing renders the plural yet — this prototype's ranges
+ * are date ranges, not distance bands — so it is the hook for when they land. */
+function unitPlural(unit) { return unit === 'mile' ? 'miles' : 'km'; }
+const DISTANCE_RATE_TYPES = ['Fuel Rate/Distance', 'Transport Rate/Distance'];
+function withUnit(display, rateType, unit) {
+  if (!DISTANCE_RATE_TYPES.includes(rateType)) return display;
+  const v = String(display == null ? '' : display).trim();
+  if (!v || v === '—' || v === '-') return v;
+  return `${v} / ${unit}`;
+}
+/* A value on its way into (or out of) the Add/Edit Range modal, rendered the
+ * way its own rate type reads — percentages carry %, distance rates carry the
+ * inherited unit, and Fuel Not Applicable carries neither. */
+function formatRangeValue(rateType, value, currency, unit) {
+  if (rateType === 'Fuel Not Applicable') return '—';
+  const v = String(value == null ? '' : value).trim();
+  if (!v) return '';
+  if (rateType === 'Fuel Percentage') return `${v}%`;
+  return withUnit(`${currencySymbol(currency)} ${v}`, rateType, unit);
+}
 const CURRENCY_SYMBOLS = { EUR: '€', USD: '$' };
 function currencySymbol(code) { return CURRENCY_SYMBOLS[code] || '€'; }
 /* Fixture rates are written in euros; re-render them in the active group's currency. */
@@ -1757,40 +1769,40 @@ const ENTERPRISE_RELATIONS_SEED = {
   3: [],
   // Ingram (Shipper) — scenario 1, seen from the buying side
   4: [
-    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Supplier', relationDetail: 'Supplier — sells transport to Ingram', serviceTypes: 'Brokerage' },
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Supplier', relationDetail: 'Supplier — sells transport to Ingram', serviceTypes: '-' },
   ],
   5: [],
   6: [],
   7: [],
   // CtrlChain B.V. — scenarios 1 and 2 meet here: sells to shippers, buys from carriers
   8: [
-    { groupName: 'Ingram', subGroup: 'Ingram', relation: 'Customer', relationDetail: 'Customer — buys transport from CtrlChain B.V.', serviceTypes: 'Brokerage' },
-    { groupName: 'NewCold', subGroup: 'NewCold France', relation: 'Customer', relationDetail: 'Customer — buys transport from CtrlChain B.V.', serviceTypes: 'Brokerage' },
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to CtrlChain B.V.', serviceTypes: 'Brokerage' },
+    { groupName: 'Ingram', subGroup: 'Ingram', relation: 'Customer', relationDetail: 'Customer — buys transport from CtrlChain B.V.', serviceTypes: '-' },
+    { groupName: 'NewCold', subGroup: 'NewCold France', relation: 'Customer', relationDetail: 'Customer — buys transport from CtrlChain B.V.', serviceTypes: '-' },
+    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to CtrlChain B.V.', serviceTypes: '-' },
   ],
   // CtrlChain USA — same shape as B.V., but priced in USD per mile
   9: [
-    { groupName: 'Tesla Trucking', subGroup: 'TESLA TRUCKING INC (R)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to CtrlChain USA', serviceTypes: 'Brokerage' },
+    { groupName: 'Tesla Trucking', subGroup: 'TESLA TRUCKING INC (R)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to CtrlChain USA', serviceTypes: '-' },
   ],
   // NewCold France — subgroup-level override of the NewCold group
   10: [
-    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Supplier', relationDetail: 'Supplier — sells transport to NewCold France', serviceTypes: 'Brokerage' },
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Supplier', relationDetail: 'Supplier — sells transport to NewCold France', serviceTypes: '-' },
   ],
-  // Ingram Micro Spain — scenario 4, shipper buying direct under Managed Transport
+  // Ingram Micro Spain — scenario 4, shipper buying direct from a carrier
   11: [
-    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to Ingram Micro Spain', serviceTypes: 'Managed Transport' },
+    { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Supplier', relationDetail: 'Supplier — sells transport to Ingram Micro Spain', serviceTypes: '-' },
   ],
   12: [],
   13: [],
   // TESLA TRUCKING INC (R) — sells to a freight forwarder and to CtrlChain USA
   14: [
     { groupName: 'Enepso Sp. z o.o.', subGroup: 'Enepso Sp. z o.o. (FF)', relation: 'Customer', relationDetail: 'Customer — buys transport from TESLA TRUCKING INC (R)', serviceTypes: '-' },
-    { groupName: 'CtrlChain', subGroup: 'CtrlChain USA', relation: 'Customer', relationDetail: 'Customer — buys transport from TESLA TRUCKING INC (R)', serviceTypes: 'Brokerage' },
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain USA', relation: 'Customer', relationDetail: 'Customer — buys transport from TESLA TRUCKING INC (R)', serviceTypes: '-' },
   ],
   // Enepso (FF) — scenarios 2, 3 and 4 all touch this record
   15: [
-    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Customer', relationDetail: 'Customer — buys transport from Enepso Sp. z o.o. (FF)', serviceTypes: 'Brokerage' },
-    { groupName: 'Ingram', subGroup: 'Ingram Micro Spain', relation: 'Customer', relationDetail: 'Customer — buys transport from Enepso Sp. z o.o. (FF)', serviceTypes: 'Managed Transport' },
+    { groupName: 'CtrlChain', subGroup: 'CtrlChain B.V.', relation: 'Customer', relationDetail: 'Customer — buys transport from Enepso Sp. z o.o. (FF)', serviceTypes: '-' },
+    { groupName: 'Ingram', subGroup: 'Ingram Micro Spain', relation: 'Customer', relationDetail: 'Customer — buys transport from Enepso Sp. z o.o. (FF)', serviceTypes: '-' },
     { groupName: 'Tesla Trucking', subGroup: 'TESLA TRUCKING INC (R)', relation: 'Subcontractor', relationDetail: 'Subcontractor — carries loads on behalf of Enepso Sp. z o.o. (FF)', serviceTypes: '-' },
   ],
   16: [],
@@ -1853,7 +1865,7 @@ class Component extends DCLogic {
         { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to 10%' },
         { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
-      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '€ 0.09', rateType: 'Fuel Rate/Distance', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
     ],
@@ -1870,7 +1882,6 @@ class Component extends DCLogic {
     ruleModalNum: '',
     ruleModalDesc: '',
     ruleModalRate: '',
-    ruleModalUnit: '/ order',
     ruleModalServices: [],
     ruleModalVehicleType: 'Boxwagon',
     ruleNumDropdownOpen: false,
@@ -1950,22 +1961,22 @@ class Component extends DCLogic {
       { id: 9, num: '428', desc: 'L4H4 Minimum ride fare', rate: '€ 85.80', editing: false, services: ['Full Truckload (FTL)', 'Full Container Load (FCL)'] },
     ],
     groupsData: [
-      { id: 1, subgroup: 'CtrlChain', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'CtrlChain Entity', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: 'Martijn Coenen', industry: 'Transport' },
-      { id: 8, subgroup: 'CtrlChain B.V.', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:00', groupType: 'CtrlChain Entity', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: 'Martijn Coenen', industry: 'Transport' },
-      { id: 9, subgroup: 'CtrlChain USA', group: 'CtrlChain', addr1: 'Gateway Freight Terminal', addr2: '2100 Logistics Pkwy, Chicago, IL 60638, USA', created: 'Mon, 24 Aug 2026', createdTime: '09:05', groupType: 'CtrlChain Entity', serviceType: 'Brokerage', currency: 'USD', distanceUnit: 'mi', manager: '—', industry: 'Transport' },
-      { id: 4, subgroup: 'Ingram', group: 'Ingram', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Shipper', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: 'Sanne de Groot', industry: 'Transport' },
-      { id: 11, subgroup: 'Ingram Micro Spain', group: 'Ingram', addr1: 'Zona Franca Logistics Centre', addr2: 'Carrer A 42, 08040 Barcelona, Spain', created: 'Tue, 25 Aug 2026', createdTime: '10:20', groupType: 'Shipper', serviceType: 'Managed Transport, Brokerage', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: 'Transport' },
-      { id: 5, subgroup: 'Nordics Distribution', group: 'Ingram', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '10:05', groupType: 'Shipper', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
-      { id: 2, subgroup: 'Benelux Fleet', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:15', groupType: 'Carrier', serviceType: 'Managed Transport', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
-      { id: 3, subgroup: 'DACH Operations', group: 'CtrlChain', parentSubgroup: 'Benelux Fleet', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:20', groupType: 'Carrier', serviceType: 'Managed Transport', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
-      { id: 7, subgroup: 'NewCold', group: 'NewCold', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Thu, 16 Jul 2026', createdTime: '09:15', groupType: 'Shipper', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: 'Anders Lindqvist', industry: 'Transport' },
-      { id: 10, subgroup: 'NewCold France', group: 'NewCold', addr1: 'Plateforme Logistique Nord', addr2: '14 Rue du Transport, 59810 Lesquin, France', created: 'Tue, 25 Aug 2026', createdTime: '10:10', groupType: 'Shipper', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: 'Transport' },
-      { id: 6, subgroup: 'Baltic Carriers', group: 'NewCold', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '11:40', groupType: 'Carrier', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: '-' },
-      { id: 12, subgroup: 'Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:30', groupType: 'Carrier, Freight Forwarder', serviceType: '-', currency: 'EUR', distanceUnit: 'km', manager: 'Piotr Kowalczyk', industry: 'Transport' },
-      { id: 15, subgroup: 'Enepso Sp. z o.o. (FF)', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:35', groupType: 'Carrier, Freight Forwarder', serviceType: 'Brokerage', currency: 'EUR', distanceUnit: 'km', manager: 'Piotr Kowalczyk', industry: 'Transport' },
-      { id: 13, subgroup: 'CTS NL c/o Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 26 Aug 2026', createdTime: '08:45', groupType: 'Carrier', serviceType: 'Managed Transport', currency: 'EUR', distanceUnit: 'km', manager: '—', industry: 'Transport' },
-      { id: 16, subgroup: 'Tesla Trucking', group: 'Tesla Trucking', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '13:55', groupType: 'Carrier', serviceType: '-', currency: 'USD', distanceUnit: 'mi', manager: '—', industry: 'Transport' },
-      { id: 14, subgroup: 'TESLA TRUCKING INC (R)', group: 'Tesla Trucking', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '14:00', groupType: 'Carrier', serviceType: '-', currency: 'USD', distanceUnit: 'mi', manager: '—', industry: 'Transport' },
+      { id: 1, subgroup: 'CtrlChain', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Enterprise', serviceType: '-', areaOfOperations: 'Europe', currency: 'EUR', manager: 'Martijn Coenen', industry: 'Transport' },
+      { id: 8, subgroup: 'CtrlChain B.V.', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Mon, 24 Aug 2026', createdTime: '09:00', groupType: 'Enterprise', serviceType: '-', currency: 'EUR', manager: 'Martijn Coenen', industry: 'Transport' },
+      { id: 9, subgroup: 'CtrlChain USA', group: 'CtrlChain', addr1: 'Gateway Freight Terminal', addr2: '2100 Logistics Pkwy, Chicago, IL 60638, USA', created: 'Mon, 24 Aug 2026', createdTime: '09:05', groupType: 'Enterprise', serviceType: '-', currency: 'EUR', manager: '—', industry: 'Transport' },
+      { id: 4, subgroup: 'Ingram', group: 'Ingram', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Mon, 11 Apr 2026', createdTime: '08:00', groupType: 'Shipper, Finance customer, Location, Enterprise', serviceType: 'Full Truckload (FTL), Less-than-Truckload (LTL)', areaOfOperations: 'Europe', currency: 'EUR', manager: 'Sanne de Groot', industry: 'Transport' },
+      { id: 11, subgroup: 'Ingram Micro Spain', group: 'Ingram', addr1: 'Zona Franca Logistics Centre', addr2: 'Carrer A 42, 08040 Barcelona, Spain', created: 'Tue, 25 Aug 2026', createdTime: '10:20', groupType: 'Shipper, Finance customer, Location, Enterprise', serviceType: 'Full Truckload (FTL), Parcel, Courier', currency: 'EUR', manager: '—', industry: 'Transport' },
+      { id: 5, subgroup: 'Nordics Distribution', group: 'Ingram', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '10:05', groupType: 'Shipper, Finance customer, Enterprise', serviceType: '-', currency: 'EUR', manager: '—', industry: '-' },
+      { id: 2, subgroup: 'Benelux Fleet', group: 'CtrlChain', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:15', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', currency: 'EUR', manager: '—', industry: '-' },
+      { id: 3, subgroup: 'DACH Operations', group: 'CtrlChain', parentSubgroup: 'Benelux Fleet', addr1: 'Oradea International Airport', addr2: 'Calea Aradului 80, 410223 Oradea, Romania', created: 'Tue, 12 Apr 2026', createdTime: '09:20', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: '-', currency: 'EUR', manager: '—', industry: '-' },
+      { id: 7, subgroup: 'NewCold', group: 'NewCold', addr1: 'Meridian Distribution Center', addr2: 'Sønderborg Havnevej 12, 6400 Sønderborg, Denmark', created: 'Thu, 16 Jul 2026', createdTime: '09:15', groupType: 'Shipper, Finance customer, Location, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load (FCL)', areaOfOperations: 'Europe', currency: 'EUR', manager: 'Anders Lindqvist', industry: 'Transport' },
+      { id: 10, subgroup: 'NewCold France', group: 'NewCold', addr1: 'Plateforme Logistique Nord', addr2: '14 Rue du Transport, 59810 Lesquin, France', created: 'Tue, 25 Aug 2026', createdTime: '10:10', groupType: 'Shipper, Finance customer, Location, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load (FCL)', currency: 'EUR', manager: '—', industry: 'Transport' },
+      { id: 6, subgroup: 'Baltic Carriers', group: 'NewCold', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 13 Apr 2026', createdTime: '11:40', groupType: 'Carrier, Finance supplier, Shipper, Finance customer, Enterprise', serviceType: '-', currency: 'EUR', manager: '—', industry: '-' },
+      { id: 12, subgroup: 'Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:30', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load (FCL), Less-than-Truckload (LTL)', areaOfOperations: 'Europe', currency: 'EUR', manager: 'Piotr Kowalczyk', industry: 'Transport' },
+      { id: 15, subgroup: 'Enepso Sp. z o.o. (FF)', group: 'Enepso Sp. z o.o.', addr1: 'Enepso Logistics Park', addr2: 'ul. Transportowa 12, 00-844 Warsaw, Poland', created: 'Wed, 26 Aug 2026', createdTime: '08:35', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL), Full Container Load (FCL), Less-than-Truckload (LTL)', currency: 'EUR', manager: 'Piotr Kowalczyk', industry: 'Transport' },
+      { id: 13, subgroup: 'CTS NL c/o Enepso Sp. z o.o.', group: 'Enepso Sp. z o.o.', addr1: 'Rotterdam Distribution Park', addr2: 'Waalhaven Zuidzijde 6, 3089 JH Rotterdam, Netherlands', created: 'Wed, 26 Aug 2026', createdTime: '08:45', groupType: 'Carrier, Finance supplier', serviceType: 'Full Truckload (FTL)', currency: 'EUR', manager: '—', industry: 'Transport' },
+      { id: 16, subgroup: 'Tesla Trucking', group: 'Tesla Trucking', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '13:55', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL)', areaOfOperations: 'North America', currency: 'EUR', manager: '—', industry: 'Transport' },
+      { id: 14, subgroup: 'TESLA TRUCKING INC (R)', group: 'Tesla Trucking', addr1: 'Gigafactory Logistics Hub', addr2: '1 Tesla Road, Austin, TX 78725, USA', created: 'Wed, 26 Aug 2026', createdTime: '14:00', groupType: 'Carrier, Finance supplier, Enterprise', serviceType: 'Full Truckload (FTL)', currency: 'EUR', manager: '—', industry: 'Transport' },
     ],
     filterChipsData: [
       { id: 1, label: 'Assigned Operator: John Doe' },
@@ -2070,13 +2081,13 @@ class Component extends DCLogic {
       ],
     });
   };
-  openRuleModal = () => this.setState({ ruleModalOpen: true, ruleModalStep: 1, ruleModalOriginalRate: '', ruleModalOrdersTab: 'affected', ruleModalCorrectionReason: '', ruleModalNum: '', ruleModalDesc: '', ruleModalRate: '', ruleModalUnit: '/ order', ruleModalServices: [], ruleModalVehicleType: 'Boxwagon', ruleNumDropdownOpen: false, ruleModalEditId: null });
+  openRuleModal = () => this.setState({ ruleModalOpen: true, ruleModalStep: 1, ruleModalOriginalRate: '', ruleModalOrdersTab: 'affected', ruleModalCorrectionReason: '', ruleModalNum: '', ruleModalDesc: '', ruleModalRate: '', ruleModalServices: [], ruleModalVehicleType: 'Boxwagon', ruleNumDropdownOpen: false, ruleModalEditId: null });
   openRuleEditModal = (key, row) => {
     const n = parseFloat((row.rate || '').replace(/[^\d.]/g, ''));
     this.setState({
       ruleModalOpen: true, ruleModalEditId: row.id, ruleModalStep: 1, ruleModalOriginalRate: row.rate, ruleModalOrdersTab: 'affected', ruleModalCorrectionReason: '',
       ruleModalNum: row.num, ruleModalDesc: row.desc,
-      ruleModalRate: isNaN(n) ? '' : String(n), ruleModalUnit: '/ order', ruleModalServices: row.services ? [...row.services] : [], ruleModalVehicleType: row.vehicleType || 'Boxwagon', ruleNumDropdownOpen: false,
+      ruleModalRate: isNaN(n) ? '' : String(n), ruleModalServices: row.services ? [...row.services] : [], ruleModalVehicleType: row.vehicleType || 'Boxwagon', ruleNumDropdownOpen: false,
     });
   };
   deleteRuleModal = () => this.setState(s => {
@@ -2113,7 +2124,6 @@ class Component extends DCLogic {
   onRuleModalNum = (e) => this.setState({ ruleModalNum: e.target.value });
   onRuleModalDesc = (e) => this.setState({ ruleModalDesc: e.target.value });
   onRuleModalRate = (e) => this.setState({ ruleModalRate: e.target.value });
-  onRuleModalUnit = (e) => this.setState({ ruleModalUnit: e.target.value });
   onRuleModalVehicleType = (e) => this.setState({ ruleModalVehicleType: e.target.value });
   toggleRuleModalService = (service) => this.setState(s => ({
     ruleModalServices: s.ruleModalServices.includes(service) ? s.ruleModalServices.filter(x => x !== service) : [...s.ruleModalServices, service],
@@ -2178,8 +2188,8 @@ class Component extends DCLogic {
     addRangeValue: String(rg.value).replace('%', '').replace('€', '').trim(),
     addRangeOriginalValue: rg.value, addRangeDetailView: 'summary',
     addRangeStartFull: rg.rangeFrom, addRangeEndFull: rg.rangeTo,
-    addRangeOriginalType: rg.rateType, addRangeOriginalUnit: rg.unit || null,
-    addRangeOriginalStart: rg.rangeFrom, addRangeOriginalEnd: rg.rangeTo, addRangeUnit: 'km',
+    addRangeOriginalType: rg.rateType,
+    addRangeOriginalStart: rg.rangeFrom, addRangeOriginalEnd: rg.rangeTo,
   }));
   openEditRangeModal = (listKey, row) => this.setState({
     addRangeModalOpen: true, addRangeTarget: 'editSchedule', addRangeStep: 1,
@@ -2189,8 +2199,8 @@ class Component extends DCLogic {
     addRangeValue: String(row.value).replace('%', '').replace('€', '').trim(),
     addRangeOriginalValue: row.value, addRangeDetailView: 'summary',
     addRangeStartFull: row.rangeFrom, addRangeEndFull: row.rangeTo,
-    addRangeOriginalType: row.rateType, addRangeOriginalUnit: row.unit || null,
-    addRangeOriginalStart: row.rangeFrom, addRangeOriginalEnd: row.rangeTo, addRangeUnit: 'km',
+    addRangeOriginalType: row.rateType,
+    addRangeOriginalStart: row.rangeFrom, addRangeOriginalEnd: row.rangeTo,
   });
   closeAddRangeModal = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, addRangeCorrectionReason: '', addRangeOrdersTab: 'affected' });
   backToScheduleHistory = () => this.setState({ addRangeModalOpen: false, addRangeStep: 1, scheduleHistoryOpen: true });
@@ -2427,7 +2437,7 @@ class Component extends DCLogic {
     }
     return sourceRows.map(row => ({
       ...row,
-      valueDisplay: inCurrency(row.value, activeGroup && activeGroup.currency),
+      valueDisplay: withUnit(inCurrency(row.value, activeGroup && activeGroup.currency), row.rateType, distanceUnitForGroup(activeGroup, this.state.groupsData)),
       notEditing: !row.editing,
       statusBadgeStyle: this.statusBadgeStyle(row.status),
       isWarning: row.status === 'No active range',
@@ -2485,7 +2495,7 @@ class Component extends DCLogic {
         { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to 10%' },
         { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
-      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '€ 0.09', rateType: 'Fuel Rate/Distance', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
     ];
@@ -2540,6 +2550,8 @@ class Component extends DCLogic {
       const m = (str || '').match(/(\d{1,2})\s+(\w{3})\w*\s+(\d{4})/);
       return m ? `${m[1].padStart(2, '0')} ${m[2]} ${m[3].slice(2)}` : str;
     };
+    const groupsData = s.groupsData;
+    const activeGroup = groupsData.find(g => g.id === s.activeGroupId) || groupsData[3];
     const addRangeShowReasonStep = (s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange') || s.addRangeStep === 3;
     const ruleModalOrderGroups = this.buildAffectedOrderGroups(s.confirmChangeCount, s.ruleModalOriginalRate, s.ruleModalRate ? `${currencySymbol(activeGroup.currency)} ${(parseFloat(s.ruleModalRate) || 0).toFixed(2)}` : '');
     const addRangeOrdersTabStyle = (active) => ({
@@ -2548,13 +2560,14 @@ class Component extends DCLogic {
       borderBottom: active ? '2px solid var(--border-brand-default)' : '2px solid transparent',
       marginBottom: -1, marginRight: 20,
     });
-    const groupsData = s.groupsData;
-    const activeGroup = groupsData.find(g => g.id === s.activeGroupId) || groupsData[3];
     /* Kilometre rates need a Carrier role to mean anything (see isCarrierGroup).
      * The tab itself always stays visible — only the table is swapped for an
      * explanatory empty state. Fuel Rate and Surcharges are never gated.
      * OPEN QUESTION: whether Minimum Rate should be gated the same way is
      * unresolved, so it is deliberately left ungated. */
+    /* Inherited from the enterprise's Area of Operations — the single place
+     * every rate surface reads the distance unit from. */
+    const activeDistanceUnit = distanceUnitForGroup(activeGroup, groupsData);
     const kmRatesBlocked = s.activeTab === 'Kilometre Rates' && !isCarrierGroup(activeGroup);
     /* Fuel Not Applicable hides the Value field, so requiring a value there
      * would leave the primary button permanently disabled. */
@@ -2564,10 +2577,8 @@ class Component extends DCLogic {
      * the non-carrier case is not always a shipper (CtrlChain entities land
      * here too). Derived, not hardcoded. */
     const activeGroupRoles = tagsFromGroupType(activeGroup.groupType);
-    const activeGroupRolePhrase = activeGroupRoles.includes('Shipper') ? 'a shipper group'
-      : activeGroupRoles.includes('CtrlChain Entity') ? 'a CtrlChain entity'
-      : activeGroupRoles.includes('Freight Forwarder') ? 'a freight forwarder'
-      : 'not a carrier group';
+    const activeGroupRolePhrase = activeGroupRoles.includes('Shipper')
+      ? 'a shipper group' : 'not a carrier group';
     return {
       isGroups: s.screen === 'groups',
       isRate: s.screen === 'rate',
@@ -2611,11 +2622,11 @@ class Component extends DCLogic {
       isSubgroupLevel: activeGroup.subgroup !== activeGroup.group,
       groupLevelLabel: activeGroup.subgroup === activeGroup.group ? 'Enterprise' : 'Subgroup',
       activeGroupTags: tagsFromGroupType(activeGroup.groupType),
-      activeServiceTags: tagsFromServiceType(activeGroup.serviceType),
       activeCurrency: activeGroup.currency || 'EUR',
       activeCurrencySymbol: currencySymbol(activeGroup.currency),
-      activeDistanceUnit: activeGroup.distanceUnit || 'km',
-      activeRatePerDistance: '/ ' + (activeGroup.distanceUnit || 'km'),
+      activeDistanceUnit: activeDistanceUnit,
+      activeDistanceUnitPlural: unitPlural(activeDistanceUnit),
+      activeRatePerDistance: '/ ' + activeDistanceUnit,
       groupBreadcrumbs: (() => {
         const chain = [activeGroup];
         let cur = activeGroup;
@@ -2641,9 +2652,6 @@ class Component extends DCLogic {
       groupsViewIsAll: s.groupsView === 'all',
       groupRows: groupsData.filter(g => s.groupsView === 'all' || g.subgroup === g.group).map(g => ({
         ...g,
-        groupTypeTags: tagsFromGroupType(g.groupType),
-        serviceTypeTags: tagsFromServiceType(g.serviceType),
-        hasNoServiceType: tagsFromServiceType(g.serviceType).length === 0,
         onOpen: () => this.goRate(g.id),
       })),
       filterChips: s.filterChipsData.map(c => ({ ...c, onRemove: () => {} })),
@@ -2678,7 +2686,9 @@ class Component extends DCLogic {
       activeGroupRolePhrase,
       rulesRows: (kmRatesBlocked ? [] : (s[s.activeTab] || [])).map(r => ({
         ...r,
-        rateDisplay: inCurrency(r.rate, activeGroup.currency),
+        rateDisplay: s.activeTab === 'Kilometre Rates'
+          ? `${inCurrency(r.rate, activeGroup.currency)} / ${activeDistanceUnit}`
+          : inCurrency(r.rate, activeGroup.currency),
         dateRangeDisplay: r.dateRange || '01 Jan 26 – 31 Dec 26',
         notEditing: !r.editing,
         onToggleEdit: () => this.toggleRuleEdit(s.activeTab, r.id),
@@ -2728,8 +2738,6 @@ class Component extends DCLogic {
       addRangeTypeIsDistance: s.addRangeType === 'Fuel Rate/Distance',
       addRangeTypeIsPercentage: s.addRangeType === 'Fuel Percentage',
       addRangeShowValueField: s.addRangeType !== 'Fuel Not Applicable',
-      addRangeUnit: s.addRangeUnit || 'km',
-      onAddRangeUnit: (e) => this.setState({ addRangeUnit: e.target.value }),
       addRangeIsEdit: s.addRangeTarget === 'editSchedule' || s.addRangeTarget === 'detailRange',
       addRangeIsAdd: s.addRangeTarget !== 'editSchedule' && s.addRangeTarget !== 'detailRange',
       addRangeConfirmShowContinue: s.addRangeStep === 2 && addRangeShowReasonStep,
@@ -2782,17 +2790,13 @@ class Component extends DCLogic {
       onAddRangeOrdersNext: () => this.goAddRangeOrdersPage(Math.min(addRangeOrdersLastPage, addRangeOrdersPage + 1)),
       onAddRangeOrdersLast: () => this.goAddRangeOrdersPage(addRangeOrdersLastPage),
       addRangeNewValueDisplay: (() => {
-        const nv = s.addRangeType === 'Fuel Percentage' ? `${s.addRangeValue}%` : s.addRangeValue;
-        return nv === (s.addRangeOriginalValue || '') ? '-' : nv;
+        const nv = formatRangeValue(s.addRangeType, s.addRangeValue, activeGroup.currency, activeDistanceUnit);
+        const ov = withUnit(inCurrency(s.addRangeOriginalValue, activeGroup.currency), s.addRangeOriginalType, activeDistanceUnit);
+        return (!nv || nv === ov) ? '-' : nv;
       })(),
-      addRangeOriginalValueDisplay: inCurrency(s.addRangeOriginalValue, activeGroup.currency) || '—',
+      addRangeOriginalValueDisplay: withUnit(inCurrency(s.addRangeOriginalValue, activeGroup.currency), s.addRangeOriginalType, activeDistanceUnit) || '—',
       addRangeOriginalTypeDisplay: s.addRangeOriginalType || '—',
       addRangeTypeNewDisplay: s.addRangeType === s.addRangeOriginalType ? '-' : s.addRangeType,
-      addRangeUnitDisplay: (() => {
-        const nu = s.addRangeUnit === 'mi' ? 'Miles (mi)' : 'Kilometers (km)';
-        return nu === s.addRangeOriginalUnit ? '-' : nu;
-      })(),
-      addRangeOriginalUnitDisplay: s.addRangeOriginalUnit === 'mi' ? 'Miles (mi)' : s.addRangeOriginalUnit === 'km' ? 'Kilometers (km)' : 'Not set',
       addRangeOriginalPeriodDisplay: (s.addRangeOriginalStart && s.addRangeOriginalEnd) ? `${shortDate(s.addRangeOriginalStart)} – ${shortDate(s.addRangeOriginalEnd)}` : '—',
       addRangeNewPeriodDisplay: (() => {
         if (!(s.addRangeStartFull && s.addRangeEndFull)) return '—';
@@ -2828,14 +2832,14 @@ class Component extends DCLogic {
         { id: 2, status: 'Expired', rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '28 Mar 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 2, rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', status: 'Expired' }) },
         { id: 4, status: 'Deleted', rangeFrom: 'Sat, 01 Jun 2024', rangeTo: 'Mon, 30 Jun 2024', value: '7%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Deleted'), lastUpdated: '15 Jun 2024', updatedBy: 'M. Kowalski', isExpired: false },
         { id: 3, status: 'Expired', rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '25 Sep 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 3, rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', status: 'Expired' }) },
-      ].map(r => ({ ...r, valueDisplay: inCurrency(r.value, activeGroup.currency) })),
+      ].map(r => ({ ...r, valueDisplay: withUnit(inCurrency(r.value, activeGroup.currency), r.rateType, activeDistanceUnit) })),
       exceptionDetailOpen: s.exceptionDetailOpen,
       exceptionDetailClosed: !s.exceptionDetailOpen,
       closeExceptionDetail: this.closeExceptionDetail,
       exceptionDetailTitle: `Fuel Settings for ${(s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).groupName || ''}`,
       exceptionDetailRanges: ((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).ranges || []).map(rg => ({
         ...rg,
-        valueDisplay: inCurrency(rg.value, activeGroup.currency),
+        valueDisplay: withUnit(inCurrency(rg.value, activeGroup.currency), rg.rateType, activeDistanceUnit),
         notEditing: !rg.editing,
         statusBadgeStyle: this.statusBadgeStyle(rg.status),
         onRangeFrom: (e) => this.updateDetailRange(s.exceptionDetailId, rg.id, 'rangeFrom', e.target.value),
@@ -2865,7 +2869,7 @@ class Component extends DCLogic {
         { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 03 Apr 2022 08:00', rangeTo: 'Mon, 10 Apr 2022 08:00', value: '€ 1.35', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '1 Apr 2022', updatedBy: 'A. de Vries' },
         { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Tue, 05 Apr 2022 08:00', rangeTo: 'Tue, 12 Apr 2022 08:00', value: '€ 1.10', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '3 Apr 2022', updatedBy: 'M. Kowalski' },
         { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 07 Apr 2022 08:00', rangeTo: 'Thu, 14 Apr 2022 08:00', value: '€ 1.55', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '5 Apr 2022', updatedBy: 'A. de Vries' },
-      ].map(r => ({ ...r, valueDisplay: inCurrency(r.value, activeGroup.currency) })),
+      ].map(r => ({ ...r, valueDisplay: withUnit(inCurrency(r.value, activeGroup.currency), r.rateType, activeDistanceUnit) })),
       addExceptionRow: this.addExceptionRow,
       openGroupsConnection: this.openGroupsConnection,
       groupsConnectionOpen: s.groupsConnectionOpen,
@@ -2973,7 +2977,6 @@ class Component extends DCLogic {
       ruleModalNum: s.ruleModalNum,
       ruleModalDesc: s.ruleModalDesc,
       ruleModalRate: s.ruleModalRate,
-      ruleModalUnit: s.ruleModalUnit,
       onRuleModalNum: this.onRuleModalNum,
       onRuleModalDesc: this.onRuleModalDesc,
       onRuleModalRate: this.onRuleModalRate,
