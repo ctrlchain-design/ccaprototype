@@ -215,6 +215,50 @@
    * exactly this. Same control, two placements.
    */
 
+  /*
+   * A LABELLED field, which is how dev renders text and select filters — the
+   * filter's name sits in the notch above the control, so the row reads as a
+   * form field rather than a bare box, and the control is visible whether or
+   * not it holds anything.
+   *
+   * Markup copied from the "Filled" variant on components/input.html:
+   * `mdc-text-field--label-floating` on the wrapper (NOT `--no-label`),
+   * `mdc-notched-outline--upgraded --notched` on the outline, and
+   * `mdc-floating-label--float-above` on the label.
+   *
+   * THE NOTCH NEEDS AN EXPLICIT WIDTH. Angular measures the label and sets it
+   * at runtime; the doc page shows `style="width: 63px"` baked in. A static
+   * page has to state it, so it is estimated from the label length here —
+   * layout only, and the reason a very long filter name may notch slightly
+   * wide or narrow.
+   */
+  function labelledField(id, label, value, suffix, placeholder) {
+    var notch = Math.round(label.length * 6.2 + 12);
+    return (
+      '<mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input ' +
+      'mat-form-field-appearance-outline mat-primary w-full' +
+      (suffix ? ' mat-mdc-form-field-has-icon-suffix' : '') + '">' +
+      '<div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined ' +
+      'mdc-text-field--label-floating">' +
+      '<div class="mat-mdc-form-field-flex">' +
+      '<div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">' +
+      '<div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>' +
+      '<div class="mdc-notched-outline__notch mat-mdc-notch-piece" ' +
+      'style="width: ' + notch + 'px; max-width: calc(100% - 60px)">' +
+      '<label class="mdc-floating-label mat-mdc-floating-label mdc-floating-label--float-above" ' +
+      'for="' + id + '">' + label + '</label></div>' +
+      '<div class="mdc-notched-outline__trailing mat-mdc-notch-piece"></div></div>' +
+      '<div class="mat-mdc-form-field-infix">' +
+      '<input type="text" class="mat-mdc-input-element mdc-text-field__input" ' +
+      'data-filter-input="' + id + '" placeholder="' + (placeholder || '') + '" value="' +
+      (value || '') + '" autocomplete="off" /></div>' +
+      (suffix ? '<div class="mat-mdc-form-field-icon-suffix">' + icon(suffix) + '</div>' : '') +
+      '</div></div>' +
+      '<div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>' +
+      '</mat-form-field>'
+    );
+  }
+
   function textField(id, placeholder, value) {
     return (
       '<mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input ' +
@@ -286,6 +330,7 @@
     var showPinned = opts.showPinned !== false;
     var query = '';
     var openChip = null;
+    var openList = {};   // which select filters have their list open
 
     filters.forEach(function (f) { if (!f.applied) f.applied = []; });
 
@@ -347,12 +392,41 @@
     function control(f) {
       if (f.kind === 'chips' || f.kind === 'select') {
         var vals = valuesOf(f);
-        if (!vals.length) {
+        /*
+         * Only a CHIP SET with no values has nothing to draw. A select still
+         * renders its field — that is the whole point of it being a field
+         * rather than an inline list, and returning early here was the bug
+         * that made 17 filters look dead when expanded.
+         */
+        if (!vals.length && f.kind === 'chips') {
           return '<div class="mt-2 text-cca-base-sm text-neutral-caption">' +
                  'No values in this data set</div>';
         }
         if (f.kind === 'chips') {
-          return '<div class="mt-3 flex flex-wrap items-center gap-2">' + vals.map(function (v) {
+          /*
+           * "All" on its own row above the values, as dev has it. It is not a
+           * value — it clears the filter, and reads as selected when nothing
+           * else is.
+           */
+          var all = '<div class="mt-3"><mat-chip-option class="mat-mdc-chip ' +
+            'mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip ' +
+            'mdc-evolution-chip--filter mdc-evolution-chip--selectable ' +
+            'mdc-evolution-chip--with-primary-graphic cca-chip mat-primary' +
+            (f.applied.length ? '' : ' mdc-evolution-chip--selected') +
+            '" data-filter="' + f.name + '" data-value-all="1">' +
+            '<span class="mat-mdc-chip-focus-overlay"></span>' +
+            '<span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">' +
+            '<span class="mdc-evolution-chip__action mat-mdc-chip-action ' +
+            'mdc-evolution-chip__action--primary" role="option" aria-selected="' +
+            (f.applied.length ? 'false' : 'true') + '">' +
+            '<span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">' +
+            '<span class="mdc-evolution-chip__checkmark">' +
+            '<svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">' +
+            '<path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor" ' +
+            'd="M1.73,12.91 8.1,19.28 22.79,4.59"></path></svg></span></span>' +
+            '<span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">All</span>' +
+            '</span></span></mat-chip-option></div>';
+          return all + '<div class="mt-2 flex flex-wrap items-center gap-2">' + vals.map(function (v) {
             var on = f.applied.indexOf(v) !== -1, off = disabledIn(f, v);
             return '<mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option ' +
               'mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable ' +
@@ -374,15 +448,34 @@
               '</span></span></mat-chip-option>';
           }).join('') + '</div>';
         }
-        // select: a checkbox list, scrollable because some are long
-        return '<div class="mt-2 flex max-h-44 flex-col overflow-y-auto" data-filter="' + f.name + '">' +
-          vals.map(function (v) {
-            return checkboxRow(f.name, String(v), f.applied.indexOf(v) !== -1, false, '');
-          }).join('') + '</div>';
+        /*
+         * A select shows its FIELD whether or not it has options, because a
+         * filter that renders nothing looks broken. That was the bug: 17 of
+         * these have no field in this repo's fixtures, so an inline checkbox
+         * list came out empty and the row looked dead. Dev renders a labelled
+         * dropdown here, present regardless of what is in it.
+         *
+         * The checkbox list sits under the field, open only when asked, so a
+         * 20-value lookup does not push the rest of the drawer off screen.
+         */
+        var summary = f.applied.length ? f.applied.join(', ') : '';
+        var placeholder = vals.length ? 'Select ' + f.name.toLowerCase()
+                                      : 'No options in this data set';
+        return '<div class="mt-2" data-filter="' + f.name + '">' +
+          labelledField(f.name, f.name, summary, 'chevron-down', placeholder) +
+          (vals.length && openList[f.name]
+            ? '<div class="mt-1 flex max-h-44 flex-col overflow-y-auto rounded-lg ' +
+              'border border-neutral-default">' +
+              vals.map(function (v) {
+                return checkboxRow(f.name, String(v), f.applied.indexOf(v) !== -1, false, '');
+              }).join('') + '</div>'
+            : '') +
+          '</div>';
       }
       if (f.kind === 'text') {
         return '<div class="mt-2" data-filter="' + f.name + '">' +
-          textField(f.name, 'Search ' + f.name.toLowerCase(), f.applied[0]) + '</div>';
+          labelledField(f.name, f.name, f.applied[0], null,
+                        'Search ' + f.name.toLowerCase()) + '</div>';
       }
       if (f.kind === 'date') {
         // No datepicker in the bundle, so a range is two text inputs.
@@ -426,6 +519,7 @@
 
     return { visible: visible, filters: filters, valuesOf: valuesOf,
              appliedCount: count,
+             openList: openList,
              typeDisabled: typeDisabled, prune: prune, isInert: isInert,
              expanded: expanded, appliedOf: appliedOf, totalApplied: totalApplied,
              control: control, row: row, checkboxRow: checkboxRow,

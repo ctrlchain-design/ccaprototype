@@ -1263,6 +1263,38 @@
           return;
         }
         /*
+         * "All" clears the filter rather than selecting a value — it reads as
+         * selected precisely when nothing else is.
+         */
+        const all = e.target.closest('[data-value-all]');
+        if (all) {
+          const f = FILTERS.filter((x) => x.name === all.getAttribute('data-filter'))[0];
+          f.applied = [];
+          if (f.name === 'Category') FX.prune();
+          renderDrawer();
+          renderPinnedRow();
+          renderRows();
+          return;
+        }
+
+        /*
+         * A select's field opens its checkbox list. The field is always
+         * rendered — even with no options — so the row never looks dead; the
+         * list is what toggles.
+         */
+        const field = e.target.closest('[data-filter] .mat-mdc-form-field');
+        if (field) {
+          const holder = field.closest('[data-filter]');
+          const f = FILTERS.filter((x) => x.name === holder.getAttribute('data-filter'))[0];
+          if (f && f.kind === 'select' && FX.valuesOf(f).length) {
+            FX.openList[f.name] = !FX.openList[f.name];
+            renderDrawer();
+            return;
+          }
+          // text and date fields fall through: the input handles itself
+        }
+
+        /*
          * A checkbox in a `select` filter. Same data-menu-value contract as the
          * pinned chip's popover, so both surfaces share FX.checkboxRow — the
          * parent [data-filter] says which filter it belongs to.
