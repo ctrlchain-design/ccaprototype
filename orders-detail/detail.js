@@ -1441,13 +1441,13 @@
         financeSummary(o) + contacts(o) + carrierAndVehicle(o) +
         '</div>' +
         '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
-        locationsInfo(o) + dateAndTimes(o) +
+        /* Order Items sits directly under Locations Info, as asked. It is
+           fifteen columns in a two-thirds column, so its own overflow-x-auto
+           wrapper does the work — the table scrolls inside the card rather
+           than widening the page. */
+        locationsInfo(o) + orderItems() + dateAndTimes(o) +
         '</div></div>' +
-        /* Full width, below the two columns. Order Items is fifteen columns
-           wide; in the half-width right-hand column it would be a permanent
-           horizontal scroll. The Figma draws it full-bleed for the same
-           reason. */
-        '<div class="mt-4 flex flex-col gap-4">' + orderItems() + shortages() + '</div>';
+        '<div class="mt-4 flex flex-col gap-4">' + shortages() + '</div>';
       return;
     }
 
