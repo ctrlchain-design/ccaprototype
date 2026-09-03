@@ -106,6 +106,13 @@ no `field`, `derive` or `match` renders its control and says out loud that it
 does not narrow anything — which is honest for the ones this repo's fixtures
 cannot exercise, and better than a control that silently does nothing.
 
+Every prototype that loads `_shared/shell-markup.js` gets a floating
+**Prototypes** button, bottom-right, back to the repo index — injected by its
+`render()`, so no page needs markup for it. It is deliberately NOT a side-menu
+item: the rail is the product's own navigation, and an entry there among Orders
+and Finance would read to a reviewer as a shipped feature rather than as our
+scaffolding.
+
 Prototypes are one product, not separate screens: render records from
 `_shared/data.js` and link between prototypes by screen name
 (`data-screen="orders.detail"`), which `_shared/routes.js` resolves. Links to
