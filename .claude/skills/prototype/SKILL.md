@@ -511,6 +511,28 @@ EOF
 
 Only the occurrence with an even backtick count is the document.
 
+**And never put a backtick inside a template literal — including in a comment.**
+A comment written *inside* the literal is just text to JavaScript, so a
+markdown-style `` `word` `` in it TERMINATES the string. I broke
+orders-pinned-filters exactly this way: an explanatory HTML comment reading
+"plain \`pinned\` is the unpinned outline" sat inside the chip's template
+literal, the backticks closed the string early, and the whole page script died
+with `missing ) after argument list` — a table rendering zero rows for a reason
+nothing on screen explained.
+
+Put the comment ABOVE the `.map(` as a `//` comment, and quote names with
+"double quotes" inside anything that might end up in a literal. To check:
+
+```bash
+python3 - <<'EOF'
+depth = 0
+for i, line in enumerate(open('PROTOTYPE/index.html'), 1):
+    if depth % 2 and line.count('`') >= 2:
+        print(i, line.strip()[:80])      # a backtick pair while inside a literal
+    depth += line.count('`')
+EOF
+```
+
 **`cca-btn--link` always underlines.** It hard-codes
 `text-decoration: underline`, which is right for a link in prose and wrong for a
 header action. Use `.proto-header-link` from `_shared/prototype.css`.

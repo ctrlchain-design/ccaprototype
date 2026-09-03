@@ -485,11 +485,11 @@
         const row = document.getElementById('pinned-filters-row');
         const pinned = FILTERS.filter((f) => f.pinned);
         row.hidden = !showPinned || pinned.length === 0;
+        // The glyph is pinned-yes. Plain "pinned" is the UNPINNED outline —
+        // see the Pinned filter chip note in _shared/patterns.html.
         row.innerHTML = pinned
           .map(
             (f) => `
-          <!-- pinned-yes, not pinned: plain `pinned` is the UNPINNED outline.
-               See the Pinned filter chip note in _shared/patterns.html. -->
           <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
             ${icon('pinned-yes')}
             <span class="truncate">${f.name}</span>
