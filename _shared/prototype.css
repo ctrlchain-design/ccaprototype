@@ -428,3 +428,39 @@ cca-filters-select {
   top: 0;
   margin-top: 0;
 }
+
+/*
+ * Frozen columns on a wide table
+ * ------------------------------
+ * These tables are wider than any screen — the Orders list is 3328px and the
+ * app's own is 3161px — so the columns that identify a row have to stay put
+ * while the rest scrolls. Otherwise you scroll right to read a delivery date
+ * and no longer know whose order it is.
+ *
+ * `position: sticky` needs three things beyond the offset, and it fails
+ * quietly without them:
+ *
+ *   · A BACKGROUND. A sticky cell is transparent by default, so the scrolling
+ *     content slides visibly underneath it.
+ *   · A z-index, or the non-sticky cells paint over it anyway.
+ *   · A HIGHER z-index on the header, since a sticky <th> has to sit above
+ *     both the sticky body cells and the scrolling ones.
+ *
+ * The `left` offset is per-column and belongs on the cell, because only the
+ * page knows its own column widths — see the colgroup in oms/index.html.
+ * `.proto-sticky-edge` marks the last frozen column and draws the seam, so it
+ * is obvious that the pane to its right is what moves.
+ */
+.proto-sticky-col {
+  position: sticky;
+  z-index: 1;
+  background: var(--surface-neutral-light);
+}
+
+.mat-mdc-header-row .proto-sticky-col {
+  z-index: 2;
+}
+
+.proto-sticky-edge {
+  box-shadow: 1px 0 0 var(--border-neutral-default);
+}
