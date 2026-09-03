@@ -662,7 +662,16 @@
    */
   function stopCard(n, kind, end, o, open) {
     var hours = o.detail.openingHours;
-    var t = o.detail.totals;
+    /*
+     * ORDER_DETAIL.totals is the transport fixture's — 3,500 kg over 10 items.
+     * A warehouse order carries its own weight and pallet count, and showing
+     * the shared numbers would have contradicted the order's own data on the
+     * same screen. Exchange is not modelled for warehouse, so it says so.
+     */
+    var t = o.domain === 'warehouse'
+      ? { weight: o.weightKg.toLocaleString('en-GB') + ' kg',
+          items: String(o.pallets), exchangeNeeded: 'n/a', actualExchange: 'n/a' }
+      : o.detail.totals;
     return (
       '<cca-stop-card class="block rounded-lg border border-neutral-default">' +
       '<div class="flex items-start gap-3 p-3">' +
@@ -719,7 +728,9 @@
       ? '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Trip: ' +
         link(o.tripReference, 'trips.detail', { id: o.tripReference }) + '</span>'
       : '<span class="shrink-0 text-cca-base-sm text-neutral-caption">No trip raised</span>';
-    if (o.detail.bookedFrom) {
+    /* A contracted lane is a road-freight agreement; a warehouse order is not
+       booked from one, so it does not claim to be. */
+    if (o.domain !== 'warehouse' && o.detail.bookedFrom) {
       trip += '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Booked from: ' +
         link(o.detail.bookedFrom, 'contracts.detail', { id: o.detail.bookedFrom }) + '</span>';
     }
@@ -1094,7 +1105,18 @@
      * dashes would read as a warehouse order missing its data.
      */
     if (o.domain === 'warehouse') {
-      bodyHost.innerHTML = top;
+      /* Built up one section at a time. Same two-column split as transport —
+         the narrow column carries what the order IS, the wide one what happens
+         to it — so the two domains stay recognisably the same page. */
+      bodyHost.innerHTML =
+        top +
+        '<div class="mt-4 flex flex-wrap items-start gap-4">' +
+        '<div class="flex min-w-80 flex-1 flex-col gap-4">' +
+        financeSummary(o) +
+        '</div>' +
+        '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
+        locationsInfo(o) +
+        '</div></div>';
       return;
     }
 
