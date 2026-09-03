@@ -126,14 +126,34 @@
     return typeof f.applied === 'number' ? f.applied : f.applied.length;
   }
 
-  function actionsFor(filters) {
+  function actionsFor(filters, visibleChips) {
+    /*
+     * TWO CONDITIONS, and both matter.
+     *
+     *   visibleChips  the actions sit BESIDE the chips, so with none on show
+     *                 they would float alone against an empty row. That is
+     *                 what happened on orders-pinned-filters, where the chip
+     *                 row is switched off by default: the buttons appeared
+     *                 with nothing next to them and nothing visibly filtered.
+     *   applied       a row of pinned-but-empty chips has nothing to clear,
+     *                 so Clear Filters would be a no-op button.
+     *
+     * A filter applied from the drawer with pinning off therefore shows no
+     * actions here — the drawer keeps its own Clear Filters for that case,
+     * which is where someone in that state already is.
+     */
+    if (!visibleChips) return '';
     if (!filters.some(function (f) { return appliedCountOf(f) > 0; })) return '';
     var btn = function (label, attr) {
       return '<button ccaButton hierarchy="tertiary" type="button" ' +
         'class="cca-btn cca-btn--tertiary" ' + attr + '>' + label + '</button>';
     };
     return (
-      '<div class="ml-auto flex shrink-0 items-center gap-1" data-filter-actions>' +
+      /* Beside the chips, not pushed to the far edge — `ml-auto` had them
+         floating against the right of the row, detached from the filters they
+         act on. The row is flex-wrap, so they follow the last chip and wrap
+         with it. */
+      '<div class="flex shrink-0 items-center gap-1" data-filter-actions>' +
       btn('Clear Filters', 'data-clear-filters') +
       '<span class="block h-6 border-l border-neutral-default"></span>' +
       btn('Save View', 'data-save-view') +
@@ -404,7 +424,7 @@
     var isInert = function (f) { return !f.field && !f.match && !f.derive; };
 
     /* Clear Filters / Save View for THIS mount's filter set. */
-    function actions() { return actionsFor(filters); }
+    function actions(visibleChips) { return actionsFor(filters, visibleChips); }
     function clearAll() { clearAllOf(filters); }
 
     /* Values a select offers: derived from the records, or from `derive`. */

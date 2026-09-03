@@ -337,15 +337,30 @@
       //
       // The numbers differ deliberately: with a badge of 2 next to 2 pinned
       // filters it was impossible to tell which one the badge was counting.
+      /*
+       * `applied` is a COUNT here, not an array of values — this prototype
+       * predates _shared/filters.js and models the PIN mechanism, so it never
+       * needed the values. Anything shared with oms/ must read it through
+       * CCA_FILTERS.appliedCountOf().
+       *
+       * Every count starts at 0 ON PURPOSE. It is driven by the selected saved
+       * view (see selectView), and the default view is `All` — system, with
+       * `filters: {}`, so nothing is applied. Three of these used to be seeded
+       * 3, 2 and 5, which made the page load claiming three active filters
+       * while showing the unfiltered All view: the Filters button wore a "3"
+       * with nothing to clear. The counter badge still demonstrates itself the
+       * moment a view with values is selected, which is the flow this page is
+       * actually about.
+       */
       const FILTERS = [
-        { name: 'Account Manager', applied: 3, pinned: true },
+        { name: 'Account Manager', applied: 0, pinned: true },
         { name: 'Assigned Operator', applied: 0, pinned: true },
         { name: 'Addresses', applied: 0, pinned: false },
         { name: 'Booked with Contracted Lane', applied: 0, pinned: false },
-        { name: 'Carrier Assignment Status', applied: 2, pinned: false },
+        { name: 'Carrier Assignment Status', applied: 0, pinned: false },
         { name: 'Carrier Enterprise', applied: 0, pinned: false },
         { name: 'Carrier Invoice Status', applied: 0, pinned: false },
-        { name: 'Customer Invoice Status', applied: 5, pinned: false },
+        { name: 'Customer Invoice Status', applied: 0, pinned: false },
       ];
 
       // Orders come from _shared/data.js so the row you click in this list is the
@@ -489,8 +504,8 @@
         // Clear Filters / Save View, from the shared mechanism. They key off
         // what is APPLIED, not what is pinned, so the row has to survive an
         // empty chip set while they are showing.
-        const acts = window.CCA_FILTERS.actions(FILTERS);
         const chips = showPinned ? pinned : [];
+        const acts = window.CCA_FILTERS.actions(FILTERS, chips.length);
         row.hidden = !chips.length && !acts;
         // The glyph is pinned-yes. Plain "pinned" is the UNPINNED outline —
         // see the Pinned filter chip note in _shared/patterns.html.

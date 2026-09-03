@@ -736,8 +736,8 @@
         // whenever anything is APPLIED — which can happen straight from the
         // drawer, with nothing pinned. So the row survives an empty chip set
         // when the actions are showing, instead of hiding them.
-        const acts = FX.actions();
         const chips = showPinned ? pinned : [];
+        const acts = FX.actions(chips.length);
         row.hidden = !chips.length && !acts;
         row.innerHTML = chips
           .map((f) => {
