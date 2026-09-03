@@ -318,6 +318,24 @@ cca-main .appContent .page {
   overflow-y: auto;
 }
 
+/*
+ * Table header line-height.
+ *
+ * platform-02.css carries `table .mdc-data-table__cell, table
+ * .mdc-data-table__header-cell { line-height: initial }`. That rule needs a
+ * real <table> ancestor — and the app has none: its tables are mat-table
+ * custom elements, so the rule never fires there and its header cells sit at
+ * 14px/21px. A prototype building a real <table> DOES trip it, and every
+ * header row came out at `normal`, visibly tighter than the app's.
+ *
+ * Matching the platform's own specificity (element + class) and loading after
+ * it is what makes this win; a utility class on the th loses at 0,1,0 against
+ * its 0,1,1. 1.5 on 14px is the app's 21px.
+ */
+table .mdc-data-table__header-cell {
+  line-height: 1.5;
+}
+
 /* ---------------------------------------------------------------- snackbar */
 
 /*

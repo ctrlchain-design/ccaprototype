@@ -43,8 +43,8 @@
   function field(label, value) {
     return (
       '<div class="overflow-hidden">' +
-      '<p class="text-2xs text-neutral-caption">' + esc(label) + '</p>' +
-      '<p class="text-cca-base-sm text-neutral-body">' + (value || '-') + '</p>' +
+      '<p class="text-cca-label-sm text-neutral-caption">' + esc(label) + '</p>' +
+      '<p class="text-cca-base text-neutral-body">' + (value || '-') + '</p>' +
       '</div>'
     );
   }
@@ -163,11 +163,17 @@
   }
 
   /* A dot and a label — cca-text-badge, which is how Finance Summary reads. */
+  /*
+   * The DOT carries the flavour; the text does not. On staging the value is
+   * 14px/20px BOLD in body colour beside a coloured dot — this had the flavour
+   * on the whole span, so the text came out caption-grey at weight 400.
+   */
   function dotValue(text, flavor) {
     return (
-      '<cca-text-badge><span class="flex items-center gap-2 ' + flavor + '">' +
-      '<span class="dot inline-block h-2 w-2 rounded-full"></span>' +
-      '<span class="text-cca-base-sm">' + esc(text) + '</span></span></cca-text-badge>'
+      '<cca-text-badge><span class="flex items-center gap-2">' +
+      '<span class="dot inline-block h-2 w-2 rounded-full ' + flavor + '"></span>' +
+      '<span class="text-cca-base-sm font-bold text-neutral-body">' + esc(text) +
+      '</span></span></cca-text-badge>'
     );
   }
 
@@ -817,7 +823,10 @@
             '<button type="button" class="flex flex-1 items-start gap-2 text-left" data-toggle="stop-' + n + '">') +
       '<div class="flex-1">' + typeBadge(kind) +
       /* An h3 on staging — the stop's address is the sub-heading of its card. */
-      '<h3 class="mt-1 text-cca-base-sm text-neutral-body">' +
+      /* No type utility: the platform styles h3 at 18px/28px/500 and staging's
+         stop address is exactly that. `text-cca-base-sm` was silently shrinking
+         it to 14px — the bare-tag trap. */
+      '<h3 class="mt-1 text-neutral-body">' +
       esc([end.name, end.street, end.city, end.country].filter(Boolean).join(', ')) + '</h3></div>' +
       (wh ? '' :
         '<span class="text-neutral-caption" id="stop-' + n + '-chevron">' +
@@ -1144,8 +1153,12 @@
    * surface matters — without it the rows show through as they pass beneath.
    */
   function th(label) {
+    /* text-cca-label-md is 14px/20px/500 — staging's header cell is 14/21/500.
+       Without it the line-height computed to `normal`, tightening every header
+       row against the app's. */
     return '<th class="mat-mdc-header-cell mdc-data-table__header-cell whitespace-nowrap ' +
-      'sticky top-0 z-10 surface-neutral-light" role="columnheader">' + esc(label) + '</th>';
+      'text-cca-label-md sticky top-0 z-10 surface-neutral-light" role="columnheader">' +
+      esc(label) + '</th>';
   }
   function td(inner, extra) {
     return '<td class="mat-mdc-cell mdc-data-table__cell ' + (extra || '') + '">' + inner + '</td>';
@@ -1222,8 +1235,8 @@
      */
     var genField = function (label, value) {
       return '<div class="min-w-40 flex-1">' +
-        '<p class="text-2xs text-neutral-caption">' + esc(label) + '</p>' +
-        '<p class="text-cca-base-sm text-neutral-body">' + value + '</p></div>';
+        '<p class="text-cca-label-sm text-neutral-caption">' + esc(label) + '</p>' +
+        '<p class="text-cca-base text-neutral-body">' + value + '</p></div>';
     };
     var general =
       '<h4>General Information</h4>' +

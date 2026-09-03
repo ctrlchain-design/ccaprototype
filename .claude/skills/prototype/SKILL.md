@@ -684,6 +684,34 @@ Card headings are **classless** `<h2>`/`<h3>`/`<h4>`. The platform styles them
 globally, so `class="text-cca-label-md"` on a heading is both redundant and a
 size off.
 
+**Diff COMPUTED TYPE against the app, not just the markup.** Every class can
+be real and the sizes still wrong. Five roles on the order detail were off,
+none of them visible as a broken layout:
+
+| Role | App | Ours was | Cause |
+| --- | --- | --- | --- |
+| field label | 12/16/400 | 10px | `text-2xs` is 0.625rem — the smallest label is `text-cca-label-sm` |
+| field value | 16/24/400 | 14px | `text-cca-base-sm` where `text-cca-base` was meant |
+| status value | 14/20/**700** | 14/20/400, grey | the flavour class was on the whole span, so it coloured the text too; only the DOT takes it |
+| stop address | 18/28/500 | 14px | a `text-cca-*` utility on an `<h3>` — the bare-tag trap |
+| table header | 14/**21** | `normal` | see below |
+
+Pull both sides down to `fontSize / lineHeight / fontWeight` and compare:
+
+```js
+const t = el => { const c = getComputedStyle(el);
+  return c.fontSize + ' / ' + c.lineHeight + ' / ' + c.fontWeight; };
+```
+
+**And watch for platform rules that only fire in a prototype.** `platform-02.css`
+has `table .mdc-data-table__cell, table .mdc-data-table__header-cell {
+line-height: initial }`. It needs a real `<table>` ancestor — which the app
+never has, because its tables are `mat-table` custom elements. So the rule is
+dead in production and live in any prototype that builds a real table, and
+every header row comes out tighter than the app's. A utility on the `th` loses
+to it, 0,1,0 against 0,1,1; `_shared/prototype.css` now matches its specificity
+and restores the app's 1.5.
+
 **When you have the real DOM, diff the heading skeleton — not the screenshot.**
 Reading section order off a picture misses the levels, and the levels are the
 information architecture. Pull both sides down to `tag + text` and compare
