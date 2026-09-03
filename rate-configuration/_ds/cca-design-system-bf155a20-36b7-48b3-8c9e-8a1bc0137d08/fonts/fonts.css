@@ -1,6 +1,0 @@
-/* Load Roboto, IBM Plex Sans, Inter from Google Fonts.
-   Substitution: the source .fig references Roboto/IBM Plex/Inter as webfonts;
-   we load Google Fonts CDN copies. These match the files used in production
-   closely. Flag for user: replace with hosted TTFs if brand requires.
-*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=IBM+Plex+Sans:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
