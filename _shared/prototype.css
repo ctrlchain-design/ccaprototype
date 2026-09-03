@@ -365,6 +365,36 @@ cca-main .appContent .page > .proto-hug {
   z-index: 10;
 }
 
+/*
+ * ...and the missing SCROLL, from the same missing stylesheet.
+ *
+ * filters-select.css caps the panel at 296px and platform-02.css gives it
+ * `overflow: hidden`, which clips the rounded corners. Neither gives the option
+ * list anywhere to scroll — ng-select's core CSS puts `overflow-y: auto` on
+ * `.ng-dropdown-panel-items`, and that is the file the export omits.
+ *
+ * Measured before this rule: Order Status rendered 14 options as an 896px
+ * stack inside the 296px panel, and TEN OF THEM WERE UNREACHABLE. No
+ * scrollbar, no overflow reported on the panel, nothing to say they were
+ * there.
+ *
+ * Flex column plus `min-height: 0` is what makes the items region shrink below
+ * its content and scroll, while the header stays put.
+ */
+.ng-dropdown-panel.ng-select-custom {
+  display: flex;
+  flex-direction: column;
+}
+
+.ng-dropdown-panel.ng-select-custom .ng-dropdown-header {
+  flex: 0 0 auto;
+}
+
+.ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items {
+  min-height: 0;
+  overflow-y: auto;
+}
+
 /* The panel anchors to the field, so the field's wrapper has to be the
    containing block. cca-filters-select is a custom element with no default
    display, so it needs one — and it is the ancestor every rule in

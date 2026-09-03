@@ -585,6 +585,24 @@ rather than composing one.
   Neutrals.200 in dark mode, so the overlay would come out lighter than the page
   behind it. Say so rather than implementing it.
 
+- **A TRANSPARENT backdrop needs its showing class to catch clicks at all.**
+  On a dark scrim `cdk-overlay-backdrop-showing` is just the fade, so it looks
+  cosmetic. On a transparent one it is the difference between working and not:
+
+      .cdk-overlay-transparent-backdrop            { visibility: hidden; opacity: 1 }
+      .cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing
+                                                   { visibility: visible; opacity: 0 }
+
+  A `visibility: hidden` element is not hit-testable, so without the class every
+  outside click falls straight through and the overlay never closes. Worse, the
+  flip is TRANSITIONED (`transition: visibility 1ms`), so it is a race in a live
+  tab and permanent in a background one — which also means
+  `getComputedStyle(...).visibility` lies to you while measuring.
+
+  Add the CDK's own **`cdk-overlay-backdrop-noop-animation`** to a transparent
+  backdrop. It drops the transition, the flip is immediate, and there is nothing
+  to animate anyway — opacity 0 to opacity 0.
+
 - **Never gate correctness on `requestAnimationFrame`.** rAF does not fire in a
   background or non-rendering tab, so a fade armed that way silently never starts
   and the scrim sits at `opacity: 0` — invisible. Force the starting state with a

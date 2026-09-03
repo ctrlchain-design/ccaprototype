@@ -364,7 +364,23 @@
         components/modal.html.
       -->
       <div class="cdk-overlay-container" id="chip-overlay" hidden>
-        <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop" id="chip-backdrop"></div>
+        <!--
+          cdk-overlay-backdrop-noop-animation is the CDK's own class for "no
+          transition", and it is load-bearing on a TRANSPARENT backdrop.
+
+          `.cdk-overlay-transparent-backdrop` is `visibility: hidden` with a 1ms
+          `transition: visibility`, and the showing class flips it to
+          `visibility: visible`. A hidden element is not hit-testable, so until
+          that transition commits, outside clicks fall straight through to the
+          page — which is exactly how this popover failed to close. Transitions
+          do not advance at all while the tab is not rendering, so the failure
+          is permanent in a background tab and merely a race in a live one.
+
+          Dropping the transition makes the flip immediate and the behaviour
+          deterministic. A transparent backdrop has nothing to animate anyway —
+          it goes from opacity 0 to opacity 0.
+        -->
+        <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-noop-animation" id="chip-backdrop"></div>
         <!-- The pane positions; the ng-select panel inside brings its own
              surface, radius and shadow, so no mat-mdc-menu-panel here. -->
         <div class="cdk-overlay-pane proto-menu-pane" id="chip-pane">
@@ -822,7 +838,23 @@
         openChip = name;
         renderChipMenu();
         const c = document.getElementById('chip-overlay');
+        const scrim = document.getElementById('chip-backdrop');
         c.hidden = false;
+        /*
+         * cdk-overlay-backdrop-showing IS WHAT MAKES A TRANSPARENT BACKDROP
+         * CATCH CLICKS. On a dark scrim the class is just the fade-in, so it is
+         * easy to think it is cosmetic. On a transparent one
+         * `.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing`
+         * resolves to `opacity: 0; visibility: visible` — without it the
+         * backdrop stays `visibility: hidden`, which is not hit-testable, and
+         * every outside click falls straight through to the page. That is why
+         * this popover would not close.
+         *
+         * Committed with a layout read rather than rAF, which does not fire in
+         * a background tab.
+         */
+        void scrim.offsetWidth;
+        scrim.classList.add('cdk-overlay-backdrop-showing');
         // The CDK computes this from a position strategy at runtime; a static
         // page states the end position, hung under the chip it belongs to.
         const r = anchor.getBoundingClientRect();
@@ -833,6 +865,7 @@
 
       function closeChipMenu() {
         openChip = null;
+        document.getElementById('chip-backdrop').classList.remove('cdk-overlay-backdrop-showing');
         document.getElementById('chip-overlay').hidden = true;
       }
 
