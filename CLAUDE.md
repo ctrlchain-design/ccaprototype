@@ -88,6 +88,19 @@ opens its values inline, the same filter renders as chips in the drawer and as
 checkboxes in that popover, and Category interlocks with Order Type so no one
 can filter to a combination no order can have. Its header documents the rest.
 
+`CCA_FILTERS.actions(filters)` renders the **Clear Filters / Save View** pair,
+and `CCA_FILTERS.clearAll(filters)` backs the first — both module-level, so a
+prototype that borrows the preset without mounting still gets them. They key off
+what is APPLIED, not what is pinned: a filter can be applied straight from the
+drawer, so a row that only appears for pinned chips hides them exactly when they
+are wanted.
+
+⚠ **`applied` has two shapes.** `mount()` and `oms/` treat `f.applied` as an
+**array of values**; `orders-pinned-filters/` predates this file and treats it as
+a **count** (`applied: 3`). Read it through `CCA_FILTERS.appliedCountOf(f)` in
+anything shared — assuming `.length` is what made Clear Filters silently never
+appear on that page, since `(3).length` is `undefined`.
+
 Add a filter by adding to the preset, not by editing a prototype. A filter with
 no `field`, `derive` or `match` renders its control and says out loud that it
 does not narrow anything — which is honest for the ones this repo's fixtures

@@ -92,64 +92,6 @@
     return out.sort();
   }
 
-  /*
-   * CLEAR FILTERS / SAVE VIEW — the pair the app shows once anything is
-   * applied, and hides again when nothing is.
-   *
-   * Module level on purpose. mount() exposes it as FX.actions(), but a
-   * prototype that only borrows the preset and runs its own state — as
-   * orders-pinned-filters does — still needs it, and duplicating the markup
-   * there is how the two pages drift apart.
-   *
-   * The condition is APPLIED, not PINNED. A filter can be applied straight
-   * from the drawer without ever being pinned, so a row that only appears for
-   * pinned chips would hide these exactly when they are wanted.
-   *
-   * Two tertiary buttons with a rule between them — the same divider the
-   * platform header uses between its own clusters.
-   */
-  /*
-   * ⚠ THE TWO PROTOTYPES DISAGREE ON THE SHAPE OF `applied`.
-   *
-   *   mount() / oms          f.applied is an ARRAY of the chosen values
-   *   orders-pinned-filters  f.applied is a COUNT, e.g. `applied: 3`
-   *
-   * That prototype predates this file and models the pin mechanism rather than
-   * real filtering, so it never needed the values. Anything shared between the
-   * two has to read the count through here instead of assuming `.length` —
-   * which is exactly the bug that made Clear Filters / Save View never appear
-   * on that page: `(3).length` is undefined, so it looked like nothing was
-   * applied.
-   */
-  function appliedCountOf(f) {
-    if (!f || f.applied == null) return 0;
-    return typeof f.applied === 'number' ? f.applied : f.applied.length;
-  }
-
-  function actionsFor(filters) {
-    if (!filters.some(function (f) { return appliedCountOf(f) > 0; })) return '';
-    var btn = function (label, attr) {
-      return '<button ccaButton hierarchy="tertiary" type="button" ' +
-        'class="cca-btn cca-btn--tertiary" ' + attr + '>' + label + '</button>';
-    };
-    return (
-      '<div class="ml-auto flex shrink-0 items-center gap-1" data-filter-actions>' +
-      btn('Clear Filters', 'data-clear-filters') +
-      '<span class="block h-6 border-l border-neutral-default"></span>' +
-      btn('Save View', 'data-save-view') +
-      '</div>'
-    );
-  }
-
-  /* Drops every applied value. Pinning is layout and survives — unpinning
-     everything on a clear would throw away a deliberate arrangement. */
-  function clearAllOf(filters) {
-    /* Reset to the shape it was found in — see appliedCountOf. */
-    filters.forEach(function (f) {
-      f.applied = typeof f.applied === 'number' ? 0 : [];
-    });
-  }
-
   /* ------------------------------------------------ the Orders filter preset */
 
   /*
@@ -403,9 +345,41 @@
     var totalApplied = function () { return filters.filter(count).length; };
     var isInert = function (f) { return !f.field && !f.match && !f.derive; };
 
-    /* Clear Filters / Save View for THIS mount's filter set. */
-    function actions() { return actionsFor(filters); }
-    function clearAll() { clearAllOf(filters); }
+    /*
+     * CLEAR FILTERS / SAVE VIEW — the pair the app shows once anything is
+     * applied, and hides again when nothing is.
+     *
+     * They live here rather than in a prototype because the trigger is a
+     * property of the filter state, not of one page: any prototype calling
+     * mount() gets them by rendering actions() into its pinned row.
+     *
+     * Note the condition is APPLIED, not PINNED. A filter can be applied
+     * straight from the drawer without ever being pinned, so a row that only
+     * appears for pinned chips would hide these exactly when they are needed.
+     *
+     * Two tertiary buttons with a rule between them — the same divider the
+     * platform header uses between its own clusters.
+     */
+    function actions() {
+      if (!totalApplied()) return '';
+      var btn = function (label, attr) {
+        return '<button ccaButton hierarchy="tertiary" type="button" ' +
+          'class="cca-btn cca-btn--tertiary" ' + attr + '>' + label + '</button>';
+      };
+      return (
+        '<div class="ml-auto flex shrink-0 items-center gap-1" data-filter-actions>' +
+        btn('Clear Filters', 'data-clear-filters') +
+        '<span class="block h-6 border-l border-neutral-default"></span>' +
+        btn('Save View', 'data-save-view') +
+        '</div>'
+      );
+    }
+
+    /* Drops every applied value. Pinning is layout and survives — unpinning
+       everything on a clear would throw away a deliberate arrangement. */
+    function clearAll() {
+      filters.forEach(function (f) { f.applied = []; });
+    }
 
     /* Values a select offers: derived from the records, or from `derive`. */
     function valuesOf(f) {
@@ -671,9 +645,5 @@
     uniq: uniq,
     icon: icon,
     mount: __MOUNT_FN__,
-    /* For a prototype that runs its own state instead of mounting. */
-    actions: actionsFor,
-    clearAll: clearAllOf,
-    appliedCountOf: appliedCountOf,
   };
 })();

@@ -322,6 +322,8 @@
     <script src="../_shared/screens.js"></script>
     <script src="../_shared/shell-markup.js"></script>
     <script src="../_shared/routes.js"></script>
+    <!-- Clear Filters / Save View come from the shared mechanism. -->
+    <script src="../_shared/filters.js"></script>
     <script src="../_shared/nav.js"></script>
     <script src="../_shared/shell.js"></script>
 
@@ -484,10 +486,15 @@
       function renderPinnedRow() {
         const row = document.getElementById('pinned-filters-row');
         const pinned = FILTERS.filter((f) => f.pinned);
-        row.hidden = !showPinned || pinned.length === 0;
+        // Clear Filters / Save View, from the shared mechanism. They key off
+        // what is APPLIED, not what is pinned, so the row has to survive an
+        // empty chip set while they are showing.
+        const acts = window.CCA_FILTERS.actions(FILTERS);
+        const chips = showPinned ? pinned : [];
+        row.hidden = !chips.length && !acts;
         // The glyph is pinned-yes. Plain "pinned" is the UNPINNED outline —
         // see the Pinned filter chip note in _shared/patterns.html.
-        row.innerHTML = pinned
+        row.innerHTML = chips
           .map(
             (f) => `
           <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
@@ -495,7 +502,15 @@
             <span class="truncate">${f.name}</span>
           </span>`
           )
-          .join('');
+          .join('') + acts;
+
+        row.querySelector('[data-clear-filters]')?.addEventListener('click', () => {
+          window.CCA_FILTERS.clearAll(FILTERS);
+          render();
+        });
+        row.querySelector('[data-save-view]')?.addEventListener('click', () => {
+          window.CCA_ROUTES.notice('Saving a view has not been prototyped yet.');
+        });
       }
 
       // -------------------------------------------------------- the drawer
