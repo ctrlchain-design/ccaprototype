@@ -148,6 +148,11 @@
     <script src="../_shared/routes.js"></script>
     <script src="../_shared/nav.js"></script>
     <script src="../_shared/shell.js"></script>
+    <!-- For CCA_FILTERS.labelledField, the labelled outlined field the UoM
+         selects on Order Items and Shortages use. The file only defines
+         window.CCA_FILTERS — it touches no DOM until mount() is called — so
+         loading it on a page with no filter drawer costs nothing. -->
+    <script src="../_shared/filters.js"></script>
     <script src="detail.js"></script>
   </body>
 </html>

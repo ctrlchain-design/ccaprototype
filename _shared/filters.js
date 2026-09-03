@@ -695,5 +695,8 @@
     actions: actionsFor,
     clearAll: clearAllOf,
     appliedCountOf: appliedCountOf,
+    /* A labelled outlined field. Generic enough that other prototypes want
+       it — the order detail's UoM select uses it. */
+    labelledField: labelledField,
   };
 })();

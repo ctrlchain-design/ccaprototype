@@ -656,6 +656,49 @@ linked: ['CCA2023-000274.1'],
     ],
   };
 
+  /*
+   * ORDER ITEMS AND SHORTAGES — the two tables below Locations Info on a
+   * warehouse order. Shape taken from Figma 29Ixi12L8wlQPTh3oVg0ao node
+   * 103:52832; the values are invented.
+   *
+   * An item row expands into its SSCC pallets, which is why `pallets` hangs
+   * off each item rather than being a flat second table: an SSCC belongs to
+   * exactly one line.
+   */
+  var WAREHOUSE_ITEMS = [
+    {
+      line: '0010', code: '10533',
+      description: 'Onion Cubes 10x10SF Med-1x10kg - BP80',
+      bestBefore: 'Mon, 12 Mar 2028', lot: 'L6071', quality: '-',
+      ordered: '560', shipped: '560', uom: 'CA', uomType: 'Default UoM',
+      shortage: '-', palletsOrdered: '7', palletsShipped: '7', tempClass: 'Frozen',
+      pallets: [
+        { sscc: '388284', lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', ordered: '80',
+          shipped: '80', uom: 'CA', uomType: 'Default UoM', quality: '-',
+          temperature: '- 37.2 °C', profileCheck: '€ 543.00' },
+        { sscc: '388290', lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', ordered: '80',
+          shipped: '80', uom: 'CA', uomType: 'Default UoM', quality: '-',
+          temperature: '- 37.2 °C', profileCheck: '€ 155.00' },
+        { sscc: '388296', lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', ordered: '80',
+          shipped: '80', uom: 'CA', uomType: 'Default UoM', quality: '-',
+          temperature: '- 37.2 °C', profileCheck: '€ 155.00' },
+      ],
+    },
+    {
+      line: '0020', code: '12070',
+      description: 'Onion strips SF Med-1x10kg - bp70',
+      bestBefore: 'Mon, 03 Feb 2028', lot: 'L6034', quality: '-',
+      ordered: '210', shipped: '210', uom: 'CA', uomType: 'Default UoM',
+      shortage: '-', palletsOrdered: '3', palletsShipped: '3', tempClass: 'Frozen',
+      pallets: [],
+    },
+  ];
+
+  var WAREHOUSE_SHORTAGES = [
+    { line: '0010', code: '31029065', description: '8 St Limone XXL 88ml (X6) LIDL',
+      quantity: '5' },
+  ];
+
   var ORDER_DETAIL = {
     cargo: {
       kind: 'Pallet',
@@ -1065,6 +1108,10 @@ linked: ['CCA2023-000274.1'],
      * block is the same for every order — fixture data, not a claim that real
      * orders share a cargo manifest.
      */
+    /* The two warehouse tables below Locations Info. */
+    orderItems: function () { return WAREHOUSE_ITEMS; },
+    shortages: function () { return WAREHOUSE_SHORTAGES; },
+
     /* The Shipment updates drawer's events, by domain. */
     timeline: function (o) {
       return TIMELINE[o && o.domain === 'warehouse' ? 'warehouse' : 'transport'];

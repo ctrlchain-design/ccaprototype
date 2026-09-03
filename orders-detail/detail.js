@@ -1026,6 +1026,153 @@
       'Learn more</a></div>');
   }
 
+  /* ------------------------------------------- order items and shortages */
+
+  /*
+   * The two tables below Locations Info on a warehouse order, from Figma
+   * 29Ixi12L8wlQPTh3oVg0ao node 103:52832.
+   *
+   * Both share a card shell the rest of this page does not use: a COLLAPSIBLE
+   * heading, a UoM select and a fullscreen toggle in the header, and a
+   * paginator in the footer. card() renders a plain h2 with one action slot,
+   * so this is built alongside it rather than bent out of it.
+   *
+   * The UoM select is CCA_FILTERS.labelledField — the same labelled outlined
+   * field the filter drawer uses, exported for this. Its notch width has to be
+   * stated because Angular measures the label at runtime and a static page
+   * cannot.
+   */
+  var tableOpen = { 'order-items': true, shortages: true };
+
+  function tableCard(key, heading, uom, body, count) {
+    var open = tableOpen[key] !== false;
+    return (
+      '<section class="page-container">' +
+      '<div class="flex flex-wrap items-center justify-between gap-4">' +
+      '<div role="button" tabindex="0" class="flex cursor-pointer items-center gap-2" ' +
+      'data-table-toggle="' + key + '">' +
+      '<span class="text-neutral-body">' + icon(open ? 'chevron-up' : 'chevron-down') + '</span>' +
+      '<h2>' + esc(heading) + '</h2>' +
+      '</div>' +
+      '<div class="flex shrink-0 items-center gap-3">' +
+      '<div class="w-40">' +
+      window.CCA_FILTERS.labelledField(key + '-uom', 'UoM', uom, null, '') +
+      '</div>' +
+      '<button ccaButton hierarchy="subtle" type="button" ' +
+      'class="cca-btn cca-btn--subtle cca-btn--icon-only" aria-label="Expand ' + esc(heading) + '">' +
+      icon('fullscreen') + '</button>' +
+      '</div></div>' +
+      (open ? '<div class="mt-4">' + body + paginator(count) + '</div>' : '') +
+      '</section>'
+    );
+  }
+
+  /* The repo's paginator, as oms/ and orders-pinned-filters/ render it. */
+  function paginator(count) {
+    var arrow = function (label, glyph, disabled) {
+      return '<button ccaButton type="button" class="cca-btn cca-btn--tertiary cca-btn--icon-only"' +
+        (disabled ? ' disabled' : '') + ' aria-label="' + label + '">' + icon(glyph) + '</button>';
+    };
+    return (
+      '<div class="mt-4 flex flex-wrap items-center justify-end gap-3">' +
+      '<span class="text-cca-label-sm text-neutral-caption">Rows per page</span>' +
+      '<span class="flex items-center gap-2 rounded-lg border border-neutral-default px-3 py-1 text-cca-base-sm text-neutral-body">' +
+      '25' + icon('chevron-down') + '</span>' +
+      '<span class="text-cca-label-sm text-neutral-caption">1-' + count + ' of ' + count + '</span>' +
+      arrow('First page', 'chevrons-left', true) + arrow('Previous page', 'chevron-left', true) +
+      arrow('Next page', 'chevron-right', true) + arrow('Last page', 'chevrons-right', true) +
+      '</div>'
+    );
+  }
+
+  function th(label) {
+    return '<th class="mat-mdc-header-cell mdc-data-table__header-cell whitespace-nowrap" ' +
+      'role="columnheader">' + esc(label) + '</th>';
+  }
+  function td(inner, extra) {
+    return '<td class="mat-mdc-cell mdc-data-table__cell ' + (extra || '') + '">' + inner + '</td>';
+  }
+  function txt(v) {
+    return '<span class="text-cca-base-sm whitespace-nowrap text-neutral-body">' + esc(v) + '</span>';
+  }
+
+  /*
+   * The nested SSCC table an item row opens into. Tinted and inset, as the
+   * Figma draws it, so it reads as belonging to the row above rather than as a
+   * second table of its own.
+   */
+  function palletRows(item) {
+    if (!item.pallets.length) return '';
+    var cols = ['SSCC', 'LOT/Batch', 'Best Before Date', 'Ordered Quantity',
+                'Shipped Quantity', 'UoM', 'UoM Type', 'Quality',
+                'Temperature', 'Profile Check'];
+    return (
+      '<tr class="mat-mdc-row mdc-data-table__row" data-pallets="' + item.line + '">' +
+      '<td class="mat-mdc-cell mdc-data-table__cell surface-neutral-default p-4" colspan="14">' +
+      '<div class="overflow-x-auto rounded-lg border border-neutral-default surface-neutral-light">' +
+      '<table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
+      '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
+      cols.map(th).join('') + '</tr></thead>' +
+      '<tbody class="mdc-data-table__content">' +
+      item.pallets.map(function (p) {
+        return '<tr class="mat-mdc-row mdc-data-table__row">' +
+          td(txt(p.sscc)) + td(txt(p.lot)) +
+          td(stamp('At', p.bestBefore, '')) +
+          td(txt(p.ordered)) + td(txt(p.shipped)) + td(txt(p.uom)) + td(txt(p.uomType)) +
+          td(txt(p.quality)) + td(txt(p.temperature)) + td(txt(p.profileCheck)) +
+          '</tr>';
+      }).join('') +
+      '</tbody></table></div></td></tr>'
+    );
+  }
+
+  var itemOpen = { '0010': true };
+
+  function orderItems() {
+    var items = D.orderItems();
+    var cols = ['', 'Line', 'Product Code', 'Product Description', 'Best Before Date',
+                'LOT/Batch', 'Quality', 'Ordered Quantity', 'Shipped Quantity', 'UOM',
+                'UOM Type', 'Shortage', 'Pallets Ordered', 'Pallets Shipped', 'Temp Class'];
+    var body =
+      '<div class="overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
+      '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
+      cols.map(th).join('') + '</tr></thead>' +
+      '<tbody class="mdc-data-table__content">' +
+      items.map(function (it) {
+        var open = !!itemOpen[it.line] && it.pallets.length;
+        return '<tr class="mat-mdc-row mdc-data-table__row">' +
+          td(it.pallets.length
+            ? '<span role="button" tabindex="0" class="cursor-pointer text-neutral-body" ' +
+              'data-item-toggle="' + it.line + '">' + icon(open ? 'chevron-up' : 'chevron-down') + '</span>'
+            : '', 'w-8') +
+          td(txt(it.line)) + td(txt(it.code)) + td(txt(it.description)) +
+          td(stamp('At', it.bestBefore, '')) +
+          td(txt(it.lot)) + td(txt(it.quality)) + td(txt(it.ordered)) + td(txt(it.shipped)) +
+          td(txt(it.uom)) + td(txt(it.uomType)) + td(txt(it.shortage)) +
+          td(txt(it.palletsOrdered)) + td(txt(it.palletsShipped)) + td(txt(it.tempClass)) +
+          '</tr>' + (open ? palletRows(it) : '');
+      }).join('') +
+      '</tbody></table></div>';
+    return tableCard('order-items', 'Order Items', 'Default', body, items.length);
+  }
+
+  function shortages() {
+    var rows = D.shortages();
+    var cols = ['Line', 'Product Code', 'Product Description', 'Shortage Quantity'];
+    var body =
+      '<div class="overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
+      '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
+      cols.map(th).join('') + '</tr></thead>' +
+      '<tbody class="mdc-data-table__content">' +
+      rows.map(function (r) {
+        return '<tr class="mat-mdc-row mdc-data-table__row">' +
+          td(txt(r.line)) + td(txt(r.code)) + td(txt(r.description)) + td(txt(r.quantity)) +
+          '</tr>';
+      }).join('') +
+      '</tbody></table></div>';
+    return tableCard('shortages', 'Shortages', 'Default', body, rows.length);
+  }
+
   /* -------------------------------------------------- shipment timeline */
 
   /*
@@ -1295,7 +1442,12 @@
         '</div>' +
         '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
         locationsInfo(o) + dateAndTimes(o) +
-        '</div></div>';
+        '</div></div>' +
+        /* Full width, below the two columns. Order Items is fifteen columns
+           wide; in the half-width right-hand column it would be a permanent
+           horizontal scroll. The Figma draws it full-bleed for the same
+           reason. */
+        '<div class="mt-4 flex flex-col gap-4">' + orderItems() + shortages() + '</div>';
       return;
     }
 
@@ -1342,6 +1494,22 @@
   /* ------------------------------------------------------------ behaviour */
 
   document.addEventListener('click', function (ev) {
+    /* --------------------------------- order items / shortages collapse */
+    var tt = ev.target.closest('[data-table-toggle]');
+    if (tt) {
+      var key = tt.getAttribute('data-table-toggle');
+      tableOpen[key] = tableOpen[key] === false;
+      renderBody(order);
+      return;
+    }
+    var it = ev.target.closest('[data-item-toggle]');
+    if (it) {
+      var line = it.getAttribute('data-item-toggle');
+      itemOpen[line] = !itemOpen[line];
+      renderBody(order);
+      return;
+    }
+
     /* ------------------------------------------- shipment timeline drawer */
     if (ev.target.closest('[data-open-timeline]')) { openTimeline(true); return; }
     if (ev.target.closest('[data-close-timeline]')) { openTimeline(false); return; }
