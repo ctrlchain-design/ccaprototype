@@ -430,11 +430,18 @@
       ['POD Status', o.podApproved ? 'Approved' : 'Not approved',
        o.podApproved ? 'primary' : 'neutral-caption'],
     ];
-    /* Under the rows, not in the header. It acts on POD Status, which is the
-       last row, so it reads as following from the statuses rather than being a
-       header action on the card as a whole. Secondary rather than the tertiary
-       the other card headers carry: a real deliverable, not an inline edit. */
-    var downloadPod =
+    /*
+     * Under the rows, not in the header: it acts on POD Status, which is the
+     * last row, so it reads as following from the statuses rather than being an
+     * action on the card as a whole. Secondary rather than the tertiary the
+     * other card headers carry — a real deliverable, not an inline edit.
+     *
+     * WAREHOUSE ONLY. This was on both domains at first, on the reasoning that
+     * Finance Summary shows POD Status either way. That was a call nobody asked
+     * for, and it put a new button on the transport page after that page was
+     * signed off. Transport can have it when someone asks for it there.
+     */
+    var downloadPod = o.domain !== 'warehouse' ? '' :
       '<div class="mt-4 border-t border-neutral-default pt-4">' +
       '<button ccaButton hierarchy="secondary" type="button" ' +
       'class="cca-btn cca-btn--secondary w-full" data-download-pod>' +
