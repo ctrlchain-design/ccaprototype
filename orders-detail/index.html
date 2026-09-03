@@ -144,6 +144,21 @@
 
         Content is rendered by detail.js, per domain.
       -->
+      <!--
+        FULL SCREEN TABLE. A dialog, not a drawer, so it takes the CDK's own
+        cdk-overlay-dark-backdrop (0.32) rather than the sidenav scrim (0.6) —
+        see the Scrims table on components/modal.html. proto-dialog-wrapper is
+        what centres the pane; the CDK writes that at runtime in the app and a
+        static page has to state it.
+      -->
+      <div class="cdk-overlay-container" id="fullscreen-overlay" hidden>
+        <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" id="fullscreen-scrim"></div>
+        <div class="cdk-global-overlay-wrapper proto-dialog-wrapper">
+          <div class="cdk-overlay-pane page-container proto-fullscreen-pane flex flex-col p-0"
+               id="fullscreen-pane" role="dialog" aria-modal="true" aria-label="Table full screen"></div>
+        </div>
+      </div>
+
       <div class="cdk-overlay-container" id="timeline-overlay" hidden>
         <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="timeline-scrim"></div>
         <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default"

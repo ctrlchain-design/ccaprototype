@@ -1070,7 +1070,8 @@
       window.CCA_FILTERS.labelledField(key + '-uom', 'UoM', uom, null, '') +
       '</div>' +
       '<button ccaButton hierarchy="subtle" type="button" ' +
-      'class="cca-btn cca-btn--subtle cca-btn--icon-only" aria-label="Expand ' + esc(heading) + '">' +
+      'class="cca-btn cca-btn--subtle cca-btn--icon-only" data-fullscreen="' + key + '" ' +
+      'aria-label="Show ' + esc(heading) + ' full screen">' +
       icon('fullscreen') + '</button>' +
       '</div></div>' +
       '<div class="mt-4">' + body + paginator(key, count) + '</div>' +
@@ -1185,9 +1186,28 @@
      * The Figma says 18,340 kg; using it would have put a number on the page
      * that contradicts the record every other section reads from.
      */
+    /*
+     * ONE LINE WHEN THE SCREEN ALLOWS IT.
+     *
+     * fieldGrid is grid-cols-2, so these four stacked 2x2 however wide the
+     * card got. A four-column grid is not available: the bundle ships
+     * grid-cols-1..7 but only md:grid-cols-2, md:grid-cols-3 and
+     * xl:grid-cols-3 as responsive variants, so `md:grid-cols-4` would have
+     * failed silently.
+     *
+     * A wrapping flex row does it with classes that exist and needs no
+     * breakpoint: each field claims an equal share above min-w-40, so four sit
+     * on one line when there is room and fold to two, then one, when there is
+     * not.
+     */
+    var genField = function (label, value) {
+      return '<div class="min-w-40 flex-1">' +
+        '<p class="text-2xs text-neutral-caption">' + esc(label) + '</p>' +
+        '<p class="text-cca-base-sm text-neutral-body">' + value + '</p></div>';
+    };
     var general =
       '<h4>General Information</h4>' +
-      '<div class="mt-3">' + fieldGrid([
+      '<div class="mt-3 flex flex-wrap gap-x-8 gap-y-4">' + [
         ['Lines', String(items.length)],
         ['Pallets', String(items.reduce(function (n, it) {
           return n + (parseInt(it.palletsOrdered, 10) || 0);
@@ -1196,7 +1216,7 @@
         ['Temperature Profile code',
          '<span class="flex items-center gap-1">' + icon('temperature-3') +
          esc(order.temperatureProfile) + '</span>'],
-      ]) + '</div>';
+      ].map(function (f) { return genField(f[0], f[1]); }).join('') + '</div>';
 
     var body =
       general +
@@ -1208,10 +1228,25 @@
       shown.map(function (it) {
         var open = !!itemOpen[it.line] && it.pallets.length;
         return '<tr class="mat-mdc-row mdc-data-table__row">' +
+          /*
+           * A REAL ICON BUTTON, not a bare span.
+           *
+           * It was a `role="button"` span, display: inline, sitting on the
+           * text BASELINE rather than centred in a 64px cell — which is what
+           * made the chevrons look adrift down the column. Its icon inherited
+           * a 14px font size and its whole hit area was 14x16px.
+           *
+           * cca-btn--icon-only + --x-small is the app's own size for a
+           * table-cell action, and it centres itself.
+           */
           td(it.pallets.length
-            ? '<span role="button" tabindex="0" class="cursor-pointer text-neutral-body" ' +
-              'data-item-toggle="' + it.line + '">' + icon(open ? 'chevron-down' : 'chevron-up') + '</span>'
-            : '', 'w-8') +
+            ? '<button ccaButton hierarchy="icon" type="button" ' +
+              'class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" ' +
+              'data-item-toggle="' + it.line + '" ' +
+              'aria-expanded="' + (open ? 'true' : 'false') + '" ' +
+              'aria-label="' + (open ? 'Collapse' : 'Expand') + ' line ' + esc(it.line) + '">' +
+              icon(open ? 'chevron-down' : 'chevron-up') + '</button>'
+            : '', 'w-10') +
           td(txt(it.line)) + td(txt(it.code)) + td(txt(it.description)) +
           td(stamp('At', it.bestBefore, '')) +
           td(txt(it.lot)) + td(txt(it.quality)) + td(txt(it.ordered)) + td(txt(it.shipped)) +
@@ -1240,6 +1275,52 @@
       }).join('') +
       '</tbody></table></div>';
     return tableCard('shortages', 'Shortages', 'Default', body, rows.length);
+  }
+
+  /*
+   * FULL SCREEN VIEW. Order Items is fifteen columns in a two-thirds column,
+   * so it is clipped by around 1,000px — the fullscreen button is how you
+   * actually read it, which means it has to do something.
+   *
+   * Same CDK overlay the Shipment Timeline drawer uses, but a centred pane
+   * rather than a drawer, so it takes the dialog's own scrim
+   * (cdk-overlay-dark-backdrop at 0.32) rather than the sidenav's 0.6. The
+   * pane is a page-container filling the viewport bar a margin, and the table
+   * inside it loses the max-height cap — the whole point is to see it all.
+   */
+  var fullscreenKey = null;
+
+  function renderFullscreen() {
+    var box = document.getElementById('fullscreen-overlay');
+    var pane = document.getElementById('fullscreen-pane');
+    if (!fullscreenKey) {
+      box.hidden = true;
+      document.documentElement.classList.remove('cdk-global-scrollblock');
+      return;
+    }
+    var isItems = fullscreenKey === 'order-items';
+    var heading = isItems ? 'Order Items' : 'Shortages';
+    var built = isItems ? orderItems(order) : shortages();
+    /* Reuse the card the page already renders, then unpick the two things
+       that only make sense in a column: the height cap and its own header. */
+    var holder = document.createElement('div');
+    holder.innerHTML = built;
+    var section = holder.firstElementChild;
+    section.querySelector('.max-h-96').classList.remove('max-h-96');
+    section.firstElementChild.remove();
+    pane.innerHTML =
+      '<div class="flex shrink-0 items-center justify-between gap-4 border-b border-neutral-default p-6">' +
+      '<h2>' + esc(heading) + '</h2>' +
+      '<button ccaButton hierarchy="icon" type="button" ' +
+      'class="cca-btn cca-btn--icon-only cca-btn--icon" data-exit-fullscreen ' +
+      'aria-label="Close full screen">' + icon('xmark') + '</button>' +
+      '</div>' +
+      '<div class="proto-drawer-body p-6">' + section.innerHTML + '</div>';
+    box.hidden = false;
+    var scrim = document.getElementById('fullscreen-scrim');
+    void scrim.offsetWidth;
+    scrim.classList.add('cdk-overlay-backdrop-showing');
+    document.documentElement.classList.add('cdk-global-scrollblock');
   }
 
   /* -------------------------------------------------- shipment timeline */
@@ -1562,12 +1643,20 @@
   /* ------------------------------------------------------------ behaviour */
 
   document.addEventListener('click', function (ev) {
+    /* ------------------------------------------------- full screen view */
+    var fs = ev.target.closest('[data-fullscreen]');
+    if (fs) { fullscreenKey = fs.getAttribute('data-fullscreen'); renderFullscreen(); return; }
+    if (ev.target.closest('[data-exit-fullscreen]') || ev.target.id === 'fullscreen-scrim') {
+      fullscreenKey = null; renderFullscreen(); return;
+    }
+
     /* ------------------------------------------------ paginator arrows */
     var pg = ev.target.closest('[data-page]');
     if (pg) {
       var parts = pg.getAttribute('data-page').split(':');
       page[parts[0]] = parseInt(parts[1], 10);
       renderBody(order);
+      if (fullscreenKey) renderFullscreen();
       return;
     }
 
@@ -1577,6 +1666,7 @@
       var line = it.getAttribute('data-item-toggle');
       itemOpen[line] = !itemOpen[line];
       renderBody(order);
+      if (fullscreenKey) renderFullscreen();
       return;
     }
 

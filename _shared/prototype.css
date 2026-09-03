@@ -246,6 +246,23 @@ cca-main .appContent .page {
  * class after a layout read, never in requestAnimationFrame — rAF does not fire
  * in a background tab, and the dialog would stay invisible.
  */
+/*
+ * A dialog pane that fills the viewport — the full screen table view.
+ *
+ * Layout only, and it has to live here rather than on utilities: `h-[92vh]`
+ * and `w-[94vw]` are ARBITRARY Tailwind values, and the app compiles Tailwind
+ * at build time so the export contains no rule for either. They fail silently,
+ * which is how the pane ended up unsized the first time.
+ *
+ * The pane is a page-container, so it brings its own border, radius and
+ * surface; this only says how big.
+ */
+.proto-fullscreen-pane {
+  width: 94vw;
+  height: 92vh;
+  max-width: 94vw;
+}
+
 .proto-dialog-wrapper {
   align-items: center;
   justify-content: center;
