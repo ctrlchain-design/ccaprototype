@@ -301,26 +301,79 @@
    * plate rather than a fake picture of a route — but the overlay panel is
    * where the app puts it, top-left and `w-75`, not a full-width row.
    */
-  function mapRegion() {
+  /*
+   * The map. There is no map runtime in a static prototype and the export
+   * ships no tiles, so this is a SCHEMATIC of the route rather than either a
+   * blank plate or a fake photograph of one — it reads as a map at a glance,
+   * says out loud that it is not live, and invents no colours: the roads are
+   * border-neutral-default, the route is border-brand-default, and the stops
+   * are the real cca-marker-pin.
+   *
+   * marker-pin.css is a FEATURE component (isDesignSystem: false in
+   * manifest.json) rather than an official one, but it is still FE's own
+   * exported CSS, so its pins beat any I would draw. `.tail.location` has no
+   * width on purpose — its 1px left and right borders ARE the 2px stalk under
+   * the circle, which is why it must stay a bare span in a centred flex
+   * column.
+   */
+  function mapRegion(o) {
+    var e = ends(o);
+    var pin = function (n, x, y, label) {
+      return (
+        /* translate(-50%,-100%) puts the stalk's tip on the coordinate —
+           the same inline transform staging uses on its own gmp markers. The
+           bundle ships no translate-x-1/2 or -translate-y-full utility. */
+        '<div class="absolute" style="left:' + x + '%;top:' + y + '%;' +
+        'transform:translate(-50%,-100%)">' +
+        '<cca-marker-pin title="' + esc(label) + '">' +
+        '<div class="pin-container"><div class="flex flex-col items-center">' +
+        '<span class="pin-content location"><span class="pin-label">' + n + '</span></span>' +
+        '<span class="tail location"></span>' +
+        '</div></div></cca-marker-pin></div>'
+      );
+    };
+    /* Roads and the route, drawn once at 800x400 and scaled. The stroke keeps
+       its width under the scale via vector-effect. */
+    var art =
+      '<svg class="absolute inset-0 h-full w-full" viewBox="0 0 800 400" ' +
+      'preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
+      '<g fill="none" stroke="var(--border-neutral-default)" stroke-width="1" ' +
+      'vector-effect="non-scaling-stroke">' +
+      '<path d="M-20 96 H820 M-20 214 H820 M-20 322 H820" />' +
+      '<path d="M132 -20 V420 M330 -20 V420 M548 -20 V420 M700 -20 V420" />' +
+      '<path d="M-20 40 L240 160 L470 120 L820 250" />' +
+      '<path d="M60 420 L210 250 L430 300 L620 200 L820 60" />' +
+      '</g>' +
+      /* The route itself, over the roads. */
+      '<path d="M110 275 C 250 205, 330 330, 470 190 S 600 90, 675 120" fill="none" ' +
+      'stroke="var(--border-brand-default)" stroke-width="3" stroke-linecap="round" ' +
+      'vector-effect="non-scaling-stroke" />' +
+      '</svg>';
     return (
       '<section class="relative h-100 w-full overflow-hidden rounded-xl surface-neutral-default">' +
-      '<div class="grid h-full place-items-center">' +
-      '<div class="flex max-w-100 flex-col items-center gap-2 text-center">' +
-      '<span class="text-neutral-caption">' + icon('simple-map') + '</span>' +
-      '<span class="text-cca-base-sm text-neutral-caption">No map in a static prototype</span>' +
-      '<span class="text-2xs text-neutral-caption">The app renders cca-order-map here, ' +
-      'with the route, via points and any traceable objects.</span>' +
-      '</div></div>' +
-      '<div class="page-container absolute top-3 left-3 flex h-min w-75 min-w-75 flex-col p-3" id="map-section">' +
+      art +
+      pin(1, 13.75, 68.75, e.a.city) +
+      pin(2, 84.375, 30, e.b.city) +
+      /* Says what it is, quietly, so nobody reviews this thinking the route is
+         real geography. */
+      '<div class="absolute bottom-4 left-0 flex w-full justify-center">' +
+      '<p class="rounded-lg surface-neutral-light px-3 py-1 text-2xs text-neutral-caption">' +
+      'Schematic — the app renders cca-order-map here, with the real route, ' +
+      'via points and traceable objects.</p></div>' +
+      /* Map Overview floats on the map, top-left, as cca-map-overview. Its own
+         stylesheet is what shrinks the collapse button to 1.25rem. */
+      '<cca-map-overview class="absolute top-3 left-3 block">' +
+      '<div class="page-container flex h-min w-75 min-w-75 flex-col p-3" id="map-section">' +
       '<div class="flex flex-row items-center justify-between">' +
       '<h4>Map Overview (0)</h4>' +
       '<button ccaButton hierarchy="icon" type="button" class="cca-btn cca-btn--icon" ' +
       'data-toggle="map" aria-label="Toggle map overview">' +
-      '<span id="map-chevron">' + icon('chevron-down') + '</span></button>' +
+      '<cca-icon><span id="map-chevron">' + icon('chevron-down') + '</span></cca-icon></button>' +
       '</div>' +
       '<div class="mt-3 hidden text-cca-base-sm text-neutral-caption" id="map-body">' +
       'Nothing traceable on this order.</div>' +
-      '</div></section>'
+      '</div></cca-map-overview>' +
+      '</section>'
     );
   }
 
@@ -825,7 +878,7 @@
     bodyHost.innerHTML =
       /* One card: header, rule, status, map — cca-order-map on the app. */
       '<section class="page-container flex w-full flex-col gap-4">' +
-      detailHeader(o) + mapRegion() + '</section>' +
+      detailHeader(o) + mapRegion(o) + '</section>' +
       /* Two columns: the narrow one carries what the order IS, the wide one what
          happens to it. Stacks on a narrow viewport rather than scrolling. */
       '<div class="mt-4 flex flex-wrap items-start gap-4">' +
