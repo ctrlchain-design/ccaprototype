@@ -347,6 +347,20 @@
         cdk-overlay-container, the sidenav scrim (proto-drawer-backdrop, which
         is the 0.6 drawer scrim rather than the 0.32 dialog one) and a pane.
       -->
+      <!--
+        The popover a pinned chip opens. Read off staging: clicking a pinned
+        filter gives a CHECKBOX list, not the chip set the drawer uses — with
+        the selected values sorted to the top. Transparent backdrop, because
+        this is menu-like rather than modal, per the three-scrim table in
+        components/modal.html.
+      -->
+      <div class="cdk-overlay-container" id="chip-overlay" hidden>
+        <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop" id="chip-backdrop"></div>
+        <div class="cdk-overlay-pane proto-menu-pane" id="chip-pane">
+          <div class="mat-mdc-menu-panel surface-neutral-light" role="menu" id="chip-menu"></div>
+        </div>
+      </div>
+
       <div class="cdk-overlay-container" id="overlay-container" hidden>
         <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="drawer-scrim"></div>
         <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default" id="filters-drawer" role="dialog" aria-modal="true" aria-label="Filters">
@@ -746,6 +760,50 @@
       ];
       let showPinned = true;
       let filterQuery = '';
+      let openChip = null;
+
+      /*
+       * WHICH ORDER TYPES BELONG TO WHICH CATEGORY. Order Type is not a flat
+       * list — Brokerage, Managed transportation, Own Fleet and SAAS are
+       * transport movements, Inbound and Outbound are warehouse ones, and an
+       * invoice order has no type at all.
+       *
+       * So the two filters interlock: pick Category = Transport and Inbound and
+       * Outbound stop being selectable, because no order can be both. Picking
+       * Invoice disables every type, since invoice orders have none.
+       *
+       * Disabled rather than hidden, using the chip component's own
+       * `mdc-evolution-chip--disabled` state (components/chips.html): a value
+       * that vanishes leaves the reader wondering whether it ever existed,
+       * while one greyed out says "not with what you have chosen".
+       */
+      const TYPE_DOMAIN = {
+        Brokerage: 'transport',
+        'Managed transportation': 'transport',
+        'Own Fleet': 'transport',
+        SAAS: 'transport',
+        Inbound: 'warehouse',
+        Outbound: 'warehouse',
+      };
+
+      const appliedOf = (name) => (FILTERS.filter((f) => f.name === name)[0] || {}).applied || [];
+
+      function typeDisabled(value) {
+        const cats = appliedOf('Category');
+        if (!cats.length) return false;
+        return cats.indexOf(CATEGORY[TYPE_DOMAIN[value]]) === -1;
+      }
+
+      /*
+       * Changing Category can strip a type that is no longer reachable. Done
+       * here rather than left to the user, because a selection that still
+       * filters but can no longer be seen or unset is the worst of both.
+       */
+      function pruneUnreachableTypes() {
+        const type = FILTERS.filter((f) => f.name === 'Order Type')[0];
+        if (!type.applied) return;
+        type.applied = type.applied.filter((v) => !typeDisabled(v));
+      }
 
       const appliedCount = (f) => (f.applied ? f.applied.length : 0);
       const totalApplied = () => FILTERS.filter((f) => appliedCount(f)).length;
@@ -768,7 +826,8 @@
           .map((f) => {
             const n = appliedCount(f);
             return `
-          <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
+          <span class="flex max-w-80 cursor-pointer items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body"
+                role="button" tabindex="0" aria-haspopup="menu" data-open-chip="${f.name}">
             ${icon('pinned-yes')}
             <span class="truncate">${f.name}${n ? ': ' + f.applied.join(', ') : ''}</span>
             ${
@@ -787,10 +846,13 @@
           return `<div class="mt-3 flex flex-wrap items-center gap-2">${f.values
             .map((v) => {
               const on = (f.applied || []).indexOf(v) !== -1;
+              const off = f.name === 'Order Type' && typeDisabled(v);
               return `
               <mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable mdc-evolution-chip--with-primary-graphic cca-chip mat-primary${
                 on ? ' mdc-evolution-chip--selected' : ''
-              }" data-filter="${f.name}" data-value="${v}">
+              }${off ? ' mdc-evolution-chip--disabled' : ''}"${off ? ' aria-disabled="true"' : ''}${
+                off ? ` title="Not available with Category: ${appliedOf('Category').join(', ')}"` : ''
+              } data-filter="${f.name}" data-value="${v}">
                 <span class="mat-mdc-chip-focus-overlay"></span>
                 <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
                   <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="${on}">
@@ -877,6 +939,93 @@
           document.documentElement.classList.remove('cdk-global-scrollblock');
         }
         btn.setAttribute('aria-expanded', String(open));
+      }
+
+      /* ------------------------------------------- the pinned chip's popover
+       * Clicking a pinned filter opens its values inline, so the common case
+       * never needs the drawer. Read off staging, where the popover is a
+       * CHECKBOX LIST — not the chip set the drawer uses — with the selected
+       * values sorted to the top.
+       *
+       * Checkbox markup is the documented one from
+       * design-system/dist/components/input.html: a mat-checkbox wrapping
+       * .mdc-checkbox with its native input, background and checkmark svg. The
+       * input is what carries `checked`, so the tick renders from state rather
+       * than from a class.
+       *
+       * Selected-first ordering is the app's, and it is the right call for a
+       * long list: Order Status has 14 values and the two you have chosen would
+       * otherwise be somewhere in the middle of them.
+       */
+      function renderChipMenu() {
+        const f = FILTERS.filter((x) => x.name === openChip)[0];
+        const menu = document.getElementById('chip-menu');
+        if (!f) return;
+
+        if (f.kind !== 'chips') {
+          // Same honesty as the drawer: name the control rather than fake it.
+          menu.innerHTML = `<div class="px-4 py-3 text-cca-base-sm text-neutral-caption">${
+            { text: 'Free text', select: 'Lookup', date: 'Date range', switch: 'On / off' }[f.kind]
+          } — not prototyped here</div>`;
+          return;
+        }
+
+        const on = f.applied || [];
+        // Selected first, each group keeping the order the filter declares.
+        const ordered = f.values.filter((v) => on.indexOf(v) !== -1)
+          .concat(f.values.filter((v) => on.indexOf(v) === -1));
+
+        menu.innerHTML =
+          '<div class="flex max-h-80 min-w-50 flex-col overflow-y-auto py-1">' +
+          ordered
+            .map((v, i) => {
+              const checked = on.indexOf(v) !== -1;
+              const off = f.name === 'Order Type' && typeDisabled(v);
+              const id = 'chipbox-' + i;
+              return `
+              <div class="flex items-center px-3 py-1 ${
+                checked ? 'surface-brand-lighter' : ''
+              }${off ? ' opacity-50' : ''}" data-menu-value="${v}"${
+                off ? ' aria-disabled="true"' : ''
+              }>
+                <mat-checkbox class="mat-mdc-checkbox mat-primary${off ? ' mat-mdc-checkbox-disabled' : ''}">
+                  <div class="mdc-form-field mat-internal-form-field">
+                    <div class="mdc-checkbox">
+                      <input type="checkbox" class="mdc-checkbox__native-control" id="${id}"${
+                        checked ? ' checked' : ''
+                      }${off ? ' disabled' : ''} />
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24" aria-hidden="true">
+                          <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label class="mdc-label" for="${id}">${v}</label>
+                  </div>
+                </mat-checkbox>
+              </div>`;
+            })
+            .join('') +
+          '</div>';
+      }
+
+      function openChipMenu(name, anchor) {
+        openChip = name;
+        renderChipMenu();
+        const c = document.getElementById('chip-overlay');
+        c.hidden = false;
+        // The CDK computes this from a position strategy at runtime; a static
+        // page states the end position, hung under the chip it belongs to.
+        const r = anchor.getBoundingClientRect();
+        const pane = document.getElementById('chip-pane');
+        pane.style.left = Math.round(r.left) + 'px';
+        pane.style.top = Math.round(r.bottom + 4) + 'px';
+      }
+
+      function closeChipMenu() {
+        openChip = null;
+        document.getElementById('chip-overlay').hidden = true;
       }
 
       // ------------------------------------------------------------ saved views      // ------------------------------------------------------------ saved views
@@ -1238,7 +1387,10 @@
       document.getElementById('filters-button').addEventListener('click', () => openDrawer(true));
       document.getElementById('drawer-scrim').addEventListener('click', () => openDrawer(false));
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') openDrawer(false);
+        if (e.key === 'Escape') {
+          openDrawer(false);
+          closeChipMenu();
+        }
       });
       document.getElementById('filter-search').addEventListener('input', (e) => {
         filterQuery = e.target.value;
@@ -1269,12 +1421,14 @@
         // A value chip applies immediately — there is no Apply step.
         const chip = e.target.closest('[data-value]');
         if (chip) {
+          if (chip.getAttribute('aria-disabled') === 'true') return;
           const f = FILTERS.filter((x) => x.name === chip.getAttribute('data-filter'))[0];
           const v = chip.getAttribute('data-value');
           f.applied = f.applied || [];
           const at = f.applied.indexOf(v);
           if (at === -1) f.applied.push(v);
           else f.applied.splice(at, 1);
+          if (f.name === 'Category') pruneUnreachableTypes();
           document.getElementById('save-view').disabled = false;
           renderDrawer();
           renderPinnedRow();
@@ -1282,9 +1436,38 @@
         }
       });
 
+      /* The popover: opens from the chip, closes on the backdrop or Escape. */
+      document.getElementById('chip-backdrop').addEventListener('click', closeChipMenu);
+      document.getElementById('chip-menu').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-menu-value]');
+        if (!row || row.getAttribute('aria-disabled') === 'true') return;
+        const f = FILTERS.filter((x) => x.name === openChip)[0];
+        const v = row.getAttribute('data-menu-value');
+        f.applied = f.applied || [];
+        const at = f.applied.indexOf(v);
+        if (at === -1) f.applied.push(v);
+        else f.applied.splice(at, 1);
+        if (f.name === 'Category') pruneUnreachableTypes();
+        document.getElementById('save-view').disabled = false;
+        /*
+         * The row order is deliberately NOT recomputed on each tick. Selected
+         * values sort to the top when the popover opens; re-sorting live would
+         * move a row out from under the cursor mid-click.
+         */
+        renderChipMenu();
+        renderPinnedRow();
+        renderRows();
+      });
+
       // The ✕ on a pinned chip clears that filter's values, not its pin.
       document.getElementById('pinned-filters-row').addEventListener('click', (e) => {
+        const open = e.target.closest('[data-open-chip]');
         const clear = e.target.closest('[data-clear]');
+        // The ✕ sits inside the chip, so it has to be checked first.
+        if (open && !clear) {
+          openChipMenu(open.getAttribute('data-open-chip'), open);
+          return;
+        }
         if (!clear) return;
         const f = FILTERS.filter((x) => x.name === clear.getAttribute('data-clear'))[0];
         f.applied = [];
