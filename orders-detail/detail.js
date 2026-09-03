@@ -89,13 +89,43 @@
     );
   }
 
-  /* The app's inline "Edit" and "Translate" affordances. cca-btn--link
-     underlines, which is wrong for a header action — proto-header-link is the
-     shared fix. */
-  function headerLink(text, glyph) {
+  /*
+   * A card-header action — Edit, Translate, Cargo Planner. These were anchors
+   * on `.proto-header-link`, a class this repo DELETED on purpose: see the note
+   * at the top of _shared/prototype.css. So they were rendering unstyled, and
+   * an action that changes the order was marked up as a link to nowhere.
+   *
+   * The app's is a real button on the button component:
+   *   <button ccaButton hierarchy="tertiary" size="small"
+   *           class="cca-btn cca-btn--small cca-btn--tertiary">Edit</button>
+   *
+   * cca-btn--tertiary is already undecorated and brand-coloured, and carries
+   * the hover, focus and active states the workaround never had.
+   */
+  function headerAction(text, glyph) {
     return (
-      '<a class="proto-header-link flex shrink-0 items-center gap-1 text-cca-base-sm" href="#">' +
-      (glyph ? icon(glyph) : '') + esc(text) + '</a>'
+      '<button ccaButton hierarchy="tertiary" size="small" type="button" ' +
+      'class="cca-btn cca-btn--small cca-btn--tertiary shrink-0">' +
+      (glyph ? '<cca-icon>' + icon(glyph) + '</cca-icon>' : '') + esc(text) + '</button>'
+    );
+  }
+
+  /*
+   * A reference that navigates. `text-cca-link` is the bundle's own link type
+   * style, paired with text-brand-default as the app pairs it.
+   *
+   * Cross-prototype links go through the SCREEN REGISTRY, never a folder path
+   * or href="#" — see _shared/routes.js. Neither the trip nor the contracted
+   * lane screen is built yet, and that is fine: routes.js shows its
+   * not-built-yet snackbar, and the link starts working the day someone
+   * registers the screen, with no edit here.
+   */
+  function link(text, screen, params) {
+    return (
+      '<a class="cursor-pointer text-cca-link text-brand-default" href="#"' +
+      (screen ? ' data-screen="' + esc(screen) + '"' : '') +
+      (params ? " data-params='" + JSON.stringify(params) + "'" : '') +
+      '>' + esc(text) + '</a>'
     );
   }
 
@@ -309,7 +339,8 @@
       icon('building') + esc(o.shipperGroup) + '</p>' +
       '<p class="flex items-center gap-1 text-2xs text-neutral-caption">' +
       icon('users') + esc(o.shipperSubGroup) + '</p>' +
-      '<a class="proto-header-link text-2xs" href="#">' + esc(c.shipper.email) + '</a>' +
+      '<a class="cursor-pointer text-2xs text-brand-default underline" href="mailto:' +
+      esc(c.shipper.email) + '">' + esc(c.shipper.email) + '</a>' +
       '</div></div></div></div>');
   }
 
@@ -323,7 +354,7 @@
     return (
       '<section class="rounded-lg border border-neutral-default surface-neutral-light p-4">' +
       '<h3 class="flex items-center justify-between gap-4 text-neutral-body">Route Details' +
-      headerLink('Edit') + '</h3>' +
+      headerAction('Edit') + '</h3>' +
       '<div class="mt-4">' + field('Avoid', esc(r.avoid)) + '</div>' +
       '<div class="mt-4 flex flex-wrap gap-6">' +
       [['Duration', r.duration], ['Total Distance', r.distance],
@@ -383,7 +414,7 @@
 
   function loadSummary(o) {
     var g = o.detail.cargo;
-    return card('Load Summary', headerLink('Edit'),
+    return card('Load Summary', headerAction('Edit'),
       '<h3 class="flex items-center gap-2 text-neutral-title">Cargo' + typeBadge(g.kind) + '</h3>' +
       '<h4 class="mt-4 text-neutral-title">General Information</h4>' +
       '<div class="mt-3">' + fieldGrid([
@@ -411,7 +442,7 @@
   function palletInfo(o) {
     var p = o.detail.pallet;
     var e = ends(o);
-    return block('Pallet Info', headerLink('Cargo Planner'),
+    return block('Pallet Info', headerAction('Cargo Planner'),
       /* The pallet's name sits on its own tinted row, as staging draws it. */
       '<div class="rounded-lg surface-neutral-default px-3 py-2 text-cca-base-sm text-neutral-body">' +
       esc(p.name) + '</div>' +
@@ -447,10 +478,10 @@
       icon('users') + esc(o.carrierSubGroup) + '</p>' +
       '<p class="mt-3 text-2xs text-neutral-caption">Contact person</p>' +
       '<div class="flex flex-wrap gap-6">' +
-      '<a class="proto-header-link flex items-center gap-1 text-cca-base-sm" href="#">' +
-      icon('phone') + esc(c.phone) + '</a>' +
-      '<a class="proto-header-link flex items-center gap-1 text-cca-base-sm" href="#">' +
-      icon('mail') + esc(c.email) + '</a></div>' +
+      '<a class="flex items-center gap-1 text-cca-base-sm text-brand-default underline" ' +
+      'href="tel:' + esc(c.phone.replace(/\s/g, '')) + '">' + icon('phone') + esc(c.phone) + '</a>' +
+      '<a class="flex items-center gap-1 text-cca-base-sm text-brand-default underline" ' +
+      'href="mailto:' + esc(c.email) + '">' + icon('mail') + esc(c.email) + '</a></div>' +
       '<hr class="my-4 border-neutral-default" />' +
       '<p class="text-cca-label-md text-neutral-title">Motor Vehicle</p>' +
       '<div class="mt-3">' + fieldGrid([
@@ -543,8 +574,13 @@
       }).join('') +
       '</tbody></table>' +
       '<cca-show-more-less style="display:block">' +
-      '<button type="button" class="proto-header-link mt-1 flex items-center gap-1 text-cca-base-sm" data-showmore="stop-' + n + '">' +
-      'Show More' + icon('chevron-down') + '</button></cca-show-more-less>' +
+      /* cca-show-more-less — official (isDesignSystem in manifest.json) but not
+         imported by ds/index.css, so index.html links its stylesheet. The host
+         tag and `.show-text` are both load-bearing. */
+      '<cca-show-more-less><div role="button" tabindex="0" class="show-text mt-1" ' +
+      'data-showmore="stop-' + n + '">' +
+      '<span>Show More</span><cca-icon class="mb-0.5 ml-1">' + icon('chevron-down') +
+      '</cca-icon></div></cca-show-more-less>' +
       '</div>' +
       '<div>' + field('Location Type', esc(o.detail.locationType)) +
       '<p class="mt-3 text-2xs text-neutral-caption">Instructions</p>' +
@@ -564,11 +600,11 @@
     var e = ends(o);
     var trip = o.tripReference
       ? '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Trip: ' +
-        '<a class="proto-header-link" href="#">' + esc(o.tripReference) + '</a></span>'
+        link(o.tripReference, 'trips.detail', { id: o.tripReference }) + '</span>'
       : '<span class="shrink-0 text-cca-base-sm text-neutral-caption">No trip raised</span>';
     if (o.detail.bookedFrom) {
       trip += '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Booked from: ' +
-        '<a class="proto-header-link" href="#">' + esc(o.detail.bookedFrom) + '</a></span>';
+        link(o.detail.bookedFrom, 'contracts.detail', { id: o.detail.bookedFrom }) + '</span>';
     }
     return card('Locations Info', '<div class="flex flex-wrap gap-3">' + trip + '</div>',
       '<div class="flex flex-col gap-3">' +
@@ -588,7 +624,7 @@
       { label: 'Stop #1', kind: o.domain === 'warehouse' ? 'Origin' : 'Pickup', end: e.a },
       { label: 'Stop #2', kind: o.domain === 'warehouse' ? 'Destination' : 'Delivery', end: e.b },
     ];
-    return card('Date & Times', headerLink('Edit'),
+    return card('Date & Times', headerAction('Edit'),
       '<div class="overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       ['Location', 'Desired', 'Expected', 'Arrived', 'Cargo Load / Cargo Unload', 'Waiting Time']
@@ -612,7 +648,7 @@
   }
 
   function references(o) {
-    return card('References', headerLink('Edit'),
+    return card('References', headerAction('Edit'),
       '<div class="flex flex-col gap-3">' +
       field('Shipper Reference', esc(o.shipperReference)) +
       fieldGrid([
@@ -629,12 +665,12 @@
       return (
         '<div class="flex flex-col gap-2">' +
         '<div class="flex items-center justify-between gap-2">' +
-        '<h4>' + esc(heading) + '</h4>' + headerLink('Edit') + '</div>' +
+        '<h4>' + esc(heading) + '</h4>' + headerAction('Edit') + '</div>' +
         '<span class="text-cca-base-sm text-neutral-subtitle">-</span>' +
         '</div>'
       );
     };
-    return card('Instructions', headerLink('Translate', 'translation'),
+    return card('Instructions', headerAction('Translate', 'translation'),
       '<div class="flex flex-col gap-4">' +
       one('Operator Instruction') + one('Shipper Instruction') + '</div>');
   }
@@ -677,7 +713,10 @@
       item('hand-holding-seedling', 'Land Greened', c.land) +
       item('tree', 'Trees Brought Back', c.trees) +
       '</div>' +
-      '<div class="mt-4 text-center"><a class="proto-header-link text-cca-base-sm" href="#">Learn more</a></div>');
+      '<div class="mt-4 flex justify-center">' +
+      '<a ccaButton hierarchy="link" class="cca-btn cca-btn--link" target="_blank" ' +
+      'rel="noopener noreferrer" href="https://www.ctrlchain.com/en/green-logistics">' +
+      'Learn more</a></div>');
   }
 
   /* ---------------------------------------------------------------- tabs */
@@ -830,7 +869,8 @@
       var hiddenRows = document.querySelectorAll('[data-more="' + scope + '"]');
       var opening = hiddenRows.length && hiddenRows[0].classList.contains('hidden');
       hiddenRows.forEach(function (r) { r.classList.toggle('hidden', !opening); });
-      more.innerHTML = (opening ? 'Show Less' : 'Show More') + icon(opening ? 'chevron-up' : 'chevron-down');
+      more.innerHTML = '<span>' + (opening ? 'Show Less' : 'Show More') + '</span>' +
+        '<cca-icon class="mb-0.5 ml-1">' + icon(opening ? 'chevron-up' : 'chevron-down') + '</cca-icon>';
     }
   });
 
