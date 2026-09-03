@@ -66,9 +66,14 @@
    */
   function card(heading, action, body) {
     return (
-      '<section class="rounded-lg border border-neutral-default surface-neutral-light p-4">' +
+      /* `page-container` IS the card — radius-xl, 1px border-neutral-default,
+         surface-neutral-light, and padding that steps 4 → 6 at a breakpoint.
+         This hand-rolled `rounded-lg … p-4`, which is the wrong radius and
+         loses the responsive padding. The <h2> is classless: the platform
+         styles headings globally. */
+      '<section class="page-container">' +
       '<div class="flex items-start justify-between gap-4">' +
-      '<h2 class="text-neutral-title">' + esc(heading) + '</h2>' +
+      '<h2>' + esc(heading) + '</h2>' +
       (action || '') +
       '</div>' +
       '<div class="mt-4">' + body + '</div>' +
@@ -187,52 +192,67 @@
 
   /* ------------------------------------------------------------- sections */
 
-  function routeBar(o) {
+  /*
+   * THE TOP OF THE PAGE IS ONE CARD, NOT THREE. This had the route bar, the
+   * status row and Map Overview as three stacked cards; on the app they are a
+   * single `page-container` — cca-order-map — holding cca-detail-header, a
+   * rule, cca-status-overview and then the map, with Map Overview floating on
+   * the map as an absolute panel rather than spanning the width.
+   *
+   * The trip indicator was the other tell: staging fixes it at `w-40` so the
+   * two ends and the line read as one cluster on the left. This stretched the
+   * connector with `flex-1`, which pushed the ends to opposite edges and drew
+   * the long rule that did not look like the app.
+   */
+  function detailHeader(o) {
     var e = ends(o);
+    var end = function (label, x) {
+      return (
+        '<div class="flex flex-col">' +
+        '<span class="text-cca-label-sm text-neutral-caption">' + esc(label) + '</span>' +
+        '<h1>' + esc(x.city) + '</h1>' +
+        '<div class="text-cca-base-sm font-medium text-neutral-subtitle">' + esc(x.date) + '</div>' +
+        '</div>'
+      );
+    };
+    var dot = '<span class="flex h-4 w-4 shrink-0 rounded-full border-2 border-solid ' +
+              'border-brand-default surface-neutral-light"></span>';
+    /* A reefer only. `info-text` is the bundle's own info colour (#2a628f). */
+    var temp = o.detail.cargo.temperatureRange
+      ? '<div class="flex items-center gap-2">' +
+        '<span class="text-neutral-caption">' + icon('temperature-3') + '</span>' +
+        '<div><p class="text-2xs text-neutral-caption">Required: ' +
+        '<span class="text-neutral-body">' + esc(o.detail.cargo.temperatureRange) + '</span></p>' +
+        '<p class="text-2xs text-neutral-caption">Current: ' +
+        '<span class="text-critical-text">Disconnected</span></p></div></div>'
+      : '';
     return (
-      '<section class="flex flex-wrap items-center gap-6 rounded-lg border border-neutral-default surface-neutral-light p-4">' +
-      '<div class="min-w-40">' +
-      '<p class="text-2xs text-neutral-caption">First Pickup</p>' +
-      '<p class="text-cca-label-lg text-neutral-title">' + esc(e.a.city) + '</p>' +
-      '<p class="text-cca-base-sm text-neutral-caption">' + esc(e.a.date) + '</p>' +
-      '</div>' +
-      /* The connector: a dot, a rule, a dot. Two stops is the common case and
-         the app draws the same line whatever the count, with the number of
-         stops carried in its own column on the list. */
-      '<div class="flex min-w-24 flex-1 items-center gap-1" aria-hidden="true">' +
-      '<span class="h-2 w-2 shrink-0 rounded-full border border-brand-default"></span>' +
-      '<span class="h-0.5 flex-1 surface-brand-default"></span>' +
-      '<span class="h-2 w-2 shrink-0 rounded-full border border-brand-default"></span>' +
-      '</div>' +
-      '<div class="min-w-40">' +
-      '<p class="text-2xs text-neutral-caption">Last Delivery</p>' +
-      '<p class="text-cca-label-lg text-neutral-title">' + esc(e.b.city) + '</p>' +
-      '<p class="text-cca-base-sm text-neutral-caption">' + esc(e.b.date) + '</p>' +
-      '</div>' +
-      '<div class="ml-auto flex items-center gap-2">' +
-      '<span class="text-neutral-caption">' + icon('temperature-3') + '</span>' +
-      '<div>' +
-      '<p class="text-2xs text-neutral-caption">Required: ' +
-      '<span class="text-neutral-body">' + esc(o.detail.cargo.temperatureRange) + '</span></p>' +
-      '<p class="text-2xs text-neutral-caption">Current: ' +
-      '<span class="text-critical-text">Disconnected</span></p>' +
-      '</div>' +
-      '<button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Order actions">' +
+      '<cca-detail-header class="block">' +
+      '<div class="flex flex-col justify-between gap-4">' +
+      '<div class="flex items-center justify-between gap-4">' +
+      '<header class="flex w-full flex-wrap items-center justify-between gap-2">' +
+      '<div class="flex items-center gap-8">' +
+      end('First Pickup', e.a) +
+      '<cca-trip-indicator class="block">' +
+      '<div class="relative flex flex-col items-center gap-1 pt-1">' +
+      '<div class="flex w-40 items-center">' + dot +
+      '<span class="flex h-1 w-full items-center justify-center surface-brand-light"></span>' +
+      dot + '</div>' +
+      '<span class="text-cca-base-sm font-medium info-text">' +
+      esc(o.detail.route.distance) + '</span>' +
+      '</div></cca-trip-indicator>' +
+      end(o.domain === 'warehouse' ? 'Destination' : 'Last Delivery', e.b) +
+      '</div>' + temp + '</header>' +
+      '<button ccaButton hierarchy="tertiary" type="button" ' +
+      'class="cca-btn cca-btn--tertiary cca-btn--icon-only ml-2" aria-label="Order actions">' +
       icon('ellipsis-vertical') + '</button>' +
-      '</div></section>'
+      '</div>' +
+      '<hr />' +
+      statusOverview(o) +
+      '</div></cca-detail-header>'
     );
   }
 
-  /*
-   * THE LINE BESIDE THE BADGE HAS TO FOLLOW THE STATUS. Staging showed
-   * "Cargo unloaded at …" because the order I opened was Completed; hard-coding
-   * that made a "Searching for Carrier" order claim its cargo had been
-   * unloaded, which reads as a data bug rather than a prototype simplification.
-   *
-   * So each status gets the sentence that belongs to it, and anything
-   * unrecognised falls back to when the order was raised — true of every order,
-   * and never wrong.
-   */
   function statusLine(o) {
     var e = ends(o);
     var a = win(e.a.window);
@@ -264,34 +284,43 @@
 
   function statusOverview(o) {
     return (
-      '<section class="flex flex-wrap items-center gap-4 rounded-lg border border-neutral-default surface-neutral-light px-4 py-3">' +
-      statusBadge(o.status, o.statusFlavor) +
-      '<span class="text-cca-base-sm text-neutral-body">' + statusLine(o) + '</span>' +
-      '<button ccaButton class="cca-btn cca-btn--secondary ml-auto">Shipment updates</button>' +
-      '</section>'
+      '<cca-status-overview class="block">' +
+      '<div class="flex items-center justify-between gap-4">' +
+      '<div class="flex items-center gap-4">' + statusBadge(o.status, o.statusFlavor) +
+      '<p class="text-cca-base font-medium text-neutral-body">' + statusLine(o) + '</p>' +
+      '</div>' +
+      '<button ccaButton hierarchy="secondary" type="button" ' +
+      'class="cca-btn cca-btn--secondary shrink-0">Shipment updates</button>' +
+      '</div></cca-status-overview>'
     );
   }
 
   /*
-   * Map Overview. A static prototype has no map runtime and the export ships no
-   * tiles, so this is the collapsible with its state and an honest empty panel
-   * rather than a fake picture of a route. The count in the heading is the
-   * app's — the number of traceable objects on the map, zero here.
+   * The map, and Map Overview floating on it. No map runtime in a static
+   * prototype and the export ships no tiles, so the region is an honest empty
+   * plate rather than a fake picture of a route — but the overlay panel is
+   * where the app puts it, top-left and `w-75`, not a full-width row.
    */
-  function mapOverview() {
+  function mapRegion() {
     return (
-      '<section class="rounded-lg border border-neutral-default surface-neutral-light" id="map-section">' +
-      '<button type="button" class="flex w-full items-center gap-2 p-4 text-left" data-toggle="map">' +
-      '<h4 class="text-neutral-title">Map Overview (0)</h4>' +
-      '<span class="ml-auto text-neutral-caption" id="map-chevron">' + icon('chevron-down') + '</span>' +
-      '</button>' +
-      '<div class="hidden border-t border-neutral-default p-4" id="map-body">' +
-      '<div class="grid h-60 place-items-center rounded-lg surface-neutral-default">' +
-      '<div class="flex flex-col items-center gap-2 text-center">' +
+      '<section class="relative h-100 w-full overflow-hidden rounded-xl surface-neutral-default">' +
+      '<div class="grid h-full place-items-center">' +
+      '<div class="flex max-w-100 flex-col items-center gap-2 text-center">' +
       '<span class="text-neutral-caption">' + icon('simple-map') + '</span>' +
       '<span class="text-cca-base-sm text-neutral-caption">No map in a static prototype</span>' +
-      '<span class="text-2xs text-neutral-caption">The app renders cca-order-map here, with the route, via points and any traceable objects.</span>' +
-      '</div></div></div></section>'
+      '<span class="text-2xs text-neutral-caption">The app renders cca-order-map here, ' +
+      'with the route, via points and any traceable objects.</span>' +
+      '</div></div>' +
+      '<div class="page-container absolute top-3 left-3 flex h-min w-75 min-w-75 flex-col p-3" id="map-section">' +
+      '<div class="flex flex-row items-center justify-between">' +
+      '<h4>Map Overview (0)</h4>' +
+      '<button ccaButton hierarchy="icon" type="button" class="cca-btn cca-btn--icon" ' +
+      'data-toggle="map" aria-label="Toggle map overview">' +
+      '<span id="map-chevron">' + icon('chevron-down') + '</span></button>' +
+      '</div>' +
+      '<div class="mt-3 hidden text-cca-base-sm text-neutral-caption" id="map-body">' +
+      'Nothing traceable on this order.</div>' +
+      '</div></section>'
     );
   }
 
@@ -352,7 +381,7 @@
   function routeDetails(o) {
     var r = o.detail.route;
     return (
-      '<section class="rounded-lg border border-neutral-default surface-neutral-light p-4">' +
+      '<section class="page-container">' +
       '<h3 class="flex items-center justify-between gap-4 text-neutral-body">Route Details' +
       headerAction('Edit') + '</h3>' +
       '<div class="mt-4">' + field('Avoid', esc(r.avoid)) + '</div>' +
@@ -784,7 +813,7 @@
     var tab = TABS.filter(function (t) { return t.name === activeTab; })[0];
     if (!tab.built) {
       bodyHost.innerHTML =
-        '<section class="grid place-items-center rounded-lg border border-neutral-default surface-neutral-light py-16">' +
+        '<section class="page-container grid place-items-center py-16">' +
         '<div class="flex max-w-100 flex-col items-center gap-2 text-center">' +
         '<span class="text-neutral-caption">' + icon('no-more-task') + '</span>' +
         '<h2 class="text-neutral-title">' + esc(tab.name) + ' is not prototyped yet</h2>' +
@@ -794,9 +823,9 @@
       return;
     }
     bodyHost.innerHTML =
-      routeBar(o) +
-      '<div class="mt-4">' + statusOverview(o) + '</div>' +
-      '<div class="mt-4">' + mapOverview() + '</div>' +
+      /* One card: header, rule, status, map — cca-order-map on the app. */
+      '<section class="page-container flex w-full flex-col gap-4">' +
+      detailHeader(o) + mapRegion() + '</section>' +
       /* Two columns: the narrow one carries what the order IS, the wide one what
          happens to it. Stacks on a narrow viewport rather than scrolling. */
       '<div class="mt-4 flex flex-wrap items-start gap-4">' +
@@ -829,7 +858,7 @@
     titleHost.innerHTML = '<h1 class="text-NC-blue-default">Order Details</h1>';
     tabsHost.innerHTML = '';
     bodyHost.innerHTML =
-      '<section class="grid place-items-center rounded-lg border border-neutral-default surface-neutral-light py-16">' +
+      '<section class="page-container grid place-items-center py-16">' +
       '<div class="flex flex-col items-center gap-4 text-center">' +
       '<h2 class="text-neutral-title">No such order</h2>' +
       '<p class="text-cca-base text-neutral-subtitle">' +

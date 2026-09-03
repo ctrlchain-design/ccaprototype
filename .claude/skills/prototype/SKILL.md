@@ -660,6 +660,23 @@ adding any `mat-` element:
 
     getComputedStyle(el).boxShadow    // "none"/all-transparent, or you have a nested card
 
+**A card is `page-container`, and an action is `cca-btn`.** Two things this
+repo's own layers already had, and which are easy to hand-roll because the
+utilities to fake them all exist:
+
+| Hand-rolled | The real thing | What you lose by faking it |
+| --- | --- | --- |
+| `rounded-lg border border-neutral-default surface-neutral-light p-4` | `page-container` | wrong radius (`radius-lg` for `radius-xl`) and no responsive padding — it steps 4 → 6 at a breakpoint |
+| `<a href="#">Edit</a>` in a card header | `cca-btn cca-btn--small cca-btn--tertiary` | hover, focus and active states, and an action stops claiming to be a link |
+
+`page-container` also brings `position: relative` and `overflow: hidden`, which
+is what lets the app hang an absolute panel inside a card — Map Overview floats
+on the map that way.
+
+Card headings are **classless** `<h2>`/`<h3>`/`<h4>`. The platform styles them
+globally, so `class="text-cca-label-md"` on a heading is both redundant and a
+size off.
+
 **When you have the real DOM, diff the heading skeleton — not the screenshot.**
 Reading section order off a picture misses the levels, and the levels are the
 information architecture. Pull both sides down to `tag + text` and compare
