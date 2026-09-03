@@ -1130,7 +1130,9 @@
     );
   }
 
-  var itemOpen = { '0010': true };
+  /* Every item row starts collapsed. The table's job is to show the lines;
+     opening one is the user's move, not the page's. */
+  var itemOpen = {};
 
   function orderItems() {
     var items = D.orderItems();
