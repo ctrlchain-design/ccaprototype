@@ -430,20 +430,22 @@
       ['POD Status', o.podApproved ? 'Approved' : 'Not approved',
        o.podApproved ? 'primary' : 'neutral-caption'],
     ];
-    /* POD Status is the last row here, so the action that acts on it belongs in
-       this card's header. Secondary rather than the tertiary the other card
-       headers use: it is a real deliverable, not an inline edit. */
+    /* Under the rows, not in the header. It acts on POD Status, which is the
+       last row, so it reads as following from the statuses rather than being a
+       header action on the card as a whole. Secondary rather than the tertiary
+       the other card headers carry: a real deliverable, not an inline edit. */
     var downloadPod =
+      '<div class="mt-4 border-t border-neutral-default pt-4">' +
       '<button ccaButton hierarchy="secondary" type="button" ' +
-      'class="cca-btn cca-btn--secondary shrink-0" data-download-pod>' +
-      icon('export') + 'Download POD</button>';
-    return card('Finance Summary', downloadPod,
+      'class="cca-btn cca-btn--secondary w-full" data-download-pod>' +
+      icon('export') + 'Download POD</button></div>';
+    return card('Finance Summary', '',
       '<div class="flex flex-col gap-3">' +
       rows.filter(Boolean).map(function (r) {
         return '<div class="flex items-center justify-between gap-4">' +
           '<span class="text-cca-base-sm text-neutral-caption">' + esc(r[0]) + '</span>' +
           dotValue(r[1], r[2]) + '</div>';
-      }).join('') + '</div>');
+      }).join('') + '</div>' + downloadPod);
   }
 
   function avatar(initials) {
@@ -741,6 +743,38 @@
 
   function locationsInfo(o) {
     var e = ends(o);
+    /*
+     * A WAREHOUSE ORDER'S REFERENCES ARE THREE TRIP NUMBERS, not a trip and a
+     * contracted lane. Same format as the transport card's header — a caption
+     * label, then the value, in a wrapping row — so the two read as the same
+     * card with different references rather than two different designs.
+     *
+     * N/A is a real state: a warehouse order with no transport leg linked yet
+     * genuinely has no transport trip number, and saying N/A is more honest
+     * than hiding the row and leaving a reviewer to wonder if it exists.
+     */
+    if (o.domain === 'warehouse') {
+      var t = o.tripNumbers || {};
+      var num = function (label, value, screen) {
+        return '<span class="shrink-0 text-cca-base-sm text-neutral-caption">' +
+          esc(label) + ': ' +
+          (value
+            ? (screen ? link(value, screen, { id: value })
+                      : '<span class="text-neutral-body">' + esc(value) + '</span>')
+            : '<span class="text-neutral-body">N/A</span>') +
+          '</span>';
+      };
+      return card('Locations Info',
+        '<div class="flex flex-wrap items-center gap-3">' +
+        num('Warehouse Trip Number', t.warehouse, 'trips.detail') +
+        num('Transport Trip Number', t.transport, 'trips.detail') +
+        num('Customer Trip Number', t.customer, null) +
+        '</div>',
+        '<div class="flex flex-col gap-3">' +
+        stopCard(1, 'Origin', e.a, o, true) +
+        stopCard(2, 'Destination', e.b, o, false) +
+        '</div>');
+    }
     var trip = o.tripReference
       ? '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Trip: ' +
         link(o.tripReference, 'trips.detail', { id: o.tripReference }) + '</span>'

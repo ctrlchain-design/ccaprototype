@@ -262,6 +262,10 @@ linked: [],
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24655', transport: 'TRIP2026-020684', customer: null },
       domain: 'warehouse',
       type: 'Outbound',
       shipperGroup: 'Ingram Micro Global',
@@ -286,6 +290,10 @@ linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24655', transport: null, customer: null },
       domain: 'warehouse',
       type: 'Inbound',
       shipperGroup: 'Ingram Micro Global',
@@ -310,6 +318,10 @@ linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24702', transport: 'TRIP2026-020456', customer: 'CT-88417' },
       domain: 'warehouse',
       type: 'Outbound',
       shipperGroup: 'Ingram Micro Global',
@@ -334,6 +346,10 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24688', transport: null, customer: 'CT-88392' },
       domain: 'warehouse',
       type: 'Inbound',
       shipperGroup: 'Ingram Micro Global',
@@ -358,6 +374,10 @@ linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24711', transport: 'TRIP2026-019672', customer: null },
       domain: 'warehouse',
       type: 'Outbound',
       shipperGroup: 'Ingram Micro Global',
