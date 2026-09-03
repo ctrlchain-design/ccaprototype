@@ -374,3 +374,27 @@ cca-filters-select {
   position: relative;
   display: block;
 }
+
+/*
+ * A panel opened from a PINNED CHIP rather than from a select field.
+ *
+ * `.ng-select-bottom` offsets the panel by `top: calc(100% - 1.25em)`, which is
+ * right when its positioned parent is the select field — 100% of the field's
+ * height drops the panel just below it. A chip's popover has no field: the CDK
+ * pane is already positioned where the panel should start, and its wrapper has
+ * ZERO height, so `100%` resolves to 0 and the offset becomes -20px. The panel
+ * then hangs above the pane and covers the chip it came from.
+ *
+ * So the offset is cancelled here and only here. Keeping `.ng-select-bottom`
+ * on the panel is deliberate — it carries the downward box-shadow, which is
+ * still the right shadow for something hanging below its trigger.
+ *
+ * THE SELECTOR HAS TO MATCH ALL THREE CLASSES. platform-02.css sets the offset
+ * on `.ng-dropdown-panel.ng-select-custom.ng-select-bottom` — three classes —
+ * so a two-class override loses on specificity even though this file loads
+ * later. Measured: the panel stayed 20px high until this selector matched it.
+ */
+.proto-ng-select--anchored .ng-dropdown-panel.ng-select-custom.ng-select-bottom {
+  top: 0;
+  margin-top: 0;
+}
