@@ -262,6 +262,8 @@ linked: [],
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
          HAS a carrier — the timeline's "Truck Arrived" is theirs — but
          CtrlChain does not invoice it, which is why Finance Summary still
@@ -306,6 +308,8 @@ linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
          HAS a carrier — the timeline's "Truck Arrived" is theirs — but
          CtrlChain does not invoice it, which is why Finance Summary still
@@ -350,6 +354,8 @@ linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
          HAS a carrier — the timeline's "Truck Arrived" is theirs — but
          CtrlChain does not invoice it, which is why Finance Summary still
@@ -394,6 +400,8 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
          HAS a carrier — the timeline's "Truck Arrived" is theirs — but
          CtrlChain does not invoice it, which is why Finance Summary still
@@ -438,6 +446,8 @@ linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
          HAS a carrier — the timeline's "Truck Arrived" is theirs — but
          CtrlChain does not invoice it, which is why Finance Summary still

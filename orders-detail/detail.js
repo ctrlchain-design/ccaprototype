@@ -1051,7 +1051,11 @@
       '<div class="flex flex-wrap items-center justify-between gap-4">' +
       '<div role="button" tabindex="0" class="flex cursor-pointer items-center gap-2" ' +
       'data-table-toggle="' + key + '">' +
-      '<span class="text-neutral-body">' + icon(open ? 'chevron-up' : 'chevron-down') + '</span>' +
+      /* Expanded points DOWN, collapsed points UP. The inverse of the Material
+         default and of what the Figma frame shows, but it is what was asked
+         for — the arrow reads as the direction the panel will move. Both this
+         card and the item rows below follow it, so the page is consistent. */
+      '<span class="text-neutral-body">' + icon(open ? 'chevron-down' : 'chevron-up') + '</span>' +
       '<h2>' + esc(heading) + '</h2>' +
       '</div>' +
       '<div class="flex shrink-0 items-center gap-3">' +
@@ -1133,8 +1137,34 @@
     var cols = ['', 'Line', 'Product Code', 'Product Description', 'Best Before Date',
                 'LOT/Batch', 'Quality', 'Ordered Quantity', 'Shipped Quantity', 'UOM',
                 'UOM Type', 'Shortage', 'Pallets Ordered', 'Pallets Shipped', 'Temp Class'];
+    /*
+     * GENERAL INFORMATION, above the table.
+     *
+     * Lines and Pallets are DERIVED from the items rather than stored — two
+     * lines and 7 + 3 pallets, which is exactly what the Figma frame shows, so
+     * the totals cannot drift from the rows underneath them the way the stop
+     * card's borrowed totals did.
+     *
+     * Total Weight comes from the order's own weightKg for the same reason.
+     * The Figma says 18,340 kg; using it would have put a number on the page
+     * that contradicts the record every other section reads from.
+     */
+    var general =
+      '<h4>General Information</h4>' +
+      '<div class="mt-3">' + fieldGrid([
+        ['Lines', String(items.length)],
+        ['Pallets', String(items.reduce(function (n, it) {
+          return n + (parseInt(it.palletsOrdered, 10) || 0);
+        }, 0))],
+        ['Total Weight', esc(order.weightKg.toLocaleString('en-GB')) + ' kg'],
+        ['Temperature Profile code',
+         '<span class="flex items-center gap-1">' + icon('temperature-3') +
+         esc(order.temperatureProfile) + '</span>'],
+      ]) + '</div>';
+
     var body =
-      '<div class="overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
+      general +
+      '<div class="mt-5 overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
       '<tbody class="mdc-data-table__content">' +
@@ -1143,7 +1173,7 @@
         return '<tr class="mat-mdc-row mdc-data-table__row">' +
           td(it.pallets.length
             ? '<span role="button" tabindex="0" class="cursor-pointer text-neutral-body" ' +
-              'data-item-toggle="' + it.line + '">' + icon(open ? 'chevron-up' : 'chevron-down') + '</span>'
+              'data-item-toggle="' + it.line + '">' + icon(open ? 'chevron-down' : 'chevron-up') + '</span>'
             : '', 'w-8') +
           td(txt(it.line)) + td(txt(it.code)) + td(txt(it.description)) +
           td(stamp('At', it.bestBefore, '')) +
@@ -1445,9 +1475,8 @@
            fifteen columns in a two-thirds column, so its own overflow-x-auto
            wrapper does the work — the table scrolls inside the card rather
            than widening the page. */
-        locationsInfo(o) + orderItems() + dateAndTimes(o) +
-        '</div></div>' +
-        '<div class="mt-4 flex flex-col gap-4">' + shortages() + '</div>';
+        locationsInfo(o) + orderItems() + shortages() + dateAndTimes(o) +
+        '</div></div>';
       return;
     }
 
