@@ -253,14 +253,32 @@
       end(o.domain === 'warehouse' ? 'Destination' : 'Last Delivery', e.b) +
       '</div>' + temp + '</header>' +
       /*
+       * The header's right-hand cluster. The button and the kebab are wrapped
+       * together rather than left as siblings of <header>, because the row is
+       * `justify-between` — as siblings the three children would space out
+       * across the full width instead of the actions sitting together.
+       */
+      '<div class="flex shrink-0 items-center gap-2">' +
+      /*
+       * NEW NCR — a non-conformance report, raised against a warehouse order
+       * when what arrived or shipped does not match what was expected. Primary
+       * because it is the one thing this page invites you to do; transport
+       * orders do not raise NCRs, so they do not get it.
+       */
+      (o.domain === 'warehouse'
+        ? '<button ccaButton hierarchy="primary" type="button" ' +
+          'class="cca-btn cca-btn--primary">New NCR</button>'
+        : '') +
+      /*
        * `subtle`, not `tertiary`. cca-btn--tertiary sets `border: none`, so the
        * kebab had no outline at all; cca-btn--subtle recolours the base rule's
        * `1px solid transparent` to button-subtle-border-default (#d9d9d9).
        * It is also the hierarchy the app uses on this exact button.
        */
       '<button ccaButton hierarchy="subtle" type="button" ' +
-      'class="cca-btn cca-btn--subtle cca-btn--icon-only ml-2" aria-label="Order actions">' +
+      'class="cca-btn cca-btn--subtle cca-btn--icon-only" aria-label="Order actions">' +
       icon('ellipsis-vertical') + '</button>' +
+      '</div>' +
       '</div>' +
       '<hr />' +
       statusOverview(o) +
