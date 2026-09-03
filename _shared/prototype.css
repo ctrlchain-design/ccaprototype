@@ -341,3 +341,36 @@ cca-main .appContent .page > .proto-hug {
 .proto-switch-row[data-disabled="true"] * {
   cursor: not-allowed;
 }
+
+/*
+ * ng-select dropdown panel — the missing `position`
+ * -------------------------------------------------
+ * The filter drawer's selects and the pinned-filter chips are ng-select
+ * components (cca-filters-select, cca-pinned-filters), and the platform styles
+ * their panel through `.ng-dropdown-panel.ng-select-custom` in
+ * ds/platform-02.css: background, radius, the per-side box-shadows, option
+ * heights, the selected and marked states. All of that is in the export.
+ *
+ * What is NOT is `position: absolute`. It lives in the ng-select library's own
+ * core stylesheet, which the export does not include — so the panel's `left: 0`
+ * and `.ng-select-bottom`'s `top: 100%` have nothing to resolve against and the
+ * panel renders in the flow, pushing the rest of the drawer down.
+ *
+ * Layout only, and it belongs here rather than in a prototype because every
+ * page using a filter select needs it. Delete it if FE ever exports the
+ * library's core CSS.
+ */
+.ng-dropdown-panel {
+  position: absolute;
+  z-index: 10;
+}
+
+/* The panel anchors to the field, so the field's wrapper has to be the
+   containing block. cca-filters-select is a custom element with no default
+   display, so it needs one — and it is the ancestor every rule in
+   ds/components/filters-select.css is scoped to. */
+.proto-ng-select,
+cca-filters-select {
+  position: relative;
+  display: block;
+}

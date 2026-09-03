@@ -259,10 +259,11 @@
     );
   }
 
-  function textField(id, placeholder, value) {
+  function textField(id, placeholder, value, suffix) {
     return (
       '<mat-form-field class="mat-mdc-form-field mat-mdc-form-field-type-mat-input ' +
-      'mat-form-field-appearance-outline mat-primary w-full">' +
+      'mat-form-field-appearance-outline mat-primary w-full' +
+      (suffix ? ' mat-mdc-form-field-has-icon-suffix' : '') + '">' +
       '<div class="mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">' +
       '<div class="mat-mdc-form-field-flex"><div class="mdc-notched-outline">' +
       '<div class="mdc-notched-outline__leading mat-mdc-notch-piece"></div>' +
@@ -271,13 +272,15 @@
       '<div class="mat-mdc-form-field-infix">' +
       '<input type="text" class="mat-mdc-input-element mdc-text-field__input" ' +
       'data-filter-input="' + id + '" placeholder="' + placeholder + '" value="' +
-      (value || '') + '" autocomplete="off" /></div></div></div>' +
+      (value || '') + '" autocomplete="off" /></div>' +
+      (suffix ? '<div class="mat-mdc-form-field-icon-suffix">' + icon(suffix) + '</div>' : '') +
+      '</div></div>' +
       '<div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>' +
       '</mat-form-field>'
     );
   }
 
-  function checkboxRow(name, value, checked, disabled, why) {
+  function checkboxRow(name, value, checked, disabled, why, labelText) {
     var id = 'f-' + name.replace(/[^a-z0-9]/gi, '') + '-' + value.replace(/[^a-z0-9]/gi, '');
     return (
       '<div class="flex items-center px-3 py-1' + (checked ? ' surface-brand-lighter' : '') +
@@ -291,7 +294,8 @@
       '<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24" aria-hidden="true">' +
       '<path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>' +
       '</svg><div class="mdc-checkbox__mixedmark"></div></div></div>' +
-      '<label class="mdc-label" for="' + id + '">' + value + '</label>' +
+      (labelText === '' ? ''
+        : '<label class="mdc-label" for="' + id + '">' + (labelText || value) + '</label>') +
       '</div></mat-checkbox></div>'
     );
   }
@@ -331,6 +335,7 @@
     var query = '';
     var openChip = null;
     var openList = {};   // which select filters have their list open
+    var listQuery = {}; // search text inside each select's panel
 
     filters.forEach(function (f) { if (!f.applied) f.applied = []; });
 
@@ -386,6 +391,49 @@
           return true;                                 // inert: renders, filters nothing
         });
       });
+    }
+
+    /*
+     * THE DROPDOWN PANEL — one builder, used in both places.
+     *
+     * The drawer's select and a pinned chip's popover are the SAME ng-select
+     * panel: the interaction shows the identical thing opening from a chip
+     * above the table. So it is built once here.
+     *
+     * The header is one row — a select-all checkbox beside a search field with
+     * the search icon as a suffix and "Type to search" as its placeholder.
+     * filters-select.css told me both elements live in the header; the
+     * interaction told me they sit side by side.
+     *
+     * Hover comes free: `.ng-option-marked` is the platform's green
+     * (surface-brand-lighter), and selection is `.ng-option-selected`.
+     */
+    function panelFor(f) {
+      var vals = valuesOf(f);
+      var q = (listQuery[f.name] || '').toLowerCase();
+      var shown = q
+        ? vals.filter(function (v) { return String(v).toLowerCase().indexOf(q) !== -1; })
+        : vals;
+      var allOn = vals.length > 0 && f.applied.length === vals.length;
+
+      return (
+        '<div class="ng-dropdown-panel ng-select-custom ng-select-bottom">' +
+        '<div class="ng-dropdown-header flex items-center gap-2">' +
+        checkboxRow(f.name, '__all__', allOn, false, '', '') +
+        '<div class="proto-no-subscript flex-1">' +
+        textField(f.name + '|listsearch', 'Type to search', listQuery[f.name], 'search') +
+        '</div></div>' +
+        '<div class="ng-dropdown-panel-items"><div class="scrollable-content">' +
+        (shown.length
+          ? shown.map(function (v) {
+              var on = f.applied.indexOf(v) !== -1;
+              return '<div class="ng-option' + (on ? ' ng-option-selected' : '') +
+                '" data-menu-value="' + v + '">' +
+                checkboxRow(f.name, String(v), on, false, '') + '</div>';
+            }).join('')
+          : '<div class="ng-option loading-notfound-text">No results</div>') +
+        '</div></div></div>'
+      );
     }
 
     /* ------------------------------------------------------------ markup */
@@ -449,28 +497,47 @@
           }).join('') + '</div>';
         }
         /*
-         * A select shows its FIELD whether or not it has options, because a
-         * filter that renders nothing looks broken. That was the bug: 17 of
-         * these have no field in this repo's fixtures, so an inline checkbox
-         * list came out empty and the row looked dead. Dev renders a labelled
-         * dropdown here, present regardless of what is in it.
+         * A SELECT IS AN ng-select, and its dropdown is the platform's own
+         * panel — not a list I invent.
          *
-         * The checkbox list sits under the field, open only when asked, so a
-         * 20-value lookup does not push the rest of the drawer off screen.
+         *   ds/material-vendor.css        ng-select's base
+         *   ds/platform-02.css            .ng-dropdown-panel.ng-select-custom —
+         *                                 background, radius, per-side shadow,
+         *                                 3em options, marked and selected
+         *                                 states, header and footer
+         *   ds/components/filters-select.css
+         *                                 the drawer's overrides: 296px max
+         *                                 height, 316px max width, 8px
+         *                                 padding-block, 30px options
+         *
+         * The first two are imported by ds/index.css; the third a page links.
+         *
+         * This replaced an inline `max-h-44 overflow-y-auto` list I had
+         * invented, which CLIPPED ROWS MID-HEIGHT — its height was not a
+         * multiple of the row height and it had no padding. The real panel caps
+         * at 296px with 8px padding-block and whole 3em rows, so no row is ever
+         * half-shown.
+         *
+         * The field still renders whether or not there are options, because a
+         * filter that draws nothing looks broken — 17 of these have no backing
+         * field in this repo's fixtures.
          */
         var summary = f.applied.length ? f.applied.join(', ') : '';
         var placeholder = vals.length ? 'Select ' + f.name.toLowerCase()
                                       : 'No options in this data set';
-        return '<div class="mt-2" data-filter="' + f.name + '">' +
+        /*
+         * <cca-filters-select> IS LOAD-BEARING, not decoration. Every rule in
+         * ds/components/filters-select.css is scoped to
+         * `cca-filters-select .ng-dropdown-panel …`, so without the element the
+         * panel gets no max-height, no max-width and no padding-block — it just
+         * grows to fit and never scrolls. Measured: maxHeight computed to
+         * `none` until this wrapper existed.
+         */
+        return '<cca-filters-select class="proto-ng-select mt-2" data-filter="' +
+          f.name + '">' +
           labelledField(f.name, f.name, summary, 'chevron-down', placeholder) +
-          (vals.length && openList[f.name]
-            ? '<div class="mt-1 flex max-h-44 flex-col overflow-y-auto rounded-lg ' +
-              'border border-neutral-default">' +
-              vals.map(function (v) {
-                return checkboxRow(f.name, String(v), f.applied.indexOf(v) !== -1, false, '');
-              }).join('') + '</div>'
-            : '') +
-          '</div>';
+          (vals.length && openList[f.name] ? panelFor(f) : '') +
+          '</cca-filters-select>';
       }
       if (f.kind === 'text') {
         return '<div class="mt-2" data-filter="' + f.name + '">' +
@@ -520,6 +587,8 @@
     return { visible: visible, filters: filters, valuesOf: valuesOf,
              appliedCount: count,
              openList: openList,
+             listQuery: listQuery,
+             panelFor: panelFor,
              typeDisabled: typeDisabled, prune: prune, isInert: isInert,
              expanded: expanded, appliedOf: appliedOf, totalApplied: totalApplied,
              control: control, row: row, checkboxRow: checkboxRow,

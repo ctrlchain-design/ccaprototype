@@ -88,7 +88,7 @@
     <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
 
     <!--
-      ONE EXTRA STYLESHEET, which is a departure from the usual two-link rule —
+      TWO EXTRA STYLESHEETS, which is a departure from the usual two-link rule —
       called out here rather than left to be discovered.
 
       ds/index.css covers the 40 documented design-system components.
@@ -98,10 +98,19 @@
       to be linked by hand. Nothing else in the bundle renders a date, so a
       table with Date and Time columns cannot avoid it.
 
+      ds/components/filters-select.css is the same story for the filter
+      drawer's selects. Their dropdown is an ng-select panel, and while the
+      panel's look comes from ds/platform-02.css and ds/material-vendor.css —
+      both imported — this file carries the drawer's own overrides: the panel's
+      296px max-height and 316px max-width, its 8px padding-block, and the
+      30px option height. Without it the panel has no height cap and does not
+      scroll.
+
       It goes BEFORE _shared/prototype.css so the shared layer can still
       override.
     -->
     <link rel="stylesheet" href="../design-system/dist/ds/components/date-cell.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/filters-select.css" />
 
     <link rel="stylesheet" href="../_shared/prototype.css" />
 
@@ -356,8 +365,12 @@
       -->
       <div class="cdk-overlay-container" id="chip-overlay" hidden>
         <div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop" id="chip-backdrop"></div>
+        <!-- The pane positions; the ng-select panel inside brings its own
+             surface, radius and shadow, so no mat-mdc-menu-panel here. -->
         <div class="cdk-overlay-pane proto-menu-pane" id="chip-pane">
-          <div class="mat-mdc-menu-panel surface-neutral-light" role="menu" id="chip-menu"></div>
+          <!-- cca-filters-select is load-bearing here too: filters-select.css
+               scopes every panel override to it. -->
+          <cca-filters-select class="proto-ng-select" role="menu" id="chip-menu"></cca-filters-select>
         </div>
       </div>
 
@@ -784,36 +797,25 @@
        * long list: Order Status has 14 values and the two you have chosen would
        * otherwise be somewhere in the middle of them.
        */
+      /*
+       * THE PINNED CHIP'S POPOVER IS THE SAME PANEL as the drawer's select —
+       * FX.panelFor builds both. It was a bespoke checkbox menu until the
+       * interaction showed the identical ng-select panel opening from a chip
+       * above the table: select-all and search in the header, checkbox rows
+       * under it, green hover.
+       */
       function renderChipMenu() {
         const f = FILTERS.filter((x) => x.name === openChip)[0];
         const menu = document.getElementById('chip-menu');
         if (!f) return;
-
-        if (f.kind !== 'chips') {
-          // Same honesty as the drawer: name the control rather than fake it.
-          menu.innerHTML = `<div class="px-4 py-3 text-cca-base-sm text-neutral-caption">${
-            { text: 'Free text', select: 'Lookup', date: 'Date range', switch: 'On / off' }[f.kind]
-          } — not prototyped here</div>`;
+        if (f.kind === 'chips' || f.kind === 'select') {
+          menu.innerHTML = FX.panelFor(f);
           return;
         }
-
-        const on = f.applied || [];
-        // Selected first, each group keeping the order the filter declares.
-        const ordered = f.values.filter((v) => on.indexOf(v) !== -1)
-          .concat(f.values.filter((v) => on.indexOf(v) === -1));
-
+        // A text, date or switch filter has no list; the drawer owns it.
         menu.innerHTML =
-          '<div class="flex max-h-80 min-w-50 flex-col overflow-y-auto py-1">' +
-          ordered
-            .map(function (v) {
-              const off = f.name === 'Order Type' && typeDisabled(v);
-              return FX.checkboxRow(
-                f.name, String(v), on.indexOf(v) !== -1, off,
-                'Not available with Category: ' + appliedOf('Category').join(', ')
-              );
-            })
-            .join('') +
-          '</div>';
+          '<div class="px-4 py-3 text-cca-base-sm text-neutral-caption">Open Filters to set ' +
+          f.name + '</div>';
       }
 
       function openChipMenu(name, anchor) {
@@ -1212,6 +1214,21 @@
         const parts = input.getAttribute('data-filter-input').split('|');
         const f = FILTERS.filter((x) => x.name === parts[0])[0];
         if (!f) return;
+        /*
+         * The panel's own search narrows the OPTION LIST, not the table. It has
+         * to re-render the drawer to re-filter the options, so focus is put
+         * back afterwards — the one place a re-render mid-typing is unavoidable.
+         */
+        if (parts[1] === 'listsearch') {
+          FX.listQuery[f.name] = e.target.value;
+          const at = e.target.selectionStart;
+          renderDrawer();
+          const again = document.querySelector(
+            '[data-filter-input="' + f.name + '|listsearch"]'
+          );
+          if (again) { again.focus(); again.setSelectionRange(at, at); }
+          return;
+        }
         if (parts[1] === 'from') f.applied[0] = e.target.value;
         else if (parts[1] === 'to') f.applied[1] = e.target.value;
         else f.applied = e.target.value ? [e.target.value] : [];
@@ -1283,7 +1300,9 @@
          * list is what toggles.
          */
         const field = e.target.closest('[data-filter] .mat-mdc-form-field');
-        if (field) {
+        // The panel's own search is a form field too — clicking it must not
+        // close the panel it lives in.
+        if (field && !e.target.closest('.ng-dropdown-panel')) {
           const holder = field.closest('[data-filter]');
           const f = FILTERS.filter((x) => x.name === holder.getAttribute('data-filter'))[0];
           if (f && f.kind === 'select' && FX.valuesOf(f).length) {
@@ -1292,6 +1311,22 @@
             return;
           }
           // text and date fields fall through: the input handles itself
+        }
+
+        /*
+         * Select-all in the panel header: on means every value, off means none.
+         */
+        const allBox = e.target.closest('[data-menu-value="__all__"]');
+        if (allBox) {
+          const holder = allBox.closest('[data-filter]');
+          const f = FILTERS.filter((x) => x.name === holder.getAttribute('data-filter'))[0];
+          const vals = FX.valuesOf(f);
+          f.applied = f.applied.length === vals.length ? [] : vals.slice();
+          document.getElementById('save-view').disabled = false;
+          renderDrawer();
+          renderPinnedRow();
+          renderRows();
+          return;
         }
 
         /*
