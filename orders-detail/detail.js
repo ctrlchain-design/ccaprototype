@@ -1042,22 +1042,22 @@
    * stated because Angular measures the label at runtime and a static page
    * cannot.
    */
-  var tableOpen = { 'order-items': true, shortages: true };
-
+  /*
+   * No collapse on these two. The heading is a plain h2 and the body is always
+   * rendered; a MAX HEIGHT on the scroll wrapper keeps a long list from
+   * running the card off the page, which is what the accordion was really
+   * guarding against.
+   *
+   * `max-h-96` is 384px — the bundle's scale has no half steps, and this is
+   * the step that matches the Figma's content area. The wrapper is
+   * `overflow-auto` rather than `overflow-x-auto` because Order Items now
+   * needs both axes.
+   */
   function tableCard(key, heading, uom, body, count) {
-    var open = tableOpen[key] !== false;
     return (
       '<section class="page-container">' +
       '<div class="flex flex-wrap items-center justify-between gap-4">' +
-      '<div role="button" tabindex="0" class="flex cursor-pointer items-center gap-2" ' +
-      'data-table-toggle="' + key + '">' +
-      /* Expanded points DOWN, collapsed points UP. The inverse of the Material
-         default and of what the Figma frame shows, but it is what was asked
-         for — the arrow reads as the direction the panel will move. Both this
-         card and the item rows below follow it, so the page is consistent. */
-      '<span class="text-neutral-body">' + icon(open ? 'chevron-down' : 'chevron-up') + '</span>' +
       '<h2>' + esc(heading) + '</h2>' +
-      '</div>' +
       '<div class="flex shrink-0 items-center gap-3">' +
       '<div class="w-40">' +
       window.CCA_FILTERS.labelledField(key + '-uom', 'UoM', uom, null, '') +
@@ -1066,7 +1066,7 @@
       'class="cca-btn cca-btn--subtle cca-btn--icon-only" aria-label="Expand ' + esc(heading) + '">' +
       icon('fullscreen') + '</button>' +
       '</div></div>' +
-      (open ? '<div class="mt-4">' + body + paginator(count) + '</div>' : '') +
+      '<div class="mt-4">' + body + paginator(count) + '</div>' +
       '</section>'
     );
   }
@@ -1164,7 +1164,8 @@
 
     var body =
       general +
-      '<div class="mt-5 overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
+      '<div class="mt-5 max-h-96 overflow-auto">' +
+      '<table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
       '<tbody class="mdc-data-table__content">' +
@@ -1190,7 +1191,8 @@
     var rows = D.shortages();
     var cols = ['Line', 'Product Code', 'Product Description', 'Shortage Quantity'];
     var body =
-      '<div class="overflow-x-auto"><table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
+      '<div class="max-h-96 overflow-auto">' +
+      '<table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
       '<tbody class="mdc-data-table__content">' +
@@ -1523,14 +1525,7 @@
   /* ------------------------------------------------------------ behaviour */
 
   document.addEventListener('click', function (ev) {
-    /* --------------------------------- order items / shortages collapse */
-    var tt = ev.target.closest('[data-table-toggle]');
-    if (tt) {
-      var key = tt.getAttribute('data-table-toggle');
-      tableOpen[key] = tableOpen[key] === false;
-      renderBody(order);
-      return;
-    }
+    /* ------------------------------------- an item row's SSCC pallets */
     var it = ev.target.closest('[data-item-toggle]');
     if (it) {
       var line = it.getAttribute('data-item-toggle');
