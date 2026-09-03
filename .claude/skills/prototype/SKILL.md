@@ -67,8 +67,14 @@ EOF
 
 Invented icon names are the single easiest mistake to make, because they sound
 right and fail invisibly — the glyph is simply absent. `inbox` does not exist;
-it is `message-inbox`. `pin` does not exist; it is `pinned`, `pinned-yes` or
-`pinned-no`. `download` does not exist; it is `export`.
+it is `message-inbox`. `download` does not exist; it is `export`.
+
+**And a name that exists can still be the wrong one.** The pin is the trap:
+`pinned-yes` is PINNED, plain `pinned` is the outline UNPINNED state, and
+`pinned-no` is a third thing. Both audits pass either way, because both names
+are real. `patterns.html` and `orders-pinned-filters` both drew the unpinned
+glyph on pinned chips for months. When a glyph comes in a set, check which
+member you want against the running app, not just that the name resolves.
 
 **Search case-insensitively.** Eleven glyphs are mixed-case — `Gear-Settings`,
 `Bold`, `Italic`, `Underline`, `alignLeft`, `alignCenter`, `alignRight`,
@@ -119,6 +125,11 @@ Two rules for `_shared/`:
 
 1. **If you solve something new, put it there** rather than leaving it in one
    prototype. The next person should not have to rediscover it.
+1. **If you fix a bug, fix every copy of it.** Grep the repo before calling it
+   done — and check `patterns.html` in particular, because that is what the next
+   person copies from. A fix that leaves the pattern wrong is not a fix.
+
+       grep -rn "the-wrong-thing" --include='*.html' --include='*.js' . | grep -v design-system/
 2. **If FE later ships a real token or component for something in `_shared/`,
    delete it from `_shared/` and use the real thing.** This folder is a holding
    pen for gaps in the export, not a second design system.
@@ -417,6 +428,58 @@ cca-root { display: block; height: 100%; }  /* height: auto for a document-flow 
 ```
 
 The template already does this. If you build a page from scratch, do it too.
+
+**An element tag can gate a whole stylesheet.** Not just styling on the tag
+itself — some component stylesheets scope EVERY rule to their host, so without
+the element you get none of it and nothing tells you. `ds/components/filters-select.css`
+scopes all its overrides to `cca-filters-select .ng-dropdown-panel …`, so a
+dropdown built without that wrapper had no max-height, no max-width and no
+padding: it grew to fit and never scrolled. `maxHeight` computed to `none`.
+Before assuming a linked stylesheet is doing nothing, check what its selectors
+are anchored to:
+
+```bash
+grep -o '^[a-z-]*' design-system/dist/ds/components/THE-FILE.css | sort -u
+```
+
+**Platform rules often use three classes, so a two-class override loses.**
+`prototype.css` loads after `ds/index.css`, which tempts you into thinking any
+rule there wins. It only wins at EQUAL specificity. `platform-02.css` styles
+`.ng-dropdown-panel.ng-select-custom.ng-select-bottom` — three classes — and a
+two-class override was silently ignored. Count the classes in the rule you are
+fighting, and measure the result rather than trusting the cascade.
+
+**Flex children shrink and hide their own overflow.** This is the nastiest of
+the measurement traps, because every obvious check says the layout is fine:
+
+- A flex item with `whitespace-nowrap` shrinks below its content, and
+  `getBoundingClientRect().width` returns the SHRUNK box — so the text spills
+  out of an element that measures as fitting.
+- `td.scrollWidth > td.clientWidth` stays false throughout.
+- A custom element with `display: flex` (like `cca-date-cell`) reports the
+  column width no matter what it holds, so measuring it tells you nothing.
+
+Two date columns lost 114px of every cell this way and looked fine in a
+screenshot. To check a cell, sum its children's `scrollWidth` and compare
+against `clientWidth` minus padding — and add `shrink-0` so a too-narrow column
+overflows visibly instead of clipping in silence.
+
+**Audit a JS-built module from the rendered DOM, not its source.** The class
+audit at the top of this file reads `class="..."` attributes. A module that
+builds markup by string concatenation has none, so the scan sees nothing and
+reports success. Read the classes back out of the page instead:
+
+```javascript
+// javascript_tool, with the component on screen and its states open
+const cls = new Set();
+document.querySelectorAll('#the-thing, #the-thing *')
+  .forEach(el => el.classList.forEach(c => cls.add(c)));   // classList, not className —
+[...cls].sort().join(' ')                                   // className is an object on SVG
+```
+
+Then check that list against the stylesheets on disk. Note the CSS cannot be
+read from `document.styleSheets` either: `ds/index.css` is nothing but
+`@import` rules, so you get the imports and not their contents.
 
 **Badge flavour names lie.** On `cca-numerical-badge`, `.primary` is
 `--badge-bg-red` — not green, not the brand colour. Green is `.success`, and
