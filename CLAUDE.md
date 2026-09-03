@@ -36,6 +36,9 @@ the signal to delete whatever `_shared/` was compensating with.
 | ng-select's core CSS is not exported | `.ng-dropdown-panel` never gets `position: absolute`, so a dropdown renders in the flow. Compensated in `prototype.css`. |
 | `cca-attention-flag-badge` has no green tone | Only neutral, accent-blue, warning and danger — in the export AND in Figma. A green flag is unbuildable; passing `primary` renders unstyled grey. |
 | `components/badge.html` documents only part of the badge size scale | Two of the status badge's sizes, one of the flag's. The 12px flag the Orders table uses has no example to copy. |
+| The shipment-timeline family is not exported at all | `cca-shipment-updates`, `cca-timeline-table`, `cca-drawer-display-container`, `cca-status-card` and `cca-drawer` have no CSS and no manifest entry — not even as feature components. Their whole look is utility classes, so they can be rebuilt from the DOM, but there is nothing to link. |
+| Arbitrary and `!` Tailwind variants cannot survive the export | The app compiles Tailwind at build time; we get precompiled CSS. So `pl-[17px]`, `border-brand-default!` and `flex-[2]` are all absent, and any of them fails silently. Staging's own timeline uses the first two. |
+| The spacing scale has no half steps | `h-2.5` / `w-2.5` are in staging's markup but not the bundle — `h-*`/`w-*` stop at whole numbers. |
 | The 40 documented components are not the whole story | ~274 more stylesheets sit under `ds/components/` unimported. `cca-date-cell`, `cca-filters-select` and the rest of the filter family are all in there. |
 
 A component's stylesheet being unimported does **not** mean it is unofficial —

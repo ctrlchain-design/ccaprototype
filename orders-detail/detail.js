@@ -323,7 +323,7 @@
       '<p class="text-cca-base font-medium text-neutral-body">' + statusLine(o) + '</p>' +
       '</div>' +
       '<button ccaButton hierarchy="secondary" type="button" ' +
-      'class="cca-btn cca-btn--secondary shrink-0">Shipment updates</button>' +
+      'class="cca-btn cca-btn--secondary shrink-0" data-open-timeline>Shipment updates</button>' +
       '</div></cca-status-overview>'
     );
   }
@@ -836,6 +836,135 @@
       'Learn more</a></div>');
   }
 
+  /* -------------------------------------------------- shipment timeline */
+
+  /*
+   * THE SHIPMENT UPDATES DRAWER, read off staging's own
+   * cca-shipment-updates > cca-timeline-table > cca-drawer-display-container.
+   *
+   * None of those four elements is in the export — checked `isDesignSystem` in
+   * manifest.json and they are not there at all, so there is no stylesheet to
+   * link and the whole look comes from utility classes, which is why this can
+   * be rebuilt faithfully from the DOM alone.
+   *
+   * THREE OF STAGING'S CLASSES DO NOT EXIST IN OUR BUNDLE, because the app
+   * compiles Tailwind at build time and we get a precompiled export:
+   *
+   *   pl-[17px]              an arbitrary value. Staging uses it to nudge the
+   *                          unhighlighted cards so their content lines up with
+   *                          the highlighted one, which carries a 2px border
+   *                          against everyone else's 1px.
+   *   border-brand-default!  the `!` important variant is not compiled either.
+   *   h-2.5 / w-2.5          the 10px dot. The scale here stops at whole steps.
+   *
+   * So: every card gets `border-2` and only the colour changes, which removes
+   * the need for staging's 1px nudge entirely — a better answer than porting
+   * the hack. The dot is `h-2 w-2`, the same 8px dot the route bar uses. The
+   * brand border needs no `!` because nothing competes with it here.
+   */
+  function statusCard(ev, latest) {
+    return (
+      '<cca-status-card class="block">' +
+      '<div class="flex gap-6 border-2 border-solid px-4 ' +
+      (latest ? 'border-brand-default' : 'border-neutral-default') + '">' +
+      /* when + where */
+      '<div class="flex w-1/5 flex-col py-4 text-right text-cca-base-sm font-medium text-neutral-caption">' +
+      '<h4>' + esc(ev.time) + '</h4>' +
+      '<span class="text-cca-label-sm font-normal">' + esc(ev.place) + '</span>' +
+      '</div>' +
+      /* the rail: a hairline with the event's dot on it */
+      '<div class="relative flex w-4 justify-center">' +
+      '<span class="h-full w-px surface-neutral-darker"></span>' +
+      '<span class="absolute top-4 flex h-5 w-5 items-center justify-center rounded-full' +
+      (latest ? ' info-surface-light' : '') + '">' +
+      '<span class="h-2 w-2 rounded-full border border-solid border-neutral-default ' +
+      (latest ? 'border-neutral-invert info-surface' : 'surface-neutral-darkest') + '"></span>' +
+      '</span></div>' +
+      /* what happened */
+      '<div class="flex w-4/5 flex-col gap-1 py-4">' +
+      '<h4 class="flex items-center gap-2 text-neutral-body' + (latest ? ' font-bold' : '') + '">' +
+      esc(ev.label) + '</h4>' +
+      '<p class="text-cca-base-sm text-neutral-caption">' + esc(ev.note) + '</p>' +
+      '<span class="mt-3 text-cca-label-sm font-medium text-neutral-caption">By: ' +
+      esc(ev.by) + '</span>' +
+      '</div></div></cca-status-card>'
+    );
+  }
+
+  var timelineOpen = {}; /* which day groups are expanded */
+
+  function timelineBody(o) {
+    var groups = D.timeline(o);
+    var first = true;
+    return (
+      '<ul class="flex flex-col gap-2 p-4">' +
+      groups.map(function (g, gi) {
+        var open = timelineOpen[g.day] !== false;
+        var cards = g.events.map(function (ev) {
+          var latest = first;
+          first = false;
+          return statusCard(ev, latest);
+        }).join('');
+        return (
+          '<li class="relative flex flex-col gap-2">' +
+          /* The day header is a role=button div on staging, not a <button> —
+             a button would inherit .cca-btn-less Material resets it does not
+             want, and this one is a full-width bar. */
+          '<div role="button" tabindex="0" data-day="' + esc(g.day) + '" ' +
+          'class="flex cursor-pointer items-center gap-2 border-b border-solid ' +
+          'border-neutral-default surface-neutral-light p-2 font-normal">' +
+          '<span class="flex h-5 w-6 items-center justify-center">' +
+          '<cca-icon class="text-cca-base text-neutral-body">' +
+          icon(open ? 'chevron-up' : 'chevron-down') + '</cca-icon></span>' +
+          '<h5 class="leading-5">' + esc(g.day) + '</h5>' +
+          '</div>' +
+          '<div' + (open ? '' : ' hidden') + '>' + cards + '</div>' +
+          '</li>'
+        );
+      }).join('') +
+      '</ul>'
+    );
+  }
+
+  function renderTimeline(o) {
+    document.getElementById('timeline-drawer').innerHTML =
+      /* Header: title, a refresh beside it, and the close on the far right —
+         staging's exact clustering, so the refresh belongs to the heading
+         rather than floating between the two. */
+      '<section class="flex shrink-0 items-center justify-between gap-2 ' +
+      'border-b border-neutral-default p-6">' +
+      '<div class="flex items-center gap-2">' +
+      '<h2>Shipment Timeline</h2>' +
+      '<button ccaButton hierarchy="subtle" size="small" type="button" ' +
+      'class="cca-btn cca-btn--small cca-btn--icon-only cca-btn--subtle" aria-label="Refresh">' +
+      icon('refresh') + '</button>' +
+      '</div>' +
+      '<button ccaButton hierarchy="icon" type="button" ' +
+      'class="cca-btn mr-2 cca-btn--icon-only cca-btn--icon" aria-label="Close" ' +
+      'data-close-timeline>' + icon('xmark') + '</button>' +
+      '</section>' +
+      '<section class="proto-drawer-body">' + timelineBody(o) + '</section>';
+  }
+
+  function openTimeline(open) {
+    var box = document.getElementById('timeline-overlay');
+    var scrim = document.getElementById('timeline-scrim');
+    if (open) {
+      renderTimeline(order);
+      box.hidden = false;
+      /* A layout read commits opacity 0 before the class starts the fade.
+         Never requestAnimationFrame — it does not fire in a background tab,
+         and the scrim would stay invisible. */
+      void scrim.offsetWidth;
+      scrim.classList.add('cdk-overlay-backdrop-showing');
+      document.documentElement.classList.add('cdk-global-scrollblock');
+    } else {
+      scrim.classList.remove('cdk-overlay-backdrop-showing');
+      box.hidden = true;
+      document.documentElement.classList.remove('cdk-global-scrollblock');
+    }
+  }
+
   /* ---------------------------------------------------------------- tabs */
 
   /* Seven tabs, as the app has them. Only Basic Info is built; the rest say so
@@ -1006,6 +1135,18 @@
   /* ------------------------------------------------------------ behaviour */
 
   document.addEventListener('click', function (ev) {
+    /* ------------------------------------------- shipment timeline drawer */
+    if (ev.target.closest('[data-open-timeline]')) { openTimeline(true); return; }
+    if (ev.target.closest('[data-close-timeline]')) { openTimeline(false); return; }
+    if (ev.target.id === 'timeline-scrim') { openTimeline(false); return; }
+    var day = ev.target.closest('[data-day]');
+    if (day) {
+      var name = day.getAttribute('data-day');
+      timelineOpen[name] = timelineOpen[name] === false;
+      renderTimeline(order);
+      return;
+    }
+
     var tab = ev.target.closest('[data-tab]');
     if (tab) {
       ev.preventDefault();          // they are anchors, as the component requires

@@ -498,6 +498,64 @@ linked: ['CCA2023-000274.1'],
    * `openingHours` is per-location and the app shows a "Show More" after five
    * days, so all seven are here to give that something to reveal.
    */
+  /*
+   * SHIPMENT TIMELINE — what the "Shipment updates" drawer shows.
+   *
+   * Read off staging's own drawer (cca-shipment-updates > cca-timeline-table),
+   * so the SHAPE is the app's: events newest first, grouped under a collapsible
+   * day, each carrying a time, the place it happened, a label and who recorded
+   * it. Every value here is invented — staging is ISO 27001 and its data does
+   * not leave it.
+   *
+   * Two vocabularies, because the two domains genuinely differ. Transport
+   * tracks a road movement through to the POD; a warehouse order tracks the
+   * handling lifecycle already in WAREHOUSE_ORDERS' own statuses.
+   */
+  var TIMELINE = {
+    transport: [
+      { day: 'Sunday, 30 August 2026', events: [
+        { time: '14:22 CEST', place: '08001 Barcelona', label: 'POD Approved',
+          note: 'Proof of delivery accepted; the order can now be invoiced.',
+          by: 'Admin A. Kowalski' },
+        { time: '14:18 CEST', place: '08001 Barcelona', label: 'POD Uploaded',
+          note: 'Signed delivery note attached by the driver.', by: 'Marek Nowak' },
+        { time: '14:05 CEST', place: '08001 Barcelona', label: 'Cargo Unloaded Confirmed',
+          note: '10 of 10 pallets unloaded. No damage reported.', by: 'Marek Nowak' },
+        { time: '13:30 CEST', place: '08001 Barcelona', label: 'Arrived at Delivery Confirmed',
+          note: 'Arrived 30 minutes inside the booked window.', by: 'Marek Nowak' },
+      ] },
+      { day: 'Thursday, 27 August 2026', events: [
+        { time: '09:12 CEST', place: '080 01 Presov', label: 'Cargo Loaded Confirmed',
+          note: 'Loaded via door loading. Temperature set to -21 °C.', by: 'Marek Nowak' },
+        { time: '08:05 CEST', place: '080 01 Presov', label: 'Arrived at Pickup Confirmed',
+          note: 'Driver reported at the gate.', by: 'Marek Nowak' },
+        { time: '07:40 CEST', place: '-', label: 'Pickup ETA Confirmed',
+          note: 'Carrier confirmed an 08:00 arrival.', by: 'Transportes Garcia' },
+        { time: '06:00 CEST', place: '-', label: 'Carrier Assigned',
+          note: 'Assigned to Transportes Garcia de la Torre S.L.', by: 'Tom Jansen' },
+      ] },
+    ],
+    warehouse: [
+      { day: 'Thursday, 27 August 2026', events: [
+        { time: '01:55 CEST', place: '080 01 Presov', label: 'Loaded',
+          note: '18 pallets loaded at Dock 7. Seal 4471820 applied.',
+          by: 'Operator Tom Jansen' },
+      ] },
+      { day: 'Wednesday, 26 August 2026', events: [
+        { time: '23:40 CEST', place: '080 01 Presov', label: 'Truck Arrived',
+          note: 'Truck checked in at Dock 7, 20 minutes ahead of the slot.',
+          by: 'Operator Tom Jansen' },
+        { time: '18:20 CEST', place: '080 01 Presov', label: 'Ready to Ship',
+          note: 'Picking complete across 14 order lines. 7,420 kg staged.',
+          by: 'Operator Bianca de Vries' },
+      ] },
+      { day: 'Monday, 17 August 2026', events: [
+        { time: '08:04 CEST', place: '080 01 Presov', label: 'Registered',
+          note: 'Outbound order received from the shipper.', by: 'System' },
+      ] },
+    ],
+  };
+
   var ORDER_DETAIL = {
     cargo: {
       kind: 'Pallet',
@@ -907,6 +965,11 @@ linked: ['CCA2023-000274.1'],
      * block is the same for every order — fixture data, not a claim that real
      * orders share a cargo manifest.
      */
+    /* The Shipment updates drawer's events, by domain. */
+    timeline: function (o) {
+      return TIMELINE[o && o.domain === 'warehouse' ? 'warehouse' : 'transport'];
+    },
+
     orderDetail: function (id) {
       var o = ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
         .filter(function (r) { return r.id === id; })[0];

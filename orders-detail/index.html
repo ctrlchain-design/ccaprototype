@@ -116,6 +116,30 @@
           </div>
         </div>
       </cca-main>
+
+      <!--
+        SHIPMENT TIMELINE DRAWER — what "Shipment updates" opens.
+
+        Inside cca-root, like everything else, or the platform's body::before
+        watermark eats its clicks.
+
+        The overlay itself is all real CDK from ds/material-vendor.css. All a
+        static page has to supply is where the pane lands and the right scrim,
+        both of which _shared/prototype.css already covers:
+
+          .proto-drawer-pane      top/right/height + the platform's own fluid
+                                  40-50% width, NOT a fixed 512px
+          .proto-drawer-backdrop  --scrim-drawer at 0.6, which is the sidenav
+                                  scrim; the dialog's 0.32 would be too light
+          .proto-drawer-body      only the body scrolls, header stays put
+
+        Content is rendered by detail.js, per domain.
+      -->
+      <div class="cdk-overlay-container" id="timeline-overlay" hidden>
+        <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="timeline-scrim"></div>
+        <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default"
+             id="timeline-drawer" role="dialog" aria-modal="true" aria-label="Shipment Timeline"></div>
+      </div>
     </cca-root>
 
     <script src="../_shared/data.js"></script>
