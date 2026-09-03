@@ -155,15 +155,44 @@
               is <code>#ebebeb</code> in light mode and inverts correctly, which a
               raw hex would not.
             </p>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              <strong>The glyph is <code>pinned-yes</code>, not <code>pinned</code>.</strong>
+              Plain <code>pinned</code> is the UNPINNED state — an outline. This
+              pattern showed the wrong one until 2 Sept 2026, so anything copied
+              from it before then has an unpinned pin on a pinned chip. The pair
+              is <code>pinned-yes</code> / <code>pinned</code>, as the running
+              app uses them.
+            </p>
+            <p class="text-cca-base-sm text-neutral-subtitle">
+              The second chip is the applied form: the name, a colon, the values,
+              and an ✕ that clears the values but leaves the pin. <strong>These are
+              clickable</strong> — the app opens the filter's values in a checkbox
+              popover from the chip, so the common case never needs the drawer.
+              Do not rebuild any of that: <code>_shared/filters.js</code> has the
+              whole mechanism, and the app renders this chip with its own
+              <code>cca-filter-values-chip</code> component
+              (<code>ds/components/filter-values-chip.css</code>) if you need to
+              go closer.
+            </p>
           </div>
           <div class="pat-demo flex flex-wrap items-center gap-3">
-            <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
-              <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pinned mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+            <!-- Pinned, no values applied: the name alone. -->
+            <span class="flex max-w-80 cursor-pointer items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body" role="button" tabindex="0" aria-haspopup="menu">
+              <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pinned-yes mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
               <span class="truncate">Account Manager</span>
             </span>
-            <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body">
+            <!-- Pinned WITH values: name, colon, values, and an ✕ to clear them. -->
+            <span class="flex max-w-80 cursor-pointer items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body" role="button" tabindex="0" aria-haspopup="menu">
+              <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pinned-yes mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+              <span class="truncate">Order Status: Completed, Missing POD</span>
+              <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="Clear Order Status">
+                <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-xmark mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+              </button>
+            </span>
+            <!-- Unpinned, for contrast: the outline glyph. -->
+            <span class="flex max-w-80 items-center gap-1 rounded-lg surface-neutral-default px-2 py-1 text-cca-base text-neutral-caption">
               <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-pinned mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
-              <span class="truncate">Assigned Operator</span>
+              <span class="truncate">Not pinned</span>
             </span>
           </div>
         </section>
