@@ -680,6 +680,7 @@
    * type, instructions, and a totals footer.
    */
   function stopCard(n, kind, end, o, open) {
+    var wh = o.domain === 'warehouse';
     var hours = o.detail.openingHours;
     /*
      * ORDER_DETAIL.totals is the transport fixture's — 3,500 kg over 10 items.
@@ -687,10 +688,60 @@
      * the shared numbers would have contradicted the order's own data on the
      * same screen. Exchange is not modelled for warehouse, so it says so.
      */
-    var t = o.domain === 'warehouse'
+    var t = wh
       ? { weight: o.weightKg.toLocaleString('en-GB') + ' kg',
           items: String(o.pallets), exchangeNeeded: 'n/a', actualExchange: 'n/a' }
       : o.detail.totals;
+
+    /*
+     * OPENING HOURS AND THE TOTALS STRIP ARE TRANSPORT-ONLY.
+     *
+     * Both were reading off the shared ORDER_DETAIL fixture — one week of
+     * 06:00-18:00 repeated on every stop of every order, including a customer
+     * address where it is a guess. A warehouse order's stop card is down to
+     * what it actually knows: the location's type and its instructions.
+     *
+     * The totals go with them. They belong to a transport stop, where what is
+     * picked up and dropped off at each end is the point; on a warehouse order
+     * the load is the order, not a per-stop split, so repeating the same
+     * weight under both stops said nothing.
+     */
+    var openingHours =
+      '<div><p class="text-2xs text-neutral-caption">Opening Hours</p>' +
+      '<table class="mt-1 text-cca-base-sm text-neutral-body"><tbody>' +
+      hours.slice(0, 5).map(function (h) {
+        return '<tr><td class="pr-6 text-neutral-caption">' + esc(h.day) + '</td>' +
+          '<td>' + esc(h.hours) + '</td></tr>';
+      }).join('') +
+      hours.slice(5).map(function (h) {
+        return '<tr class="hidden" data-more="stop-' + n + '">' +
+          '<td class="pr-6 text-neutral-caption">' + esc(h.day) + '</td>' +
+          '<td>' + esc(h.hours) + '</td></tr>';
+      }).join('') +
+      '</tbody></table>' +
+      /* cca-show-more-less — official (isDesignSystem in manifest.json) but not
+         imported by ds/index.css, so index.html links its stylesheet. The host
+         tag and the show-text class are both load-bearing. */
+      '<cca-show-more-less><div role="button" tabindex="0" class="show-text mt-1" ' +
+      'data-showmore="stop-' + n + '">' +
+      '<span>Show More</span><cca-icon class="mb-0.5 ml-1">' + icon('chevron-down') +
+      '</cca-icon></div></cca-show-more-less>' +
+      '</div>';
+
+    var totalsStrip =
+      '<div class="mt-3 flex flex-wrap gap-6 border-t border-neutral-default pt-3 text-2xs text-neutral-caption">' +
+      '<span>Total Weight: <span class="text-neutral-body">' + esc(t.weight) + '</span></span>' +
+      '<span>Total Items: <span class="text-neutral-body">' + esc(t.items) + '</span></span>' +
+      '<span>Total Exchange Needed: <span class="text-neutral-body">' + esc(t.exchangeNeeded) + '</span></span>' +
+      '<span>Total Actual Exchange: <span class="text-neutral-body">' + esc(t.actualExchange) + '</span></span>' +
+      '</div>';
+
+    var facts =
+      '<div>' + field('Location Type', esc(o.detail.locationType)) +
+      '<p class="mt-3 text-2xs text-neutral-caption">Instructions</p>' +
+      '<p class="flex items-center gap-1 text-cca-base-sm text-neutral-caption">' +
+      icon('file-warning') + 'No instructions available</p></div>';
+
     return (
       '<cca-stop-card class="block rounded-lg border border-neutral-default">' +
       '<div class="flex items-start gap-3 p-3">' +
@@ -705,39 +756,10 @@
       icon(open ? 'chevron-up' : 'chevron-down') + '</span>' +
       '</button></div>' +
       '<div class="' + (open ? '' : 'hidden ') + 'border-t border-neutral-default p-3" id="stop-' + n + '-body">' +
-      '<div class="grid grid-cols-2 gap-4">' +
-      '<div><p class="text-2xs text-neutral-caption">Opening Hours</p>' +
-      '<table class="mt-1 text-cca-base-sm text-neutral-body"><tbody>' +
-      hours.slice(0, 5).map(function (h) {
-        return '<tr><td class="pr-6 text-neutral-caption">' + esc(h.day) + '</td>' +
-          '<td>' + esc(h.hours) + '</td></tr>';
-      }).join('') +
-      hours.slice(5).map(function (h) {
-        return '<tr class="hidden" data-more="stop-' + n + '">' +
-          '<td class="pr-6 text-neutral-caption">' + esc(h.day) + '</td>' +
-          '<td>' + esc(h.hours) + '</td></tr>';
-      }).join('') +
-      '</tbody></table>' +
-      '<cca-show-more-less style="display:block">' +
-      /* cca-show-more-less — official (isDesignSystem in manifest.json) but not
-         imported by ds/index.css, so index.html links its stylesheet. The host
-         tag and `.show-text` are both load-bearing. */
-      '<cca-show-more-less><div role="button" tabindex="0" class="show-text mt-1" ' +
-      'data-showmore="stop-' + n + '">' +
-      '<span>Show More</span><cca-icon class="mb-0.5 ml-1">' + icon('chevron-down') +
-      '</cca-icon></div></cca-show-more-less>' +
-      '</div>' +
-      '<div>' + field('Location Type', esc(o.detail.locationType)) +
-      '<p class="mt-3 text-2xs text-neutral-caption">Instructions</p>' +
-      '<p class="flex items-center gap-1 text-cca-base-sm text-neutral-caption">' +
-      icon('file-warning') + 'No instructions available</p></div>' +
-      '</div>' +
-      '<div class="mt-3 flex flex-wrap gap-6 border-t border-neutral-default pt-3 text-2xs text-neutral-caption">' +
-      '<span>Total Weight: <span class="text-neutral-body">' + esc(t.weight) + '</span></span>' +
-      '<span>Total Items: <span class="text-neutral-body">' + esc(t.items) + '</span></span>' +
-      '<span>Total Exchange Needed: <span class="text-neutral-body">' + esc(t.exchangeNeeded) + '</span></span>' +
-      '<span>Total Actual Exchange: <span class="text-neutral-body">' + esc(t.actualExchange) + '</span></span>' +
-      '</div></div></cca-stop-card>'
+      (wh
+        ? facts
+        : '<div class="grid grid-cols-2 gap-4">' + openingHours + facts + '</div>' + totalsStrip) +
+      '</div></cca-stop-card>'
     );
   }
 
@@ -1163,10 +1185,10 @@
         top +
         '<div class="mt-4 flex flex-wrap items-start gap-4">' +
         '<div class="flex min-w-80 flex-1 flex-col gap-4">' +
-        financeSummary(o) +
+        financeSummary(o) + contacts(o) +
         '</div>' +
         '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
-        locationsInfo(o) +
+        locationsInfo(o) + dateAndTimes(o) +
         '</div></div>';
       return;
     }
