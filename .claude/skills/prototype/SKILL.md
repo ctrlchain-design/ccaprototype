@@ -639,6 +639,42 @@ rather than composing one.
   `document.visibilityState` before believing an animation is broken, and confirm
   with a screenshot, which forces a paint.
 
+**A Material host element can bring chrome you did not ask for.** The
+load-bearing-tag rule cuts both ways. `cca-*` hosts mostly *gate* styling — use
+the wrong tag and you get nothing. Material hosts *add* it: `mat-expansion-panel`
+carries a white background, a 1px border, a 10px radius and an elevation shadow
+of its own. Drop one inside a `page-container` card to group content and you get
+a card nested in a card, which is not what the app looks like.
+
+What the app does is pair it with the classes that switch the chrome off:
+
+```html
+<mat-accordion class="mat-accordion flex-1">
+  <mat-expansion-panel class="mat-expansion-panel mat-elevation-z mat-expanded">
+```
+
+`mat-elevation-z` is the one that zeroes the shadow, and staging adds
+`border-0!` and `bg-transparent!` on top where the panel is a grouping device
+rather than a card. Check the computed background, border and box-shadow after
+adding any `mat-` element:
+
+    getComputedStyle(el).boxShadow    // "none"/all-transparent, or you have a nested card
+
+**When you have the real DOM, diff the heading skeleton — not the screenshot.**
+Reading section order off a picture misses the levels, and the levels are the
+information architecture. Pull both sides down to `tag + text` and compare
+lists:
+
+```js
+[...root.querySelectorAll('h2,h3,h4')].map(h => h.tagName + ' ' + h.innerText.trim())
+```
+
+That is what caught three whole sections missing from the order detail page
+(Route Details, Requested Vehicle(s), Parking Requirements) plus an `h3` that
+should have been an `h4`, none of which were visible in a side-by-side
+screenshot. It also tells you when a heading in your version is *not* a heading
+on the app — a sub-label promoted to `h3` reads a size too loud.
+
 ## After FE re-exports
 
 A new bundle arrives as a folder in Downloads. Install it like this — the two

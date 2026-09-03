@@ -533,8 +533,18 @@ linked: ['CCA2023-000274.1'],
                  email: 'booker@example.com' },
       carrierContact: { phone: '+48 22 290 27 62', email: 'planning@example.com' },
     },
+    /* Route Details — the planner's own figures for the drawn route. */
+    route: { avoid: '-', duration: '9h 24m', distance: '812 km', roadTaxes: '-', co2: '0 kg' },
+    /* Requested Vehicle(s) — what was asked for, distinct from what turned up
+       (which is Carrier & Vehicle Details). */
+    requestedVehicle: {
+      kind: 'Trailer', bodyType: 'Curtainside', tailLift: 'No',
+      length: '1,360 cm', width: '245 cm', height: '265 cm', maxWeight: '24,000 kg',
+    },
+    bookedFrom: 'LANE2026-000231',
     /* Zero throughout, as an un-offset order reads on the real page. */
-    co2: { offset: '0 t', water: '0 l', lives: '0 people', land: '0 m²', trees: '0 trees' },
+    co2: { contribution: '€0.00', offset: '0 t', water: '0 l', lives: '0 people',
+           land: '0 m²', trees: '0 trees' },
     openingHours: [
       { day: 'Monday', hours: '06:00 - 18:00' },
       { day: 'Tuesday', hours: '06:00 - 18:00' },

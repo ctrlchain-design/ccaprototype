@@ -76,6 +76,19 @@
     );
   }
 
+  /* A sub-block within a card: the same header row, no border of its own. */
+  function block(heading, action, body) {
+    return (
+      '<div class="mt-5">' +
+      '<div class="flex items-start justify-between gap-4">' +
+      '<h4 class="text-neutral-title">' + esc(heading) + '</h4>' +
+      (action || '') +
+      '</div>' +
+      '<div class="mt-3">' + body + '</div>' +
+      '</div>'
+    );
+  }
+
   /* The app's inline "Edit" and "Translate" affordances. cca-btn--link
      underlines, which is wrong for a header action — proto-header-link is the
      shared fix. */
@@ -169,8 +182,10 @@
       '<div class="ml-auto flex items-center gap-2">' +
       '<span class="text-neutral-caption">' + icon('temperature-3') + '</span>' +
       '<div>' +
-      '<p class="text-2xs text-neutral-caption">Required ' + esc(o.detail.cargo.temperatureRange) + '</p>' +
-      '<p class="text-2xs text-neutral-caption">Current: <span class="text-critical-text">Disconnected</span></p>' +
+      '<p class="text-2xs text-neutral-caption">Required: ' +
+      '<span class="text-neutral-body">' + esc(o.detail.cargo.temperatureRange) + '</span></p>' +
+      '<p class="text-2xs text-neutral-caption">Current: ' +
+      '<span class="text-critical-text">Disconnected</span></p>' +
       '</div>' +
       '<button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Order actions">' +
       icon('ellipsis-vertical') + '</button>' +
@@ -237,7 +252,7 @@
     return (
       '<section class="rounded-lg border border-neutral-default surface-neutral-light" id="map-section">' +
       '<button type="button" class="flex w-full items-center gap-2 p-4 text-left" data-toggle="map">' +
-      '<h2 class="text-neutral-title">Map Overview (0)</h2>' +
+      '<h4 class="text-neutral-title">Map Overview (0)</h4>' +
       '<span class="ml-auto text-neutral-caption" id="map-chevron">' + icon('chevron-down') + '</span>' +
       '</button>' +
       '<div class="hidden border-t border-neutral-default p-4" id="map-body">' +
@@ -298,16 +313,81 @@
       '</div></div></div></div>');
   }
 
+  /*
+   * Route Details. The planner's figures for the drawn route, and the one card
+   * on this page staging heads with an h3 rather than an h2 — so it is built
+   * by hand instead of through card().
+   */
+  function routeDetails(o) {
+    var r = o.detail.route;
+    return (
+      '<section class="rounded-lg border border-neutral-default surface-neutral-light p-4">' +
+      '<h3 class="flex items-center justify-between gap-4 text-neutral-body">Route Details' +
+      headerLink('Edit') + '</h3>' +
+      '<div class="mt-4">' + field('Avoid', esc(r.avoid)) + '</div>' +
+      '<div class="mt-4 flex flex-wrap gap-6">' +
+      [['Duration', r.duration], ['Total Distance', r.distance],
+       ['Road Taxes', r.roadTaxes], ['CO2', r.co2]].map(function (f) {
+        return field(f[0], esc(f[1]));
+      }).join('') +
+      '</div></section>'
+    );
+  }
+
+  /*
+   * Requested Vehicle(s) — what the shipper asked for, which is a different
+   * thing from what turned up in Carrier & Vehicle Details. The app puts a
+   * rendered vehicle image beside it; the export ships no vehicle artwork, so
+   * this leads with the truck glyph rather than a missing-image box.
+   */
+  function requestedVehicle(o) {
+    var v = o.detail.requestedVehicle;
+    var dim = function (label, value) {
+      return '<span class="flex gap-1"><span class="text-neutral-caption">' + label +
+        ': </span><span>' + esc(value) + '</span></span>';
+    };
+    return card('Requested Vehicle(s)', '',
+      '<div class="flex flex-wrap items-start gap-4">' +
+      '<div class="grid h-20 w-32 place-items-center rounded-lg surface-neutral-default">' +
+      '<span class="text-neutral-caption text-2xl">' + icon('truck') + '</span></div>' +
+      '<div class="flex flex-1 flex-col gap-2 text-cca-base-sm text-neutral-body">' +
+      '<div class="flex flex-wrap items-center gap-2"><h4>' + esc(v.kind) + '</h4>' +
+      /* `match` — the flavor the app gives a body type that satisfies the
+         request. Real on cca-label-badge; checked in cca-components.css. */
+      '<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg ' +
+      'whitespace-nowrap px-1.5 py-1 text-cca-base-sm leading-5 font-normal match">' +
+      esc(v.bodyType) + '</div></cca-label-badge></div>' +
+      dim('Tail-Lift', v.tailLift) +
+      '<div class="flex gap-3">' + dim('L', v.length) + dim('W', v.width) +
+      dim('H', v.height) + '</div>' +
+      dim('Max. weight', v.maxWeight) +
+      '</div></div>');
+  }
+
+  /* An empty state, drawn the way cca-no-data draws one. */
+  function noData(heading, note) {
+    return (
+      '<div class="flex w-full flex-col items-center justify-center gap-4 rounded-xl ' +
+      'surface-neutral-default p-5 text-center text-neutral-body">' +
+      '<span class="text-2xl text-neutral-disabled">' + icon('no-more-task') + '</span>' +
+      '<div class="flex flex-col gap-1"><h4>' + esc(heading) + '</h4>' +
+      (note ? '<p class="text-cca-base-sm text-neutral-caption">' + esc(note) + '</p>' : '') +
+      '</div></div>'
+    );
+  }
+
+  function parkingRequirements() {
+    return card('Parking Requirements', '',
+      noData('No parking requirements added yet', ''));
+  }
+
   function loadSummary(o) {
     var g = o.detail.cargo;
     return card('Load Summary', headerLink('Edit'),
-      '<div class="flex items-center gap-2">' +
-      '<span class="text-cca-label-md text-neutral-title">Cargo</span>' + typeBadge(g.kind) +
-      '</div>' +
-      '<h3 class="mt-4 text-neutral-title">General Information</h3>' +
+      '<h3 class="flex items-center gap-2 text-neutral-title">Cargo' + typeBadge(g.kind) + '</h3>' +
+      '<h4 class="mt-4 text-neutral-title">General Information</h4>' +
       '<div class="mt-3">' + fieldGrid([
         ['Estimated Total Weight', esc(g.estimatedTotalWeight)],
-        ['Calculated Total Weight', esc(g.calculatedTotalWeight)],
         ['Estimated Value', esc(g.estimatedValue)],
         ['Temperature Sensitive',
          '<span class="flex items-center gap-1">' + icon('temperature-3') + esc(g.temperatureRange) + '</span>'],
@@ -318,13 +398,20 @@
         ['Maximum Number of Pallets', esc(g.maxPallets)],
         ['Maximum Pallet Height', esc(g.maxPalletHeight)],
         ['Description', esc(g.description)],
-      ]) + '</div>');
+      ]) + '</div>' +
+      palletInfo(o));
   }
 
+  /*
+   * Pallet Info is a BLOCK INSIDE Load Summary on staging, not a card of its
+   * own — its only h2/h3 there is "Cargo Pallet", and Pallet Info is a plain
+   * sub-label like General Information. It had its own card here, which read as
+   * one section too many.
+   */
   function palletInfo(o) {
     var p = o.detail.pallet;
     var e = ends(o);
-    return card('Pallet Info', headerLink('Cargo Planner'),
+    return block('Pallet Info', headerLink('Cargo Planner'),
       /* The pallet's name sits on its own tinted row, as staging draws it. */
       '<div class="rounded-lg surface-neutral-default px-3 py-2 text-cca-base-sm text-neutral-body">' +
       esc(p.name) + '</div>' +
@@ -352,8 +439,8 @@
           ? 'The carrier is on the linked transport order.'
           : 'An invoice order has no carrier.') + '</p>');
     }
-    return card('Carrier & Vehicle Details', '',
-      '<h3 class="text-neutral-title">Carrier Company</h3>' +
+    return card('Carrier & Vehicle Details', '', shipmentPanel(o,
+      '<p class="text-cca-label-md text-neutral-title">Carrier Company</p>' +
       '<p class="mt-2 flex items-center gap-1 text-cca-base-sm text-neutral-body">' +
       icon('building') + esc(o.carrierGroup) + '</p>' +
       '<p class="flex items-center gap-1 text-cca-base-sm text-neutral-body">' +
@@ -365,7 +452,7 @@
       '<a class="proto-header-link flex items-center gap-1 text-cca-base-sm" href="#">' +
       icon('mail') + esc(c.email) + '</a></div>' +
       '<hr class="my-4 border-neutral-default" />' +
-      '<h3 class="text-neutral-title">Motor Vehicle</h3>' +
+      '<p class="text-cca-label-md text-neutral-title">Motor Vehicle</p>' +
       '<div class="mt-3">' + fieldGrid([
         ['Vehicle', esc(v.motor.vehicle)],
         ['Licence Plate Number', esc(v.motor.plate)],
@@ -373,7 +460,7 @@
         ['Owner', esc(o.carrierSubGroup)],
       ]) + '</div>' +
       '<hr class="my-4 border-neutral-default" />' +
-      '<h3 class="text-neutral-title">Trailer</h3>' +
+      '<p class="text-cca-label-md text-neutral-title">Trailer</p>' +
       '<div class="mt-3">' + fieldGrid([
         ['Vehicle Type',
          '<span class="flex items-center gap-2">' + esc(v.trailer.type) + typeBadge(v.trailer.bodyType) + '</span>'],
@@ -382,11 +469,42 @@
         ['Owner', esc(o.carrierSubGroup)],
       ]) + '</div>' +
       '<hr class="my-4 border-neutral-default" />' +
-      '<h3 class="text-neutral-title">Driver</h3>' +
+      '<p class="text-cca-label-md text-neutral-title">Driver</p>' +
       '<div class="mt-3">' + fieldGrid([
         ['Name', esc(v.driver.name)],
         ['Phone', esc(v.driver.phone)],
-      ]) + '</div>');
+      ]) + '</div>'));
+  }
+
+  /*
+   * THE CARRIER BLOCK IS PER SHIPMENT, NOT PER ORDER. Staging heads it with the
+   * shipment's own reference — the order id plus a leg number — and the leg's
+   * route, inside a collapsible, because one order can carry several shipments
+   * and each gets its own carrier, vehicle and driver. Flattening it to a
+   * single carrier, which is what this did, loses that: it reads as though an
+   * order can only ever have one.
+   */
+  function shipmentPanel(o, body) {
+    var e = ends(o);
+    var where = function (x) {
+      return esc(x.city) + ', ' + esc(x.country);
+    };
+    return (
+      /* mat-expansion-panel brings its own white card: a border, a 10px radius
+         and a Material elevation shadow. Nested inside this card it read as a
+         card within a card. `mat-elevation-z` is what zeroes the shadow, and
+         staging pairs it with a mat-accordion host — both load-bearing. */
+      '<mat-accordion class="mat-accordion flex-1">' +
+      '<mat-expansion-panel class="mat-expansion-panel mat-elevation-z mat-expanded ' +
+      'border-0! bg-transparent! shadow-none!">' +
+      '<div class="flex flex-col">' +
+      '<span class="text-cca-label-sm uppercase text-neutral-subtitle">' +
+      esc(o.id) + '.1</span>' +
+      '<h3 class="text-neutral-body">' + where(e.a) + ' → ' + where(e.b) + '</h3>' +
+      '</div>' +
+      '<div class="mt-4">' + body + '</div>' +
+      '</mat-expansion-panel></mat-accordion>'
+    );
   }
 
   /*
@@ -404,8 +522,9 @@
       n + '</span>' +
       '<button type="button" class="flex flex-1 items-start gap-2 text-left" data-toggle="stop-' + n + '">' +
       '<div class="flex-1">' + typeBadge(kind) +
-      '<p class="mt-1 text-cca-base-sm text-neutral-body">' +
-      esc([end.name, end.street, end.city, end.country].filter(Boolean).join(', ')) + '</p></div>' +
+      /* An h3 on staging — the stop's address is the sub-heading of its card. */
+      '<h3 class="mt-1 text-cca-base-sm text-neutral-body">' +
+      esc([end.name, end.street, end.city, end.country].filter(Boolean).join(', ')) + '</h3></div>' +
       '<span class="text-neutral-caption" id="stop-' + n + '-chevron">' +
       icon(open ? 'chevron-up' : 'chevron-down') + '</span>' +
       '</button></div>' +
@@ -447,7 +566,11 @@
       ? '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Trip: ' +
         '<a class="proto-header-link" href="#">' + esc(o.tripReference) + '</a></span>'
       : '<span class="shrink-0 text-cca-base-sm text-neutral-caption">No trip raised</span>';
-    return card('Locations Info', trip,
+    if (o.detail.bookedFrom) {
+      trip += '<span class="shrink-0 text-cca-base-sm text-neutral-caption">Booked from: ' +
+        '<a class="proto-header-link" href="#">' + esc(o.detail.bookedFrom) + '</a></span>';
+    }
+    return card('Locations Info', '<div class="flex flex-wrap gap-3">' + trip + '</div>',
       '<div class="flex flex-col gap-3">' +
       stopCard(1, o.domain === 'warehouse' ? 'Origin' : 'Pickup', e.a, o, true) +
       stopCard(2, o.domain === 'warehouse' ? 'Destination' : 'Delivery', e.b, o, false) +
@@ -482,7 +605,7 @@
           '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('At', r.end.date, w.from) + '</td>' +
           '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('At', r.end.date, w.from) + '</td>' +
           '<td class="mat-mdc-cell mdc-data-table__cell">' + stamp('At', r.end.date, w.to) + '</td>' +
-          '<td class="mat-mdc-cell mdc-data-table__cell"><span class="text-cca-base-sm text-neutral-caption">0 minutes</span></td>' +
+          '<td class="mat-mdc-cell mdc-data-table__cell"><span class="text-2xs text-neutral-caption">0 minutes</span></td>' +
           '</tr>';
       }).join('') +
       '</tbody></table></div>');
@@ -493,19 +616,27 @@
       '<div class="flex flex-col gap-3">' +
       field('Shipper Reference', esc(o.shipperReference)) +
       fieldGrid([
-        ['Stop #1 Reference', '-'],
-        ['Stop #2 Reference', '-'],
+        ['Stop #1(' + (o.domain === 'warehouse' ? 'Origin' : 'Pickup') + ') Reference', '-'],
+        ['Stop #2(' + (o.domain === 'warehouse' ? 'Destination' : 'Delivery') + ') Reference', '-'],
       ]) + '</div>');
   }
 
+  /* Two instruction blocks, each an h4 with its own Edit — the operator's and
+     the shipper's. They were small field labels here, a step too quiet for
+     what staging gives them. */
   function instructions() {
+    var one = function (heading) {
+      return (
+        '<div class="flex flex-col gap-2">' +
+        '<div class="flex items-center justify-between gap-2">' +
+        '<h4>' + esc(heading) + '</h4>' + headerLink('Edit') + '</div>' +
+        '<span class="text-cca-base-sm text-neutral-subtitle">-</span>' +
+        '</div>'
+      );
+    };
     return card('Instructions', headerLink('Translate', 'translation'),
       '<div class="flex flex-col gap-4">' +
-      '<div class="flex items-start justify-between gap-4">' +
-      field('Operator Instruction', '-') + headerLink('Edit') + '</div>' +
-      '<div class="flex items-start justify-between gap-4">' +
-      field('Internal Instructions', '-') + headerLink('Edit') + '</div>' +
-      '</div>');
+      one('Operator Instruction') + one('Shipper Instruction') + '</div>');
   }
 
   function co2(o) {
@@ -531,10 +662,16 @@
     return card('Overview of CO₂ offset for this order', '',
       '<p class="text-cca-base-sm text-neutral-caption">' +
       'Contribute to a sustainable future by offsetting CO2 emissions for your shipments.</p>' +
-      '<div class="mt-4 flex items-center justify-between gap-4">' +
-      '<span class="text-cca-base-sm text-neutral-caption">CO2 Offset:</span>' +
-      '<span class="text-cca-label-md text-neutral-title">' + esc(c.offset) + '</span></div>' +
-      '<div class="mt-4 grid grid-cols-2 gap-4">' +
+      '<hr class="my-4 border-neutral-default" />' +
+      '<div class="flex flex-col gap-2 text-cca-base-sm font-medium">' +
+      '<div class="flex items-center justify-between gap-4">' +
+      '<span class="text-neutral-caption">Shipper Contribution</span>' +
+      '<span class="font-bold text-neutral-title">' + esc(c.contribution) + '</span></div>' +
+      '<div class="flex items-center justify-between gap-4">' +
+      '<span class="text-neutral-caption">CO2 Offset:</span>' +
+      '<span class="font-bold text-neutral-title">' + esc(c.offset) + '</span></div></div>' +
+      '<hr class="my-4 border-neutral-default" />' +
+      '<div class="grid grid-cols-2 gap-4">' +
       item('droplet', 'Save Water', c.water) +
       item('users', 'Impact Lives', c.lives) +
       item('hand-holding-seedling', 'Land Greened', c.land) +
@@ -592,9 +729,11 @@
         '<a href="#" class="' + (on ? 'active' : '') + '" data-tab="' + esc(t.name) + '" ' +
         'role="tab" aria-selected="' + on + '">' + esc(t.name) +
         (t.badge
-          ? '<cca-numerical-badge class="ml-2"><span class="rounded-full font-medium primary ' +
-            'inline-flex items-center justify-center align-middle min-w-3.75">' +
-            '<span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">' +
+          /* Staging's tab badge is small and lifted off the label's cap line —
+             relative -top-3 left-1, and a 16px pill, not the 24px one. */
+          ? '<cca-numerical-badge class="relative -top-3 left-1"><span class="rounded-full ' +
+            'font-medium primary inline-flex items-center justify-center align-middle min-w-3.75">' +
+            '<span class="flex h-4 min-w-4 items-center justify-center px-1 text-2xs">' +
             t.badge + '</span></span></cca-numerical-badge>'
           : '') +
         '</a>'
@@ -623,17 +762,26 @@
          happens to it. Stacks on a narrow viewport rather than scrolling. */
       '<div class="mt-4 flex flex-wrap items-start gap-4">' +
       '<div class="flex min-w-80 flex-1 flex-col gap-4">' +
-      financeSummary(o) + contacts(o) + loadSummary(o) + palletInfo(o) + carrierAndVehicle(o) +
+      financeSummary(o) + contacts(o) + routeDetails(o) + loadSummary(o) +
+      requestedVehicle(o) + carrierAndVehicle(o) +
       '</div>' +
       '<div class="flex min-w-80 flex-[2] flex-col gap-4">' +
-      locationsInfo(o) + dateAndTimes(o) + references(o) + instructions() + co2(o) +
+      locationsInfo(o) + dateAndTimes(o) + references(o) + parkingRequirements() +
+      instructions() + co2(o) +
       '</div></div>';
   }
 
   function renderTitle(o) {
     titleHost.innerHTML =
       '<h1 class="text-NC-blue-default">Order Details - ' + esc(o.id) + '</h1>' +
-      (o.type ? typeBadge(o.type) : '');
+      /* Staging puts the order type in a cca-numerical-badge on `highlight`,
+         not the label badge the list column uses. */
+      (o.type
+        ? '<cca-numerical-badge class="flex h-full items-center">' +
+          '<span class="inline-flex min-w-3.75 items-center justify-center rounded-full ' +
+          'align-middle font-medium highlight"><span class="flex h-4 min-w-4 items-center ' +
+          'justify-center px-1 text-2xs">' + esc(o.type) + '</span></span></cca-numerical-badge>'
+        : '');
   }
 
   /* The not-found state. Links outlive fixtures, and a blank page reads as a
