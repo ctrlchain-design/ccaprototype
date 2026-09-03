@@ -33,9 +33,30 @@ starter template and the gotchas. Load it before writing prototype markup, not
 after.
 
 `_shared/` is the repo's thin layer over the design system: `prototype.css` (the
-rules every static prototype needs), `patterns.html` (composed patterns to copy)
-and `assets/flags/`. Start there rather than writing your own CSS, and put any new
-reusable fix there rather than in a single prototype.
+rules every static prototype needs), `patterns.html` (composed patterns to copy),
+`filters.js` (the Orders filter mechanism — drawer, pinned chips, value popover
+and the predicates behind them) and `assets/flags/`. Start there rather than
+writing your own CSS, and put any new reusable fix there rather than in a single
+prototype.
+
+**`_shared/filters.js` is where filtering lives.** Any prototype showing a list
+of records gets the whole mechanism by calling it, rather than rebuilding a
+drawer:
+
+    const filters = CCA_FILTERS.orders();       // the 31-filter Orders preset
+    const FX = CCA_FILTERS.mount({ filters, records, viewName, onChange });
+    FX.visible()                                // records surviving the filters
+
+It carries the parts that are easy to get wrong, all read off the running app
+rather than a Figma frame: pinning is layout and never filters, a pinned chip
+opens its values inline, the same filter renders as chips in the drawer and as
+checkboxes in that popover, and Category interlocks with Order Type so no one
+can filter to a combination no order can have. Its header documents the rest.
+
+Add a filter by adding to the preset, not by editing a prototype. A filter with
+no `field`, `derive` or `match` renders its control and says out loud that it
+does not narrow anything — which is honest for the ones this repo's fixtures
+cannot exercise, and better than a control that silently does nothing.
 
 Prototypes are one product, not separate screens: render records from
 `_shared/data.js` and link between prototypes by screen name

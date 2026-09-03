@@ -114,6 +114,7 @@ The handful of things a static prototype needs that the export does not provide.
 | `prototype.css` | Link after `ds/index.css`. Every recurring fix, each with a comment on what breaks without it. |
 | [`patterns.html`](_shared/patterns.html) | Composed patterns, rendered: top bar, saved-view tabs, filter chips, badges, a working drawer. |
 | `data.js` | The fixture records every prototype renders, so screens share one set of orders. |
+| `filters.js` | The whole Orders filter mechanism — drawer, pinned chips, value popover, and the predicates. Any list prototype gets it by calling `CCA_FILTERS.mount(...)`. |
 | `routes.js` | Resolves `data-screen` links; shows a "not prototyped yet" notice for screens that do not exist. |
 | `screens.js` | **Generated** by `build-screens.py`. The map of every page. |
 | `shell.js` | Makes the rail's Dark and Collapse work. |
@@ -124,6 +125,34 @@ Work something out that the next prototype will need? **Put it in `_shared/`.** 
 FE later ships a real token or component for it, **delete it from `_shared/`** and
 use the real thing — this is a holding pen for gaps in the export, not a second
 design system.
+
+#### Filtering a list
+
+`filters.js` is the one to reach for before building any filter UI. It carries
+the mechanism as the running app actually has it, which is not quite what the
+Figma shows:
+
+```js
+const filters = CCA_FILTERS.orders();          // the 31-filter Orders preset
+const FX = CCA_FILTERS.mount({ filters, records, viewName, onChange });
+FX.visible();                                  // records surviving the filters
+```
+
+Four things in there are easy to get wrong and are already handled:
+
+- **Pinning is a layout choice, not a filtering one.** It surfaces a filter
+  above the table and applies nothing.
+- **A pinned chip is clickable** and opens its values inline, so the common case
+  never needs the drawer.
+- **The same filter renders two ways** — chips in the drawer, a checkbox list in
+  the chip's popover. That is the app's behaviour, not a slip.
+- **Category interlocks with Order Type**, because no order is both a transport
+  movement and a warehouse one, and an invoice order has no type at all.
+
+Add a filter to the preset rather than to a prototype. One with no `field`,
+`derive` or `match` renders its control and says out loud that it does not
+narrow anything — honest for the filters these fixtures cannot exercise, and
+better than a control that silently does nothing.
 
 ### 3. The prototype itself
 
@@ -138,6 +167,7 @@ belongs in layer 2.
 <script src="../_shared/data.js"></script>
 <script src="../_shared/screens.js"></script>
 <script src="../_shared/routes.js"></script>
+<script src="../_shared/filters.js"></script>   <!-- only if the page filters a list -->
 <script src="../_shared/shell.js"></script>
 <script>/* the page's own script goes after these */</script>
 ```
