@@ -1068,10 +1068,19 @@
         'Basic Info is the one that is built.</p></div></section>';
       return;
     }
-    /* One card: header, rule, status, map — cca-order-map on the app. */
+    /*
+     * One card: header, rule, status, and — for a transport order — the map.
+     *
+     * A WAREHOUSE ORDER HAS NO MAP. It is handling at a site, not a movement
+     * being tracked across one, so a route schematic between two points was
+     * answering a question nobody asks of it. The Map Overview panel goes with
+     * it, since that panel only ever floated on the map.
+     */
     var top =
       '<section class="page-container flex w-full flex-col gap-4">' +
-      detailHeader(o) + mapRegion(o) + '</section>';
+      detailHeader(o) +
+      (o.domain === 'warehouse' ? '' : mapRegion(o)) +
+      '</section>';
 
     /*
      * A WAREHOUSE ORDER STOPS AT THE MAP, for now. Its Basic Info is being
