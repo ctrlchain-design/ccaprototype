@@ -280,11 +280,11 @@
                   </colgroup>
                   <thead>
                     <tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Actions</th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Category</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell proto-sticky-col" style="left: 0" role="columnheader">Actions</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell proto-sticky-col" style="left: calc(var(--spacing) * 22)" role="columnheader">Category</th>
                       <!-- The type badge is its own column in the design, with no header. -->
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader"></th>
-                      <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Reference Number</th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell proto-sticky-col" style="left: calc(var(--spacing) * 48)" role="columnheader"></th>
+                      <th class="mat-mdc-header-cell mdc-data-table__header-cell proto-sticky-col proto-sticky-edge" style="left: calc(var(--spacing) * 73)" role="columnheader">Reference Number</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Status</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Transit Status</th>
                       <th class="mat-mdc-header-cell mdc-data-table__header-cell" role="columnheader">Client</th>
@@ -1152,18 +1152,25 @@
           .map(
             (o) => `
           <tr class="mat-mdc-row mdc-data-table__row">
-            <td class="mat-mdc-cell mdc-data-table__cell">
+            <!--
+              FROZEN: Actions through Reference Number stay put while the rest
+              of the row scrolls. The left offsets match the colgroup — 0, 22,
+              48 and 73 spacing units — so they have to move together if a
+              width changes. See .proto-sticky-col in _shared/prototype.css for
+              why each needs a background and a z-index.
+            -->
+            <td class="mat-mdc-cell mdc-data-table__cell proto-sticky-col" style="left: 0">
               <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Row actions">${icon('ellipsis-vertical')}</button>
             </td>
-            <td class="mat-mdc-cell mdc-data-table__cell">${categoryBadge(o.domain)}</td>
-            <td class="mat-mdc-cell mdc-data-table__cell">${
+            <td class="mat-mdc-cell mdc-data-table__cell proto-sticky-col" style="left: calc(var(--spacing) * 22)">${categoryBadge(o.domain)}</td>
+            <td class="mat-mdc-cell mdc-data-table__cell proto-sticky-col" style="left: calc(var(--spacing) * 48)">${
               o.type
                 ? smallLabelBadge(o.type, TYPE_FLAVOR)
                 : notApplicable('Invoice orders have no order type')
             }</td>
-            <td class="mat-mdc-cell mdc-data-table__cell">
-              <!-- By SCREEN NAME, not folder — _shared/routes.js resolves it, and
-                   the click explains itself until the detail exists. -->
+            <td class="mat-mdc-cell mdc-data-table__cell proto-sticky-col proto-sticky-edge" style="left: calc(var(--spacing) * 73)">
+              <!-- By SCREEN NAME, not folder — _shared/routes.js resolves it.
+                   The detail page exists now, so this navigates. -->
               <a class="cca-btn cca-btn--link whitespace-nowrap" href="#"
                  data-screen="orders.detail" data-params='{"id":"${o.id}"}'>${o.id}</a>
             </td>
