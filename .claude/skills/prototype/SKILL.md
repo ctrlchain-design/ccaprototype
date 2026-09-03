@@ -535,7 +535,14 @@ EOF
 
 **`cca-btn--link` always underlines.** It hard-codes
 `text-decoration: underline`, which is right for a link in prose and wrong for a
-header action. Use `.proto-header-link` from `_shared/prototype.css`.
+header action — use `cca-btn cca-btn--small cca-btn--tertiary`, which is what the
+app uses and is already undecorated and brand-coloured.
+
+This used to say "use `.proto-header-link` from `_shared/prototype.css`". That
+class is GONE — deleted on purpose, with a note at the top of `prototype.css`
+saying so, because it was a stand-in for a component that already existed. Nine
+anchors in `orders-detail` were still written against it and rendered completely
+unstyled. If you read that advice anywhere else, it is stale.
 
 **Dark mode.** The tokens flip under `@media (prefers-color-scheme: dark)` unless
 the root has `class="light"`. Without `<html lang="en" class="light">`, the

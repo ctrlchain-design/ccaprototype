@@ -224,7 +224,7 @@
         '<div><p class="text-2xs text-neutral-caption">Required: ' +
         '<span class="text-neutral-body">' + esc(o.detail.cargo.temperatureRange) + '</span></p>' +
         '<p class="text-2xs text-neutral-caption">Current: ' +
-        '<span class="text-critical-text">Disconnected</span></p></div></div>'
+        '<span class="critical-text">Disconnected</span></p></div></div>'
       : '';
     return (
       '<cca-detail-header class="block">' +
@@ -232,14 +232,17 @@
       '<div class="flex items-center justify-between gap-4">' +
       '<header class="flex w-full flex-wrap items-center justify-between gap-2">' +
       '<div class="flex items-center gap-8">' +
-      end('First Pickup', e.a) +
+      end(o.domain === 'warehouse' ? 'Origin' : 'First Pickup', e.a) +
       '<cca-trip-indicator class="block">' +
       '<div class="relative flex flex-col items-center gap-1 pt-1">' +
       '<div class="flex w-40 items-center">' + dot +
       '<span class="flex h-1 w-full items-center justify-center surface-brand-light"></span>' +
       dot + '</div>' +
-      '<span class="text-cca-base-sm font-medium info-text">' +
-      esc(o.detail.route.distance) + '</span>' +
+      /* A warehouse order has no road distance of its own — that belongs to the
+         transport leg. Better a bare connector than a borrowed number. */
+      (o.domain === 'warehouse' ? '' :
+        '<span class="text-cca-base-sm font-medium info-text">' +
+        esc(o.detail.route.distance) + '</span>') +
       '</div></cca-trip-indicator>' +
       end(o.domain === 'warehouse' ? 'Destination' : 'Last Delivery', e.b) +
       '</div>' + temp + '</header>' +
@@ -381,13 +384,15 @@
     var rows = [
       ['Customer Invoice Status', o.customerInvoiceStatus || 'Not Invoiced',
        o.customerInvoiceStatus === 'Paid' ? 'primary' : 'neutral-caption'],
-      ['Carrier Invoice Status', 'Not Invoiced', 'neutral-caption'],
+      /* No carrier on a warehouse order, so no carrier invoice to have a
+         status. The row was reading "Not Invoiced" as though one were pending. */
+      o.carrierGroup ? ['Carrier Invoice Status', 'Not Invoiced', 'neutral-caption'] : null,
       ['POD Status', o.podApproved ? 'Approved' : 'Not approved',
        o.podApproved ? 'primary' : 'neutral-caption'],
     ];
     return card('Finance Summary', '',
       '<div class="flex flex-col gap-3">' +
-      rows.map(function (r) {
+      rows.filter(Boolean).map(function (r) {
         return '<div class="flex items-center justify-between gap-4">' +
           '<span class="text-cca-base-sm text-neutral-caption">' + esc(r[0]) + '</span>' +
           dotValue(r[1], r[2]) + '</div>';
@@ -807,7 +812,19 @@
      rather than pretending — a detail page with one tab misrepresents the
      information architecture, and someone reviewing this needs to see that
      Pricing and Documents are their own places. */
-  var TABS = [
+  /*
+   * TAB SETS DIFFER BY DOMAIN. A transport order has seven; a warehouse order
+   * has four — no Actions, Route Planning or Pricing, because none of those are
+   * things a warehouse order carries. Showing the transport set on a warehouse
+   * order would claim capabilities it does not have, which is the same mistake
+   * as an empty section pretending to hold data.
+   *
+   * Only Basic Info is built on either. The rest are listed rather than hidden
+   * because a detail page showing one tab misrepresents the information
+   * architecture — someone reviewing this needs to see that Documents and
+   * Event Log are their own places.
+   */
+  var TRANSPORT_TABS = [
     { name: 'Basic Info', built: true },
     { name: 'Actions', built: false, badge: 1 },
     { name: 'Documents', built: false },
@@ -816,6 +833,23 @@
     { name: 'Communication', built: false },
     { name: 'Event Log', built: false },
   ];
+
+  var WAREHOUSE_TABS = [
+    { name: 'Basic Info', built: true },
+    { name: 'Communication', built: false },
+    { name: 'Documents', built: false },
+    { name: 'Event Log', built: false },
+  ];
+
+  /* Invoice orders are still on the transport set — nobody has said what an
+     invoice order's tabs are, and guessing is worse than being obviously
+     unfinished. */
+  function tabsFor(o) {
+    return o && o.domain === 'warehouse' ? WAREHOUSE_TABS : TRANSPORT_TABS;
+  }
+
+  var TABS = tabsFor(order);
+
   var activeTab = 'Basic Info';
 
   /*
@@ -875,10 +909,29 @@
         'Basic Info is the one that is built.</p></div></section>';
       return;
     }
-    bodyHost.innerHTML =
-      /* One card: header, rule, status, map — cca-order-map on the app. */
+    /* One card: header, rule, status, map — cca-order-map on the app. */
+    var top =
       '<section class="page-container flex w-full flex-col gap-4">' +
-      detailHeader(o) + mapRegion(o) + '</section>' +
+      detailHeader(o) + mapRegion(o) + '</section>';
+
+    /*
+     * A WAREHOUSE ORDER STOPS AT THE MAP, for now. Its Basic Info is being
+     * built section by section rather than inherited from the transport page —
+     * the transport layout below the map (Route Details, Requested Vehicle(s),
+     * Parking Requirements, the CO2 offset) is about moving goods by road, and
+     * the rest needs deciding on its own terms rather than adapted by guesswork.
+     *
+     * So nothing is rendered below the map until it has been specified. That is
+     * deliberate: an empty area is honest, whereas transport cards full of
+     * dashes would read as a warehouse order missing its data.
+     */
+    if (o.domain === 'warehouse') {
+      bodyHost.innerHTML = top;
+      return;
+    }
+
+    bodyHost.innerHTML =
+      top +
       /* Two columns: the narrow one carries what the order IS, the wide one what
          happens to it. Stacks on a narrow viewport rather than scrolling. */
       '<div class="mt-4 flex flex-wrap items-start gap-4">' +
@@ -886,7 +939,7 @@
       financeSummary(o) + contacts(o) + routeDetails(o) + loadSummary(o) +
       requestedVehicle(o) + carrierAndVehicle(o) +
       '</div>' +
-      '<div class="flex min-w-80 flex-[2] flex-col gap-4">' +
+      '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
       locationsInfo(o) + dateAndTimes(o) + references(o) + parkingRequirements() +
       instructions() + co2(o) +
       '</div></div>';
