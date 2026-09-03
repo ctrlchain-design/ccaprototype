@@ -1066,27 +1066,53 @@
       'class="cca-btn cca-btn--subtle cca-btn--icon-only" aria-label="Expand ' + esc(heading) + '">' +
       icon('fullscreen') + '</button>' +
       '</div></div>' +
-      '<div class="mt-4">' + body + paginator(count) + '</div>' +
+      '<div class="mt-4">' + body + paginator(key, count) + '</div>' +
       '</section>'
     );
   }
 
-  /* The repo's paginator, as oms/ and orders-pinned-filters/ render it. */
-  function paginator(count) {
-    var arrow = function (label, glyph, disabled) {
+  /*
+   * The repo's paginator, as oms/ and orders-pinned-filters/ render it.
+   *
+   * The range and the arrows are COMPUTED. This used to print "1-<count> of
+   * <count>" beside a hard-coded 25 with all four arrows disabled, so a
+   * fourteen-row table claimed to be showing all fourteen on a page of 25 and
+   * offered no way to move. Page size is 10, which is what the rest of the
+   * repo's tables use.
+   */
+  var PAGE_SIZE = 10;
+  var page = { 'order-items': 0, shortages: 0 };
+
+  function paginator(key, count) {
+    var pages = Math.max(1, Math.ceil(count / PAGE_SIZE));
+    var current = Math.min(page[key] || 0, pages - 1);
+    var from = count ? current * PAGE_SIZE + 1 : 0;
+    var to = Math.min(count, (current + 1) * PAGE_SIZE);
+    var arrow = function (label, glyph, disabled, target) {
       return '<button ccaButton type="button" class="cca-btn cca-btn--tertiary cca-btn--icon-only"' +
-        (disabled ? ' disabled' : '') + ' aria-label="' + label + '">' + icon(glyph) + '</button>';
+        (disabled ? ' disabled' : ' data-page="' + key + ':' + target + '"') +
+        ' aria-label="' + label + '">' + icon(glyph) + '</button>';
     };
     return (
       '<div class="mt-4 flex flex-wrap items-center justify-end gap-3">' +
       '<span class="text-cca-label-sm text-neutral-caption">Rows per page</span>' +
       '<span class="flex items-center gap-2 rounded-lg border border-neutral-default px-3 py-1 text-cca-base-sm text-neutral-body">' +
-      '25' + icon('chevron-down') + '</span>' +
-      '<span class="text-cca-label-sm text-neutral-caption">1-' + count + ' of ' + count + '</span>' +
-      arrow('First page', 'chevrons-left', true) + arrow('Previous page', 'chevron-left', true) +
-      arrow('Next page', 'chevron-right', true) + arrow('Last page', 'chevrons-right', true) +
+      PAGE_SIZE + icon('chevron-down') + '</span>' +
+      '<span class="text-cca-label-sm text-neutral-caption">' +
+      from + '-' + to + ' of ' + count + '</span>' +
+      arrow('First page', 'chevrons-left', current === 0, 0) +
+      arrow('Previous page', 'chevron-left', current === 0, current - 1) +
+      arrow('Next page', 'chevron-right', current >= pages - 1, current + 1) +
+      arrow('Last page', 'chevrons-right', current >= pages - 1, pages - 1) +
       '</div>'
     );
+  }
+
+  /* The slice the current page shows. */
+  function pageSlice(key, rows) {
+    var pages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+    var current = Math.min(page[key] || 0, pages - 1);
+    return rows.slice(current * PAGE_SIZE, (current + 1) * PAGE_SIZE);
   }
 
   function th(label) {
@@ -1134,8 +1160,9 @@
      opening one is the user's move, not the page's. */
   var itemOpen = {};
 
-  function orderItems() {
-    var items = D.orderItems();
+  function orderItems(o) {
+    var items = D.orderItems(o);
+    var shown = pageSlice('order-items', items);
     var cols = ['', 'Line', 'Product Code', 'Product Description', 'Best Before Date',
                 'LOT/Batch', 'Quality', 'Ordered Quantity', 'Shipped Quantity', 'UOM',
                 'UOM Type', 'Shortage', 'Pallets Ordered', 'Pallets Shipped', 'Temp Class'];
@@ -1171,7 +1198,7 @@
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
       '<tbody class="mdc-data-table__content">' +
-      items.map(function (it) {
+      shown.map(function (it) {
         var open = !!itemOpen[it.line] && it.pallets.length;
         return '<tr class="mat-mdc-row mdc-data-table__row">' +
           td(it.pallets.length
@@ -1191,6 +1218,7 @@
 
   function shortages() {
     var rows = D.shortages();
+    var shown = pageSlice('shortages', rows);
     var cols = ['Line', 'Product Code', 'Product Description', 'Shortage Quantity'];
     var body =
       '<div class="max-h-96 overflow-auto">' +
@@ -1198,7 +1226,7 @@
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
       '<tbody class="mdc-data-table__content">' +
-      rows.map(function (r) {
+      shown.map(function (r) {
         return '<tr class="mat-mdc-row mdc-data-table__row">' +
           td(txt(r.line)) + td(txt(r.code)) + td(txt(r.description)) + td(txt(r.quantity)) +
           '</tr>';
@@ -1479,7 +1507,7 @@
            fifteen columns in a two-thirds column, so its own overflow-x-auto
            wrapper does the work — the table scrolls inside the card rather
            than widening the page. */
-        locationsInfo(o) + orderItems() + shortages() + dateAndTimes(o) +
+        locationsInfo(o) + orderItems(o) + shortages() + dateAndTimes(o) +
         '</div></div>';
       return;
     }
@@ -1527,6 +1555,15 @@
   /* ------------------------------------------------------------ behaviour */
 
   document.addEventListener('click', function (ev) {
+    /* ------------------------------------------------ paginator arrows */
+    var pg = ev.target.closest('[data-page]');
+    if (pg) {
+      var parts = pg.getAttribute('data-page').split(':');
+      page[parts[0]] = parseInt(parts[1], 10);
+      renderBody(order);
+      return;
+    }
+
     /* ------------------------------------- an item row's SSCC pallets */
     var it = ev.target.closest('[data-item-toggle]');
     if (it) {

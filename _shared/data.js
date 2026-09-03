@@ -668,41 +668,71 @@ linked: ['CCA2023-000274.1'],
 
   /*
    * ORDER ITEMS AND SHORTAGES — the two tables below Locations Info on a
-   * warehouse order. Shape taken from Figma 29Ixi12L8wlQPTh3oVg0ao node
-   * 103:52832; the values are invented.
+   * warehouse order. Shape from Figma 29Ixi12L8wlQPTh3oVg0ao node 103:52832;
+   * the values are invented.
    *
-   * An item row expands into its SSCC pallets, which is why `pallets` hangs
-   * off each item rather than being a flat second table: an SSCC belongs to
-   * exactly one line.
+   * THE ROWS ARE BUILT FROM THE ORDER, not stored as one shared list.
+   *
+   * They used to be a fixed pair of lines, which meant General Information
+   * derived "2 lines / 10 pallets" on an order whose own record says 14 and 18
+   * — the page contradicting itself, and the paginator claiming two rows for
+   * every warehouse order regardless of size. Now each order gets `o.lines`
+   * rows whose palletsOrdered sum to exactly `o.pallets`, so the totals above
+   * the table, the rows in it, and the order record all agree.
+   *
+   * Deterministic: the catalogue cycles by index, no randomness, so a re-render
+   * produces the same table.
    */
-  var WAREHOUSE_ITEMS = [
-    {
-      line: '0010', code: '10533',
-      description: 'Onion Cubes 10x10SF Med-1x10kg - BP80',
-      bestBefore: 'Mon, 12 Mar 2028', lot: 'L6071', quality: '-',
-      ordered: '560', shipped: '560', uom: 'CA', uomType: 'Default UoM',
-      shortage: '-', palletsOrdered: '7', palletsShipped: '7', tempClass: 'Frozen',
-      pallets: [
-        { sscc: '388284', lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', ordered: '80',
-          shipped: '80', uom: 'CA', uomType: 'Default UoM', quality: '-',
-          temperature: '- 37.2 °C', profileCheck: '€ 543.00' },
-        { sscc: '388290', lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', ordered: '80',
-          shipped: '80', uom: 'CA', uomType: 'Default UoM', quality: '-',
-          temperature: '- 37.2 °C', profileCheck: '€ 155.00' },
-        { sscc: '388296', lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', ordered: '80',
-          shipped: '80', uom: 'CA', uomType: 'Default UoM', quality: '-',
-          temperature: '- 37.2 °C', profileCheck: '€ 155.00' },
-      ],
-    },
-    {
-      line: '0020', code: '12070',
-      description: 'Onion strips SF Med-1x10kg - bp70',
-      bestBefore: 'Mon, 03 Feb 2028', lot: 'L6034', quality: '-',
-      ordered: '210', shipped: '210', uom: 'CA', uomType: 'Default UoM',
-      shortage: '-', palletsOrdered: '3', palletsShipped: '3', tempClass: 'Frozen',
-      pallets: [],
-    },
+  var ITEM_CATALOGUE = [
+    { code: '10533', description: 'Onion Cubes 10x10SF Med-1x10kg - BP80',
+      lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', tempClass: 'Frozen' },
+    { code: '12070', description: 'Onion strips SF Med-1x10kg - bp70',
+      lot: 'L6034', bestBefore: 'Mon, 03 Feb 2028', tempClass: 'Frozen' },
+    { code: '10884', description: 'Leek Rings 10x10SF Med-1x10kg - BP80',
+      lot: 'L6112', bestBefore: 'Thu, 27 Apr 2028', tempClass: 'Frozen' },
+    { code: '11402', description: 'Carrot Cubes 10x10 Fine-1x10kg - BP60',
+      lot: 'L5988', bestBefore: 'Sat, 15 Jan 2028', tempClass: 'Frozen' },
+    { code: '13115', description: 'Pepper Mix Strips SF-1x10kg - bp70',
+      lot: 'L6203', bestBefore: 'Wed, 09 Aug 2028', tempClass: 'Frozen' },
+    { code: '10061', description: 'Spinach Leaf Whole-1x10kg - BP80',
+      lot: 'L6047', bestBefore: 'Tue, 22 Feb 2028', tempClass: 'Frozen' },
   ];
+
+  /* Pallets spread as evenly as the order's own total allows: one each, then
+     the remainder over the first rows. Sums to o.pallets exactly. */
+  function buildItems(o) {
+    var n = o.lines || 0;
+    if (!n) return [];
+    var total = o.pallets || 0;
+    var base = Math.floor(total / n);
+    var extra = total - base * n;
+    var rows = [];
+    for (var i = 0; i < n; i++) {
+      var cat = ITEM_CATALOGUE[i % ITEM_CATALOGUE.length];
+      var pallets = base + (i < extra ? 1 : 0);
+      var qty = pallets * 80;
+      var pals = [];
+      for (var k = 0; k < pallets; k++) {
+        pals.push({
+          sscc: String(388284 + i * 6 + k * 2),
+          lot: cat.lot, bestBefore: cat.bestBefore,
+          ordered: '80', shipped: '80', uom: 'CA', uomType: 'Default UoM',
+          quality: '-', temperature: '- 37.2 °C',
+          profileCheck: k === 0 ? '€ 543.00' : '€ 155.00',
+        });
+      }
+      rows.push({
+        line: String((i + 1) * 10).padStart(4, '0'),
+        code: cat.code, description: cat.description,
+        bestBefore: cat.bestBefore, lot: cat.lot, quality: '-',
+        ordered: String(qty), shipped: String(qty),
+        uom: 'CA', uomType: 'Default UoM', shortage: '-',
+        palletsOrdered: String(pallets), palletsShipped: String(pallets),
+        tempClass: cat.tempClass, pallets: pals,
+      });
+    }
+    return rows;
+  }
 
   var WAREHOUSE_SHORTAGES = [
     { line: '0010', code: '31029065', description: '8 St Limone XXL 88ml (X6) LIDL',
@@ -1119,7 +1149,7 @@ linked: ['CCA2023-000274.1'],
      * orders share a cargo manifest.
      */
     /* The two warehouse tables below Locations Info. */
-    orderItems: function () { return WAREHOUSE_ITEMS; },
+    orderItems: function (o) { return buildItems(o || {}); },
     shortages: function () { return WAREHOUSE_SHORTAGES; },
 
     /* The Shipment updates drawer's events, by domain. */
