@@ -1059,7 +1059,14 @@
       '<div class="flex flex-wrap items-center justify-between gap-4">' +
       '<h2>' + esc(heading) + '</h2>' +
       '<div class="flex shrink-0 items-center gap-3">' +
-      '<div class="w-40">' +
+      /*
+       * proto-no-subscript, from _shared/prototype.css. Material reserves 24px
+       * under every form field for hints and errors, so this field rendered
+       * 72px tall and pushed the whole header row to 72px — the field even
+       * overhanging the card's content box by 4px. The repo already had the
+       * fix and oms/ and orders-pinned-filters/ both use it; this did not.
+       */
+      '<div class="proto-no-subscript w-40">' +
       window.CCA_FILTERS.labelledField(key + '-uom', 'UoM', uom, null, '') +
       '</div>' +
       '<button ccaButton hierarchy="subtle" type="button" ' +
