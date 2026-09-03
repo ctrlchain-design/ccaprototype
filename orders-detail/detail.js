@@ -1074,7 +1074,8 @@
       'aria-label="Show ' + esc(heading) + ' full screen">' +
       icon('fullscreen') + '</button>' +
       '</div></div>' +
-      '<div class="mt-4">' + body + paginator(key, count) + '</div>' +
+      '<div class="mt-4">' + body +
+      '<div data-table-pager>' + paginator(key, count) + '</div></div>' +
       '</section>'
     );
   }
@@ -1123,9 +1124,18 @@
     return rows.slice(current * PAGE_SIZE, (current + 1) * PAGE_SIZE);
   }
 
+  /*
+   * The header stays put while the rows scroll under it.
+   *
+   * `sticky top-0` on the th rather than the platform's mat-mdc-table-sticky:
+   * that class is `position: sticky !important` PLUS 2px brand-coloured
+   * borders, and the app supplies its top/left/z-index inline at runtime. Here
+   * the plain utilities say exactly what is meant and nothing more. The
+   * surface matters — without it the rows show through as they pass beneath.
+   */
   function th(label) {
-    return '<th class="mat-mdc-header-cell mdc-data-table__header-cell whitespace-nowrap" ' +
-      'role="columnheader">' + esc(label) + '</th>';
+    return '<th class="mat-mdc-header-cell mdc-data-table__header-cell whitespace-nowrap ' +
+      'sticky top-0 z-10 surface-neutral-light" role="columnheader">' + esc(label) + '</th>';
   }
   function td(inner, extra) {
     return '<td class="mat-mdc-cell mdc-data-table__cell ' + (extra || '') + '">' + inner + '</td>';
@@ -1219,8 +1229,8 @@
       ].map(function (f) { return genField(f[0], f[1]); }).join('') + '</div>';
 
     var body =
-      general +
-      '<div class="mt-5 max-h-96 overflow-auto">' +
+      '<div data-table-general>' + general + '</div>' +
+      '<div class="mt-5 max-h-96 overflow-auto" data-table-scroll>' +
       '<table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
@@ -1245,7 +1255,12 @@
               'data-item-toggle="' + it.line + '" ' +
               'aria-expanded="' + (open ? 'true' : 'false') + '" ' +
               'aria-label="' + (open ? 'Collapse' : 'Expand') + ' line ' + esc(it.line) + '">' +
-              icon(open ? 'chevron-down' : 'chevron-up') + '</button>'
+              /* Collapsed points DOWN ("open me"), expanded points UP. This
+                 was inverted for a while, from a request aimed at the CARD
+                 accordions — and those are gone now, replaced by the height
+                 cap, so the row toggle was the only thing left carrying it and
+                 it read backwards in a table. */
+              icon(open ? 'chevron-up' : 'chevron-down') + '</button>'
             : '', 'w-10') +
           td(txt(it.line)) + td(txt(it.code)) + td(txt(it.description)) +
           td(stamp('At', it.bestBefore, '')) +
@@ -1263,7 +1278,7 @@
     var shown = pageSlice('shortages', rows);
     var cols = ['Line', 'Product Code', 'Product Description', 'Shortage Quantity'];
     var body =
-      '<div class="max-h-96 overflow-auto">' +
+      '<div class="max-h-96 overflow-auto" data-table-scroll>' +
       '<table class="mat-mdc-table mdc-data-table__table" style="width:100%">' +
       '<thead><tr class="mat-mdc-header-row mdc-data-table__header-row" role="row">' +
       cols.map(th).join('') + '</tr></thead>' +
@@ -1300,14 +1315,21 @@
     }
     var isItems = fullscreenKey === 'order-items';
     var heading = isItems ? 'Order Items' : 'Shortages';
-    var built = isItems ? orderItems(order) : shortages();
-    /* Reuse the card the page already renders, then unpick the two things
-       that only make sense in a column: the height cap and its own header. */
+    /* Reuse the card the page already renders, then lay its parts out as a
+       column that FILLS the pane: the summary and the paginator hold their
+       height, the table takes everything left. Without this the table sat at
+       its natural height and left the bottom half of the overlay empty. */
     var holder = document.createElement('div');
-    holder.innerHTML = built;
+    holder.innerHTML = isItems ? orderItems(order) : shortages();
     var section = holder.firstElementChild;
-    section.querySelector('.max-h-96').classList.remove('max-h-96');
-    section.firstElementChild.remove();
+    var general = section.querySelector('[data-table-general]');
+    var scroll = section.querySelector('[data-table-scroll]');
+    var pager = section.querySelector('[data-table-pager]');
+    /* The cap is the column's answer to a long table; here the pane's own
+       height is. */
+    scroll.classList.remove('max-h-96', 'mt-5');
+    scroll.classList.add('h-full');
+
     pane.innerHTML =
       '<div class="flex shrink-0 items-center justify-between gap-4 border-b border-neutral-default p-6">' +
       '<h2>' + esc(heading) + '</h2>' +
@@ -1315,7 +1337,12 @@
       'class="cca-btn cca-btn--icon-only cca-btn--icon" data-exit-fullscreen ' +
       'aria-label="Close full screen">' + icon('xmark') + '</button>' +
       '</div>' +
-      '<div class="proto-drawer-body p-6">' + section.innerHTML + '</div>';
+      '<div class="flex min-h-0 flex-1 flex-col px-6 pt-4">' +
+      (general ? '<div class="shrink-0">' + general.innerHTML + '</div>' : '') +
+      '<div class="mt-4 min-h-0 flex-1 overflow-auto">' + scroll.innerHTML + '</div>' +
+      '</div>' +
+      '<div class="shrink-0 px-6 pb-4">' + (pager ? pager.innerHTML : '') + '</div>';
+
     box.hidden = false;
     var scrim = document.getElementById('fullscreen-scrim');
     void scrim.offsetWidth;
