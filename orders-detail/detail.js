@@ -144,10 +144,20 @@
     );
   }
 
+  /*
+   * THE ORDERS TABLE'S TYPE BADGE, character for character — oms/index.html's
+   * smallLabelBadge on the `neutral` flavour. One order type should not read
+   * differently depending on which screen you are looking at.
+   *
+   * No `border` utility: `emphasis-outline` already supplies border-width 1px
+   * and border-color, and `cca-label-badge .neutral.emphasis-outline` outranks
+   * a one-class utility anyway — the `border border-transparent` this used to
+   * carry was inert.
+   */
   function typeBadge(text) {
     return (
-      '<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg border ' +
-      'border-transparent whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm font-normal ' +
+      '<cca-label-badge><div class="flex w-fit items-center gap-1 rounded-lg ' +
+      'whitespace-nowrap px-1.5 py-0.5 text-cca-label-sm leading-4 font-normal ' +
       'neutral emphasis-outline">' + esc(text) + '</div></cca-label-badge>'
     );
   }
@@ -420,7 +430,14 @@
       ['POD Status', o.podApproved ? 'Approved' : 'Not approved',
        o.podApproved ? 'primary' : 'neutral-caption'],
     ];
-    return card('Finance Summary', '',
+    /* POD Status is the last row here, so the action that acts on it belongs in
+       this card's header. Secondary rather than the tertiary the other card
+       headers use: it is a real deliverable, not an inline edit. */
+    var downloadPod =
+      '<button ccaButton hierarchy="secondary" type="button" ' +
+      'class="cca-btn cca-btn--secondary shrink-0" data-download-pod>' +
+      icon('export') + 'Download POD</button>';
+    return card('Finance Summary', downloadPod,
       '<div class="flex flex-col gap-3">' +
       rows.filter(Boolean).map(function (r) {
         return '<div class="flex items-center justify-between gap-4">' +
@@ -1138,14 +1155,11 @@
   function renderTitle(o) {
     titleHost.innerHTML =
       '<h1 class="text-NC-blue-default">Order Details - ' + esc(o.id) + '</h1>' +
-      /* Staging puts the order type in a cca-numerical-badge on `highlight`,
-         not the label badge the list column uses. */
-      (o.type
-        ? '<cca-numerical-badge class="flex h-full items-center">' +
-          '<span class="inline-flex min-w-3.75 items-center justify-center rounded-full ' +
-          'align-middle font-medium highlight"><span class="flex h-4 min-w-4 items-center ' +
-          'justify-center px-1 text-2xs">' + esc(o.type) + '</span></span></cca-numerical-badge>'
-        : '');
+      /* The same badge the Orders table gives the type column. Staging puts a
+         cca-numerical-badge on `highlight` here, but a reviewer moving from
+         the list to the detail should see one type badge, not two designs of
+         it — and the list is the one people read all day. */
+      (o.type ? typeBadge(o.type) : '');
   }
 
   /* The not-found state. Links outlive fixtures, and a blank page reads as a
