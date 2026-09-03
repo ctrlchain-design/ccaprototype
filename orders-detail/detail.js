@@ -427,8 +427,12 @@
       /* No carrier on a warehouse order, so no carrier invoice to have a
          status. The row was reading "Not Invoiced" as though one were pending. */
       o.carrierGroup ? ['Carrier Invoice Status', 'Not Invoiced', 'neutral-caption'] : null,
-      ['POD Status', o.podApproved ? 'Approved' : 'Not approved',
-       o.podApproved ? 'primary' : 'neutral-caption'],
+      /* A warehouse order carries the three-state podStatus; transport still
+         has only the podApproved boolean. */
+      o.podStatus
+        ? ['POD Status', o.podStatus, o.podStatus === 'Approved' ? 'primary' : 'neutral-caption']
+        : ['POD Status', o.podApproved ? 'Approved' : 'Not approved',
+           o.podApproved ? 'primary' : 'neutral-caption'],
     ];
     /*
      * Under the rows, not in the header: it acts on POD Status, which is the
@@ -441,7 +445,16 @@
      * for, and it put a new button on the transport page after that page was
      * signed off. Transport can have it when someone asks for it there.
      */
-    var downloadPod = o.domain !== 'warehouse' ? '' :
+    /*
+     * ONLY WHEN A POD HAS ACTUALLY BEEN UPLOADED. Offering a download on an
+     * order whose POD has not been sent is a button that cannot work.
+     *
+     * Read literally: it shows on `Uploaded` and not on `Approved`. Flagged
+     * rather than assumed — an approved POD is by definition an uploaded one,
+     * so if Approved should also offer the download, this is the line to
+     * widen.
+     */
+    var downloadPod = (o.domain !== 'warehouse' || o.podStatus !== 'Uploaded') ? '' :
       '<div class="mt-4 border-t border-neutral-default pt-4">' +
       '<button ccaButton hierarchy="secondary" type="button" ' +
       'class="cca-btn cca-btn--secondary w-full" data-download-pod>' +

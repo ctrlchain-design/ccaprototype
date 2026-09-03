@@ -262,6 +262,11 @@ linked: [],
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Uploaded',
       /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
          transport fixture's Booker; a warehouse order's counterpart is the
          client, so it carries its own rather than borrowing that one. */
@@ -294,6 +299,11 @@ linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Not Sent',
       /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
          transport fixture's Booker; a warehouse order's counterpart is the
          client, so it carries its own rather than borrowing that one. */
@@ -326,6 +336,11 @@ linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Not Sent',
       /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
          transport fixture's Booker; a warehouse order's counterpart is the
          client, so it carries its own rather than borrowing that one. */
@@ -358,6 +373,11 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Not Sent',
       /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
          transport fixture's Booker; a warehouse order's counterpart is the
          client, so it carries its own rather than borrowing that one. */
@@ -390,6 +410,11 @@ linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Approved',
       /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
          transport fixture's Booker; a warehouse order's counterpart is the
          client, so it carries its own rather than borrowing that one. */
