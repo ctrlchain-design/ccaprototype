@@ -440,6 +440,7 @@
     <script src="../_shared/screens.js"></script>
     <script src="../_shared/shell-markup.js"></script>
     <script src="../_shared/routes.js"></script>
+    <script src="../_shared/filters.js"></script>
     <script src="../_shared/nav.js"></script>
     <script src="../_shared/shell.js"></script>
 
@@ -496,7 +497,7 @@
        * Making it an explicit column also makes it sortable and filterable,
        * which inference never was.
        */
-      const CATEGORY = { transport: 'Transport', warehouse: 'Warehouse', invoice: 'Invoice' };
+      const CATEGORY = window.CCA_FILTERS.CATEGORY;
 
       /*
        * ONE COMPONENT FOR EVERY TYPE, whichever domain it belongs to.
@@ -666,147 +667,28 @@
        * An empty selection means "no filter", never "nothing matches": a
        * filter with no values chosen must not empty the table.
        */
-      function visibleOrders() {
-        const applied = (name) => (FILTERS.filter((f) => f.name === name)[0] || {}).applied || [];
-        const cat = applied('Category');
-        const type = applied('Order Type');
-        const stat = applied('Order Status');
-        // The filter spells MT out; the badge abbreviates it.
-        const typeOf = (o) => (o.type === 'MT' ? 'Managed transportation' : o.type);
-        return ALL.filter((o) => {
-          if (cat.length && cat.indexOf(CATEGORY[o.domain]) === -1) return false;
-          if (type.length && type.indexOf(typeOf(o)) === -1) return false;
-          if (stat.length && stat.indexOf(o.status) === -1) return false;
-          return true;
-        });
-      }
+      /*
+       * Filtering, the filter definitions and every control now live in
+       * _shared/filters.js — read its header for how the mechanism works. This
+       * page keeps the markup shell and the wiring; the module owns the
+       * definitions, the controls and the predicates, so the next list
+       * prototype gets all of it without copying anything.
+       */
+      const FILTERS = window.CCA_FILTERS.orders();
+      const FX = window.CCA_FILTERS.mount({
+        filters: FILTERS,
+        records: ALL,
+        viewName: 'All orders',
+        onChange: function () { renderRows(); },
+      });
 
-      /* =================================================================
-       * FILTERS — the real list, read off the running app at
-       * development.ctrlchain.com/shipper-tms/order. 31 filters there; this
-       * adds Category, which is this table's own.
-       *
-       * HOW FILTERS WORK, since it is one mechanism and not three:
-       *
-       *   · Filters belong to the ACTIVE SAVED VIEW. The drawer is headed by
-       *     the view's name, not by the word "Filters", and the count badge
-       *     counts filters with values applied in that view.
-       *   · Each row carries a PIN, the name, a count badge once values are
-       *     applied, and a chevron. Pinned rows sort to the top and open
-       *     expanded; the rest sit below, collapsed, alphabetical.
-       *   · Pinning is a LAYOUT choice, not a filtering one. It surfaces the
-       *     filter above the table; it applies nothing. The "Show pinned
-       *     filters above the table" switch hides that row wholesale.
-       *   · Values are `cca-chip` — selectable filter chips, INSIDE the drawer.
-       *     This page briefly had them above the table, which collided with the
-       *     pinned row; that is what the chips are for, one level in.
-       *   · There is no Apply step. Picking a value filters immediately; the
-       *     only footer action is Save Changes, which saves the view.
-       *
-       * `kind` is how the row renders its control, matching the app: chips for
-       * an enumerated set, text for free entry, select for a lookup, date for a
-       * range, switch for a boolean.
-       * ================================================================= */
-      const FILTERS = [
-        // --- pinned ------------------------------------------------------
-        { name: 'Category', kind: 'chips', pinned: true,
-          values: ['Transport', 'Warehouse', 'Invoice'], applied: [] },
-        { name: 'Order Type', kind: 'chips', pinned: true,
-          /* The app spells MT out as "Managed transportation" in the filter
-             while the badge abbreviates it. Warehouse types are appended —
-             the app's list is transport-only. */
-          values: ['Brokerage', 'Managed transportation', 'Own Fleet', 'SAAS', 'Inbound', 'Outbound'],
-          applied: [] },
-        { name: 'Order Status', kind: 'chips', pinned: true,
-          /* Transport statuses are the app's own. Warehouse adds its
-             lifecycle — see WAREHOUSE_ORDERS in _shared/data.js. */
-          values: ['Cancelled', 'Carrier Informed', 'Completed', 'Delivery Attempt Failed',
-                   'In Transit', 'Missing POD', 'New', 'Searching for Carrier',
-                   'Registered', 'Ready to Ship', 'Truck Arrived', 'Loaded', 'Departed', 'Delivered'],
-          applied: [] },
-        // --- the rest, as the app orders them ----------------------------
-        { name: 'Account Manager', kind: 'select', pinned: false },
-        { name: 'Addresses', kind: 'text', pinned: false },
-        { name: 'Assigned Operator', kind: 'select', pinned: false },
-        { name: 'Booked with Contracted Lane', kind: 'select', pinned: false },
-        { name: 'Carrier Assignment Status', kind: 'select', pinned: false },
-        { name: 'Carrier Enterprise', kind: 'select', pinned: false },
-        { name: 'Carrier Group', kind: 'select', pinned: false },
-        { name: 'Carrier Invoice Status', kind: 'select', pinned: false },
-        { name: 'Customer Invoice Status', kind: 'select', pinned: false },
-        { name: 'Desired Delivery Date', kind: 'date', pinned: false },
-        { name: 'Desired Pickup Date', kind: 'date', pinned: false },
-        { name: 'Desired Pickup or Delivery Date', kind: 'date', pinned: false },
-        { name: 'Destination Location', kind: 'select', pinned: false },
-        { name: 'Expected Delivery Date', kind: 'date', pinned: false },
-        { name: 'Expected Pickup Date', kind: 'date', pinned: false },
-        { name: 'Expected Pickup or Delivery Date', kind: 'date', pinned: false },
-        { name: 'First Cargo Loaded Date', kind: 'date', pinned: false },
-        { name: 'Has DIFOT Reason code', kind: 'switch', pinned: false },
-        { name: 'Last Cargo Unloaded Date', kind: 'date', pinned: false },
-        { name: 'License plate', kind: 'text', pinned: false },
-        { name: 'Negative margin', kind: 'switch', pinned: false },
-        { name: 'Order created', kind: 'date', pinned: false },
-        { name: 'Origin Location', kind: 'select', pinned: false },
-        { name: 'POD Status', kind: 'select', pinned: false },
-        { name: 'Sales Organisation', kind: 'select', pinned: false },
-        { name: 'Service Type', kind: 'select', pinned: false },
-        { name: 'Shipper Enterprise', kind: 'select', pinned: false },
-        { name: 'Shipper Group', kind: 'select', pinned: false },
-        /* The app's current answer to hidden invoice orders: a boolean that
-           reveals them. This table shows them by Category instead, so the
-           filter is here for completeness rather than doing the work. */
-        { name: 'Show Invoice Orders Only', kind: 'switch', pinned: false },
-      ];
+      const visibleOrders = () => FX.visible();
+      const appliedOf = (n) => FX.appliedOf(n);
+      const typeDisabled = (v) => FX.typeDisabled(v);
+
       let showPinned = true;
       let filterQuery = '';
       let openChip = null;
-
-      /*
-       * WHICH ORDER TYPES BELONG TO WHICH CATEGORY. Order Type is not a flat
-       * list — Brokerage, Managed transportation, Own Fleet and SAAS are
-       * transport movements, Inbound and Outbound are warehouse ones, and an
-       * invoice order has no type at all.
-       *
-       * So the two filters interlock: pick Category = Transport and Inbound and
-       * Outbound stop being selectable, because no order can be both. Picking
-       * Invoice disables every type, since invoice orders have none.
-       *
-       * Disabled rather than hidden, using the chip component's own
-       * `mdc-evolution-chip--disabled` state (components/chips.html): a value
-       * that vanishes leaves the reader wondering whether it ever existed,
-       * while one greyed out says "not with what you have chosen".
-       */
-      const TYPE_DOMAIN = {
-        Brokerage: 'transport',
-        'Managed transportation': 'transport',
-        'Own Fleet': 'transport',
-        SAAS: 'transport',
-        Inbound: 'warehouse',
-        Outbound: 'warehouse',
-      };
-
-      const appliedOf = (name) => (FILTERS.filter((f) => f.name === name)[0] || {}).applied || [];
-
-      function typeDisabled(value) {
-        const cats = appliedOf('Category');
-        if (!cats.length) return false;
-        return cats.indexOf(CATEGORY[TYPE_DOMAIN[value]]) === -1;
-      }
-
-      /*
-       * Changing Category can strip a type that is no longer reachable. Done
-       * here rather than left to the user, because a selection that still
-       * filters but can no longer be seen or unset is the worst of both.
-       */
-      function pruneUnreachableTypes() {
-        const type = FILTERS.filter((f) => f.name === 'Order Type')[0];
-        if (!type.applied) return;
-        type.applied = type.applied.filter((v) => !typeDisabled(v));
-      }
-
-      const appliedCount = (f) => (f.applied ? f.applied.length : 0);
-      const totalApplied = () => FILTERS.filter((f) => appliedCount(f)).length;
 
       /*
        * The pinned chip above the table. `pinned-yes` is the PINNED glyph —
@@ -824,7 +706,7 @@
         row.hidden = !showPinned || pinned.length === 0;
         row.innerHTML = pinned
           .map((f) => {
-            const n = appliedCount(f);
+            const n = FX.appliedCount(f);
             return `
           <span class="flex max-w-80 cursor-pointer items-center gap-1 rounded-lg surface-neutral-dark px-2 py-1 text-cca-base text-neutral-body"
                 role="button" tabindex="0" aria-haspopup="menu" data-open-chip="${f.name}">
@@ -841,73 +723,18 @@
       }
 
       // ------------------------------------------------------------ the drawer
-      function filterControl(f) {
-        if (f.kind === 'chips') {
-          return `<div class="mt-3 flex flex-wrap items-center gap-2">${f.values
-            .map((v) => {
-              const on = (f.applied || []).indexOf(v) !== -1;
-              const off = f.name === 'Order Type' && typeDisabled(v);
-              return `
-              <mat-chip-option class="mat-mdc-chip mat-mdc-standard-chip mat-mdc-chip-option mdc-evolution-chip mdc-evolution-chip--filter mdc-evolution-chip--selectable mdc-evolution-chip--with-primary-graphic cca-chip mat-primary${
-                on ? ' mdc-evolution-chip--selected' : ''
-              }${off ? ' mdc-evolution-chip--disabled' : ''}"${off ? ' aria-disabled="true"' : ''}${
-                off ? ` title="Not available with Category: ${appliedOf('Category').join(', ')}"` : ''
-              } data-filter="${f.name}" data-value="${v}">
-                <span class="mat-mdc-chip-focus-overlay"></span>
-                <span class="mdc-evolution-chip__cell mdc-evolution-chip__cell--primary">
-                  <span class="mdc-evolution-chip__action mat-mdc-chip-action mdc-evolution-chip__action--primary" role="option" aria-selected="${on}">
-                    <span class="mdc-evolution-chip__graphic mat-mdc-chip-graphic">
-                      <span class="mdc-evolution-chip__checkmark">
-                        <svg class="mdc-evolution-chip__checkmark-svg" viewBox="-2 -3 30 30" aria-hidden="true">
-                          <path class="mdc-evolution-chip__checkmark-path" fill="none" stroke="currentColor" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-                        </svg>
-                      </span>
-                    </span>
-                    <span class="mdc-evolution-chip__text-label mat-mdc-chip-action-label">${v}</span>
-                  </span>
-                </span>
-              </mat-chip-option>`;
-            })
-            .join('')}</div>`;
-        }
-        // The other kinds are named rather than drawn: this page is about the
-        // table, and the controls themselves are prototyped next door.
-        const label = { text: 'Free text', select: 'Lookup', date: 'Date range', switch: 'On / off' }[f.kind];
-        return `<div class="mt-2 text-cca-base-sm text-neutral-caption">${label}</div>`;
-      }
-
-      function filterRow(f, expanded) {
-        const n = appliedCount(f);
-        return `
-          <div data-filter-row="${f.name}">
-            <div class="flex cursor-pointer items-center gap-2">
-              <button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="${
-                f.pinned ? 'Unpin' : 'Pin'
-              } ${f.name}" data-pin="${f.name}">${icon(f.pinned ? 'pinned-yes' : 'pinned')}</button>
-              <span class="text-cca-label-md text-neutral-title">${f.name}</span>
-              ${
-                n
-                  ? `<cca-numerical-badge class="ml-auto"><span class="rounded-full font-medium success inline-flex items-center justify-center align-middle min-w-3.75"><span class="flex items-center justify-center min-w-6 px-2 py-1 text-cca-label-sm">${n}</span></span></cca-numerical-badge>`
-                  : '<span class="ml-auto"></span>'
-              }
-              ${icon(expanded ? 'chevron-up' : 'chevron-down')}
-            </div>
-            ${expanded ? filterControl(f) : ''}
-          </div>`;
-      }
-
       function renderDrawer() {
         const q = filterQuery.trim().toLowerCase();
         const match = (f) => !q || f.name.toLowerCase().indexOf(q) !== -1;
         const pinned = FILTERS.filter((f) => f.pinned && match(f));
         const rest = FILTERS.filter((f) => !f.pinned && match(f));
 
-        document.getElementById('pinned-list').innerHTML = pinned.map((f) => filterRow(f, true)).join('');
-        document.getElementById('unpinned-list').innerHTML = rest.map((f) => filterRow(f, false)).join('');
+        document.getElementById('pinned-list').innerHTML = pinned.map((f) => FX.row(f, FX.expanded[f.name] !== false)).join('');
+        document.getElementById('unpinned-list').innerHTML = rest.map((f) => FX.row(f, !!FX.expanded[f.name])).join('');
         document.getElementById('pinned-divider').hidden = !pinned.length || !rest.length;
 
         const badge = document.getElementById('drawer-count');
-        const n = totalApplied();
+        const n = FX.totalApplied();
         badge.hidden = !n;
         if (n) badge.querySelector('span span').textContent = n;
 
@@ -978,33 +805,12 @@
         menu.innerHTML =
           '<div class="flex max-h-80 min-w-50 flex-col overflow-y-auto py-1">' +
           ordered
-            .map((v, i) => {
-              const checked = on.indexOf(v) !== -1;
+            .map(function (v) {
               const off = f.name === 'Order Type' && typeDisabled(v);
-              const id = 'chipbox-' + i;
-              return `
-              <div class="flex items-center px-3 py-1 ${
-                checked ? 'surface-brand-lighter' : ''
-              }${off ? ' opacity-50' : ''}" data-menu-value="${v}"${
-                off ? ' aria-disabled="true"' : ''
-              }>
-                <mat-checkbox class="mat-mdc-checkbox mat-primary${off ? ' mat-mdc-checkbox-disabled' : ''}">
-                  <div class="mdc-form-field mat-internal-form-field">
-                    <div class="mdc-checkbox">
-                      <input type="checkbox" class="mdc-checkbox__native-control" id="${id}"${
-                        checked ? ' checked' : ''
-                      }${off ? ' disabled' : ''} />
-                      <div class="mdc-checkbox__background">
-                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24" aria-hidden="true">
-                          <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-                        </svg>
-                        <div class="mdc-checkbox__mixedmark"></div>
-                      </div>
-                    </div>
-                    <label class="mdc-label" for="${id}">${v}</label>
-                  </div>
-                </mat-checkbox>
-              </div>`;
+              return FX.checkboxRow(
+                f.name, String(v), on.indexOf(v) !== -1, off,
+                'Not available with Category: ' + appliedOf('Category').join(', ')
+              );
             })
             .join('') +
           '</div>';
@@ -1392,6 +1198,29 @@
           closeChipMenu();
         }
       });
+      /*
+       * Text and date inputs filter as you type. `input` rather than `change`,
+       * because there is no Apply step anywhere else in this mechanism and a
+       * field that waited for blur would be the only thing that did.
+       *
+       * The drawer is NOT re-rendered here — that would replace the input
+       * mid-keystroke and lose focus. Only the chip row and the table update.
+       */
+      document.getElementById('filters-drawer').addEventListener('input', (e) => {
+        const input = e.target.closest('[data-filter-input]');
+        if (!input) return;
+        const parts = input.getAttribute('data-filter-input').split('|');
+        const f = FILTERS.filter((x) => x.name === parts[0])[0];
+        if (!f) return;
+        if (parts[1] === 'from') f.applied[0] = e.target.value;
+        else if (parts[1] === 'to') f.applied[1] = e.target.value;
+        else f.applied = e.target.value ? [e.target.value] : [];
+        if (f.kind === 'date' && !f.applied[0] && !f.applied[1]) f.applied = [];
+        document.getElementById('save-view').disabled = false;
+        renderPinnedRow();
+        renderRows();
+      });
+
       document.getElementById('filter-search').addEventListener('input', (e) => {
         filterQuery = e.target.value;
         renderDrawer();
@@ -1410,6 +1239,21 @@
          * Pin: a LAYOUT change, so it re-renders the chip row and the drawer
          * but never touches which rows the table shows.
          */
+        /*
+         * Expanding a row. Pinned rows open by default and the rest are
+         * collapsed, as the app has it — so every filter is reachable, not just
+         * the pinned three. Checked before the pin, because the pin button
+         * sits inside the header the toggle listens on.
+         */
+        const toggle = e.target.closest('[data-toggle-row]');
+        const pinBtn = e.target.closest('[data-pin]');
+        if (toggle && !pinBtn) {
+          const n = toggle.getAttribute('data-toggle-row');
+          FX.expanded[n] = !FX.expanded[n];
+          renderDrawer();
+          return;
+        }
+
         const pin = e.target.closest('[data-pin]');
         if (pin) {
           const f = FILTERS.filter((x) => x.name === pin.getAttribute('data-pin'))[0];
@@ -1418,6 +1262,40 @@
           renderPinnedRow();
           return;
         }
+        /*
+         * A checkbox in a `select` filter. Same data-menu-value contract as the
+         * pinned chip's popover, so both surfaces share FX.checkboxRow — the
+         * parent [data-filter] says which filter it belongs to.
+         */
+        const box = e.target.closest('[data-menu-value]');
+        if (box) {
+          const holder = box.closest('[data-filter]');
+          if (holder) {
+            const f = FILTERS.filter((x) => x.name === holder.getAttribute('data-filter'))[0];
+            const v = box.getAttribute('data-menu-value');
+            const at = f.applied.indexOf(v);
+            if (at === -1) f.applied.push(v);
+            else f.applied.splice(at, 1);
+            document.getElementById('save-view').disabled = false;
+            renderDrawer();
+            renderPinnedRow();
+            renderRows();
+            return;
+          }
+        }
+
+        // A switch filter: on means applied, off means not.
+        const sw = e.target.closest('[data-filter-switch]');
+        if (sw) {
+          const f = FILTERS.filter((x) => x.name === sw.getAttribute('data-filter-switch'))[0];
+          f.applied = f.applied.length ? [] : [true];
+          document.getElementById('save-view').disabled = false;
+          renderDrawer();
+          renderPinnedRow();
+          renderRows();
+          return;
+        }
+
         // A value chip applies immediately — there is no Apply step.
         const chip = e.target.closest('[data-value]');
         if (chip) {
@@ -1428,7 +1306,7 @@
           const at = f.applied.indexOf(v);
           if (at === -1) f.applied.push(v);
           else f.applied.splice(at, 1);
-          if (f.name === 'Category') pruneUnreachableTypes();
+          if (f.name === 'Category') FX.prune();
           document.getElementById('save-view').disabled = false;
           renderDrawer();
           renderPinnedRow();
@@ -1447,7 +1325,7 @@
         const at = f.applied.indexOf(v);
         if (at === -1) f.applied.push(v);
         else f.applied.splice(at, 1);
-        if (f.name === 'Category') pruneUnreachableTypes();
+        if (f.name === 'Category') FX.prune();
         document.getElementById('save-view').disabled = false;
         /*
          * The row order is deliberately NOT recomputed on each tick. Selected
