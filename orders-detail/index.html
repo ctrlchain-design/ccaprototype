@@ -95,9 +95,18 @@
 
           <cca-message-banner style="display: block">
             <div class="grid h-12 w-full grid-cols-7 content-center grayscale-mode-neutral highlight">
+              <!--
+                THE FLANKING CELLS ARE WHAT CENTRES THE TEXT. With only the
+                col-span-5 child, it takes columns 1-5 of 7 and centres inside
+                THOSE — visibly left of the page's middle. The leading cell
+                pushes it to columns 2-6, which is what the app does: an
+                icon slot on the left, the message, a dismiss slot on the right.
+              -->
+              <div class="pl-5"></div>
               <div class="col-span-5 self-center justify-self-center">
                 <span class="text-neutral-title">Development environment — do not use real customer data (ISO 27001).</span>
               </div>
+              <div class="justify-self-end pr-9"></div>
             </div>
           </cca-message-banner>
 
