@@ -67,8 +67,14 @@ EOF
 
 Invented icon names are the single easiest mistake to make, because they sound
 right and fail invisibly — the glyph is simply absent. `inbox` does not exist;
-it is `message-inbox`. `pin` does not exist; it is `pinned`, `pinned-yes` or
-`pinned-no`. `download` does not exist; it is `export`.
+it is `message-inbox`. `download` does not exist; it is `export`.
+
+**And a name that exists can still be the wrong one.** The pin is the trap:
+`pinned-yes` is PINNED, plain `pinned` is the outline UNPINNED state, and
+`pinned-no` is a third thing. Both audits pass either way, because both names
+are real. `patterns.html` and `orders-pinned-filters` both drew the unpinned
+glyph on pinned chips for months. When a glyph comes in a set, check which
+member you want against the running app, not just that the name resolves.
 
 **Search case-insensitively.** Eleven glyphs are mixed-case — `Gear-Settings`,
 `Bold`, `Italic`, `Underline`, `alignLeft`, `alignCenter`, `alignRight`,
@@ -119,6 +125,11 @@ Two rules for `_shared/`:
 
 1. **If you solve something new, put it there** rather than leaving it in one
    prototype. The next person should not have to rediscover it.
+1. **If you fix a bug, fix every copy of it.** Grep the repo before calling it
+   done — and check `patterns.html` in particular, because that is what the next
+   person copies from. A fix that leaves the pattern wrong is not a fix.
+
+       grep -rn "the-wrong-thing" --include='*.html' --include='*.js' . | grep -v design-system/
 2. **If FE later ships a real token or component for something in `_shared/`,
    delete it from `_shared/` and use the real thing.** This folder is a holding
    pen for gaps in the export, not a second design system.
@@ -208,10 +219,11 @@ state to the taskboard", or a description with enough in it to start.
 
 ## Workflow
 
-### 0. Start on a branch — before touching a file
+### 0. Branch — automatically, before touching a file
 
-Never build or edit a prototype on `main`. Committing publishes, so work done on
-`main` goes live the moment it is committed, half-finished and unreviewed.
+**If the repo is on `main`, branch. Do not ask; just do it and say so.** This is
+not a decision the user should have to make or be prompted for — `main` is what
+GitHub Pages serves, so work committed there is published work.
 
     git checkout main
     git pull
@@ -233,6 +245,10 @@ out — otherwise you inherit someone else's unpublished work and it rides along
 when yours is published.
 
 If the user is already on a branch for this prototype, stay on it.
+
+Branching is free and reversible; publishing is neither. Committing to the
+branch as work goes along is always fine — merging it to `main` is what waits
+for the word "publish". See the `/prototype-commit` skill.
 
 ### 1. Find the vocabulary
 
@@ -418,6 +434,58 @@ cca-root { display: block; height: 100%; }  /* height: auto for a document-flow 
 
 The template already does this. If you build a page from scratch, do it too.
 
+**An element tag can gate a whole stylesheet.** Not just styling on the tag
+itself — some component stylesheets scope EVERY rule to their host, so without
+the element you get none of it and nothing tells you. `ds/components/filters-select.css`
+scopes all its overrides to `cca-filters-select .ng-dropdown-panel …`, so a
+dropdown built without that wrapper had no max-height, no max-width and no
+padding: it grew to fit and never scrolled. `maxHeight` computed to `none`.
+Before assuming a linked stylesheet is doing nothing, check what its selectors
+are anchored to:
+
+```bash
+grep -o '^[a-z-]*' design-system/dist/ds/components/THE-FILE.css | sort -u
+```
+
+**Platform rules often use three classes, so a two-class override loses.**
+`prototype.css` loads after `ds/index.css`, which tempts you into thinking any
+rule there wins. It only wins at EQUAL specificity. `platform-02.css` styles
+`.ng-dropdown-panel.ng-select-custom.ng-select-bottom` — three classes — and a
+two-class override was silently ignored. Count the classes in the rule you are
+fighting, and measure the result rather than trusting the cascade.
+
+**Flex children shrink and hide their own overflow.** This is the nastiest of
+the measurement traps, because every obvious check says the layout is fine:
+
+- A flex item with `whitespace-nowrap` shrinks below its content, and
+  `getBoundingClientRect().width` returns the SHRUNK box — so the text spills
+  out of an element that measures as fitting.
+- `td.scrollWidth > td.clientWidth` stays false throughout.
+- A custom element with `display: flex` (like `cca-date-cell`) reports the
+  column width no matter what it holds, so measuring it tells you nothing.
+
+Two date columns lost 114px of every cell this way and looked fine in a
+screenshot. To check a cell, sum its children's `scrollWidth` and compare
+against `clientWidth` minus padding — and add `shrink-0` so a too-narrow column
+overflows visibly instead of clipping in silence.
+
+**Audit a JS-built module from the rendered DOM, not its source.** The class
+audit at the top of this file reads `class="..."` attributes. A module that
+builds markup by string concatenation has none, so the scan sees nothing and
+reports success. Read the classes back out of the page instead:
+
+```javascript
+// javascript_tool, with the component on screen and its states open
+const cls = new Set();
+document.querySelectorAll('#the-thing, #the-thing *')
+  .forEach(el => el.classList.forEach(c => cls.add(c)));   // classList, not className —
+[...cls].sort().join(' ')                                   // className is an object on SVG
+```
+
+Then check that list against the stylesheets on disk. Note the CSS cannot be
+read from `document.styleSheets` either: `ds/index.css` is nothing but
+`@import` rules, so you get the imports and not their contents.
+
 **Badge flavour names lie.** On `cca-numerical-badge`, `.primary` is
 `--badge-bg-red` — not green, not the brand colour. Green is `.success`, and
 white-on-green is `.inverted`. The flavour set also differs per badge component:
@@ -448,9 +516,38 @@ EOF
 
 Only the occurrence with an even backtick count is the document.
 
+**And never put a backtick inside a template literal — including in a comment.**
+A comment written *inside* the literal is just text to JavaScript, so a
+markdown-style `` `word` `` in it TERMINATES the string. I broke
+orders-pinned-filters exactly this way: an explanatory HTML comment reading
+"plain \`pinned\` is the unpinned outline" sat inside the chip's template
+literal, the backticks closed the string early, and the whole page script died
+with `missing ) after argument list` — a table rendering zero rows for a reason
+nothing on screen explained.
+
+Put the comment ABOVE the `.map(` as a `//` comment, and quote names with
+"double quotes" inside anything that might end up in a literal. To check:
+
+```bash
+python3 - <<'EOF'
+depth = 0
+for i, line in enumerate(open('PROTOTYPE/index.html'), 1):
+    if depth % 2 and line.count('`') >= 2:
+        print(i, line.strip()[:80])      # a backtick pair while inside a literal
+    depth += line.count('`')
+EOF
+```
+
 **`cca-btn--link` always underlines.** It hard-codes
 `text-decoration: underline`, which is right for a link in prose and wrong for a
-header action. Use `.proto-header-link` from `_shared/prototype.css`.
+header action — use `cca-btn cca-btn--small cca-btn--tertiary`, which is what the
+app uses and is already undecorated and brand-coloured.
+
+This used to say "use `.proto-header-link` from `_shared/prototype.css`". That
+class is GONE — deleted on purpose, with a note at the top of `prototype.css`
+saying so, because it was a stand-in for a component that already existed. Nine
+anchors in `orders-detail` were still written against it and rendered completely
+unstyled. If you read that advice anywhere else, it is stale.
 
 **Dark mode.** The tokens flip under `@media (prefers-color-scheme: dark)` unless
 the root has `class="light"`. Without `<html lang="en" class="light">`, the
@@ -522,6 +619,24 @@ rather than composing one.
   Neutrals.200 in dark mode, so the overlay would come out lighter than the page
   behind it. Say so rather than implementing it.
 
+- **A TRANSPARENT backdrop needs its showing class to catch clicks at all.**
+  On a dark scrim `cdk-overlay-backdrop-showing` is just the fade, so it looks
+  cosmetic. On a transparent one it is the difference between working and not:
+
+      .cdk-overlay-transparent-backdrop            { visibility: hidden; opacity: 1 }
+      .cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing
+                                                   { visibility: visible; opacity: 0 }
+
+  A `visibility: hidden` element is not hit-testable, so without the class every
+  outside click falls straight through and the overlay never closes. Worse, the
+  flip is TRANSITIONED (`transition: visibility 1ms`), so it is a race in a live
+  tab and permanent in a background one — which also means
+  `getComputedStyle(...).visibility` lies to you while measuring.
+
+  Add the CDK's own **`cdk-overlay-backdrop-noop-animation`** to a transparent
+  backdrop. It drops the transition, the flip is immediate, and there is nothing
+  to animate anyway — opacity 0 to opacity 0.
+
 - **Never gate correctness on `requestAnimationFrame`.** rAF does not fire in a
   background or non-rendering tab, so a fade armed that way silently never starts
   and the scrim sits at `opacity: 0` — invisible. Force the starting state with a
@@ -535,6 +650,87 @@ rather than composing one.
   so `getComputedStyle(el).opacity` can read the start value forever. Check
   `document.visibilityState` before believing an animation is broken, and confirm
   with a screenshot, which forces a paint.
+
+**A Material host element can bring chrome you did not ask for.** The
+load-bearing-tag rule cuts both ways. `cca-*` hosts mostly *gate* styling — use
+the wrong tag and you get nothing. Material hosts *add* it: `mat-expansion-panel`
+carries a white background, a 1px border, a 10px radius and an elevation shadow
+of its own. Drop one inside a `page-container` card to group content and you get
+a card nested in a card, which is not what the app looks like.
+
+What the app does is pair it with the classes that switch the chrome off:
+
+```html
+<mat-accordion class="mat-accordion flex-1">
+  <mat-expansion-panel class="mat-expansion-panel mat-elevation-z mat-expanded">
+```
+
+`mat-elevation-z` is the one that zeroes the shadow, and staging adds
+`border-0!` and `bg-transparent!` on top where the panel is a grouping device
+rather than a card. Check the computed background, border and box-shadow after
+adding any `mat-` element:
+
+    getComputedStyle(el).boxShadow    // "none"/all-transparent, or you have a nested card
+
+**A card is `page-container`, and an action is `cca-btn`.** Two things this
+repo's own layers already had, and which are easy to hand-roll because the
+utilities to fake them all exist:
+
+| Hand-rolled | The real thing | What you lose by faking it |
+| --- | --- | --- |
+| `rounded-lg border border-neutral-default surface-neutral-light p-4` | `page-container` | wrong radius (`radius-lg` for `radius-xl`) and no responsive padding — it steps 4 → 6 at a breakpoint |
+| `<a href="#">Edit</a>` in a card header | `cca-btn cca-btn--small cca-btn--tertiary` | hover, focus and active states, and an action stops claiming to be a link |
+
+`page-container` also brings `position: relative` and `overflow: hidden`, which
+is what lets the app hang an absolute panel inside a card — Map Overview floats
+on the map that way.
+
+Card headings are **classless** `<h2>`/`<h3>`/`<h4>`. The platform styles them
+globally, so `class="text-cca-label-md"` on a heading is both redundant and a
+size off.
+
+**Diff COMPUTED TYPE against the app, not just the markup.** Every class can
+be real and the sizes still wrong. Five roles on the order detail were off,
+none of them visible as a broken layout:
+
+| Role | App | Ours was | Cause |
+| --- | --- | --- | --- |
+| field label | 12/16/400 | 10px | `text-2xs` is 0.625rem — the smallest label is `text-cca-label-sm` |
+| field value | 16/24/400 | 14px | `text-cca-base-sm` where `text-cca-base` was meant |
+| status value | 14/20/**700** | 14/20/400, grey | the flavour class was on the whole span, so it coloured the text too; only the DOT takes it |
+| stop address | 18/28/500 | 14px | a `text-cca-*` utility on an `<h3>` — the bare-tag trap |
+| table header | 14/**21** | `normal` | see below |
+
+Pull both sides down to `fontSize / lineHeight / fontWeight` and compare:
+
+```js
+const t = el => { const c = getComputedStyle(el);
+  return c.fontSize + ' / ' + c.lineHeight + ' / ' + c.fontWeight; };
+```
+
+**And watch for platform rules that only fire in a prototype.** `platform-02.css`
+has `table .mdc-data-table__cell, table .mdc-data-table__header-cell {
+line-height: initial }`. It needs a real `<table>` ancestor — which the app
+never has, because its tables are `mat-table` custom elements. So the rule is
+dead in production and live in any prototype that builds a real table, and
+every header row comes out tighter than the app's. A utility on the `th` loses
+to it, 0,1,0 against 0,1,1; `_shared/prototype.css` now matches its specificity
+and restores the app's 1.5.
+
+**When you have the real DOM, diff the heading skeleton — not the screenshot.**
+Reading section order off a picture misses the levels, and the levels are the
+information architecture. Pull both sides down to `tag + text` and compare
+lists:
+
+```js
+[...root.querySelectorAll('h2,h3,h4')].map(h => h.tagName + ' ' + h.innerText.trim())
+```
+
+That is what caught three whole sections missing from the order detail page
+(Route Details, Requested Vehicle(s), Parking Requirements) plus an `h3` that
+should have been an `h4`, none of which were visible in a side-by-side
+screenshot. It also tells you when a heading in your version is *not* a heading
+on the app — a sub-label promoted to `h3` reads a size too loud.
 
 ## After FE re-exports
 

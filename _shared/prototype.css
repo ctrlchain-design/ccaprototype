@@ -59,6 +59,26 @@ cca-main .appContent .page > .proto-hug {
   height: auto;
 }
 
+/*
+ * The floating Prototypes button sits bottom-LEFT, just right of the rail's
+ * Collapse item, rather than over the page's own content.
+ *
+ * The rail is a stable 72px wide whether the submenu is open or collapsed —
+ * measured both ways — so a fixed offset holds in either state. 23 spacing
+ * units is 92px: the rail plus the same 20px gap the button keeps from the
+ * bottom.
+ *
+ * This replaces a padding-bottom reserved on .page. That was there because the
+ * button used to be bottom-RIGHT, where it covered whatever a page ended with
+ * — on the order detail, a paginator whose "Last page" button rendered
+ * perfectly and was not clickable. Over the rail it covers no page content at
+ * all, so the reserved space is no longer needed.
+ */
+.proto-home-button {
+  left: calc(var(--spacing) * 23);
+}
+
+
 /* --------------------------------------------------------------- form fields */
 
 /*
@@ -229,6 +249,23 @@ cca-main .appContent .page > .proto-hug {
  * class after a layout read, never in requestAnimationFrame — rAF does not fire
  * in a background tab, and the dialog would stay invisible.
  */
+/*
+ * A dialog pane that fills the viewport — the full screen table view.
+ *
+ * Layout only, and it has to live here rather than on utilities: `h-[92vh]`
+ * and `w-[94vw]` are ARBITRARY Tailwind values, and the app compiles Tailwind
+ * at build time so the export contains no rule for either. They fail silently,
+ * which is how the pane ended up unsized the first time.
+ *
+ * The pane is a page-container, so it brings its own border, radius and
+ * surface; this only says how big.
+ */
+.proto-fullscreen-pane {
+  width: 94vw;
+  height: 92vh;
+  max-width: 94vw;
+}
+
 .proto-dialog-wrapper {
   align-items: center;
   justify-content: center;
@@ -282,6 +319,24 @@ cca-main .appContent .page > .proto-hug {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+}
+
+/*
+ * Table header line-height.
+ *
+ * platform-02.css carries `table .mdc-data-table__cell, table
+ * .mdc-data-table__header-cell { line-height: initial }`. That rule needs a
+ * real <table> ancestor — and the app has none: its tables are mat-table
+ * custom elements, so the rule never fires there and its header cells sit at
+ * 14px/21px. A prototype building a real <table> DOES trip it, and every
+ * header row came out at `normal`, visibly tighter than the app's.
+ *
+ * Matching the platform's own specificity (element + class) and loading after
+ * it is what makes this win; a utility class on the th loses at 0,1,0 against
+ * its 0,1,1. 1.5 on 14px is the app's 21px.
+ */
+table .mdc-data-table__header-cell {
+  line-height: 1.5;
 }
 
 /* ---------------------------------------------------------------- snackbar */
@@ -340,4 +395,127 @@ cca-main .appContent .page > .proto-hug {
 }
 .proto-switch-row[data-disabled="true"] * {
   cursor: not-allowed;
+}
+
+/*
+ * ng-select dropdown panel — the missing `position`
+ * -------------------------------------------------
+ * The filter drawer's selects and the pinned-filter chips are ng-select
+ * components (cca-filters-select, cca-pinned-filters), and the platform styles
+ * their panel through `.ng-dropdown-panel.ng-select-custom` in
+ * ds/platform-02.css: background, radius, the per-side box-shadows, option
+ * heights, the selected and marked states. All of that is in the export.
+ *
+ * What is NOT is `position: absolute`. It lives in the ng-select library's own
+ * core stylesheet, which the export does not include — so the panel's `left: 0`
+ * and `.ng-select-bottom`'s `top: 100%` have nothing to resolve against and the
+ * panel renders in the flow, pushing the rest of the drawer down.
+ *
+ * Layout only, and it belongs here rather than in a prototype because every
+ * page using a filter select needs it. Delete it if FE ever exports the
+ * library's core CSS.
+ */
+.ng-dropdown-panel {
+  position: absolute;
+  z-index: 10;
+}
+
+/*
+ * ...and the missing SCROLL, from the same missing stylesheet.
+ *
+ * filters-select.css caps the panel at 296px and platform-02.css gives it
+ * `overflow: hidden`, which clips the rounded corners. Neither gives the option
+ * list anywhere to scroll — ng-select's core CSS puts `overflow-y: auto` on
+ * `.ng-dropdown-panel-items`, and that is the file the export omits.
+ *
+ * Measured before this rule: Order Status rendered 14 options as an 896px
+ * stack inside the 296px panel, and TEN OF THEM WERE UNREACHABLE. No
+ * scrollbar, no overflow reported on the panel, nothing to say they were
+ * there.
+ *
+ * Flex column plus `min-height: 0` is what makes the items region shrink below
+ * its content and scroll, while the header stays put.
+ */
+.ng-dropdown-panel.ng-select-custom {
+  display: flex;
+  flex-direction: column;
+}
+
+.ng-dropdown-panel.ng-select-custom .ng-dropdown-header {
+  flex: 0 0 auto;
+}
+
+.ng-dropdown-panel.ng-select-custom .ng-dropdown-panel-items {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* The panel anchors to the field, so the field's wrapper has to be the
+   containing block. cca-filters-select is a custom element with no default
+   display, so it needs one — and it is the ancestor every rule in
+   ds/components/filters-select.css is scoped to. */
+.proto-ng-select,
+cca-filters-select {
+  position: relative;
+  display: block;
+}
+
+/*
+ * A panel opened from a PINNED CHIP rather than from a select field.
+ *
+ * `.ng-select-bottom` offsets the panel by `top: calc(100% - 1.25em)`, which is
+ * right when its positioned parent is the select field — 100% of the field's
+ * height drops the panel just below it. A chip's popover has no field: the CDK
+ * pane is already positioned where the panel should start, and its wrapper has
+ * ZERO height, so `100%` resolves to 0 and the offset becomes -20px. The panel
+ * then hangs above the pane and covers the chip it came from.
+ *
+ * So the offset is cancelled here and only here. Keeping `.ng-select-bottom`
+ * on the panel is deliberate — it carries the downward box-shadow, which is
+ * still the right shadow for something hanging below its trigger.
+ *
+ * THE SELECTOR HAS TO MATCH ALL THREE CLASSES. platform-02.css sets the offset
+ * on `.ng-dropdown-panel.ng-select-custom.ng-select-bottom` — three classes —
+ * so a two-class override loses on specificity even though this file loads
+ * later. Measured: the panel stayed 20px high until this selector matched it.
+ */
+.proto-ng-select--anchored .ng-dropdown-panel.ng-select-custom.ng-select-bottom {
+  top: 0;
+  margin-top: 0;
+}
+
+/*
+ * Frozen columns on a wide table
+ * ------------------------------
+ * These tables are wider than any screen — the Orders list is 3328px and the
+ * app's own is 3161px — so the columns that identify a row have to stay put
+ * while the rest scrolls. Otherwise you scroll right to read a delivery date
+ * and no longer know whose order it is.
+ *
+ * `position: sticky` needs three things beyond the offset, and it fails
+ * quietly without them:
+ *
+ *   · A BACKGROUND. A sticky cell is transparent by default, so the scrolling
+ *     content slides visibly underneath it.
+ *   · A z-index, or the non-sticky cells paint over it anyway.
+ *   · A HIGHER z-index on the header, since a sticky <th> has to sit above
+ *     both the sticky body cells and the scrolling ones.
+ *
+ * The `left` offset is per-column and belongs on the cell, because only the
+ * page knows its own column widths — see the colgroup in oms/index.html.
+ * `.proto-sticky-edge` marks the last frozen column and draws the seam, so it
+ * is obvious that the pane to its right is what moves.
+ */
+.proto-sticky-col {
+  position: sticky;
+  z-index: 1;
+  background: var(--surface-neutral-light);
+}
+
+.mat-mdc-header-row .proto-sticky-col {
+  z-index: 2;
+}
+
+.proto-sticky-edge {
+  box-shadow: 1px 0 0 var(--border-neutral-default);
 }

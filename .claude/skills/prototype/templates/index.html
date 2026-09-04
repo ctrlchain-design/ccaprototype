@@ -128,8 +128,16 @@
           <div class="page">
             <div class="proto-hug flex flex-col gap-4">
               <!-- PAGE CONTENT. Compose from design-system/dist/components/*.html. -->
-              <div class="rounded-lg border border-neutral-default surface-neutral-light p-4">
-                <h2 class="text-cca-label-md text-neutral-title">Card</h2>
+              <!--
+                A CARD IS `page-container`. It carries radius-xl, a 1px
+                border-neutral-default, surface-neutral-light and padding that
+                steps 4 -> 6 at a breakpoint. This used to hand-roll
+                `rounded-lg border ... p-4` — the wrong radius, no responsive
+                padding, and it taught everyone who copied it to invent one.
+                The <h2> is classless on purpose: the platform styles headings.
+              -->
+              <div class="page-container">
+                <h2>Card</h2>
                 <p class="text-cca-base-sm text-neutral-subtitle">
                   Replace this. Copy real markup out of the component pages — do not
                   write your own hex values, pixel sizes or radii.

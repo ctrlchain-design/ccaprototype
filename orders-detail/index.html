@@ -1,0 +1,182 @@
+<!doctype html>
+<!--
+  Order detail — transport orders
+  ==============================
+
+  The screen every reference number in the Orders lists points at. It was
+  registered as `null` in _shared/screens.js from the day the first list linked
+  to it; this is that link coming alive.
+
+  BUILT FROM STAGING, NOT FROM FIGMA.
+  development.ctrlchain.com/shipper-tms/order/detail/{reference}/info — read on
+  2026-09-03. That has been the more reliable source all the way through this
+  work: the Figma was out of date on the filter drawer, the badge sizes and the
+  dropdown component, and it is out of date here too.
+
+  STRUCTURE FROM THERE, CONTENT FROM _shared/data.js. That page carries live
+  customer data behind an ISO 27001 notice and this repo publishes to GitHub
+  Pages, so not one value is copied — every name, address, plate and reference
+  here is fixture data.
+
+  WHAT IS BUILT: the BASIC INFO tab, in full. That is the landing tab and the
+  bulk of the page — ten sections across two columns. The other six tabs
+  (Actions, Documents, Route Planning, Pricing, Communication, Event Log) are
+  present in the tab bar because the IA is wrong without them, and each says
+  plainly that it is not prototyped yet rather than pretending. See the note at
+  the foot of this file.
+
+  Its script lives in detail.js, per the detail-page template's advice: a page
+  that builds markup from template literals should keep it out of the HTML, so
+  this file holds exactly one closing body tag and a search-and-replace here
+  cannot silently edit generated markup. That is not hypothetical — a comment
+  containing backticks inside a template literal took the orders-pinned-filters
+  table down to zero rows earlier in this same branch.
+
+  Never write a literal opening html tag in this comment: build-screens.py reads
+  data-screen off the first thing that looks like one.
+-->
+<html lang="en" class="light" data-screen="orders.detail">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Order Details · CtrlChain</title>
+
+    <link rel="stylesheet" href="../design-system/dist/fonts/fonts.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/index.css" />
+    <!--
+      Two extra stylesheets, both deep components ds/index.css does not import,
+      called out rather than left to be discovered:
+
+        message-banner.css   the environment banner has no background without it
+        date-cell.css        the Date & Times table and the route bar render
+                             every timestamp through cca-date-cell
+    -->
+    <link rel="stylesheet" href="../design-system/dist/ds/components/message-banner.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/date-cell.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/show-more-less.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/marker-pin.css" />
+    <link rel="stylesheet" href="../design-system/dist/ds/components/map-overview.css" />
+    <link rel="stylesheet" href="../_shared/prototype.css" />
+
+    <style>
+      /* The bundle ships no page-level reset — the app's own index.html has it. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <cca-root>
+      <cca-main>
+        <div class="appContent">
+          <cca-side-menu data-rail="Shipper TMS"></cca-side-menu>
+          <cca-side-submenu data-submenu="shipper-tms" data-submenu-active="Orders"></cca-side-submenu>
+
+          <cca-header>
+            <div class="sticky z-10 flex h-15 w-auto max-w-full items-center border-b border-neutral-default surface-neutral-light">
+              <!-- The back arrow is the way out, and it goes by screen name. -->
+              <div class="pl-6">
+                <button ccaButton class="cca-btn cca-btn--tertiary cca-btn--icon-only" aria-label="Back to orders" data-screen="oms.orders">
+                  <cca-icon><mat-icon class="mat-icon notranslate cca-icon cca-icon-arrow-left mat-ligature-font mat-icon-inline" aria-hidden="true"></mat-icon></cca-icon>
+                </button>
+              </div>
+              <!--
+                Unlike most screens, this bar DOES name the record — staging
+                titles it "Order Details - {reference}" with the order-type
+                badge beside it. Filled in by detail.js.
+              -->
+              <div class="flex flex-row items-center gap-2 pl-1" id="page-title"></div>
+              <div data-top-bar-trailing data-initials="AF"></div>
+            </div>
+          </cca-header>
+
+          <cca-message-banner style="display: block">
+            <div class="grid h-12 w-full grid-cols-7 content-center grayscale-mode-neutral highlight">
+              <!--
+                THE FLANKING CELLS ARE WHAT CENTRES THE TEXT. With only the
+                col-span-5 child, it takes columns 1-5 of 7 and centres inside
+                THOSE — visibly left of the page's middle. The leading cell
+                pushes it to columns 2-6, which is what the app does: an
+                icon slot on the left, the message, a dismiss slot on the right.
+              -->
+              <div class="pl-5"></div>
+              <div class="col-span-5 self-center justify-self-center">
+                <span class="text-neutral-title">Development environment — do not use real customer data (ISO 27001).</span>
+              </div>
+              <div class="justify-self-end pr-9"></div>
+            </div>
+          </cca-message-banner>
+
+          <div class="page">
+            <div class="proto-hug flex flex-col gap-4">
+              <!--
+                The tab bar is the platform's `.menu-bar` component — see
+                renderTabs in detail.js. It needs no classes of its own beyond
+                that one, and its children have to be anchors.
+              -->
+              <nav class="menu-bar" id="tabs"></nav>
+
+              <!-- Everything below is one tab's body. -->
+              <div id="tab-body"></div>
+            </div>
+          </div>
+        </div>
+      </cca-main>
+
+      <!--
+        SHIPMENT TIMELINE DRAWER — what "Shipment updates" opens.
+
+        Inside cca-root, like everything else, or the platform's body::before
+        watermark eats its clicks.
+
+        The overlay itself is all real CDK from ds/material-vendor.css. All a
+        static page has to supply is where the pane lands and the right scrim,
+        both of which _shared/prototype.css already covers:
+
+          .proto-drawer-pane      top/right/height + the platform's own fluid
+                                  40-50% width, NOT a fixed 512px
+          .proto-drawer-backdrop  --scrim-drawer at 0.6, which is the sidenav
+                                  scrim; the dialog's 0.32 would be too light
+          .proto-drawer-body      only the body scrolls, header stays put
+
+        Content is rendered by detail.js, per domain.
+      -->
+      <!--
+        FULL SCREEN TABLE. A dialog, not a drawer, so it takes the CDK's own
+        cdk-overlay-dark-backdrop (0.32) rather than the sidenav scrim (0.6) —
+        see the Scrims table on components/modal.html. proto-dialog-wrapper is
+        what centres the pane; the CDK writes that at runtime in the app and a
+        static page has to state it.
+      -->
+      <div class="cdk-overlay-container" id="fullscreen-overlay" hidden>
+        <div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" id="fullscreen-scrim"></div>
+        <div class="cdk-global-overlay-wrapper proto-dialog-wrapper">
+          <div class="cdk-overlay-pane page-container proto-fullscreen-pane flex flex-col p-0"
+               id="fullscreen-pane" role="dialog" aria-modal="true" aria-label="Table full screen"></div>
+        </div>
+      </div>
+
+      <div class="cdk-overlay-container" id="timeline-overlay" hidden>
+        <div class="cdk-overlay-backdrop proto-drawer-backdrop" id="timeline-scrim"></div>
+        <div class="cdk-overlay-pane proto-drawer-pane surface-neutral-light border border-neutral-default"
+             id="timeline-drawer" role="dialog" aria-modal="true" aria-label="Shipment Timeline"></div>
+      </div>
+    </cca-root>
+
+    <script src="../_shared/data.js"></script>
+    <script src="../_shared/screens.js"></script>
+    <script src="../_shared/shell-markup.js"></script>
+    <script src="../_shared/routes.js"></script>
+    <script src="../_shared/nav.js"></script>
+    <script src="../_shared/shell.js"></script>
+    <!-- For CCA_FILTERS.labelledField, the labelled outlined field the UoM
+         selects on Order Items and Shortages use. The file only defines
+         window.CCA_FILTERS — it touches no DOM until mount() is called — so
+         loading it on a page with no filter drawer costs nothing. -->
+    <script src="../_shared/filters.js"></script>
+    <script src="detail.js"></script>
+  </body>
+</html>

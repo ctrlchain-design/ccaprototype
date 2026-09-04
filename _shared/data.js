@@ -35,7 +35,7 @@
       status: 'Searching for Carrier',
       statusFlavor: 'warning',
       transitStatus: 'On time',
-      transitFlavor: 'accent-blue',
+      transitFlavor: 'primary',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Thu, 27 Aug 2026', window: '08:00' },
@@ -43,7 +43,14 @@
       stops: 2,
       distanceKm: 2247,
       domain: 'transport',
-      linked: ['CCA2023-000418.1', 'CCA2023-000501.1'],
+      tripReference: 'TRIP2026-020684',
+      carrierGroup: 'TRANSPORTES GARCÍA DE LA TORRE S.L.',
+      carrierSubGroup: 'TGF Valencia',
+      shipmentIssues: false,
+      podApproved: false,
+      createdAt: 'Mon, 17 Aug 2026',
+      createdTime: '08:00',
+linked: ['CCA2023-000418.1', 'CCA2023-000501.1'],
     },
     {
       id: 'CCA2023-000271.4',
@@ -53,9 +60,9 @@
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585 + 10046562',
       status: 'New',
-      statusFlavor: 'highlight',
+      statusFlavor: 'neutral',
       transitStatus: 'On time',
-      transitFlavor: 'accent-blue',
+      transitFlavor: 'primary',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: '09:30' },
@@ -63,7 +70,14 @@
       stops: 2,
       distanceKm: 1680,
       domain: 'transport',
-      linked: ['CCA2023-000420.1'],
+      tripReference: 'TRIP2026-020456',
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Rotterdam',
+      shipmentIssues: false,
+      podApproved: false,
+      createdAt: 'Tue, 18 Aug 2026',
+      createdTime: '09:12',
+linked: ['CCA2023-000420.1'],
     },
     {
       id: 'CCA2023-000272.2',
@@ -72,8 +86,8 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain España S.L.U',
       shipperReference: '10046590',
-      status: 'Orders Generated',
-      statusFlavor: 'primary',
+      status: 'In Transit',
+      statusFlavor: 'accent-blue',
       transitStatus: 'Early',
       transitFlavor: 'accent-blue',
       accountManager: 'Admin Bianca',
@@ -83,7 +97,14 @@
       stops: 3,
       distanceKm: 712,
       domain: 'transport',
-      linked: ['CCA2023-000420.1'],
+      tripReference: 'TRIP2026-020457',
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Rotterdam',
+      shipmentIssues: false,
+      podApproved: true,
+      createdAt: 'Tue, 18 Aug 2026',
+      createdTime: '09:14',
+linked: ['CCA2023-000420.1'],
     },
     {
       id: 'CCA2023-000273.7',
@@ -92,10 +113,10 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046601 + 10046602',
-      status: 'Searching for Carrier',
-      statusFlavor: 'warning',
+      status: 'Missing POD',
+      statusFlavor: 'danger',
       transitStatus: 'Late',
-      transitFlavor: 'warning',
+      transitFlavor: 'danger',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
       pickup: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', date: 'Mon, 24 Aug 2026', window: '06:00' },
@@ -103,19 +124,26 @@
       stops: 2,
       distanceKm: 934,
       domain: 'transport',
-      linked: ['CCA2023-000422.1'],
+      tripReference: 'TRIP2026-019672',
+      carrierGroup: 'Ardennes Fret SA',
+      carrierSubGroup: 'AF Liège',
+      shipmentIssues: true,
+      podApproved: false,
+      createdAt: 'Fri, 14 Aug 2026',
+      createdTime: '15:40',
+linked: ['CCA2023-000422.1'],
     },
     {
       id: 'CCA2023-000274.1',
-      type: 'SaaS',
+      type: 'SAAS',
       shipperGroup: 'Ingram Micro Global',
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046612',
-      status: 'Carrier Assigned',
-      statusFlavor: 'primary',
+      status: 'Carrier Informed',
+      statusFlavor: 'accent-blue',
       transitStatus: 'On time',
-      transitFlavor: 'accent-blue',
+      transitFlavor: 'primary',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Venlo DC 1', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', date: 'Fri, 28 Aug 2026', window: '10:00' },
@@ -123,7 +151,14 @@
       stops: 2,
       distanceKm: 1043,
       domain: 'transport',
-      linked: ['CCA2023-000503.1'],
+      tripReference: 'TRIP2026-019171',
+      carrierGroup: 'Autotrasporti Lombardi S.p.A.',
+      carrierSubGroup: 'AL Milano',
+      shipmentIssues: false,
+      podApproved: false,
+      createdAt: 'Wed, 19 Aug 2026',
+      createdTime: '11:05',
+linked: ['CCA2023-000503.1'],
     },
     {
       id: 'CCA2023-000275.2',
@@ -132,10 +167,10 @@
       shipperSubGroup: 'Ingram Micro Deutschland',
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
-      status: 'Planned',
-      statusFlavor: 'accent-blue',
+      status: 'Completed',
+      statusFlavor: 'primary',
       transitStatus: 'On time',
-      transitFlavor: 'accent-blue',
+      transitFlavor: 'primary',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
       pickup: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', date: 'Mon, 31 Aug 2026', window: '07:00' },
@@ -143,7 +178,14 @@
       stops: 2,
       distanceKm: 449,
       domain: 'transport',
-      linked: [],
+      tripReference: 'TRIP2026-017671',
+      carrierGroup: 'CtrlChain Own Fleet',
+      carrierSubGroup: 'Fleet Duisburg',
+      shipmentIssues: false,
+      podApproved: true,
+      createdAt: 'Thu, 20 Aug 2026',
+      createdTime: '07:30',
+linked: [],
     },
   ];
 
@@ -171,6 +213,30 @@
    * Orders list renders them on. The postcode lives in `city`, as it does in
    * the transport records, so both domains format identically.
    *
+   * STATUSES ARE THE REAL LIFECYCLE, not invented ones. In order:
+   *
+   *     Registered -> Ready to Ship -> Truck Arrived -> Loaded
+   *                -> Departed -> Delivered
+   *
+   * That is the Outbound run; an Inbound ends at Received rather than
+   * Delivered (the OMS warehouse table shows Received on its Inbound rows and
+   * Departed on its Outbound ones). Earlier revisions of this file guessed at
+   * Slot Booked / Picking / Ready for Dispatch / Awaiting Slot / Slot Missed —
+   * none of which exist.
+   *
+   * `statusFlavor` follows the badge component's tone guidance: green is for a
+   * "final or positive outcome" only, so Delivered and Received are `primary`
+   * and everything else in the lifecycle — Registered included — is
+   * `accent-blue`. Explicitly NOT green for in-progress states, which the
+   * component's own description warns against.
+   *
+   * There is no failure status here, and that is not an omission: the warehouse
+   * table carries exceptions in their own Shortage and NCR columns rather than
+   * in Status.
+   *
+   * The fixtures run chronologically — the earliest dates are furthest along
+   * the lifecycle, the latest is only just Registered.
+   *
    * An empty `linked` is a real case, not missing data: an Inbound where the
    * supplier arranges its own haulage has no CtrlChain transport order at all.
    *
@@ -196,34 +262,87 @@
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4471820',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Zeeland',
+      warehouseVehicle: { plate: 'BX-472-K', driver: 'Rens de Groot', phone: '+31 113 55 21 40' },
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Uploaded',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'JB', name: 'Joost Bakker', role: 'Client', email: 'joost.bakker@example.com' },
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24655', transport: 'TRIP2026-020684', customer: null },
       domain: 'warehouse',
       type: 'Outbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585',
-      status: 'Ready for Dispatch',
-      statusFlavor: 'primary',
+      status: 'Loaded',
+      statusFlavor: 'accent-blue',
       warehouse: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', dock: 'Dock 7' },
       warehouseSide: 'origin',
-      origin: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Wed, 26 Aug 2026', window: { from: '22:00', to: '02:00', toDate: 'Thu, 27 Aug 2026' } },
-      destination: { name: 'Ingram Micro Barcelona', street: 'La Rambla, 88', city: '08001 Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: { from: '08:00', to: null } },
+      origin: { name: '', street: 'Nishoek 2', city: 'Kruiningen, 4416 PE', country: 'NL', date: 'Wed, 26 Aug 2026', window: { from: '22:00', to: '02:00', toDate: 'Thu, 27 Aug 2026' } },
+      destination: { name: 'Heywood Coldstore', street: 'Hareshill Road', city: 'Heywood/Lancashire, OL10 2TP', country: '044', date: 'Sun, 30 Aug 2026', window: { from: '08:00', to: null } },
       lines: 14,
       pallets: 18,
       weightKg: 7420,
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
-      linked: ['CCA2023-000270.1'],
+      tripReference: 'TRIP2026-020684',
+      createdAt: 'Mon, 17 Aug 2026',
+      createdTime: '08:04',
+linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4471964',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Zeeland',
+      warehouseVehicle: { plate: 'BX-118-P', driver: 'Rens de Groot', phone: '+31 113 55 21 40' },
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Not Sent',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'JB', name: 'Joost Bakker', role: 'Client', email: 'joost.bakker@example.com' },
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24655', transport: null, customer: null },
       domain: 'warehouse',
       type: 'Inbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046612',
-      status: 'Slot Booked',
+      status: 'Truck Arrived',
       statusFlavor: 'accent-blue',
       warehouse: { name: 'Venlo DC 1', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', dock: 'Dock 3' },
       warehouseSide: 'destination',
@@ -234,18 +353,46 @@
       weightKg: 3180,
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
-      linked: [],
+      tripReference: null,
+      createdAt: 'Mon, 17 Aug 2026',
+      createdTime: '16:22',
+linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4472115',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Rotterdam Haulage N.V.',
+      carrierSubGroup: 'RH Zuid-Holland',
+      warehouseVehicle: { plate: 'RH-903-T', driver: 'Milan Visser', phone: '+31 10 240 88 12' },
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Not Sent',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'SM', name: 'Sanne Meijer', role: 'Client', email: 'sanne.meijer@example.com' },
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24702', transport: 'TRIP2026-020456', customer: 'CT-88417' },
       domain: 'warehouse',
       type: 'Outbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain España S.L.U',
       shipperReference: '10046590 + 10046591',
-      status: 'Picking',
-      statusFlavor: 'warning',
+      status: 'Departed',
+      statusFlavor: 'accent-blue',
       warehouse: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', dock: 'Dock 2' },
       warehouseSide: 'origin',
       origin: { name: 'Rotterdam DC 3', street: 'Wilhelminakade 179', city: '3072 AP Rotterdam', country: 'Netherlands', date: 'Wed, 26 Aug 2026', window: { from: '09:00', to: '11:00' } },
@@ -255,18 +402,46 @@
       weightKg: 14960,
       accountManager: 'Admin Bianca',
       assignedOperator: 'Sanne Meijer',
-      linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
+      tripReference: 'TRIP2026-020456',
+      createdAt: 'Tue, 18 Aug 2026',
+      createdTime: '09:15',
+linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4472240',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Spedition Vogel GmbH',
+      carrierSubGroup: 'Vogel Nordrhein',
+      warehouseVehicle: { plate: 'K-VG 4471', driver: 'Lars Brandt', phone: '+49 221 55 90 33' },
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Not Sent',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'KV', name: 'Katrin Vogel', role: 'Client', email: 'katrin.vogel@example.com' },
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24688', transport: null, customer: 'CT-88392' },
       domain: 'warehouse',
       type: 'Inbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Deutschland',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Deutschland',
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
-      status: 'Awaiting Slot',
-      statusFlavor: 'neutral',
+      status: 'Registered',
+      statusFlavor: 'accent-blue',
       warehouse: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', dock: null },
       warehouseSide: 'destination',
       origin: { name: 'Nordfracht Logistik GmbH', street: 'Grosse Elbstrasse 145', city: '22767 Hamburg', country: 'Germany', date: 'Sun, 30 Aug 2026', window: { from: '11:00', to: null } },
@@ -276,18 +451,46 @@
       weightKg: 1240,
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
-      linked: [],
+      tripReference: null,
+      createdAt: 'Fri, 28 Aug 2026',
+      createdTime: '10:01',
+linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4472388',
+      /* Shown as "Temperature Profile code" above Order Items. */
+      temperatureProfile: '36.1 - 37.2 °C',
+      /* The haulier that collects or delivers at the dock. A warehouse order
+         HAS a carrier — the timeline's "Truck Arrived" is theirs — but
+         CtrlChain does not invoice it, which is why Finance Summary still
+         shows no Carrier Invoice Status. */
+      carrierGroup: 'Van Dijk Transport B.V.',
+      carrierSubGroup: 'Van Dijk Zeeland',
+      warehouseVehicle: { plate: 'BX-472-K', driver: 'Rens de Groot', phone: '+31 113 55 21 40' },
+      /* Not Sent -> Uploaded -> Approved. Distinct from transport's
+         podApproved boolean, which cannot express "uploaded but not yet
+         signed off" — the state that decides whether there is a document
+         to download at all. */
+      podStatus: 'Approved',
+      /* The shipper's own contact. ORDER_DETAIL.contacts.shipper is the
+         transport fixture's Booker; a warehouse order's counterpart is the
+         client, so it carries its own rather than borrowing that one. */
+      shipperContact: { initials: 'JB', name: 'Joost Bakker', role: 'Client', email: 'joost.bakker@example.com' },
+      /* Three trip numbers, not a contracted lane: the warehouse's own,
+         the transport leg's if one is linked, and the customer's if they
+         gave one. N/A is a real state here, not missing fixture data. */
+      tripNumbers: { warehouse: '24711', transport: 'TRIP2026-019672', customer: null },
       domain: 'warehouse',
       type: 'Outbound',
-      shipperGroup: 'Ingram Micro Global',
-      shipperSubGroup: 'Ingram Micro Netherlands',
+      shipperGroup: 'Farm Pack BV',
+      shipperSubGroup: 'Farm Pack Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046601',
-      status: 'Slot Missed',
-      statusFlavor: 'danger',
+      status: 'Delivered',
+      statusFlavor: 'primary',
       warehouse: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', dock: 'Dock 1' },
       warehouseSide: 'origin',
       origin: { name: 'Antwerp DC 2', street: 'Noorderlaan 127', city: '2030 Antwerpen', country: 'Belgium', date: 'Mon, 24 Aug 2026', window: { from: '05:00', to: '07:00' } },
@@ -297,7 +500,10 @@
       weightKg: 5380,
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
-      linked: ['CCA2023-000273.7'],
+      tripReference: 'TRIP2026-019672',
+      createdAt: 'Fri, 14 Aug 2026',
+      createdTime: '15:44',
+linked: ['CCA2023-000273.7'],
     },
   ];
 
@@ -312,6 +518,14 @@
    * Same array-per-domain pattern as WAREHOUSE_ORDERS, and for the same
    * reason: `CCA_DATA.orders` means transport orders to every prototype that
    * already reads it.
+   *
+   * `status` IS THE SHARED ORDER STATUS, not an invoicing state. An invoice
+   * order is an order in the same list — the app hides them behind a "Show
+   * Invoice Orders Only" filter rather than putting them somewhere else — so it
+   * takes its status from the one vocabulary every order uses. "Paid" was wrong
+   * for that reason: paid is Completed, and the invoicing state belongs in its
+   * own field. The app has separate Customer Invoice Status and Carrier Invoice
+   * Status filters, which is where `customerInvoiceStatus` comes from.
    *
    * ⚠ THE FIELD VALUES HERE ARE PLACEHOLDERS. These records come from an API
    * in the real product and its shape has not been read yet. What is modelled:
@@ -340,13 +554,17 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046585',
-      status: 'Invoice Sent',
-      statusFlavor: 'accent-blue',
+      status: 'Completed',
+      statusFlavor: 'primary',
+      customerInvoiceStatus: 'Sent',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Presov DC 1', street: 'Hlavna ul. 27', city: '080 01 Presov', country: 'Slovakia', date: 'Thu, 27 Aug 2026', window: '08:00' },
       delivery: { name: 'Ingram Micro Barcelona', street: 'La Rambla, 88', city: '08001 Barcelona', country: 'Spain', date: 'Sun, 30 Aug 2026', window: '08:00' },
-      linked: ['CCA2023-000270.1'],
+      tripReference: 'TRIP2026-020684',
+      createdAt: 'Sun, 30 Aug 2026',
+      createdTime: '02:00',
+linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000502.1',
@@ -356,13 +574,16 @@
       shipperSubGroup: 'Ingram Micro Deutschland',
       salesOrganisation: 'CtrlChain GmbH',
       shipperReference: '10046620',
-      status: 'Overdue',
-      statusFlavor: 'danger',
+      status: 'Completed',
+      statusFlavor: 'primary',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Sanne Meijer',
       pickup: { name: 'Duisburg DC 1', street: 'Am Blumenkampshof 8', city: '47059 Duisburg', country: 'Germany', date: 'Mon, 31 Aug 2026', window: '07:00' },
       delivery: { name: 'Nordfracht Logistik GmbH', street: 'Grosse Elbstrasse 145', city: '22767 Hamburg', country: 'Germany', date: 'Tue, 1 Sept 2026', window: '15:00' },
-      linked: [],
+      tripReference: null,
+      createdAt: 'Tue, 1 Sept 2026',
+      createdTime: '02:00',
+linked: [],
     },
     {
       id: 'CCA2023-000503.1',
@@ -372,15 +593,226 @@
       shipperSubGroup: 'Ingram Micro Netherlands',
       salesOrganisation: 'CtrlChain B.V.',
       shipperReference: '10046612',
-      status: 'Paid',
+      status: 'Completed',
       statusFlavor: 'primary',
+      customerInvoiceStatus: 'Paid',
       accountManager: 'Bianca de Vries',
       assignedOperator: 'Tom Jansen',
       pickup: { name: 'Venlo DC 1', street: 'Columbusweg 31', city: '5928 LC Venlo', country: 'Netherlands', date: 'Fri, 28 Aug 2026', window: '10:00' },
       delivery: { name: 'Ingram Micro Milano', street: 'Via Mecenate 90', city: '20138 Milano', country: 'Italy', date: 'Mon, 31 Aug 2026', window: '11:30' },
-      linked: ['CCA2023-000274.1'],
+      tripReference: 'TRIP2026-019171',
+      createdAt: 'Mon, 31 Aug 2026',
+      createdTime: '02:00',
+linked: ['CCA2023-000274.1'],
     },
   ];
+
+
+  /*
+   * Order detail — the fields only a detail page needs
+   * --------------------------------------------------
+   * The list needs a dozen fields per order; the detail page needs sixty. Rather
+   * than bloat every record, the extra sits here and is merged on demand by
+   * `CCA_DATA.orderDetail(id)`.
+   *
+   * Read off the Basic Info tab of a real order at
+   * development.ctrlchain.com/shipper-tms/order/detail/{ref}/info — the
+   * STRUCTURE only. Every value is invented: that page carries live customer
+   * data behind an ISO 27001 notice, and this repo publishes to GitHub Pages.
+   *
+   * `openingHours` is per-location and the app shows a "Show More" after five
+   * days, so all seven are here to give that something to reveal.
+   */
+  /*
+   * SHIPMENT TIMELINE — what the "Shipment updates" drawer shows.
+   *
+   * Read off staging's own drawer (cca-shipment-updates > cca-timeline-table),
+   * so the SHAPE is the app's: events newest first, grouped under a collapsible
+   * day, each carrying a time, the place it happened, a label and who recorded
+   * it. Every value here is invented — staging is ISO 27001 and its data does
+   * not leave it.
+   *
+   * Two vocabularies, because the two domains genuinely differ. Transport
+   * tracks a road movement through to the POD; a warehouse order tracks the
+   * handling lifecycle already in WAREHOUSE_ORDERS' own statuses.
+   */
+  var TIMELINE = {
+    transport: [
+      { day: 'Sunday, 30 August 2026', events: [
+        { time: '14:22 CEST', place: '08001 Barcelona', label: 'POD Approved',
+          note: 'Proof of delivery accepted; the order can now be invoiced.',
+          by: 'Admin A. Kowalski' },
+        { time: '14:18 CEST', place: '08001 Barcelona', label: 'POD Uploaded',
+          note: 'Signed delivery note attached by the driver.', by: 'Marek Nowak' },
+        { time: '14:05 CEST', place: '08001 Barcelona', label: 'Cargo Unloaded Confirmed',
+          note: '10 of 10 pallets unloaded. No damage reported.', by: 'Marek Nowak' },
+        { time: '13:30 CEST', place: '08001 Barcelona', label: 'Arrived at Delivery Confirmed',
+          note: 'Arrived 30 minutes inside the booked window.', by: 'Marek Nowak' },
+      ] },
+      { day: 'Thursday, 27 August 2026', events: [
+        { time: '09:12 CEST', place: '080 01 Presov', label: 'Cargo Loaded Confirmed',
+          note: 'Loaded via door loading. Temperature set to -21 °C.', by: 'Marek Nowak' },
+        { time: '08:05 CEST', place: '080 01 Presov', label: 'Arrived at Pickup Confirmed',
+          note: 'Driver reported at the gate.', by: 'Marek Nowak' },
+        { time: '07:40 CEST', place: '-', label: 'Pickup ETA Confirmed',
+          note: 'Carrier confirmed an 08:00 arrival.', by: 'Transportes Garcia' },
+        { time: '06:00 CEST', place: '-', label: 'Carrier Assigned',
+          note: 'Assigned to Transportes Garcia de la Torre S.L.', by: 'Tom Jansen' },
+      ] },
+    ],
+    warehouse: [
+      { day: 'Thursday, 27 August 2026', events: [
+        { time: '01:55 CEST', place: '080 01 Presov', label: 'Loaded',
+          note: '18 pallets loaded at Dock 7. Seal 4471820 applied.',
+          by: 'Operator Tom Jansen' },
+      ] },
+      { day: 'Wednesday, 26 August 2026', events: [
+        { time: '23:40 CEST', place: '080 01 Presov', label: 'Truck Arrived',
+          note: 'Truck checked in at Dock 7, 20 minutes ahead of the slot.',
+          by: 'Operator Tom Jansen' },
+        { time: '18:20 CEST', place: '080 01 Presov', label: 'Ready to Ship',
+          note: 'Picking complete across 14 order lines. 7,420 kg staged.',
+          by: 'Operator Bianca de Vries' },
+      ] },
+      { day: 'Monday, 17 August 2026', events: [
+        { time: '08:04 CEST', place: '080 01 Presov', label: 'Registered',
+          note: 'Outbound order received from the shipper.', by: 'System' },
+      ] },
+    ],
+  };
+
+  /*
+   * ORDER ITEMS AND SHORTAGES — the two tables below Locations Info on a
+   * warehouse order. Shape from Figma 29Ixi12L8wlQPTh3oVg0ao node 103:52832;
+   * the values are invented.
+   *
+   * THE ROWS ARE BUILT FROM THE ORDER, not stored as one shared list.
+   *
+   * They used to be a fixed pair of lines, which meant General Information
+   * derived "2 lines / 10 pallets" on an order whose own record says 14 and 18
+   * — the page contradicting itself, and the paginator claiming two rows for
+   * every warehouse order regardless of size. Now each order gets `o.lines`
+   * rows whose palletsOrdered sum to exactly `o.pallets`, so the totals above
+   * the table, the rows in it, and the order record all agree.
+   *
+   * Deterministic: the catalogue cycles by index, no randomness, so a re-render
+   * produces the same table.
+   */
+  var ITEM_CATALOGUE = [
+    { code: '10533', description: 'Onion Cubes 10x10SF Med-1x10kg - BP80',
+      lot: 'L6071', bestBefore: 'Mon, 12 Mar 2028', tempClass: 'Frozen' },
+    { code: '12070', description: 'Onion strips SF Med-1x10kg - bp70',
+      lot: 'L6034', bestBefore: 'Mon, 03 Feb 2028', tempClass: 'Frozen' },
+    { code: '10884', description: 'Leek Rings 10x10SF Med-1x10kg - BP80',
+      lot: 'L6112', bestBefore: 'Thu, 27 Apr 2028', tempClass: 'Frozen' },
+    { code: '11402', description: 'Carrot Cubes 10x10 Fine-1x10kg - BP60',
+      lot: 'L5988', bestBefore: 'Sat, 15 Jan 2028', tempClass: 'Frozen' },
+    { code: '13115', description: 'Pepper Mix Strips SF-1x10kg - bp70',
+      lot: 'L6203', bestBefore: 'Wed, 09 Aug 2028', tempClass: 'Frozen' },
+    { code: '10061', description: 'Spinach Leaf Whole-1x10kg - BP80',
+      lot: 'L6047', bestBefore: 'Tue, 22 Feb 2028', tempClass: 'Frozen' },
+  ];
+
+  /* Pallets spread as evenly as the order's own total allows: one each, then
+     the remainder over the first rows. Sums to o.pallets exactly. */
+  function buildItems(o) {
+    var n = o.lines || 0;
+    if (!n) return [];
+    var total = o.pallets || 0;
+    var base = Math.floor(total / n);
+    var extra = total - base * n;
+    var rows = [];
+    for (var i = 0; i < n; i++) {
+      var cat = ITEM_CATALOGUE[i % ITEM_CATALOGUE.length];
+      var pallets = base + (i < extra ? 1 : 0);
+      var qty = pallets * 80;
+      var pals = [];
+      for (var k = 0; k < pallets; k++) {
+        pals.push({
+          sscc: String(388284 + i * 6 + k * 2),
+          lot: cat.lot, bestBefore: cat.bestBefore,
+          ordered: '80', shipped: '80', uom: 'CA', uomType: 'Default UoM',
+          quality: '-', temperature: '- 37.2 °C',
+          profileCheck: k === 0 ? '€ 543.00' : '€ 155.00',
+        });
+      }
+      rows.push({
+        line: String((i + 1) * 10).padStart(4, '0'),
+        code: cat.code, description: cat.description,
+        bestBefore: cat.bestBefore, lot: cat.lot, quality: '-',
+        ordered: String(qty), shipped: String(qty),
+        uom: 'CA', uomType: 'Default UoM', shortage: '-',
+        palletsOrdered: String(pallets), palletsShipped: String(pallets),
+        tempClass: cat.tempClass, pallets: pals,
+      });
+    }
+    return rows;
+  }
+
+  var WAREHOUSE_SHORTAGES = [
+    { line: '0010', code: '31029065', description: '8 St Limone XXL 88ml (X6) LIDL',
+      quantity: '5' },
+  ];
+
+  var ORDER_DETAIL = {
+    cargo: {
+      kind: 'Pallet',
+      estimatedTotalWeight: '3,500 kg',
+      calculatedTotalWeight: '3,500 kg',
+      estimatedValue: '€ 250,000.00',
+      temperatureRange: '-25 °C to -18 °C',
+      foodOrPerishable: 'Food',
+      hazardous: 'No',
+      goodsPalletised: 'All',
+      loadingMethod: 'Door Loading',
+      maxPallets: '10',
+      maxPalletHeight: '-',
+      description: 'Euro pallets',
+    },
+    pallet: {
+      name: 'Euro-pallet (120 x 80 x 180)',
+      quantity: '10',
+      description: 'Euro pallets',
+      weight: '350 kg',
+      requestedExchange: '10/10',
+      actualLoading: '10',
+      actualUnloading: '10',
+    },
+    vehicle: {
+      motor: { vehicle: 'Semi-tractor', plate: 'WGM4722K', truckNumber: '-' },
+      trailer: { type: 'Trailer', bodyType: 'Curtainside', plate: '12', trailerNumber: '-' },
+      driver: { name: 'Marek Nowak', phone: '+48 22 290 27 62' },
+    },
+    contacts: {
+      operator: { initials: 'TJ', name: 'Tom Jansen', company: 'CtrlChain B.V.', flag: 'nl' },
+      shipper: { initials: 'IM', name: 'Ingram Micro Booker', role: 'Booker',
+                 email: 'booker@example.com' },
+      carrierContact: { phone: '+48 22 290 27 62', email: 'planning@example.com' },
+    },
+    /* Route Details — the planner's own figures for the drawn route. */
+    route: { avoid: '-', duration: '9h 24m', distance: '812 km', roadTaxes: '-', co2: '0 kg' },
+    /* Requested Vehicle(s) — what was asked for, distinct from what turned up
+       (which is Carrier & Vehicle Details). */
+    requestedVehicle: {
+      kind: 'Trailer', bodyType: 'Curtainside', tailLift: 'No',
+      length: '1,360 cm', width: '245 cm', height: '265 cm', maxWeight: '24,000 kg',
+    },
+    bookedFrom: 'LANE2026-000231',
+    /* Zero throughout, as an un-offset order reads on the real page. */
+    co2: { contribution: '€0.00', offset: '0 t', water: '0 l', lives: '0 people',
+           land: '0 m²', trees: '0 trees' },
+    openingHours: [
+      { day: 'Monday', hours: '06:00 - 18:00' },
+      { day: 'Tuesday', hours: '06:00 - 18:00' },
+      { day: 'Wednesday', hours: '06:00 - 18:00' },
+      { day: 'Thursday', hours: '06:00 - 18:00' },
+      { day: 'Friday', hours: '06:00 - 18:00' },
+      { day: 'Saturday', hours: 'Closed' },
+      { day: 'Sunday', hours: 'Closed' },
+    ],
+    locationType: 'Warehouse',
+    totals: { weight: '3,500 kg', items: '10', exchangeNeeded: '10', actualExchange: 'n/a' },
+  };
 
   /*
    * Legal documents — Admin › Legal
@@ -726,6 +1158,29 @@
       return ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
         .filter(function (o) { return o.id === id; })[0] || null;
     },
+    /*
+     * An order plus everything a detail page needs. The shared ORDER_DETAIL
+     * block is the same for every order — fixture data, not a claim that real
+     * orders share a cargo manifest.
+     */
+    /* The two warehouse tables below Locations Info. */
+    orderItems: function (o) { return buildItems(o || {}); },
+    shortages: function () { return WAREHOUSE_SHORTAGES; },
+
+    /* The Shipment updates drawer's events, by domain. */
+    timeline: function (o) {
+      return TIMELINE[o && o.domain === 'warehouse' ? 'warehouse' : 'transport'];
+    },
+
+    orderDetail: function (id) {
+      var o = ORDERS.concat(WAREHOUSE_ORDERS, INVOICE_ORDERS)
+        .filter(function (r) { return r.id === id; })[0];
+      if (!o) return null;
+      var out = { detail: ORDER_DETAIL };
+      Object.keys(o).forEach(function (k) { out[k] = o[k]; });
+      return out;
+    },
+
     /* The counterpart records `linked` points at, resolved. */
     linkedOrders: function (o) {
       return (o && o.linked ? o.linked : []).map(function (id) {

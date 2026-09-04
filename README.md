@@ -55,8 +55,8 @@ shared — everyone who clones gets the same one, and improving it improves it f
 the team.
 
 **Prototypes are built on a branch**, named after the folder — never on `main`,
-because committing publishes and half-finished work would go live. One name for
-the whole thing: the folder `orders-detail/` is the branch `orders-detail`, the
+which is what GitHub Pages serves. Branching happens automatically when work
+starts; nobody has to ask for it. One name for the whole thing: the folder `orders-detail/` is the branch `orders-detail`, the
 screen `orders.detail`, and the URL `/ccaprototype/orders-detail/`.
 
 By hand it is a branch, a folder and a file:
@@ -114,6 +114,7 @@ The handful of things a static prototype needs that the export does not provide.
 | `prototype.css` | Link after `ds/index.css`. Every recurring fix, each with a comment on what breaks without it. |
 | [`patterns.html`](_shared/patterns.html) | Composed patterns, rendered: top bar, saved-view tabs, filter chips, badges, a working drawer. |
 | `data.js` | The fixture records every prototype renders, so screens share one set of orders. |
+| `filters.js` | The whole Orders filter mechanism — drawer, pinned chips, value popover, and the predicates. Any list prototype gets it by calling `CCA_FILTERS.mount(...)`. |
 | `routes.js` | Resolves `data-screen` links; shows a "not prototyped yet" notice for screens that do not exist. |
 | `screens.js` | **Generated** by `build-screens.py`. The map of every page. |
 | `shell.js` | Makes the rail's Dark and Collapse work. |
@@ -124,6 +125,34 @@ Work something out that the next prototype will need? **Put it in `_shared/`.** 
 FE later ships a real token or component for it, **delete it from `_shared/`** and
 use the real thing — this is a holding pen for gaps in the export, not a second
 design system.
+
+#### Filtering a list
+
+`filters.js` is the one to reach for before building any filter UI. It carries
+the mechanism as the running app actually has it, which is not quite what the
+Figma shows:
+
+```js
+const filters = CCA_FILTERS.orders();          // the 31-filter Orders preset
+const FX = CCA_FILTERS.mount({ filters, records, viewName, onChange });
+FX.visible();                                  // records surviving the filters
+```
+
+Four things in there are easy to get wrong and are already handled:
+
+- **Pinning is a layout choice, not a filtering one.** It surfaces a filter
+  above the table and applies nothing.
+- **A pinned chip is clickable** and opens its values inline, so the common case
+  never needs the drawer.
+- **The same filter renders two ways** — chips in the drawer, a checkbox list in
+  the chip's popover. That is the app's behaviour, not a slip.
+- **Category interlocks with Order Type**, because no order is both a transport
+  movement and a warehouse one, and an invoice order has no type at all.
+
+Add a filter to the preset rather than to a prototype. One with no `field`,
+`derive` or `match` renders its control and says out loud that it does not
+narrow anything — honest for the filters these fixtures cannot exercise, and
+better than a control that silently does nothing.
 
 ### 3. The prototype itself
 
@@ -138,6 +167,7 @@ belongs in layer 2.
 <script src="../_shared/data.js"></script>
 <script src="../_shared/screens.js"></script>
 <script src="../_shared/routes.js"></script>
+<script src="../_shared/filters.js"></script>   <!-- only if the page filters a list -->
 <script src="../_shared/shell.js"></script>
 <script>/* the page's own script goes after these */</script>
 ```
@@ -224,23 +254,37 @@ actual diff, splits the work along the repo's layers — the design-system expor
 history already uses. Generated files are committed with whatever regenerated
 them, never on their own.
 
-**Committing publishes.** The skill commits on your prototype branch, merges to
-`main`, pushes and deletes the merged branch, and
-GitHub Pages serves it a minute or two later — no confirmation step, because
-that was the slow part. It stops and asks only if the merge would conflict, or
-if the prototype has not been checked in a browser.
+**Committing does not publish.** The skill commits on your prototype branch and
+stops there. Nothing is live, so commit as often as you like — that is the point
+of the branch.
 
-Say "just commit" or "don't publish yet" to keep something on a branch.
+Publishing is a separate word. See below.
 
 ## Publishing
 
-Push to `main`. GitHub Pages serves the repository root, so a folder committed at
-`my-prototype/` is live at
+**Say "publish".** The skill then merges your branch into `main`, pushes, and
+deletes the merged branch. GitHub Pages serves the repository root, so a folder
+at `my-prototype/` is live at
 `https://ctrlchain-design.github.io/ccaprototype/my-prototype/` within a minute or
 two. `.nojekyll` keeps Pages from processing anything — files are served exactly as
 committed.
 
-Pushing publishes. Nothing else does.
+It stops and reports instead if the merge would conflict, or if nobody has looked
+at the prototype in a browser.
+
+Merging to `main` publishes. Nothing else does — not branching, not committing.
+
+**Three words, three jobs.** Worth keeping straight, because only the last one
+is visible to anyone else:
+
+| You say | What happens | Live? |
+| --- | --- | --- |
+| *(nothing — it is automatic)* | branch off `main`, named after the folder | no |
+| **commit** | commit onto that branch | no |
+| **publish** | merge to `main` and push | **yes** |
+
+An earlier "go ahead" does not carry forward to later changes, and a commit that
+only fixes a mistake you already published still needs the word.
 
 ---
 
