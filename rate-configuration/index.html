@@ -402,12 +402,17 @@
                       <sc-for list="{{ exceptionHistoryRows }}" as="row" hint-placeholder-count="3">
                         <tr style="border-bottom:1px solid var(--border-neutral-default);">
                           <td style="padding:14px;">
-                            <div style="display:flex;align-items:center;gap:10px;color:var(--icon-brand);">
-                              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
-                              <div>
-                                <div style="color:var(--text-neutral-body);">{{ row.groupName }}</div>
-                                <div style="font-size:12px;color:var(--text-brand-default);">{{ row.subGroup }}</div>
+                            <div style="display:flex;flex-direction:column;gap:10px;">
+                              <div style="display:flex;align-items:center;gap:8px;color:var(--text-neutral-body);">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+                                <span>{{ row.groupName }}</span>
                               </div>
+                              <sc-if value="{{ row.subGroup }}" hint-placeholder-val="{{ true }}">
+                                <div style="display:flex;align-items:center;gap:8px;color:var(--text-neutral-body);">
+                                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5" style="flex-shrink:0;"><rect x="8" y="3" width="4" height="3.5" rx="0.6"></rect><rect x="3" y="13.5" width="4" height="3.5" rx="0.6"></rect><rect x="13" y="13.5" width="4" height="3.5" rx="0.6"></rect><path d="M10 6.5v3.5M5 13.5V10h10v3.5"></path></svg>
+                                  <span>{{ row.subGroup }}</span>
+                                </div>
+                              </sc-if>
                             </div>
                           </td>
                           <td style="padding:14px;color:var(--text-neutral-body);">{{ row.rangeFrom }} → {{ row.rangeTo }}</td>
@@ -1173,12 +1178,17 @@
                         <sc-for list="{{ exceptionRows }}" as="row" hint-placeholder-count="3">
                           <tr style="border-bottom:1px solid var(--border-neutral-default);">
                             <td style="padding:16px 20px;">
-                              <div style="display:flex;align-items:center;gap:12px;color:var(--icon-brand);">
-                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
-                                <div>
-                                  <div style="color:var(--text-neutral-body);">{{ row.groupName }}</div>
-                                  <div style="font-size:12px;color:var(--text-brand-default);">{{ row.subGroup }}</div>
+                              <div style="display:flex;flex-direction:column;gap:10px;">
+                                <div style="display:flex;align-items:center;gap:8px;color:var(--text-neutral-body);">
+                                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5" style="flex-shrink:0;"><path d="M4 17V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v12M4 17h12M7 7h2M11 7h2M7 10h2M11 10h2M7 13h2M11 13h2"></path></svg>
+                                  <span>{{ row.groupName }}</span>
                                 </div>
+                                <sc-if value="{{ row.subGroup }}" hint-placeholder-val="{{ true }}">
+                                  <div style="display:flex;align-items:center;gap:8px;color:var(--text-neutral-body);">
+                                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--icon-neutral)" stroke-width="1.5" style="flex-shrink:0;"><rect x="8" y="3" width="4" height="3.5" rx="0.6"></rect><rect x="3" y="13.5" width="4" height="3.5" rx="0.6"></rect><rect x="13" y="13.5" width="4" height="3.5" rx="0.6"></rect><path d="M10 6.5v3.5M5 13.5V10h10v3.5"></path></svg>
+                                    <span>{{ row.subGroup }}</span>
+                                  </div>
+                                </sc-if>
                               </div>
                             </td>
                             <td style="padding:14px;color:var(--text-neutral-body);">
