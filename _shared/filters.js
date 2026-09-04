@@ -170,6 +170,129 @@
     });
   }
 
+  /*
+   * SAVE VIEW — the dialog staging opens from the Save View action.
+   *
+   * Read off the running app (cca-new-filter-view-dialog) rather than designed
+   * here. Its shape, in order:
+   *
+   *   h2      "Save current filters as a new view", with a close X
+   *   h3      "Name of the View"
+   *   field   outlined, label "Save as", maxlength 30
+   *   hint    a live "0 / 30" counter under the field
+   *   check   "Set this view as my default"
+   *   footer  Cancel (subtle) and Save View (primary), the primary DISABLED
+   *           until a name is typed
+   *
+   * The three-part header/main/footer inside `.dialog-container` is the
+   * platform's own — see components/modal.html, which documents it as "always
+   * this structure".
+   *
+   * The dialog is injected on first use, so no page needs markup for it, and
+   * the caller says what saving means: a prototype keeps its own view list.
+   */
+  var SAVE_VIEW_MAX = 30;
+
+  function ensureSaveViewOverlay() {
+    var box = document.getElementById('proto-save-view');
+    if (box) return box;
+    box = document.createElement('div');
+    box.className = 'cdk-overlay-container';
+    box.id = 'proto-save-view';
+    box.hidden = true;
+    box.innerHTML =
+      '<div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" data-save-view-scrim></div>' +
+      '<div class="cdk-global-overlay-wrapper proto-dialog-wrapper">' +
+      '<div class="cdk-overlay-pane mdc-dialog--open">' +
+      '<div class="mat-mdc-dialog-surface mdc-dialog__surface">' +
+      '<div class="dialog-container">' +
+      '<header><div class="title-wrapper">' +
+      '<h2>Save current filters as a new view</h2></div>' +
+      '<button class="dialog-close-button" aria-label="Close" data-save-view-cancel>' +
+      icon('xmark') + '</button></header>' +
+      '<main><form class="flex flex-col gap-4" onsubmit="return false">' +
+      '<h3>Name of the View</h3>' +
+      '<div class="w-83">' +
+      labelledField('save-view-name', 'Save as', '', null, '') +
+      '</div>' +
+      /* The counter is a mat-hint on staging; the class it uses is not in the
+         export, so this is the same element on the type style it resolves to. */
+      '<p class="text-cca-label-sm text-neutral-caption" data-save-view-count>' +
+      '0 / ' + SAVE_VIEW_MAX + '</p>' +
+      checkbox('save-view-default', 'Set this view as my default') +
+      '</form></main>' +
+      '<footer>' +
+      '<button ccaButton type="button" class="cca-btn cca-btn--subtle" data-save-view-cancel>Cancel</button>' +
+      '<button ccaButton type="button" class="cca-btn cca-btn--primary" data-save-view-confirm disabled>Save View</button>' +
+      '</footer>' +
+      '</div></div></div></div>';
+    (document.querySelector('cca-root') || document.body).appendChild(box);
+    return box;
+  }
+
+  /* The platform's checkbox, from components/input.html. */
+  function checkbox(id, label) {
+    return (
+      '<mat-checkbox class="mat-mdc-checkbox mat-primary" id="' + id + '">' +
+      '<div class="mdc-form-field">' +
+      '<div class="mdc-checkbox">' +
+      '<div class="mdc-checkbox__native-control-wrapper">' +
+      '<input type="checkbox" class="mdc-checkbox__native-control" id="' + id + '-input" />' +
+      '</div>' +
+      '<div class="mdc-checkbox__background">' +
+      '<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24" aria-hidden="true">' +
+      '<path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />' +
+      '</svg><div class="mdc-checkbox__mixedmark"></div></div></div>' +
+      '<label for="' + id + '-input">' + label + '</label>' +
+      '</div></mat-checkbox>'
+    );
+  }
+
+  /*
+   * Opens it. `onSave(name, makeDefault)` is called only when the user
+   * confirms; the caller owns the view list.
+   */
+  function openSaveView(onSave) {
+    var box = ensureSaveViewOverlay();
+    var input = box.querySelector('input[data-filter-input="save-view-name"]');
+    var count = box.querySelector('[data-save-view-count]');
+    var confirm = box.querySelector('[data-save-view-confirm]');
+    var check = box.querySelector('#save-view-default-input');
+    input.value = '';
+    input.setAttribute('maxlength', String(SAVE_VIEW_MAX));
+    check.checked = false;
+    count.textContent = '0 / ' + SAVE_VIEW_MAX;
+    confirm.disabled = true;
+
+    var close = function () {
+      box.hidden = true;
+      document.documentElement.classList.remove('cdk-global-scrollblock');
+    };
+
+    input.oninput = function () {
+      var n = input.value.trim().length;
+      count.textContent = input.value.length + ' / ' + SAVE_VIEW_MAX;
+      confirm.disabled = n === 0;
+    };
+    box.onclick = function (ev) {
+      if (ev.target.closest('[data-save-view-cancel]') ||
+          ev.target.hasAttribute('data-save-view-scrim')) { close(); return; }
+      if (ev.target.closest('[data-save-view-confirm]')) {
+        var name = input.value.trim();
+        if (!name) return;
+        close();
+        onSave(name, !!check.checked);
+      }
+    };
+
+    box.hidden = false;
+    var scrim = box.querySelector('[data-save-view-scrim]');
+    void scrim.offsetWidth;
+    scrim.classList.add('cdk-overlay-backdrop-showing');
+    document.documentElement.classList.add('cdk-global-scrollblock');
+    input.focus();
+  }
+
   /* ------------------------------------------------ the Orders filter preset */
 
   /*
@@ -698,5 +821,7 @@
     /* A labelled outlined field. Generic enough that other prototypes want
        it — the order detail's UoM select uses it. */
     labelledField: labelledField,
+    /* The Save View dialog, as staging opens it. */
+    openSaveView: openSaveView,
   };
 })();

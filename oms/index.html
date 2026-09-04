@@ -1468,9 +1468,15 @@
           return;
         }
         if (e.target.closest('[data-save-view]')) {
-          // Saved views are a real feature and not prototyped, so say so
-          // rather than pretending it saved.
-          window.CCA_ROUTES.notice('Saving a view has not been prototyped yet.');
+          // The dialog is the shared one; what saving MEANS is this page's,
+          // because the view list lives here.
+          window.CCA_FILTERS.openSaveView((name, makeDefault) => {
+            VIEWS.push({ name, isDefault: makeDefault });
+            if (makeDefault) VIEWS.forEach((v) => { v.isDefault = v.name === name; });
+            activeView = name;
+            render();
+            window.CCA_ROUTES.notice('View "' + name + '" saved.');
+          });
           return;
         }
         if (!clear) return;
