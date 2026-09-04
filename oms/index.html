@@ -894,7 +894,7 @@
               <span class="truncate text-cca-label-lg ${active ? 'text-brand-default' : 'text-neutral-caption'}">${v.name}</span>
               ${
                 active && !v.system
-                  ? `<button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="View options">${icon('ellipsis-vertical')}</button>`
+                  ? `<button ccaButton class="cca-btn cca-btn--icon cca-btn--icon-only cca-btn--x-small" aria-label="View options" data-view-menu="${v.name}">${icon('ellipsis-vertical')}</button>`
                   : ''
               }
             </div>`;
@@ -1238,6 +1238,57 @@
       }
 
       // ------------------------------------------------------------- behaviour
+      /*
+       * The view tab strip: selecting a view, and its kebab menu.
+       *
+       * There was no handler here at all — the tabs rendered and did nothing,
+       * and the kebab was decorative. The menu itself is the shared one, so
+       * this page and orders-pinned-filters cannot drift apart on it.
+       */
+      document.getElementById('view-tabs').addEventListener('click', (e) => {
+        // The kebab sits INSIDE the tab, so it has to be checked first.
+        const menu = e.target.closest('[data-view-menu]');
+        if (menu) {
+          const view = VIEWS.filter((v) => v.name === menu.dataset.viewMenu)[0];
+          window.CCA_FILTERS.openViewMenu(menu, view, {
+            onDefault: () => {
+              VIEWS.forEach((v) => { v.isDefault = v.name === view.name; });
+              render();
+              window.CCA_ROUTES.notice(`“${view.name}” is now your default view.`);
+            },
+            onRename: () => {
+              window.CCA_FILTERS.openRenameView(view.name, (name) => {
+                const was = view.name;
+                view.name = name;
+                if (activeView === was) activeView = name;
+                render();
+                window.CCA_ROUTES.notice(`Renamed “${was}” to “${name}”.`);
+              });
+            },
+            onDelete: () => {
+              VIEWS.splice(VIEWS.findIndex((v) => v.name === view.name), 1);
+              if (activeView === view.name) {
+                activeView = 'All';
+                FILTERS.forEach((f) => { f.applied = []; });
+              }
+              render();
+              window.CCA_ROUTES.notice(`Deleted “${view.name}”.`);
+            },
+          });
+          return;
+        }
+        const tab = e.target.closest('[data-view]');
+        if (!tab) return;
+        const view = VIEWS.filter((v) => v.name === tab.dataset.view)[0];
+        if (!view) return;
+        activeView = view.name;
+        // Restore what the view recorded; "All" clears back to nothing.
+        FILTERS.forEach((f) => {
+          f.applied = (view.filters && view.filters[f.name]) ? view.filters[f.name].slice() : [];
+        });
+        render();
+      });
+
       document.getElementById('filters-button').addEventListener('click', () => openDrawer(true));
       document.getElementById('drawer-scrim').addEventListener('click', () => openDrawer(false));
       document.addEventListener('keydown', (e) => {
@@ -1471,7 +1522,13 @@
           // The dialog is the shared one; what saving MEANS is this page's,
           // because the view list lives here.
           window.CCA_FILTERS.openSaveView((name, makeDefault) => {
-            VIEWS.push({ name, isDefault: makeDefault });
+            // Record what each filter had applied. Without this a saved view is
+            // just a label — selecting it later would restore nothing.
+            const snapshot = {};
+            FILTERS.forEach((f) => {
+              if (f.applied && f.applied.length) snapshot[f.name] = f.applied.slice();
+            });
+            VIEWS.push({ name, isDefault: makeDefault, filters: snapshot });
             if (makeDefault) VIEWS.forEach((v) => { v.isDefault = v.name === name; });
             activeView = name;
             render();

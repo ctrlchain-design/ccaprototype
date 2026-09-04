@@ -193,37 +193,41 @@
    */
   var SAVE_VIEW_MAX = 30;
 
-  function ensureSaveViewOverlay() {
-    var box = document.getElementById('proto-save-view');
+  /*
+   * One dialog serves both Save View and Rename, because staging's two are the
+   * same form with three differences: the title, whether the "set as default"
+   * checkbox is there, and the primary button's label — "Save View" against
+   * "Save Change". Rename also arrives pre-filled, which is why its primary
+   * starts ENABLED and its counter starts at the name's length rather than 0.
+   */
+  function ensureViewDialog() {
+    var box = document.getElementById('proto-view-dialog');
     if (box) return box;
     box = document.createElement('div');
     box.className = 'cdk-overlay-container';
-    box.id = 'proto-save-view';
+    box.id = 'proto-view-dialog';
     box.hidden = true;
     box.innerHTML =
-      '<div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" data-save-view-scrim></div>' +
+      '<div class="cdk-overlay-backdrop cdk-overlay-dark-backdrop" data-view-dialog-scrim></div>' +
       '<div class="cdk-global-overlay-wrapper proto-dialog-wrapper">' +
       '<div class="cdk-overlay-pane mdc-dialog--open">' +
       '<div class="mat-mdc-dialog-surface mdc-dialog__surface">' +
       '<div class="dialog-container">' +
-      '<header><div class="title-wrapper">' +
-      '<h2>Save current filters as a new view</h2></div>' +
-      '<button class="dialog-close-button" aria-label="Close" data-save-view-cancel>' +
+      '<header><div class="title-wrapper"><h2 data-view-dialog-title></h2></div>' +
+      '<button class="dialog-close-button" aria-label="Close" data-view-dialog-cancel>' +
       icon('xmark') + '</button></header>' +
       '<main><form class="flex flex-col gap-4" onsubmit="return false">' +
       '<h3>Name of the View</h3>' +
-      '<div class="w-83">' +
-      labelledField('save-view-name', 'Save as', '', null, '') +
-      '</div>' +
-      /* The counter is a mat-hint on staging; the class it uses is not in the
-         export, so this is the same element on the type style it resolves to. */
-      '<p class="text-cca-label-sm text-neutral-caption" data-save-view-count>' +
-      '0 / ' + SAVE_VIEW_MAX + '</p>' +
-      checkbox('save-view-default', 'Set this view as my default') +
+      '<div class="w-83">' + labelledField('view-name', 'Save as', '', null, '') + '</div>' +
+      /* staging's counter is a mat-hint; that class is not in the export, so
+         this is the same element on the type style it resolves to. */
+      '<p class="text-cca-label-sm text-neutral-caption" data-view-dialog-count></p>' +
+      '<div data-view-dialog-default>' +
+      checkbox('view-default', 'Set this view as my default') + '</div>' +
       '</form></main>' +
       '<footer>' +
-      '<button ccaButton type="button" class="cca-btn cca-btn--subtle" data-save-view-cancel>Cancel</button>' +
-      '<button ccaButton type="button" class="cca-btn cca-btn--primary" data-save-view-confirm disabled>Save View</button>' +
+      '<button ccaButton type="button" class="cca-btn cca-btn--subtle" data-view-dialog-cancel>Cancel</button>' +
+      '<button ccaButton type="button" class="cca-btn cca-btn--primary" data-view-dialog-confirm></button>' +
       '</footer>' +
       '</div></div></div></div>';
     (document.querySelector('cca-root') || document.body).appendChild(box);
@@ -248,49 +252,121 @@
     );
   }
 
-  /*
-   * Opens it. `onSave(name, makeDefault)` is called only when the user
-   * confirms; the caller owns the view list.
-   */
-  function openSaveView(onSave) {
-    var box = ensureSaveViewOverlay();
-    var input = box.querySelector('input[data-filter-input="save-view-name"]');
-    var count = box.querySelector('[data-save-view-count]');
-    var confirm = box.querySelector('[data-save-view-confirm]');
-    var check = box.querySelector('#save-view-default-input');
-    input.value = '';
+  function viewDialog(opts, onConfirm) {
+    var box = ensureViewDialog();
+    var input = box.querySelector('input[data-filter-input="view-name"]');
+    var count = box.querySelector('[data-view-dialog-count]');
+    var confirm = box.querySelector('[data-view-dialog-confirm]');
+    var defaultWrap = box.querySelector('[data-view-dialog-default]');
+    var check = box.querySelector('#view-default-input');
+
+    box.querySelector('[data-view-dialog-title]').textContent = opts.title;
+    confirm.textContent = opts.confirmLabel;
     input.setAttribute('maxlength', String(SAVE_VIEW_MAX));
+    input.value = opts.name || '';
     check.checked = false;
-    count.textContent = '0 / ' + SAVE_VIEW_MAX;
-    confirm.disabled = true;
+    defaultWrap.hidden = !opts.showDefault;
+
+    var sync = function () {
+      count.textContent = input.value.length + ' / ' + SAVE_VIEW_MAX;
+      confirm.disabled = input.value.trim().length === 0;
+    };
+    sync();
 
     var close = function () {
       box.hidden = true;
       document.documentElement.classList.remove('cdk-global-scrollblock');
     };
-
-    input.oninput = function () {
-      var n = input.value.trim().length;
-      count.textContent = input.value.length + ' / ' + SAVE_VIEW_MAX;
-      confirm.disabled = n === 0;
-    };
+    input.oninput = sync;
     box.onclick = function (ev) {
-      if (ev.target.closest('[data-save-view-cancel]') ||
-          ev.target.hasAttribute('data-save-view-scrim')) { close(); return; }
-      if (ev.target.closest('[data-save-view-confirm]')) {
+      if (ev.target.closest('[data-view-dialog-cancel]') ||
+          ev.target.hasAttribute('data-view-dialog-scrim')) { close(); return; }
+      if (ev.target.closest('[data-view-dialog-confirm]')) {
         var name = input.value.trim();
         if (!name) return;
         close();
-        onSave(name, !!check.checked);
+        onConfirm(name, !!check.checked);
       }
     };
 
     box.hidden = false;
-    var scrim = box.querySelector('[data-save-view-scrim]');
+    var scrim = box.querySelector('[data-view-dialog-scrim]');
     void scrim.offsetWidth;
     scrim.classList.add('cdk-overlay-backdrop-showing');
     document.documentElement.classList.add('cdk-global-scrollblock');
     input.focus();
+    input.select();
+  }
+
+  function openSaveView(onSave) {
+    viewDialog({ title: 'Save current filters as a new view', name: '',
+                 showDefault: true, confirmLabel: 'Save View' }, onSave);
+  }
+
+  function openRenameView(currentName, onSave) {
+    viewDialog({ title: 'Rename the View', name: currentName,
+                 showDefault: false, confirmLabel: 'Save Change' }, onSave);
+  }
+
+  /*
+   * THE VIEW TAB'S KEBAB MENU — Set as Default, Rename, Delete.
+   *
+   * Set as Default is DISABLED when the view already is the default, not
+   * hidden; checked on the running app, where the default view's own menu
+   * greys it out. A system view ("All") cannot be renamed or deleted.
+   */
+  function ensureViewMenu() {
+    var box = document.getElementById('proto-view-menu');
+    if (box) return box;
+    box = document.createElement('div');
+    box.className = 'cdk-overlay-container';
+    box.id = 'proto-view-menu';
+    box.hidden = true;
+    box.innerHTML =
+      '<div class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop ' +
+      'cdk-overlay-backdrop-noop-animation" data-view-menu-scrim></div>' +
+      '<div class="cdk-overlay-pane proto-menu-pane">' +
+      '<div class="mat-mdc-menu-panel mat-mdc-menu-panel-animations-disabled" role="menu" ' +
+      'data-view-menu-panel></div></div>';
+    (document.querySelector('cca-root') || document.body).appendChild(box);
+    return box;
+  }
+
+  function openViewMenu(trigger, view, handlers) {
+    var box = ensureViewMenu();
+    var panel = box.querySelector('[data-view-menu-panel]');
+    var item = function (label, action, disabled) {
+      return '<button ccaButton class="mat-mdc-menu-item" role="menuitem"' +
+        (disabled ? ' disabled' : ' data-view-action="' + action + '"') +
+        '><span class="mat-mdc-menu-item-text">' + label + '</span></button>';
+    };
+    panel.innerHTML =
+      item('Set as Default', 'default', !!view.isDefault || !!view.system) +
+      item('Rename', 'rename', !!view.system) +
+      item('Delete', 'delete', !!view.system);
+
+    var close = function () { box.hidden = true; };
+    box.onclick = function (ev) {
+      var a = ev.target.closest('[data-view-action]');
+      close();
+      if (!a) return;
+      var kind = a.getAttribute('data-view-action');
+      if (kind === 'default' && handlers.onDefault) handlers.onDefault();
+      if (kind === 'rename' && handlers.onRename) handlers.onRename();
+      if (kind === 'delete' && handlers.onDelete) handlers.onDelete();
+    };
+
+    var pane = box.querySelector('.proto-menu-pane');
+    var r = trigger.getBoundingClientRect();
+    pane.style.left = r.left + 'px';
+    pane.style.top = r.bottom + 4 + 'px';
+    box.hidden = false;
+    /* A transparent backdrop is visibility:hidden until this class lands, and
+       a hidden element is not hit-testable — without it the outside click
+       falls straight through and the menu never closes. */
+    var scrim = box.querySelector('[data-view-menu-scrim]');
+    void scrim.offsetWidth;
+    scrim.classList.add('cdk-overlay-backdrop-showing');
   }
 
   /* ------------------------------------------------ the Orders filter preset */
@@ -823,5 +899,7 @@
     labelledField: labelledField,
     /* The Save View dialog, as staging opens it. */
     openSaveView: openSaveView,
+    openRenameView: openRenameView,
+    openViewMenu: openViewMenu,
   };
 })();
