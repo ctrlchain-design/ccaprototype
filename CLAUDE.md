@@ -23,6 +23,29 @@ actual look rather than approximating it.
 `design-system/dist/` is generated output — **never edit anything inside it**. FE
 overwrites the whole folder on each export.
 
+### Confirmed gaps in the current export
+
+Found by building against it, so nobody rediscovers them and so there is
+something concrete to hand FE. Re-check after each re-export — a gap closing is
+the signal to delete whatever `_shared/` was compensating with.
+
+| Gap | What it means in practice |
+| --- | --- |
+| `w-22` is not a class the bundle defines | It is on the type column in `orders-pinned-filters`, doing nothing. Nothing sets `.w-22`. |
+| `--mat-option-selected-state-layer-color` is undefined | `.ng-option-selected`'s background computes to nothing, so a chosen dropdown row has no fill. |
+| ng-select's core CSS is not exported | `.ng-dropdown-panel` never gets `position: absolute`, so a dropdown renders in the flow. Compensated in `prototype.css`. |
+| `cca-attention-flag-badge` has no green tone | Only neutral, accent-blue, warning and danger — in the export AND in Figma. A green flag is unbuildable; passing `primary` renders unstyled grey. |
+| `components/badge.html` documents only part of the badge size scale | Two of the status badge's sizes, one of the flag's. The 12px flag the Orders table uses has no example to copy. |
+| The shipment-timeline family is not exported at all | `cca-shipment-updates`, `cca-timeline-table`, `cca-drawer-display-container`, `cca-status-card` and `cca-drawer` have no CSS and no manifest entry — not even as feature components. Their whole look is utility classes, so they can be rebuilt from the DOM, but there is nothing to link. |
+| Arbitrary and `!` Tailwind variants cannot survive the export | The app compiles Tailwind at build time; we get precompiled CSS. So `pl-[17px]`, `border-brand-default!` and `flex-[2]` are all absent, and any of them fails silently. Staging's own timeline uses the first two. |
+| The spacing scale has no half steps | `h-2.5` / `w-2.5` are in staging's markup but not the bundle — `h-*`/`w-*` stop at whole numbers. |
+| The 40 documented components are not the whole story | ~274 more stylesheets sit under `ds/components/` unimported. `cca-date-cell`, `cca-filters-select` and the rest of the filter family are all in there. |
+
+A component's stylesheet being unimported does **not** mean it is unofficial —
+check `isDesignSystem` in `design-system/dist/manifest.json`:
+
+    python3 -c "import json; print([c for c in json.load(open('design-system/dist/manifest.json'))['components'] if c['selector']=='cca-date-cell'])"
+
 ## Building or changing a prototype
 
 **Start on a branch, named after the prototype folder** — never build on `main`,
@@ -33,9 +56,65 @@ starter template and the gotchas. Load it before writing prototype markup, not
 after.
 
 `_shared/` is the repo's thin layer over the design system: `prototype.css` (the
-rules every static prototype needs), `patterns.html` (composed patterns to copy)
-and `assets/flags/`. Start there rather than writing your own CSS, and put any new
-reusable fix there rather than in a single prototype.
+rules every static prototype needs), `patterns.html` (composed patterns to copy),
+`filters.js` (the Orders filter mechanism — drawer, pinned chips, value popover
+and the predicates behind them) and `assets/flags/`. Start there rather than
+writing your own CSS, and put any new reusable fix there rather than in a single
+prototype.
+
+🔴 **A fix is not finished until the copies are fixed too.** Putting new work in
+`_shared/` is only half the rule. When you find a bug — a wrong icon name, a
+class that does not exist, a component used without its load-bearing element —
+**grep the repo for the same mistake and fix every instance**, including
+`_shared/patterns.html`, which is where the next person will copy it from.
+
+On 2026-09-02 `icon('pinned')` turned out to be the UNPINNED glyph. It was
+wrong in `oms/`, in `orders-pinned-filters/`, and in the `patterns.html` pattern
+both had copied it from. Fixing only the page in front of me would have left the
+pattern still teaching it. Nothing in these docs told me to look — hence this
+paragraph.
+
+    # before calling a fix done
+    grep -rn "the-wrong-thing" --include='*.html' --include='*.js' . | grep -v design-system/
+
+**`_shared/filters.js` is where filtering lives.** Any prototype showing a list
+of records gets the whole mechanism by calling it, rather than rebuilding a
+drawer:
+
+    const filters = CCA_FILTERS.orders();       // the 31-filter Orders preset
+    const FX = CCA_FILTERS.mount({ filters, records, viewName, onChange });
+    FX.visible()                                // records surviving the filters
+
+It carries the parts that are easy to get wrong, all read off the running app
+rather than a Figma frame: pinning is layout and never filters, a pinned chip
+opens its values inline, the same filter renders as chips in the drawer and as
+checkboxes in that popover, and Category interlocks with Order Type so no one
+can filter to a combination no order can have. Its header documents the rest.
+
+`CCA_FILTERS.actions(filters)` renders the **Clear Filters / Save View** pair,
+and `CCA_FILTERS.clearAll(filters)` backs the first — both module-level, so a
+prototype that borrows the preset without mounting still gets them. They key off
+what is APPLIED, not what is pinned: a filter can be applied straight from the
+drawer, so a row that only appears for pinned chips hides them exactly when they
+are wanted.
+
+⚠ **`applied` has two shapes.** `mount()` and `oms/` treat `f.applied` as an
+**array of values**; `orders-pinned-filters/` predates this file and treats it as
+a **count** (`applied: 3`). Read it through `CCA_FILTERS.appliedCountOf(f)` in
+anything shared — assuming `.length` is what made Clear Filters silently never
+appear on that page, since `(3).length` is `undefined`.
+
+Add a filter by adding to the preset, not by editing a prototype. A filter with
+no `field`, `derive` or `match` renders its control and says out loud that it
+does not narrow anything — which is honest for the ones this repo's fixtures
+cannot exercise, and better than a control that silently does nothing.
+
+Every prototype that loads `_shared/shell-markup.js` gets a floating
+**Prototypes** button, bottom-right, back to the repo index — injected by its
+`render()`, so no page needs markup for it. It is deliberately NOT a side-menu
+item: the rail is the product's own navigation, and an entry there among Orders
+and Finance would read to a reviewer as a shipped feature rather than as our
+scaffolding.
 
 Prototypes are one product, not separate screens: render records from
 `_shared/data.js` and link between prototypes by screen name

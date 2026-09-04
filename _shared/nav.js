@@ -38,15 +38,26 @@
     // Going from Orders to rate management means clicking Finance in the rail,
     // so the rail has to navigate, not just the submenu. Where a domain has
     // exactly one prototype, the domain goes straight there.
-    'Shipper TMS': 'orders.list',
-    Shipper: 'orders.list', // older prototypes use the short label
+    /*
+     * Two prototypes are the Orders screen: orders-pinned-filters, which
+     * demonstrates the pinned-filter flow, and oms, the combined
+     * transport + warehouse + invoice table. The COMBINED one is where Orders
+     * goes — it is the fuller screen, it is what the order detail links back
+     * to, and landing on the narrower flow demo from an order you were just
+     * reading is disorienting.
+     *
+     * orders-pinned-filters is still reachable from the repo's front door,
+     * which is where a reviewer picks between two takes on one screen.
+     */
+    'Shipper TMS': 'oms.orders',
+    Shipper: 'oms.orders', // older prototypes use the short label
     Finance: 'rate-configuration', // staging: /finance/rates
     Enterprise: 'resource-availability', // Enterprise → Fleet
     Taskboard: 'taskboard-redesign',
     Admin: 'admin.legal', // staging: /admin/legal
 
     // ---- Submenu items ----------------------------------------------------
-    Orders: 'orders.list',
+    Orders: 'oms.orders',
     Rates: 'rate-configuration',
     Rate: 'rate-configuration', // rate-configuration's own submenu label
     Fleet: 'resource-availability',

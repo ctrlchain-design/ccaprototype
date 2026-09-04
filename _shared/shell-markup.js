@@ -338,6 +338,35 @@
    * prototype that has a reason to hand-write its shell keeps it — and so this
    * cannot clobber anything on a second call.
    */
+  /*
+   * BACK TO THE PROTOTYPE INDEX.
+   *
+   * A floating button rather than a side-menu item on purpose. The rail is the
+   * PRODUCT's navigation — a "Prototypes" entry sitting among Orders, Finance
+   * and Admin reads to a reviewer as a shipped feature, and this is scaffolding
+   * for us, not part of the thing being designed. Floating in the corner it is
+   * unmistakably ours.
+   *
+   * It is injected by render(), so every prototype that loads this file gets it
+   * with no markup of its own. The repo index does not load the shell, so the
+   * button never appears on the page it points at.
+   *
+   * Bottom-LEFT, just right of the rail's Collapse item — see
+   * .proto-home-button in _shared/prototype.css for why the offset is fixed.
+   * Over the rail it covers no page content, which bottom-right did.
+   *
+   * z-50 clears `body::before` — the platform's watermark is a position:
+   * absolute pseudo-element, and anything without a z-index loses to it.
+   */
+  function homeButtonHtml() {
+    return (
+      '<a ccaButton class="cca-btn cca-btn--secondary proto-home-button fixed bottom-5 z-50 shadow-lg" ' +
+      'href="' + root() + 'index.html" data-proto-home ' +
+      'aria-label="All prototypes">' +
+      icon('home') + '<span>Prototypes</span></a>'
+    );
+  }
+
   function render() {
     document.querySelectorAll('cca-side-menu[data-rail]').forEach(function (el) {
       if (el.children.length) return;
@@ -348,6 +377,13 @@
       if (el.children.length) return;
       el.innerHTML = submenuHtml(el.getAttribute('data-submenu'), el.getAttribute('data-submenu-active'));
     });
+
+    /* Mounted inside cca-root where there is one — everything outside it is
+       below the platform's overlay. */
+    if (!document.querySelector('[data-proto-home]')) {
+      var host = document.querySelector('cca-root') || document.body;
+      if (host) host.insertAdjacentHTML('beforeend', homeButtonHtml());
+    }
 
     document.querySelectorAll('[data-top-bar-trailing]').forEach(function (el) {
       if (!el.children.length) wireUserMenu();
@@ -365,5 +401,5 @@
     render();
   }
 
-  window.CCA_SHELL = { rail: RAIL, railHtml: railHtml, submenus: SUBMENUS, submenuHtml: submenuHtml, userMenu: USER_MENU, topBarTrailingHtml: topBarTrailingHtml, render: render };
+  window.CCA_SHELL = { rail: RAIL, homeButtonHtml: homeButtonHtml, railHtml: railHtml, submenus: SUBMENUS, submenuHtml: submenuHtml, userMenu: USER_MENU, topBarTrailingHtml: topBarTrailingHtml, render: render };
 })();
