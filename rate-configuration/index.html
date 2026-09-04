@@ -568,7 +568,12 @@
                     </div>
                     <div style="flex:1;min-width:150px;">
                       <div style="font-size:14px;font-weight:700;color:var(--text-neutral-title);margin-bottom:8px;">{{ addExceptionValueLabel }}</div>
-                      <input value="{{ addExceptionValue }}" onChange="{{ onAddExceptionValue }}" disabled="{{ addExceptionValueDisabled }}" placeholder="0.00" style="width:100%;border:1px solid var(--border-neutral-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;">
+                      <div style="display:flex;gap:8px;align-items:center;">
+                        <input value="{{ addExceptionValue }}" onChange="{{ onAddExceptionValue }}" disabled="{{ addExceptionValueDisabled }}" placeholder="0.00" style="flex:1;border:1px solid var(--border-neutral-default);border-radius:8px;padding:10px 12px;font-size:14px;box-sizing:border-box;min-width:0;">
+                        <sc-if value="{{ addExceptionShowUnit }}" hint-placeholder-val="{{ false }}">
+                          <span style="font-size:14px;color:var(--text-neutral-caption);flex-shrink:0;">/ {{ addExceptionUnitLabel }}</span>
+                        </sc-if>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1761,6 +1766,17 @@ function distanceUnitForGroup(group, groupsData) {
     : (groupsData || []).find(g => g.group === group.group && g.subgroup === g.group);
   return AREA_DISTANCE_UNITS[(enterprise || {}).areaOfOperations] || 'km';
 }
+/* An exception's unit follows the group the exception applies TO, not the group
+ * being configured — a Europe shipper can hold an exception against a North
+ * America carrier. The picker holds an enterprise name, and every subgroup
+ * inherits its enterprise's unit, so the name alone settles it. Empty until a
+ * group is chosen, which is what hides the label. */
+function distanceUnitForGroupName(groupName, groupsData) {
+  if (!groupName) return '';
+  const enterprise = (groupsData || []).find(g => g.group === groupName && g.subgroup === g.group);
+  return enterprise ? distanceUnitForGroup(enterprise, groupsData) : '';
+}
+
 /* Rates read singular ("€1.50 / mile"); a counted distance reads plural
  * ("0 – 250 miles"). Nothing renders the plural yet — this prototype's ranges
  * are date ranges, not distance bands — so it is the hook for when they land. */
@@ -2949,6 +2965,9 @@ class Component extends DCLogic {
       onAddExceptionValue: (e) => this.setAddExceptionField('addExceptionValue', e.target.value),
       addExceptionValueLabel: s.addExceptionType,
       addExceptionValueDisabled: s.addExceptionType === 'Fuel Not Applicable',
+      addExceptionUnitLabel: distanceUnitForGroupName(s.addExceptionCarrierGroup, s.groupsData),
+      addExceptionShowUnit: DISTANCE_RATE_TYPES.includes(s.addExceptionType)
+        && !!distanceUnitForGroupName(s.addExceptionCarrierGroup, s.groupsData),
       addExceptionSaveDisabled: !(s.addExceptionCarrierGroup && s.addExceptionStart && (s.addExceptionType === 'Fuel Not Applicable' || s.addExceptionValue)),
       addExceptionSaveStyle: this.ruleModalSaveStyle(!(s.addExceptionCarrierGroup && s.addExceptionStart && (s.addExceptionType === 'Fuel Not Applicable' || s.addExceptionValue))),
       saveAddException: this.saveAddException,
