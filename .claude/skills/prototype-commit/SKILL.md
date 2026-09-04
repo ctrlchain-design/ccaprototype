@@ -9,34 +9,59 @@ This is not a code repo. Nobody reads this history to debug a regression — the
 read it to find **the version we showed in the workshop on the 25th**, or to work
 out why a prototype stopped matching the Figma. Write for that reader.
 
-## Commit, merge and publish — in one go
+## Commit and publish are two different jobs
 
-**The default is to publish.** Committing means: commit on the current branch,
-merge it into `main`, push, and let GitHub Pages serve it at
-`https://ctrlchain-design.github.io/ccaprototype/` within a minute or two.
+GitHub Pages serves `main`, so a merge is a publication. **Committing and
+publishing are separate steps and this skill does whichever one was asked for —
+never both because one was.**
 
-Do not ask for confirmation each time. The team has authorised this standing —
-asking every commit is the thing this policy exists to remove.
+### "Commit" — stop at the branch
+
+The default. Nothing goes live.
 
     git add <paths>            # explicit paths, never -A
     git commit                 # one commit per layer, see below
+
+Then stop. Do not merge, do not push, do not delete the branch. Say what was
+committed and on which branch.
+
+### "Publish" — merge to `main` and push
+
+Only on an explicit ask, in those words.
+
     git checkout main
     git merge <prototype-branch>
     git push
     git branch -d <prototype-branch>   # merged, so it is done
 
-### Stop and ask only when
+Then report the live URL — that is the thing the user is about to send someone.
+
+### What is NOT permission to publish
+
+- **An earlier "go ahead".** It covered the work as it stood at that moment, not
+  everything that came after. In a live iteration loop, each change needs its
+  own — otherwise a single "looks good" turns into a run of publishes the user
+  never saw.
+- **Fixing your own mistake.** A commit that exists only to undo something you
+  shipped needs the same go-ahead as anything else, arguably more.
+- **Being mid-way through a sequence.** Having published once does not make the
+  next one authorised.
+
+### Stop and report instead of publishing when
 
 - **The merge would conflict.** Never resolve a publish-path conflict silently —
   show the user which files clash and let them decide. `git merge --abort` and
   report rather than guessing at intent.
 - **The prototype has not been verified.** The `/prototype` skill's checks are
-  the gate that replaced the confirmation prompt: screenshot it, click things,
-  run the class and icon audits. An unstyled or unclickable prototype going live
-  wastes a reviewer's session. If it has not been looked at in a browser, say so
-  and stop.
-- **The user says otherwise** — "just commit", "don't publish yet", "keep it on
-  the branch". Then commit and stop.
+  the gate: screenshot it, click things, run the class and icon audits. An
+  unstyled or unclickable prototype going live wastes a reviewer's session. If
+  it has not been looked at in a browser, say so and stop.
+
+### Invoke this skill every time
+
+Do not run these commands from memory of having read this once. Hand-rolling
+`git commit`/`merge`/`push` is how the conditions above get skipped — the rules
+only apply if the skill is actually loaded for the commit in front of you.
 
 ### One branch per prototype
 
