@@ -974,6 +974,17 @@
   }
 
   function references(o) {
+    /*
+     * A WAREHOUSE ORDER HAS ONE REFERENCE, the external one its shipper's
+     * system gave it. No per-stop references: transport has those because a
+     * pickup and a delivery are separately referenced legs, and a warehouse
+     * order is one handling event. Two rows of "-" said the fields existed and
+     * were empty, which is not the same thing.
+     */
+    if (o.domain === 'warehouse') {
+      return card('References', headerAction('Edit'),
+        field('External Reference', esc(o.externalReference)));
+    }
     return card('References', headerAction('Edit'),
       '<div class="flex flex-col gap-3">' +
       field('Shipper Reference', esc(o.shipperReference)) +
@@ -1640,14 +1651,14 @@
         top +
         '<div class="mt-4 flex flex-wrap items-start gap-4">' +
         '<div class="flex min-w-80 flex-1 flex-col gap-4">' +
-        financeSummary(o) + contacts(o) + carrierAndVehicle(o) +
+        financeSummary(o) + contacts(o) + carrierAndVehicle(o) + references(o) +
         '</div>' +
         '<div class="flex min-w-80 flex-2 flex-col gap-4">' +
         /* Order Items sits directly under Locations Info, as asked. It is
            fifteen columns in a two-thirds column, so its own overflow-x-auto
            wrapper does the work — the table scrolls inside the card rather
            than widening the page. */
-        locationsInfo(o) + orderItems(o) + shortages() + dateAndTimes(o) + references(o) +
+        locationsInfo(o) + orderItems(o) + shortages() + dateAndTimes(o) +
         '</div></div>';
       return;
     }

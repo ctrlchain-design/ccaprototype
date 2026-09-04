@@ -262,6 +262,9 @@ linked: [],
   var WAREHOUSE_ORDERS = [
     {
       id: 'CCA2023-000418.1',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4471820',
       /* Shown as "Temperature Profile code" above Order Items. */
       temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
@@ -308,6 +311,9 @@ linked: ['CCA2023-000270.1'],
     },
     {
       id: 'CCA2023-000419.2',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4471964',
       /* Shown as "Temperature Profile code" above Order Items. */
       temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
@@ -354,6 +360,9 @@ linked: [],
     },
     {
       id: 'CCA2023-000420.1',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4472115',
       /* Shown as "Temperature Profile code" above Order Items. */
       temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
@@ -400,6 +409,9 @@ linked: ['CCA2023-000271.4', 'CCA2023-000272.2'],
     },
     {
       id: 'CCA2023-000421.3',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4472240',
       /* Shown as "Temperature Profile code" above Order Items. */
       temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
@@ -446,6 +458,9 @@ linked: [],
     },
     {
       id: 'CCA2023-000422.1',
+      /* The reference the shipper's own system gave this order. Distinct
+         from shipperReference, which is the number the Orders table shows. */
+      externalReference: 'EXT-4472388',
       /* Shown as "Temperature Profile code" above Order Items. */
       temperatureProfile: '36.1 - 37.2 °C',
       /* The haulier that collects or delivers at the dock. A warehouse order
