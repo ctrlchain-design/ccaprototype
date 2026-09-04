@@ -379,6 +379,53 @@
             </div>
           </sc-if>
 
+          <!-- EXCEPTION RANGE HISTORY MODAL — one group's previous fuel rates -->
+          <sc-if value="{{ exceptionRangeHistoryOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
+              <div style="background:#fff;border-radius:12px;width:900px;max-width:90vw;max-height:85vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-neutral-default);">
+                  <h3 style="margin:0;font-size:16px;font-weight:600;color:var(--text-neutral-title);">{{ exceptionRangeHistoryTitle }}</h3>
+                  <svg onClick="{{ closeExceptionRangeHistory }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;flex-shrink:0;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
+                </div>
+                <sc-if value="{{ exceptionRangeHistoryHasRows }}" hint-placeholder-val="{{ true }}">
+                  <div style="padding:20px 24px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:500px;white-space:nowrap;">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Status</th>
+                          <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Range</th>
+                          <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Value</th>
+                          <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Rate Type</th>
+                          <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Last Updated</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <sc-for list="{{ exceptionRangeHistoryRows }}" as="row" hint-placeholder-count="3">
+                          <tr style="border-bottom:1px solid var(--border-neutral-default);">
+                            <td style="padding:14px;"><span style="{{ row.statusBadgeStyle }}">{{ row.status }}</span></td>
+                            <td style="padding:14px;color:var(--text-neutral-body);">{{ row.rangeFrom }} → {{ row.rangeTo }}</td>
+                            <td style="padding:14px;color:var(--text-neutral-body);">{{ row.valueDisplay }}</td>
+                            <td style="padding:14px;color:var(--text-neutral-body);">{{ row.rateType }}</td>
+                            <td style="padding:14px;color:var(--text-neutral-body);">
+                              <div>{{ row.lastUpdated }}</div>
+                              <div style="font-size:12px;color:var(--text-neutral-caption);">by {{ row.setBy }}</div>
+                            </td>
+                          </tr>
+                        </sc-for>
+                      </tbody>
+                    </table>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ exceptionRangeHistoryEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:40px 24px;text-align:center;">
+                    <div style="font-size:16px;font-weight:700;color:var(--text-neutral-title);margin-bottom:6px;">No previous fuel rates</div>
+                    <p style="margin:0;font-size:14px;color:var(--text-neutral-subtitle);">This exception has only ever had its current range. Earlier rates appear here once a range expires or is deleted.</p>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
           <!-- EXCEPTION HISTORY MODAL -->
           <sc-if value="{{ exceptionHistoryOpen }}" hint-placeholder-val="{{ false }}">
             <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
@@ -1033,10 +1080,25 @@
                       <svg onClick="{{ closeExceptionDetail }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;flex-shrink:0;"><path d="M10 3L5 8l5 5"></path></svg>
                       <h3 style="margin:0;font-size:18px;font-weight:700;color:var(--text-neutral-title);">{{ exceptionDetailTitle }}</h3>
                     </div>
-                    <button onClick="{{ openAddRangeModalForDetail }}" class="cca-btn cca-btn--primary">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
-                      Add New Range
-                    </button>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="position:relative;">
+                        <button onClick="{{ toggleExceptionDetailMenu }}" style="background:#fff;border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-brand-default);">
+                          <svg width="4" height="18" viewBox="0 0 4 18" fill="currentColor"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="9" r="2"></circle><circle cx="2" cy="16" r="2"></circle></svg>
+                        </button>
+                        <sc-if value="{{ exceptionDetailMenuOpen }}" hint-placeholder-val="{{ false }}">
+                          <div style="position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,0.16);width:260px;z-index:30;padding:8px;">
+                            <div onClick="{{ viewExceptionRangeHistory }}" style-hover="background:var(--surface-neutral-lighter,#f5f5f5);" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;color:var(--text-neutral-title);font-size:14px;">
+                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7"></circle><path d="M9 5v4l3 2"></path></svg>
+                              View History
+                            </div>
+                          </div>
+                        </sc-if>
+                      </div>
+                      <button onClick="{{ openAddRangeModalForDetail }}" class="cca-btn cca-btn--primary">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
+                        Add New Range
+                      </button>
+                    </div>
                   </div>
                   <div style="overflow-x:auto;">
                     <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:800px;white-space:nowrap;">
@@ -2004,6 +2066,8 @@ class Component extends DCLogic {
     groupsConnectionSearch: '',
     treeExpandedIds: { 1: true, 4: true },
     exceptionDetailOpen: false,
+    exceptionDetailMenuOpen: false,
+    exceptionRangeHistoryOpen: false,
     exceptionDetailId: null,
     Surcharges: [
       { id: 1, num: '402', desc: 'Waiting time pickup (courier)', rate: '€ 112.00', editing: false, services: ['Courier'] },
@@ -2566,6 +2630,11 @@ class Component extends DCLogic {
   closeRowMenu = () => this.setState({ rowMenuOpenId: null });
   openExceptionDetail = (id) => this.setState({ exceptionDetailOpen: true, exceptionDetailId: id });
   closeExceptionDetail = () => this.setState({ exceptionDetailOpen: false });
+  toggleExceptionDetailMenu = () => this.setState(s => ({ exceptionDetailMenuOpen: !s.exceptionDetailMenuOpen }));
+  /* Read-only: this view exists to see what the rate used to be. The schedule
+   * side's history offers Edit on an expired range; that path is not wired here. */
+  viewExceptionRangeHistory = () => this.setState({ exceptionDetailMenuOpen: false, exceptionRangeHistoryOpen: true });
+  closeExceptionRangeHistory = () => this.setState({ exceptionRangeHistoryOpen: false });
   toggleDetailRangeEdit = (rowId, rangeId) => this.setState(s => ({
     exceptionRows: s.exceptionRows.map(r => r.id !== rowId ? r : { ...r, ranges: r.ranges.map(rg => rg.id === rangeId ? { ...rg, editing: !rg.editing } : rg) }),
   }));
@@ -2606,16 +2675,26 @@ class Component extends DCLogic {
         { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ], ranges: [
         { id: 1, rangeFrom: '1 Jun 2026', rangeTo: 'open', value: '€ 1.42', rateType: 'Transport Rate/Distance', setBy: 'M. Kowalski', lastUpdated: '18 Jan 2026, 10:41', status: 'Active', editing: false },
+      ], rangeHistory: [
+        { id: 1, status: 'Expired', rangeFrom: '1 Jan 2025', rangeTo: '31 May 2026', value: '€ 1.28', rateType: 'Transport Rate/Distance', lastUpdated: '12 Dec 2024, 09:20', setBy: 'A. de Vries' },
+        { id: 2, status: 'Expired', rangeFrom: '1 Jul 2024', rangeTo: '31 Dec 2024', value: '€ 1.15', rateType: 'Transport Rate/Distance', lastUpdated: '20 Jun 2024, 14:05', setBy: 'M. Kowalski' },
+        { id: 3, status: 'Deleted', rangeFrom: '1 Mar 2024', rangeTo: '30 Jun 2024', value: '8%', rateType: 'Fuel Percentage', lastUpdated: '25 Feb 2024, 11:35', setBy: 'R. Jansen' },
       ] },
       { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Fri, 01 Sep 2023 08:00', rangeTo: 'Tue, 14 Apr 2023 08:00', value: '€ 1.18', rateType: 'Transport Rate/Distance', status: 'Scheduled', editing: false, lastUpdated: '9 Dec 2025, 15:09', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ], ranges: [
         { id: 1, rangeFrom: '1 Sep 2026', rangeTo: 'open', value: '€ 1.18', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025, 12:33', status: 'Scheduled', editing: false },
+      ], rangeHistory: [
+        { id: 1, status: 'Expired', rangeFrom: '1 Jan 2026', rangeTo: '31 Aug 2026', value: '€ 1.05', rateType: 'Transport Rate/Distance', lastUpdated: '15 Dec 2025, 16:12', setBy: 'A. de Vries' },
+        { id: 2, status: 'Expired', rangeFrom: '1 Apr 2025', rangeTo: '31 Dec 2025', value: '9%', rateType: 'Fuel Percentage', lastUpdated: '28 Mar 2025, 08:45', setBy: 'M. Kowalski' },
       ] },
       { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 09 Apr 2023 08:00', rangeTo: 'Thu, 16 Apr 2023 08:00', value: '€ 1.65', rateType: 'Transport Rate/Distance', status: 'No active range', editing: false, lastUpdated: '9 Dec 2025, 17:26', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ], ranges: [
         { id: 1, rangeFrom: '1 Jan 2025', rangeTo: '31 Dec 2025', value: '€ 1.65', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025, 09:48', status: 'Past', editing: false },
+      ], rangeHistory: [
+        { id: 1, status: 'Expired', rangeFrom: '1 Jan 2024', rangeTo: '31 Dec 2024', value: '€ 1.50', rateType: 'Transport Rate/Distance', lastUpdated: '18 Dec 2023, 13:40', setBy: 'R. Jansen' },
+        { id: 2, status: 'Deleted', rangeFrom: '1 Jun 2023', rangeTo: '31 Dec 2023', value: '€ 1.44', rateType: 'Transport Rate/Distance', lastUpdated: '30 May 2023, 10:15', setBy: 'A. de Vries' },
       ] },
     ];
   }
@@ -2935,6 +3014,19 @@ class Component extends DCLogic {
       exceptionDetailOpen: s.exceptionDetailOpen,
       exceptionDetailClosed: !s.exceptionDetailOpen,
       closeExceptionDetail: this.closeExceptionDetail,
+      exceptionDetailMenuOpen: s.exceptionDetailMenuOpen,
+      toggleExceptionDetailMenu: this.toggleExceptionDetailMenu,
+      viewExceptionRangeHistory: this.viewExceptionRangeHistory,
+      exceptionRangeHistoryOpen: s.exceptionRangeHistoryOpen,
+      closeExceptionRangeHistory: this.closeExceptionRangeHistory,
+      exceptionRangeHistoryTitle: `Fuel Rate History for ${(s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).groupName || ''}`,
+      exceptionRangeHistoryRows: ((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).rangeHistory || []).map(rg => ({
+        ...rg,
+        valueDisplay: withUnit(inCurrency(rg.value, activeGroup.currency), rg.rateType, activeDistanceUnit),
+        statusBadgeStyle: this.statusBadgeStyle(rg.status),
+      })),
+      exceptionRangeHistoryHasRows: (((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).rangeHistory) || []).length > 0,
+      exceptionRangeHistoryEmpty: (((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).rangeHistory) || []).length === 0,
       exceptionDetailTitle: `Fuel Settings for ${(s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).groupName || ''}`,
       exceptionDetailRanges: ((s.exceptionRows.find(r => r.id === s.exceptionDetailId) || {}).ranges || []).map(rg => ({
         ...rg,
