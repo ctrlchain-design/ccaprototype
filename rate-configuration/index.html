@@ -310,9 +310,6 @@
                     <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">{{ tag }}</span>
                   </sc-for>
                 </div>
-                 <sc-if value="{{ hasDistanceUnitNote }}" hint-placeholder-val="{{ true }}">
-                   <div style="font-size:16px;color:var(--text-neutral-caption);">{{ distanceUnitNote }}</div>
-                 </sc-if>
               </div>
               <button onClick="{{ openGroupsConnection }}" class="cca-btn cca-btn--tertiary" style="flex-shrink:0">
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="13" cy="13" r="3"/><path d="M9.1 8.9l1.8 1.8"/></svg>
@@ -1233,18 +1230,18 @@
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
                 <input value="{{ rulesSearch }}" onChange="{{ setRulesSearch }}" placeholder="Search your article number, or article description" style="border:none;outline:none;font-size:14px;flex:1;font-family:var(--font-ui);">
               </div>
-              <sc-if value="{{ distanceRatesBlocked }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ kmRatesBlocked }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
                   <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="1.5" y="5" width="9" height="6" rx="1"></rect><path d="M10.5 7.5h2.5l1.5 2v1.5h-4z"></path><circle cx="4.5" cy="12" r="1.2"></circle><circle cx="11.5" cy="12" r="1.2"></circle></svg>
-                  <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-neutral-title);">No distance rates for this group</div>
-                  <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-neutral-caption);max-width:420px;">Distance rates are set per vehicle type on the carrier that operates them. {{ activeGroup.subgroup }} is {{ activeGroupRolePhrase }}, so there are no vehicles to price here.</p>
+                  <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-neutral-title);">No kilometre rates for this group</div>
+                  <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-neutral-caption);max-width:420px;">Kilometre rates are set per vehicle type on the carrier that operates them. {{ activeGroup.subgroup }} is {{ activeGroupRolePhrase }}, so there are no vehicles to price here.</p>
                   <button onClick="{{ openRuleModal }}" class="cca-btn cca-btn--primary">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
                     Add a rate anyway
                   </button>
                 </div>
               </sc-if>
-              <sc-if value="{{ distanceRatesAvailable }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ kmRatesAvailable }}" hint-placeholder-val="{{ true }}">
               <div style="overflow-x:auto;">
                 <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:700px;white-space:nowrap;">
                   <thead>
@@ -1254,7 +1251,7 @@
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Article Description</th>
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Article Rate</th>
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Transport Service</th>
-                      <sc-if value="{{ isDistanceRatesTab }}" hint-placeholder-val="{{ false }}">
+                      <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
                         <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Vehicle Type</th>
                       </sc-if>
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Last Updated</th>
@@ -1300,7 +1297,7 @@
                             </sc-for>
                           </div>
                         </td>
-                        <sc-if value="{{ isDistanceRatesTab }}" hint-placeholder-val="{{ false }}">
+                        <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
                           <td style="padding:14px;color:var(--text-neutral-body);">{{ rule.vehicleType }}</td>
                         </sc-if>
                         <td style="padding:14px;color:var(--text-neutral-body);">
@@ -1384,12 +1381,12 @@
                         <input value="{{ ruleModalRate }}" onChange="{{ onRuleModalRate }}" placeholder="0.00" style="border:none;outline:none;flex:1;font-size:14px;font-family:var(--font-ui);width:0;">
                         <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><path d="M2 5l4-4 4 4M2 9l4 4 4-4"></path></svg>
                       </div>
-                      <sc-if value="{{ ruleModalIsDistanceTab }}" hint-placeholder-val="{{ false }}">
+                      <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
                         <span style="display:flex;align-items:center;padding:12px 14px;font-size:14px;font-family:var(--font-ui);color:var(--text-neutral-caption);white-space:nowrap;">{{ activeRatePerDistance }}</span>
                       </sc-if>
                     </div>
                   </div>
-                  <sc-if value="{{ ruleModalIsDistanceTab }}" hint-placeholder-val="{{ false }}">
+                  <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
                     <div>
                       <label style="display:block;font-size:14px;font-weight:700;color:var(--text-neutral-title);margin-bottom:8px;">Vehicle Type</label>
                       <select value="{{ ruleModalVehicleType }}" onChange="{{ onRuleModalVehicleType }}" style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:#fff;">
@@ -1689,7 +1686,7 @@
 </cca-root>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;},&quot;showDetailedBreakdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Confirm Changes step&quot;}}">
-const TABS = ['Fuel Rate', 'Surcharges', 'Distance Rates', 'Minimum Rate'];
+const TABS = ['Fuel Rate', 'Surcharges', 'Kilometre Rates', 'Minimum Rate'];
 const TRANSPORT_SERVICES = ['Full Truckload (FTL)', 'Full Container Load (FCL)', 'Less-than-Truckload (LTL)', 'Courier', 'Pallet network', 'Parcel'];
 const SERVICE_ABBR = { 'Full Truckload (FTL)': 'FTL', 'Full Container Load (FCL)': 'FCL', 'Less-than-Truckload (LTL)': 'LTL', 'Courier': 'Courier', 'Pallet network': 'Pallet network', 'Parcel': 'Parcel' };
 const RANGE_TYPE_INFO = {
@@ -1716,7 +1713,7 @@ function splitTags(value, allowed) {
   return allowed.filter(v => parts.includes(v));
 }
 function tagsFromGroupType(groupType) { return splitTags(groupType, GROUP_TYPE_VALUES); }
-/* Distance rates are priced per vehicle type on the carrier that operates the
+/* Kilometre rates are priced per vehicle type on the carrier that operates the
  * vehicles, so a group with no Carrier role has nothing to price here. Derived
  * from groupType rather than from an id, so a multi-role group such as
  * "Carrier, Finance supplier, Enterprise" still counts as a carrier. */
@@ -1764,23 +1761,6 @@ function distanceUnitForGroup(group, groupsData) {
     : (groupsData || []).find(g => g.group === group.group && g.subgroup === g.group);
   return AREA_DISTANCE_UNITS[(enterprise || {}).areaOfOperations] || 'km';
 }
-const UNIT_WORDS = { km: 'kilometres', mile: 'miles' };
-/* "North America · distances in miles (from Tesla Trucking)".
- * The unit is inherited and cannot be edited here, so the header has to say
- * both what it is and which enterprise it came from. Reuses the same
- * enterprise resolution as distanceUnitForGroup — no new field. */
-function distanceUnitNoteFor(group, groupsData) {
-  if (!group) return '';
-  const isEnterprise = group.subgroup === group.group;
-  const enterprise = isEnterprise
-    ? group
-    : (groupsData || []).find(g => g.group === group.group && g.subgroup === g.group);
-  const area = (enterprise || {}).areaOfOperations;
-  if (!area) return '';
-  const words = UNIT_WORDS[distanceUnitForGroup(group, groupsData)] || UNIT_WORDS.km;
-  return area + ' · distances in ' + words + (isEnterprise ? '' : ' (from ' + enterprise.subgroup + ')');
-}
-
 /* Rates read singular ("€1.50 / mile"); a counted distance reads plural
  * ("0 – 250 miles"). Nothing renders the plural yet — this prototype's ranges
  * are date ranges, not distance bands — so it is the hook for when they land. */
@@ -1887,10 +1867,10 @@ const EXCEPTION_TYPE_INFO = {
   'Fuel Not Applicable': 'No fuel surcharge applies for this carrier.',
   'Transport Rate/Distance': 'A base transport rate charged per distance unit travelled.',
 };
-const RULE_MODAL_TITLES = { Surcharges: 'Edit Surcharge', 'Distance Rates': 'Edit Distance Rate', 'Minimum Rate': 'Edit Minimum Rate' };
+const RULE_MODAL_TITLES = { Surcharges: 'Edit Surcharge', 'Kilometre Rates': 'Edit Kilometre Rate', 'Minimum Rate': 'Edit Minimum Rate' };
 const RULE_INFO_TEXT = {
   Surcharges: 'Additional fees applied on top of the base rate, such as waiting time, booking fees, or stop charges.',
-  'Distance Rates': 'Transport rates charged per unit of distance, used to price each vehicle type.',
+  'Kilometre Rates': 'Transport rates charged per unit of distance, used to price each vehicle type.',
   'Minimum Rate': 'The lowest chargeable rate guaranteed per ride, applied when the calculated rate falls below this floor.',
 };
 
@@ -1930,7 +1910,7 @@ class Component extends DCLogic {
     nextScheduleId: 4,
     nextExceptionId: 4,
     rulesSearch: '',
-    nextRuleId: { Surcharges: 12, 'Distance Rates': 10, 'Minimum Rate': 10 },
+    nextRuleId: { Surcharges: 12, 'Kilometre Rates': 10, 'Minimum Rate': 10 },
     ruleModalOpen: false,
     ruleModalStep: 1,
     ruleModalOriginalRate: '',
@@ -1994,7 +1974,7 @@ class Component extends DCLogic {
       { id: 9, num: '508', desc: 'Proof of delivery (Signed POD) (FTL)', rate: '€ 99.00', editing: false, services: ['Full Truckload (FTL)'] },
       { id: 10, num: '509', desc: 'Paper Invoice Fee (FTL)', rate: '€ 88.00', editing: false, services: ['Full Truckload (FTL)'] },
     ],
-    'Distance Rates': [
+    'Kilometre Rates': [
       { id: 1, num: '410', desc: 'Delivery Car Transport rate', rate: '€ 0.73', editing: false, services: ['Courier', 'Parcel'], vehicleType: 'Motorwagen' },
       { id: 2, num: '411', desc: 'L1H1 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'], vehicleType: 'Boxwagon' },
       { id: 3, num: '412', desc: 'L1H2 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'], vehicleType: 'Boxwagon' },
@@ -2107,7 +2087,7 @@ class Component extends DCLogic {
   componentDidMount() {
     this.ruleDefaults = {
       Surcharges: JSON.parse(JSON.stringify(this.state.Surcharges)),
-      'Distance Rates': JSON.parse(JSON.stringify(this.state['Distance Rates'])),
+      'Kilometre Rates': JSON.parse(JSON.stringify(this.state['Kilometre Rates'])),
       'Minimum Rate': JSON.parse(JSON.stringify(this.state['Minimum Rate'])),
     };
     this.setState({ exceptionRows: this.defaultExceptionRows() });
@@ -2194,7 +2174,7 @@ class Component extends DCLogic {
     const n = parseFloat(s.ruleModalRate);
     const sym = currencySymbol((s.groupsData.find(g => g.id === s.activeGroupId) || {}).currency);
     const rate = `${sym} ${isNaN(n) ? '0.00' : n.toFixed(2)}`;
-    const vehicleType = key === 'Distance Rates' ? s.ruleModalVehicleType : undefined;
+    const vehicleType = key === 'Kilometre Rates' ? s.ruleModalVehicleType : undefined;
     if (s.ruleModalEditId != null) {
       return {
         [key]: s[key].map(r => r.id === s.ruleModalEditId ? { ...r, num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, services: s.ruleModalServices, ...(vehicleType ? { vehicleType } : {}), editing: false } : r),
@@ -2617,7 +2597,7 @@ class Component extends DCLogic {
       borderBottom: active ? '2px solid var(--border-brand-default)' : '2px solid transparent',
       marginBottom: -1, marginRight: 20,
     });
-    /* Distance rates need a Carrier role to mean anything (see isCarrierGroup).
+    /* Kilometre rates need a Carrier role to mean anything (see isCarrierGroup).
      * The tab itself always stays visible — only the table is swapped for an
      * explanatory empty state. Fuel Rate and Surcharges are never gated.
      * OPEN QUESTION: whether Minimum Rate should be gated the same way is
@@ -2625,7 +2605,7 @@ class Component extends DCLogic {
     /* Inherited from the enterprise's Area of Operations — the single place
      * every rate surface reads the distance unit from. */
     const activeDistanceUnit = distanceUnitForGroup(activeGroup, groupsData);
-    const distanceRatesBlocked = s.activeTab === 'Distance Rates' && !isCarrierGroup(activeGroup);
+    const kmRatesBlocked = s.activeTab === 'Kilometre Rates' && !isCarrierGroup(activeGroup);
     /* Fuel Not Applicable hides the Value field, so requiring a value there
      * would leave the primary button permanently disabled. */
     const addRangeIsComplete = !!s.addRangeType
@@ -2678,8 +2658,6 @@ class Component extends DCLogic {
       isEnterpriseLevel: activeGroup.subgroup === activeGroup.group,
       isSubgroupLevel: activeGroup.subgroup !== activeGroup.group,
       groupLevelLabel: activeGroup.subgroup === activeGroup.group ? 'Enterprise' : 'Subgroup',
-      distanceUnitNote: distanceUnitNoteFor(activeGroup, groupsData),
-      hasDistanceUnitNote: !!distanceUnitNoteFor(activeGroup, groupsData),
       activeGroupTags: tagsFromGroupType(activeGroup.groupType),
       activeCurrency: activeGroup.currency || 'EUR',
       activeCurrencySymbol: currencySymbol(activeGroup.currency),
@@ -2737,15 +2715,15 @@ class Component extends DCLogic {
       rulesTitle: s.activeTab,
       rulesSearch: s.rulesSearch,
       setRulesSearch: this.setRulesSearch,
-      isDistanceRatesTab: s.activeTab === 'Distance Rates',
+      isKilometreRatesTab: s.activeTab === 'Kilometre Rates',
       resetAllRules: () => this.resetAllRules(s.activeTab),
       addRuleRow: () => this.addRuleRow(s.activeTab),
-      distanceRatesBlocked,
-      distanceRatesAvailable: !distanceRatesBlocked,
+      kmRatesBlocked,
+      kmRatesAvailable: !kmRatesBlocked,
       activeGroupRolePhrase,
-      rulesRows: (distanceRatesBlocked ? [] : (s[s.activeTab] || [])).map(r => ({
+      rulesRows: (kmRatesBlocked ? [] : (s[s.activeTab] || [])).map(r => ({
         ...r,
-        rateDisplay: s.activeTab === 'Distance Rates'
+        rateDisplay: s.activeTab === 'Kilometre Rates'
           ? `${inCurrency(r.rate, activeGroup.currency)} / ${activeDistanceUnit}`
           : inCurrency(r.rate, activeGroup.currency),
         dateRangeDisplay: r.dateRange || '01 Jan 26 – 31 Dec 26',
@@ -3038,7 +3016,7 @@ class Component extends DCLogic {
       onRuleModalRate: this.onRuleModalRate,
       onRuleModalUnit: this.onRuleModalUnit,
       ruleModalServices: s.ruleModalServices,
-      ruleModalIsDistanceTab: s.activeTab === 'Distance Rates',
+      ruleModalIsKilometreTab: s.activeTab === 'Kilometre Rates',
       ruleModalVehicleType: s.ruleModalVehicleType,
       onRuleModalVehicleType: this.onRuleModalVehicleType,
       ruleModalServiceOptions: TRANSPORT_SERVICES.map(svc => ({
