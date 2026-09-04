@@ -351,12 +351,16 @@
    * with no markup of its own. The repo index does not load the shell, so the
    * button never appears on the page it points at.
    *
+   * Bottom-LEFT, just right of the rail's Collapse item — see
+   * .proto-home-button in _shared/prototype.css for why the offset is fixed.
+   * Over the rail it covers no page content, which bottom-right did.
+   *
    * z-50 clears `body::before` — the platform's watermark is a position:
    * absolute pseudo-element, and anything without a z-index loses to it.
    */
   function homeButtonHtml() {
     return (
-      '<a ccaButton class="cca-btn cca-btn--secondary fixed right-5 bottom-5 z-50 shadow-lg" ' +
+      '<a ccaButton class="cca-btn cca-btn--secondary proto-home-button fixed bottom-5 z-50 shadow-lg" ' +
       'href="' + root() + 'index.html" data-proto-home ' +
       'aria-label="All prototypes">' +
       icon('home') + '<span>Prototypes</span></a>'

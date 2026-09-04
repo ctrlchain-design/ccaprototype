@@ -60,21 +60,24 @@ cca-main .appContent .page > .proto-hug {
 }
 
 /*
- * Keep the floating Prototypes button off the bottom of the content.
+ * The floating Prototypes button sits bottom-LEFT, just right of the rail's
+ * Collapse item, rather than over the page's own content.
  *
- * shell-markup.js injects it fixed at bottom-right, so whatever sits at the
- * very end of a scrolling page ends up underneath it. On the order detail that
- * was a paginator: its "Last page" button rendered perfectly and was not
- * clickable, because elementFromPoint at its centre returned the floating
- * anchor. The oms and pinned-filters tables end the same way.
+ * The rail is a stable 72px wide whether the submenu is open or collapsed —
+ * measured both ways — so a fixed offset holds in either state. 23 spacing
+ * units is 92px: the rail plus the same 20px gap the button keeps from the
+ * bottom.
  *
- * Reserving the button's height plus its offset means no page can hide its own
- * last control behind our scaffolding. Padding rather than margin so it stays
- * inside the scroll container.
+ * This replaces a padding-bottom reserved on .page. That was there because the
+ * button used to be bottom-RIGHT, where it covered whatever a page ended with
+ * — on the order detail, a paginator whose "Last page" button rendered
+ * perfectly and was not clickable. Over the rail it covers no page content at
+ * all, so the reserved space is no longer needed.
  */
-cca-main .appContent .page {
-  padding-bottom: calc(var(--spacing) * 20);
+.proto-home-button {
+  left: calc(var(--spacing) * 23);
 }
+
 
 /* --------------------------------------------------------------- form fields */
 
