@@ -978,8 +978,10 @@
       '<div class="flex flex-col gap-3">' +
       field('Shipper Reference', esc(o.shipperReference)) +
       fieldGrid([
-        ['Stop #1(' + (o.domain === 'warehouse' ? 'Origin' : 'Pickup') + ') Reference', '-'],
-        ['Stop #2(' + (o.domain === 'warehouse' ? 'Destination' : 'Delivery') + ') Reference', '-'],
+        /* Loading/Delivery on a warehouse order, matching what Locations Info
+           and Date & Times call the same two stops. */
+        ['Stop #1(' + (o.domain === 'warehouse' ? 'Loading' : 'Pickup') + ') Reference', '-'],
+        ['Stop #2(Delivery) Reference', '-'],
       ]) + '</div>');
   }
 
@@ -1645,7 +1647,7 @@
            fifteen columns in a two-thirds column, so its own overflow-x-auto
            wrapper does the work — the table scrolls inside the card rather
            than widening the page. */
-        locationsInfo(o) + orderItems(o) + shortages() + dateAndTimes(o) +
+        locationsInfo(o) + orderItems(o) + shortages() + dateAndTimes(o) + references(o) +
         '</div></div>';
       return;
     }
