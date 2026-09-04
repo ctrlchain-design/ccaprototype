@@ -310,6 +310,9 @@
                     <span style="font-size:12px;font-weight:400;color:var(--color-neutrals-800);background:var(--color-neutrals-200);border-radius:6px;padding:4px 10px;">{{ tag }}</span>
                   </sc-for>
                 </div>
+                 <sc-if value="{{ hasDistanceUnitNote }}" hint-placeholder-val="{{ true }}">
+                   <div style="font-size:16px;color:var(--text-neutral-caption);">{{ distanceUnitNote }}</div>
+                 </sc-if>
               </div>
               <button onClick="{{ openGroupsConnection }}" class="cca-btn cca-btn--tertiary" style="flex-shrink:0">
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="13" cy="13" r="3"/><path d="M9.1 8.9l1.8 1.8"/></svg>
@@ -384,7 +387,7 @@
             <div style="position:fixed;inset:0;background:rgba(16,21,46,0.5);display:flex;align-items:center;justify-content:center;z-index:1100;">
               <div style="background:#fff;border-radius:12px;width:720px;max-width:90vw;max-height:80vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-neutral-default);">
-                  <h3 style="margin:0;font-size:16px;font-weight:600;color:var(--text-neutral-title);">Rules Exception History</h3>
+                  <h3 style="margin:0;font-size:16px;font-weight:600;color:var(--text-neutral-title);">Exception History</h3>
                   <svg onClick="{{ closeExceptionHistory }}" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.8" style="cursor:pointer;"><path d="M3 3l10 10M13 3L3 13"></path></svg>
                 </div>
                 <div style="padding:20px 24px;overflow-x:auto;">
@@ -529,19 +532,6 @@
                           <option value="{{ sg }}">{{ sg }}</option>
                         </sc-for>
                       </select>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="font-size:14px;font-weight:700;color:var(--text-neutral-title);margin-bottom:8px;">Distance unit</div>
-                    <div style="display:flex;gap:12px;">
-                      <label style="flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--border-neutral-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-neutral-title);cursor:pointer;">
-                        <input type="radio" name="addExceptionUnit" value="km" checked="{{ addExceptionUnitIsKm }}" onChange="{{ onAddExceptionUnit }}">
-                        Kilometres (km)
-                      </label>
-                      <label style="flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--border-neutral-default);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text-neutral-title);cursor:pointer;">
-                        <input type="radio" name="addExceptionUnit" value="mi" checked="{{ addExceptionUnitIsMi }}" onChange="{{ onAddExceptionUnit }}">
-                        Miles (mi)
-                      </label>
                     </div>
                   </div>
                   <div>
@@ -1101,7 +1091,7 @@
                 <div style="display:flex;flex-direction:column;gap:16px;">
                   <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
                     <div style="display:flex;align-items:center;gap:8px;position:relative;">
-                      <h3 style="margin:0;font-size:16px;font-weight:500;color:var(--text-neutral-title);">Rules Exception</h3>
+                      <h3 style="margin:0;font-size:16px;font-weight:500;color:var(--text-neutral-title);">Exception</h3>
                       <svg onMouseEnter="{{ showExceptionInfo }}" onMouseLeave="{{ hideExceptionInfo }}" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.6" style="cursor:pointer;flex-shrink:0;"><circle cx="8" cy="8" r="6"></circle><path d="M8 7v4M8 5v.01"></path></svg>
                       <sc-if value="{{ exceptionInfoOpen }}" hint-placeholder-val="{{ false }}">
                         <div style="position:absolute;top:100%;left:0;margin-top:8px;background:var(--color-neutrals-800,#1f2937);color:#fff;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;width:260px;z-index:20;box-shadow:0 8px 16px rgba(0,0,0,0.2);">A different rate for a specific connected group, instead of the default schedule.</div>
@@ -1243,18 +1233,18 @@
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--icon-neutral)" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="5.5"></circle><path d="M16 16l-3.5-3.5"></path></svg>
                 <input value="{{ rulesSearch }}" onChange="{{ setRulesSearch }}" placeholder="Search your article number, or article description" style="border:none;outline:none;font-size:14px;flex:1;font-family:var(--font-ui);">
               </div>
-              <sc-if value="{{ kmRatesBlocked }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ distanceRatesBlocked }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:56px 24px;text-align:center;">
                   <svg width="40" height="40" viewBox="0 0 16 16" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><rect x="1.5" y="5" width="9" height="6" rx="1"></rect><path d="M10.5 7.5h2.5l1.5 2v1.5h-4z"></path><circle cx="4.5" cy="12" r="1.2"></circle><circle cx="11.5" cy="12" r="1.2"></circle></svg>
-                  <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-neutral-title);">No kilometre rates for this group</div>
-                  <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-neutral-caption);max-width:420px;">Kilometre rates are set per vehicle type on the carrier that operates them. {{ activeGroup.subgroup }} is {{ activeGroupRolePhrase }}, so there are no vehicles to price here.</p>
+                  <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--text-neutral-title);">No distance rates for this group</div>
+                  <p style="margin:0;font-size:14px;line-height:1.5;color:var(--text-neutral-caption);max-width:420px;">Distance rates are set per vehicle type on the carrier that operates them. {{ activeGroup.subgroup }} is {{ activeGroupRolePhrase }}, so there are no vehicles to price here.</p>
                   <button onClick="{{ openRuleModal }}" class="cca-btn cca-btn--primary">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v10M3 8h10"></path></svg>
                     Add a rate anyway
                   </button>
                 </div>
               </sc-if>
-              <sc-if value="{{ kmRatesAvailable }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ distanceRatesAvailable }}" hint-placeholder-val="{{ true }}">
               <div style="overflow-x:auto;">
                 <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:700px;white-space:nowrap;">
                   <thead>
@@ -1264,7 +1254,7 @@
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Article Description</th>
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Article Rate</th>
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Transport Service</th>
-                      <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
+                      <sc-if value="{{ isDistanceRatesTab }}" hint-placeholder-val="{{ false }}">
                         <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Vehicle Type</th>
                       </sc-if>
                       <th style="text-align:left;padding:14px;font-size:14px;font-weight:500;color:var(--text-neutral-subtitle);border-bottom:1px solid var(--border-neutral-default);">Last Updated</th>
@@ -1310,7 +1300,7 @@
                             </sc-for>
                           </div>
                         </td>
-                        <sc-if value="{{ isKilometreRatesTab }}" hint-placeholder-val="{{ false }}">
+                        <sc-if value="{{ isDistanceRatesTab }}" hint-placeholder-val="{{ false }}">
                           <td style="padding:14px;color:var(--text-neutral-body);">{{ rule.vehicleType }}</td>
                         </sc-if>
                         <td style="padding:14px;color:var(--text-neutral-body);">
@@ -1394,12 +1384,12 @@
                         <input value="{{ ruleModalRate }}" onChange="{{ onRuleModalRate }}" placeholder="0.00" style="border:none;outline:none;flex:1;font-size:14px;font-family:var(--font-ui);width:0;">
                         <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="var(--icon-neutral)" stroke-width="1.4"><path d="M2 5l4-4 4 4M2 9l4 4 4-4"></path></svg>
                       </div>
-                      <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
+                      <sc-if value="{{ ruleModalIsDistanceTab }}" hint-placeholder-val="{{ false }}">
                         <span style="display:flex;align-items:center;padding:12px 14px;font-size:14px;font-family:var(--font-ui);color:var(--text-neutral-caption);white-space:nowrap;">{{ activeRatePerDistance }}</span>
                       </sc-if>
                     </div>
                   </div>
-                  <sc-if value="{{ ruleModalIsKilometreTab }}" hint-placeholder-val="{{ false }}">
+                  <sc-if value="{{ ruleModalIsDistanceTab }}" hint-placeholder-val="{{ false }}">
                     <div>
                       <label style="display:block;font-size:14px;font-weight:700;color:var(--text-neutral-title);margin-bottom:8px;">Vehicle Type</label>
                       <select value="{{ ruleModalVehicleType }}" onChange="{{ onRuleModalVehicleType }}" style="width:100%;box-sizing:border-box;border:1px solid var(--form-border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:var(--font-ui);background:#fff;">
@@ -1699,7 +1689,7 @@
 </cca-root>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showResetButton&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Schedule tab&quot;},&quot;showDetailedBreakdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Confirm Changes step&quot;}}">
-const TABS = ['Fuel Rate', 'Surcharges', 'Kilometre Rates', 'Minimum Rate'];
+const TABS = ['Fuel Rate', 'Surcharges', 'Distance Rates', 'Minimum Rate'];
 const TRANSPORT_SERVICES = ['Full Truckload (FTL)', 'Full Container Load (FCL)', 'Less-than-Truckload (LTL)', 'Courier', 'Pallet network', 'Parcel'];
 const SERVICE_ABBR = { 'Full Truckload (FTL)': 'FTL', 'Full Container Load (FCL)': 'FCL', 'Less-than-Truckload (LTL)': 'LTL', 'Courier': 'Courier', 'Pallet network': 'Pallet network', 'Parcel': 'Parcel' };
 const RANGE_TYPE_INFO = {
@@ -1726,7 +1716,7 @@ function splitTags(value, allowed) {
   return allowed.filter(v => parts.includes(v));
 }
 function tagsFromGroupType(groupType) { return splitTags(groupType, GROUP_TYPE_VALUES); }
-/* Kilometre rates are priced per vehicle type on the carrier that operates the
+/* Distance rates are priced per vehicle type on the carrier that operates the
  * vehicles, so a group with no Carrier role has nothing to price here. Derived
  * from groupType rather than from an id, so a multi-role group such as
  * "Carrier, Finance supplier, Enterprise" still counts as a carrier. */
@@ -1774,9 +1764,32 @@ function distanceUnitForGroup(group, groupsData) {
     : (groupsData || []).find(g => g.group === group.group && g.subgroup === g.group);
   return AREA_DISTANCE_UNITS[(enterprise || {}).areaOfOperations] || 'km';
 }
+const UNIT_WORDS = { km: 'kilometres', mile: 'miles' };
+/* "North America · distances in miles (from Tesla Trucking)".
+ * The unit is inherited and cannot be edited here, so the header has to say
+ * both what it is and which enterprise it came from. Reuses the same
+ * enterprise resolution as distanceUnitForGroup — no new field. */
+function distanceUnitNoteFor(group, groupsData) {
+  if (!group) return '';
+  const isEnterprise = group.subgroup === group.group;
+  const enterprise = isEnterprise
+    ? group
+    : (groupsData || []).find(g => g.group === group.group && g.subgroup === g.group);
+  const area = (enterprise || {}).areaOfOperations;
+  if (!area) return '';
+  const words = UNIT_WORDS[distanceUnitForGroup(group, groupsData)] || UNIT_WORDS.km;
+  return area + ' · distances in ' + words + (isEnterprise ? '' : ' (from ' + enterprise.subgroup + ')');
+}
+
 /* Rates read singular ("€1.50 / mile"); a counted distance reads plural
  * ("0 – 250 miles"). Nothing renders the plural yet — this prototype's ranges
  * are date ranges, not distance bands — so it is the hook for when they land. */
+/* A row created in this session stamps the real clock, so "Today" carries a
+ * time like every other row. 24-hour, zero-padded. */
+function nowHM() {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
 function unitPlural(unit) { return unit === 'mile' ? 'miles' : 'km'; }
 const DISTANCE_RATE_TYPES = ['Fuel Rate/Distance', 'Transport Rate/Distance'];
 function withUnit(display, rateType, unit) {
@@ -1874,10 +1887,10 @@ const EXCEPTION_TYPE_INFO = {
   'Fuel Not Applicable': 'No fuel surcharge applies for this carrier.',
   'Transport Rate/Distance': 'A base transport rate charged per distance unit travelled.',
 };
-const RULE_MODAL_TITLES = { Surcharges: 'Edit Surcharge', 'Kilometre Rates': 'Edit Kilometre Rate', 'Minimum Rate': 'Edit Minimum Rate' };
+const RULE_MODAL_TITLES = { Surcharges: 'Edit Surcharge', 'Distance Rates': 'Edit Distance Rate', 'Minimum Rate': 'Edit Minimum Rate' };
 const RULE_INFO_TEXT = {
   Surcharges: 'Additional fees applied on top of the base rate, such as waiting time, booking fees, or stop charges.',
-  'Kilometre Rates': 'Per-kilometre transport rates used to calculate distance-based pricing for each vehicle type.',
+  'Distance Rates': 'Transport rates charged per unit of distance, used to price each vehicle type.',
   'Minimum Rate': 'The lowest chargeable rate guaranteed per ride, applied when the calculated rate falls below this floor.',
 };
 
@@ -1904,12 +1917,12 @@ class Component extends DCLogic {
     subgroupOn: false,
     exceptionSearch: '',
     scheduleRows: [
-      { id: 1, status: 'Active', rangeFrom: 'Sat, 01 Aug 2026', rangeTo: 'Mon, 31 Aug 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '18 Jan 2026', updatedBy: 'M. Kowalski', history: [
+      { id: 1, status: 'Active', rangeFrom: 'Sat, 01 Aug 2026', rangeTo: 'Mon, 31 Aug 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '18 Jan 2026, 14:32', updatedBy: 'M. Kowalski', history: [
         { date: '4 Feb 2026', user: 'M. Kowalski', action: 'changed the end date to 31 Aug 2026' },
         { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to 10%' },
         { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
-      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '€ 0.09', rateType: 'Fuel Rate/Distance', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '€ 0.09', rateType: 'Fuel Rate/Distance', editing: false, lastUpdated: '9 Dec 2025, 09:05', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
     ],
@@ -1917,7 +1930,7 @@ class Component extends DCLogic {
     nextScheduleId: 4,
     nextExceptionId: 4,
     rulesSearch: '',
-    nextRuleId: { Surcharges: 12, 'Kilometre Rates': 10, 'Minimum Rate': 10 },
+    nextRuleId: { Surcharges: 12, 'Distance Rates': 10, 'Minimum Rate': 10 },
     ruleModalOpen: false,
     ruleModalStep: 1,
     ruleModalOriginalRate: '',
@@ -1956,7 +1969,6 @@ class Component extends DCLogic {
     addExceptionModalOpen: false,
     addExceptionCarrierGroup: '',
     addExceptionCarrierSubgroup: '',
-    addExceptionUnit: 'km',
     addExceptionType: 'Fuel Rate/Distance',
     addExceptionStart: '',
     addExceptionEnd: '',
@@ -1982,7 +1994,7 @@ class Component extends DCLogic {
       { id: 9, num: '508', desc: 'Proof of delivery (Signed POD) (FTL)', rate: '€ 99.00', editing: false, services: ['Full Truckload (FTL)'] },
       { id: 10, num: '509', desc: 'Paper Invoice Fee (FTL)', rate: '€ 88.00', editing: false, services: ['Full Truckload (FTL)'] },
     ],
-    'Kilometre Rates': [
+    'Distance Rates': [
       { id: 1, num: '410', desc: 'Delivery Car Transport rate', rate: '€ 0.73', editing: false, services: ['Courier', 'Parcel'], vehicleType: 'Motorwagen' },
       { id: 2, num: '411', desc: 'L1H1 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'], vehicleType: 'Boxwagon' },
       { id: 3, num: '412', desc: 'L1H2 Transport rate', rate: '€ 0.80', editing: false, services: ['Full Truckload (FTL)', 'Less-than-Truckload (LTL)'], vehicleType: 'Boxwagon' },
@@ -2095,7 +2107,7 @@ class Component extends DCLogic {
   componentDidMount() {
     this.ruleDefaults = {
       Surcharges: JSON.parse(JSON.stringify(this.state.Surcharges)),
-      'Kilometre Rates': JSON.parse(JSON.stringify(this.state['Kilometre Rates'])),
+      'Distance Rates': JSON.parse(JSON.stringify(this.state['Distance Rates'])),
       'Minimum Rate': JSON.parse(JSON.stringify(this.state['Minimum Rate'])),
     };
     this.setState({ exceptionRows: this.defaultExceptionRows() });
@@ -2108,9 +2120,9 @@ class Component extends DCLogic {
   deleteRuleRow = (key, id) => this.setState(s => ({ [key]: s[key].filter(r => r.id !== id) }));
   ruleMeta = (id) => {
     const pool = [
-      { date: '18 Jan 2026', user: 'M. Kowalski' },
-      { date: '9 Dec 2025', user: 'A. de Vries' },
-      { date: '3 Nov 2025', user: 'R. Jansen' },
+      { date: '18 Jan 2026', time: '14:32', user: 'M. Kowalski' },
+      { date: '9 Dec 2025', time: '09:05', user: 'A. de Vries' },
+      { date: '3 Nov 2025', time: '16:48', user: 'R. Jansen' },
     ];
     return pool[id % pool.length];
   };
@@ -2182,7 +2194,7 @@ class Component extends DCLogic {
     const n = parseFloat(s.ruleModalRate);
     const sym = currencySymbol((s.groupsData.find(g => g.id === s.activeGroupId) || {}).currency);
     const rate = `${sym} ${isNaN(n) ? '0.00' : n.toFixed(2)}`;
-    const vehicleType = key === 'Kilometre Rates' ? s.ruleModalVehicleType : undefined;
+    const vehicleType = key === 'Distance Rates' ? s.ruleModalVehicleType : undefined;
     if (s.ruleModalEditId != null) {
       return {
         [key]: s[key].map(r => r.id === s.ruleModalEditId ? { ...r, num: s.ruleModalNum, desc: s.ruleModalDesc || 'New rule', rate, services: s.ruleModalServices, ...(vehicleType ? { vehicleType } : {}), editing: false } : r),
@@ -2334,7 +2346,7 @@ class Component extends DCLogic {
           ...r,
           ranges: [{
             id: (Math.max(0, ...r.ranges.map(x => x.id)) + 1), rangeFrom: startDate, rangeTo: endDate,
-            value, rateType: s.addRangeType, setBy: 'You', lastUpdated: 'Today', status: 'Scheduled', editing: false,
+            value, rateType: s.addRangeType, setBy: 'You', lastUpdated: `Today, ${nowHM()}`, status: 'Scheduled', editing: false,
           }, ...r.ranges],
         }),
         addRangeModalOpen: false, addRangeStep: 1,
@@ -2344,14 +2356,14 @@ class Component extends DCLogic {
       scheduleRows: [{
         id: s.nextScheduleId, status: 'Active', rangeFrom: startDate, rangeTo: endDate,
         value, rateType: s.addRangeType,
-        editing: false, lastUpdated: 'Today', updatedBy: 'You', history: [{ date: 'Today', user: 'You', action: 'created this range' }],
+        editing: false, lastUpdated: `Today, ${nowHM()}`, updatedBy: 'You', history: [{ date: 'Today', user: 'You', action: 'created this range' }],
       }, ...s.scheduleRows],
       nextScheduleId: s.nextScheduleId + 1,
       addRangeModalOpen: false, addRangeStep: 1,
     };
   });
   addScheduleRow = () => this.setState(s => ({
-    scheduleRows: [{ id: s.nextScheduleId, status: 'Active', rangeFrom: 'Select date', rangeTo: 'Select date', value: '0%', rateType: 'Fuel Percentage', editing: true, lastUpdated: 'Today', updatedBy: 'You' }, ...s.scheduleRows],
+    scheduleRows: [{ id: s.nextScheduleId, status: 'Active', rangeFrom: 'Select date', rangeTo: 'Select date', value: '0%', rateType: 'Fuel Percentage', editing: true, lastUpdated: `Today, ${nowHM()}`, updatedBy: 'You' }, ...s.scheduleRows],
     nextScheduleId: s.nextScheduleId + 1,
   }));
   resetScheduleRows = () => this.setState({
@@ -2398,7 +2410,7 @@ class Component extends DCLogic {
   nodeOrDescendantMatches = (node, search) => node.name.toLowerCase().includes(search) || node.children.some(c => this.nodeOrDescendantMatches(c, search));
   openAddExceptionModal = () => this.setState({
     addExceptionModalOpen: true, addExceptionType: 'Fuel Rate/Distance',
-    addExceptionCarrierGroup: '', addExceptionCarrierSubgroup: '', addExceptionUnit: 'km',
+    addExceptionCarrierGroup: '', addExceptionCarrierSubgroup: '',
     addExceptionStart: '', addExceptionEnd: '', addExceptionValue: '',
   });
   closeAddExceptionModal = () => this.setState({ addExceptionModalOpen: false });
@@ -2413,7 +2425,7 @@ class Component extends DCLogic {
       exceptionRows: [{
         id: s.nextExceptionId, groupName: s.addExceptionCarrierGroup, subGroup: s.addExceptionCarrierSubgroup,
         rangeFrom: s.addExceptionStart, rangeTo: s.addExceptionEnd, value, rateType: s.addExceptionType,
-        status: 'Scheduled', editing: false, lastUpdated: 'Today', updatedBy: 'You',
+        status: 'Scheduled', editing: false, lastUpdated: `Today, ${nowHM()}`, updatedBy: 'You',
         history: [{ date: 'Today', user: 'You', action: 'created this range' }],
       }, ...s.exceptionRows],
       nextExceptionId: s.nextExceptionId + 1,
@@ -2421,7 +2433,7 @@ class Component extends DCLogic {
     };
   });
   addExceptionRow = () => this.setState(s => ({
-    exceptionRows: [{ id: s.nextExceptionId, groupName: 'New Group', subGroup: '', rangeFrom: 'Select date', rangeTo: 'Select date', value: '€ 0.00', rateType: 'Transport Rate/Distance', lastUpdated: 'Today', updatedBy: 'You', editing: true }, ...s.exceptionRows],
+    exceptionRows: [{ id: s.nextExceptionId, groupName: 'New Group', subGroup: '', rangeFrom: 'Select date', rangeTo: 'Select date', value: '€ 0.00', rateType: 'Transport Rate/Distance', lastUpdated: `Today, ${nowHM()}`, updatedBy: 'You', editing: true }, ...s.exceptionRows],
     nextExceptionId: s.nextExceptionId + 1,
   }));
 
@@ -2475,7 +2487,7 @@ class Component extends DCLogic {
     if (listKey === 'scheduleRows' && activeGroup && activeGroup.id === 5) {
       sourceRows = sourceRows.filter(row => row.status !== 'Scheduled').map(row => row.status === 'Active' ? {
         ...row,
-        lastUpdated: '11 Feb 2026',
+        lastUpdated: '11 Feb 2026, 16:48',
         updatedBy: 'K. Andersen',
         history: [{ date: '11 Feb 2026', user: 'K. Andersen', action: 'overrode the enterprise default at the subgroup level' }, ...(row.history || [])],
       } : row);
@@ -2525,7 +2537,7 @@ class Component extends DCLogic {
   addDetailRange = (rowId) => this.setState(s => ({
     exceptionRows: s.exceptionRows.map(r => r.id !== rowId ? r : {
       ...r,
-      ranges: [{ id: (Math.max(0, ...r.ranges.map(x => x.id)) + 1), rangeFrom: 'Select date', rangeTo: 'open', value: '€ 0.00', rateType: r.rateType, setBy: 'You', lastUpdated: 'Today', status: 'Scheduled', editing: true }, ...r.ranges],
+      ranges: [{ id: (Math.max(0, ...r.ranges.map(x => x.id)) + 1), rangeFrom: 'Select date', rangeTo: 'open', value: '€ 0.00', rateType: r.rateType, setBy: 'You', lastUpdated: `Today, ${nowHM()}`, status: 'Scheduled', editing: true }, ...r.ranges],
     }),
   }));
   resetRowToDefault = (listKey, id) => {
@@ -2536,32 +2548,32 @@ class Component extends DCLogic {
   };
   defaultScheduleRows() {
     return [
-      { id: 1, status: 'Active', rangeFrom: 'Sat, 01 Aug 2026', rangeTo: 'Mon, 31 Aug 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '18 Jan 2026', updatedBy: 'M. Kowalski', history: [
+      { id: 1, status: 'Active', rangeFrom: 'Sat, 01 Aug 2026', rangeTo: 'Mon, 31 Aug 2026', value: '10%', rateType: 'Fuel Percentage', editing: false, lastUpdated: '18 Jan 2026, 11:20', updatedBy: 'M. Kowalski', history: [
         { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to 10%' },
         { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
-      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '€ 0.09', rateType: 'Fuel Rate/Distance', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+      { id: 3, status: 'Scheduled', rangeFrom: 'Tue, 01 Sep 2026', rangeTo: 'Wed, 30 Sep 2026', value: '€ 0.09', rateType: 'Fuel Rate/Distance', editing: false, lastUpdated: '9 Dec 2025, 08:15', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ] },
     ];
   }
   defaultExceptionRows() {
     return [
-      { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 06 Apr 2023 08:00', rangeTo: 'Mon, 06 Apr 2023 08:00', value: '€ 1.42', rateType: 'Transport Rate/Distance', status: 'Active', editing: false, lastUpdated: '18 Jan 2026', updatedBy: 'M. Kowalski', history: [
+      { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 06 Apr 2023 08:00', rangeTo: 'Mon, 06 Apr 2023 08:00', value: '€ 1.42', rateType: 'Transport Rate/Distance', status: 'Active', editing: false, lastUpdated: '18 Jan 2026, 13:57', updatedBy: 'M. Kowalski', history: [
         { date: '18 Jan 2026', user: 'M. Kowalski', action: 'change the value to € 1.42' },
         { date: '3 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ], ranges: [
-        { id: 1, rangeFrom: '1 Jun 2026', rangeTo: 'open', value: '€ 1.42', rateType: 'Transport Rate/Distance', setBy: 'M. Kowalski', lastUpdated: '18 Jan 2026', status: 'Active', editing: false },
+        { id: 1, rangeFrom: '1 Jun 2026', rangeTo: 'open', value: '€ 1.42', rateType: 'Transport Rate/Distance', setBy: 'M. Kowalski', lastUpdated: '18 Jan 2026, 10:41', status: 'Active', editing: false },
       ] },
-      { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Fri, 01 Sep 2023 08:00', rangeTo: 'Tue, 14 Apr 2023 08:00', value: '€ 1.18', rateType: 'Transport Rate/Distance', status: 'Scheduled', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+      { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Fri, 01 Sep 2023 08:00', rangeTo: 'Tue, 14 Apr 2023 08:00', value: '€ 1.18', rateType: 'Transport Rate/Distance', status: 'Scheduled', editing: false, lastUpdated: '9 Dec 2025, 15:09', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ], ranges: [
-        { id: 1, rangeFrom: '1 Sep 2026', rangeTo: 'open', value: '€ 1.18', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025', status: 'Scheduled', editing: false },
+        { id: 1, rangeFrom: '1 Sep 2026', rangeTo: 'open', value: '€ 1.18', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025, 12:33', status: 'Scheduled', editing: false },
       ] },
-      { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 09 Apr 2023 08:00', rangeTo: 'Thu, 16 Apr 2023 08:00', value: '€ 1.65', rateType: 'Transport Rate/Distance', status: 'No active range', editing: false, lastUpdated: '9 Dec 2025', updatedBy: 'A. de Vries', history: [
+      { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 09 Apr 2023 08:00', rangeTo: 'Thu, 16 Apr 2023 08:00', value: '€ 1.65', rateType: 'Transport Rate/Distance', status: 'No active range', editing: false, lastUpdated: '9 Dec 2025, 17:26', updatedBy: 'A. de Vries', history: [
         { date: '9 Dec 2025', user: 'A. de Vries', action: 'created this range' },
       ], ranges: [
-        { id: 1, rangeFrom: '1 Jan 2025', rangeTo: '31 Dec 2025', value: '€ 1.65', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025', status: 'Past', editing: false },
+        { id: 1, rangeFrom: '1 Jan 2025', rangeTo: '31 Dec 2025', value: '€ 1.65', rateType: 'Transport Rate/Distance', setBy: 'A. de Vries', lastUpdated: '9 Dec 2025, 09:48', status: 'Past', editing: false },
       ] },
     ];
   }
@@ -2605,7 +2617,7 @@ class Component extends DCLogic {
       borderBottom: active ? '2px solid var(--border-brand-default)' : '2px solid transparent',
       marginBottom: -1, marginRight: 20,
     });
-    /* Kilometre rates need a Carrier role to mean anything (see isCarrierGroup).
+    /* Distance rates need a Carrier role to mean anything (see isCarrierGroup).
      * The tab itself always stays visible — only the table is swapped for an
      * explanatory empty state. Fuel Rate and Surcharges are never gated.
      * OPEN QUESTION: whether Minimum Rate should be gated the same way is
@@ -2613,7 +2625,7 @@ class Component extends DCLogic {
     /* Inherited from the enterprise's Area of Operations — the single place
      * every rate surface reads the distance unit from. */
     const activeDistanceUnit = distanceUnitForGroup(activeGroup, groupsData);
-    const kmRatesBlocked = s.activeTab === 'Kilometre Rates' && !isCarrierGroup(activeGroup);
+    const distanceRatesBlocked = s.activeTab === 'Distance Rates' && !isCarrierGroup(activeGroup);
     /* Fuel Not Applicable hides the Value field, so requiring a value there
      * would leave the primary button permanently disabled. */
     const addRangeIsComplete = !!s.addRangeType
@@ -2666,6 +2678,8 @@ class Component extends DCLogic {
       isEnterpriseLevel: activeGroup.subgroup === activeGroup.group,
       isSubgroupLevel: activeGroup.subgroup !== activeGroup.group,
       groupLevelLabel: activeGroup.subgroup === activeGroup.group ? 'Enterprise' : 'Subgroup',
+      distanceUnitNote: distanceUnitNoteFor(activeGroup, groupsData),
+      hasDistanceUnitNote: !!distanceUnitNoteFor(activeGroup, groupsData),
       activeGroupTags: tagsFromGroupType(activeGroup.groupType),
       activeCurrency: activeGroup.currency || 'EUR',
       activeCurrencySymbol: currencySymbol(activeGroup.currency),
@@ -2723,15 +2737,15 @@ class Component extends DCLogic {
       rulesTitle: s.activeTab,
       rulesSearch: s.rulesSearch,
       setRulesSearch: this.setRulesSearch,
-      isKilometreRatesTab: s.activeTab === 'Kilometre Rates',
+      isDistanceRatesTab: s.activeTab === 'Distance Rates',
       resetAllRules: () => this.resetAllRules(s.activeTab),
       addRuleRow: () => this.addRuleRow(s.activeTab),
-      kmRatesBlocked,
-      kmRatesAvailable: !kmRatesBlocked,
+      distanceRatesBlocked,
+      distanceRatesAvailable: !distanceRatesBlocked,
       activeGroupRolePhrase,
-      rulesRows: (kmRatesBlocked ? [] : (s[s.activeTab] || [])).map(r => ({
+      rulesRows: (distanceRatesBlocked ? [] : (s[s.activeTab] || [])).map(r => ({
         ...r,
-        rateDisplay: s.activeTab === 'Kilometre Rates'
+        rateDisplay: s.activeTab === 'Distance Rates'
           ? `${inCurrency(r.rate, activeGroup.currency)} / ${activeDistanceUnit}`
           : inCurrency(r.rate, activeGroup.currency),
         dateRangeDisplay: r.dateRange || '01 Jan 26 – 31 Dec 26',
@@ -2744,7 +2758,7 @@ class Component extends DCLogic {
         onResetFromMenu: () => { this.resetRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
         onDeleteFromMenu: () => { this.deleteRuleRow(s.activeTab, r.id); this.closeRowMenu(); },
         serviceTags: (r.services || []).slice(0, 1).map(svc => SERVICE_ABBR[svc] || svc),
-        lastUpdated: this.ruleMeta(r.id).date,
+        lastUpdated: `${this.ruleMeta(r.id).date}, ${this.ruleMeta(r.id).time}`,
         updatedBy: this.ruleMeta(r.id).user,
         onOpenLog: () => this.openRuleChangeLog(r),
         onNum: (e) => this.updateRuleField(s.activeTab, r.id, 'num', e.target.value),
@@ -2873,10 +2887,10 @@ class Component extends DCLogic {
       scheduleHistoryClosed: !s.scheduleHistoryOpen,
       closeScheduleHistory: this.closeScheduleHistory,
       scheduleHistoryRows: [
-        { id: 1, status: 'Expired', rangeFrom: 'Mon, 01 Jan 2024', rangeTo: 'Sun, 31 Mar 2024', value: '8%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '2 Jan 2024', updatedBy: 'M. Kowalski', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 1, rangeFrom: 'Mon, 01 Jan 2024', rangeTo: 'Sun, 31 Mar 2024', value: '8%', rateType: 'Fuel Percentage', status: 'Expired' }) },
-        { id: 2, status: 'Expired', rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '28 Mar 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 2, rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '9%', rateType: 'Fuel Rate/Distance', status: 'Expired' }) },
-        { id: 4, status: 'Deleted', rangeFrom: 'Sat, 01 Jun 2024', rangeTo: 'Mon, 30 Jun 2024', value: '7%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Deleted'), lastUpdated: '15 Jun 2024', updatedBy: 'M. Kowalski', isExpired: false },
-        { id: 3, status: 'Expired', rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '25 Sep 2024', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 3, rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', status: 'Expired' }) },
+        { id: 1, status: 'Expired', rangeFrom: 'Mon, 01 Jan 2024', rangeTo: 'Sun, 31 Mar 2024', value: '8%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '2 Jan 2024, 14:05', updatedBy: 'M. Kowalski', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 1, rangeFrom: 'Mon, 01 Jan 2024', rangeTo: 'Sun, 31 Mar 2024', value: '8%', rateType: 'Fuel Percentage', status: 'Expired' }) },
+        { id: 2, status: 'Expired', rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '€ 0.09', rateType: 'Fuel Rate/Distance', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '28 Mar 2024, 11:52', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 2, rangeFrom: 'Mon, 01 Apr 2024', rangeTo: 'Mon, 30 Sep 2024', value: '€ 0.09', rateType: 'Fuel Rate/Distance', status: 'Expired' }) },
+        { id: 4, status: 'Deleted', rangeFrom: 'Sat, 01 Jun 2024', rangeTo: 'Mon, 30 Jun 2024', value: '7%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Deleted'), lastUpdated: '15 Jun 2024, 16:14', updatedBy: 'M. Kowalski', isExpired: false },
+        { id: 3, status: 'Expired', rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', statusBadgeStyle: this.statusBadgeStyle('Expired'), lastUpdated: '25 Sep 2024, 08:37', updatedBy: 'A. de Vries', isExpired: true, onEdit: () => this.editScheduleHistoryRow({ id: 3, rangeFrom: 'Tue, 01 Oct 2024', rangeTo: 'Fri, 31 Mar 2025', value: '9.5%', rateType: 'Fuel Percentage', status: 'Expired' }) },
       ].map(r => ({ ...r, valueDisplay: withUnit(inCurrency(r.value, activeGroup.currency), r.rateType, activeDistanceUnit) })),
       exceptionDetailOpen: s.exceptionDetailOpen,
       exceptionDetailClosed: !s.exceptionDetailOpen,
@@ -2911,9 +2925,9 @@ class Component extends DCLogic {
       changeLogEntries: s.changeLogEntries,
       closeChangeLog: this.closeChangeLog,
       exceptionHistoryRows: [
-        { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 03 Apr 2022 08:00', rangeTo: 'Mon, 10 Apr 2022 08:00', value: '€ 1.35', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '1 Apr 2022', updatedBy: 'A. de Vries' },
-        { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Tue, 05 Apr 2022 08:00', rangeTo: 'Tue, 12 Apr 2022 08:00', value: '€ 1.10', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '3 Apr 2022', updatedBy: 'M. Kowalski' },
-        { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 07 Apr 2022 08:00', rangeTo: 'Thu, 14 Apr 2022 08:00', value: '€ 1.55', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '5 Apr 2022', updatedBy: 'A. de Vries' },
+        { id: 1, groupName: 'Carrier A', subGroup: 'Carrier A Sub Group', rangeFrom: 'Mon, 03 Apr 2022 08:00', rangeTo: 'Mon, 10 Apr 2022 08:00', value: '€ 1.35', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '1 Apr 2022, 13:11', updatedBy: 'A. de Vries' },
+        { id: 2, groupName: 'Hegelmann Transporte', subGroup: 'EU Fleet', rangeFrom: 'Tue, 05 Apr 2022 08:00', rangeTo: 'Tue, 12 Apr 2022 08:00', value: '€ 1.10', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '3 Apr 2022, 15:44', updatedBy: 'M. Kowalski' },
+        { id: 3, groupName: 'CtrlChain B.V.', subGroup: 'NL Operations', rangeFrom: 'Thu, 07 Apr 2022 08:00', rangeTo: 'Thu, 14 Apr 2022 08:00', value: '€ 1.55', rateType: 'Transport Rate/Distance', status: 'Expired', lastUpdated: '5 Apr 2022, 10:23', updatedBy: 'A. de Vries' },
       ].map(r => ({ ...r, valueDisplay: withUnit(inCurrency(r.value, activeGroup.currency), r.rateType, activeDistanceUnit) })),
       addExceptionRow: this.addExceptionRow,
       openGroupsConnection: this.openGroupsConnection,
@@ -2941,9 +2955,6 @@ class Component extends DCLogic {
       carrierGroupOptions: [...new Set(s.groupsData.map(g => g.group))],
       addExceptionShipperGroup: (s.groupsData.find(g => g.id === s.activeGroupId) || s.groupsData[3]).subgroup,
       addExceptionCarrierGroup: s.addExceptionCarrierGroup,
-      addExceptionUnitIsKm: s.addExceptionUnit === 'km',
-      addExceptionUnitIsMi: s.addExceptionUnit === 'mi',
-      onAddExceptionUnit: (e) => this.setState({ addExceptionUnit: e.target.value }),
       onAddExceptionCarrierGroup: (e) => this.setState({ addExceptionCarrierGroup: e.target.value, addExceptionCarrierSubgroup: '' }),
       carrierSubgroupOptions: s.groupsData.filter(g => g.group === s.addExceptionCarrierGroup).map(g => g.subgroup),
       addExceptionCarrierSubgroup: s.addExceptionCarrierSubgroup,
@@ -3027,7 +3038,7 @@ class Component extends DCLogic {
       onRuleModalRate: this.onRuleModalRate,
       onRuleModalUnit: this.onRuleModalUnit,
       ruleModalServices: s.ruleModalServices,
-      ruleModalIsKilometreTab: s.activeTab === 'Kilometre Rates',
+      ruleModalIsDistanceTab: s.activeTab === 'Distance Rates',
       ruleModalVehicleType: s.ruleModalVehicleType,
       onRuleModalVehicleType: this.onRuleModalVehicleType,
       ruleModalServiceOptions: TRANSPORT_SERVICES.map(svc => ({
